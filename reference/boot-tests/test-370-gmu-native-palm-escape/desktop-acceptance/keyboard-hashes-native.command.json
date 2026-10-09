@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "printf %s '706a7392e79be8c4446fcaacb091da9c8ba5c9ab0e7e78955cfd6448047da9f9  /tmp/gts9-test370-keyboard-native/select-driver.py\n53629ab839da4d42cd28305b15c5a8c3d3a7d768b7105c2931f6dcbf6bbf0b73  /tmp/gts9-test370-keyboard-native/evdev\n815eee5706dbfd81a1a122aea847c184133ab3db652fc63e0ddccdee7d8612a9  /tmp/gts9-test370-keyboard-native/gts9\n' | sha256sum -c -"
+  ],
+  "ended_utc": "2026-10-09T07:35:47.104469+00:00",
+  "started_utc": "2026-10-09T07:35:47.025362+00:00",
+  "status": 0
+}

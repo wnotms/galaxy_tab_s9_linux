@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test -f /var/lib/gts9-test370/text-scope; rm /var/lib/gts9-test370/text-scope; systemctl daemon-reload; systemctl start gdm; systemctl is-active gdm gts9-palm"
+  ],
+  "ended_utc": "2026-10-09T07:35:48.716519+00:00",
+  "started_utc": "2026-10-09T07:35:47.458005+00:00",
+  "status": 0
+}

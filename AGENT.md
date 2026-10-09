@@ -98,6 +98,21 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 TEST370_GMU_NATIVE_ESCAPE_GNOME_ACCEPTED_DEVICE_ACTIVE.
+Currentboot0cdf0b75-9334-46bb-adcf-8e2ea97c3517, WiFi10.49.219.42, newGPU
+fullupstreamfix/nativeEscape/nativesocinfo kernel accepted in bounded36s text+
+64s GNOME. Exact5partitions/181/config599ca47a/notes5c0e8233 matched, onlyboot
+changed. New paired palm/Wacom modules loaded, GPU autosuspend works, no detected
+new HFI/CPU/kernel fault/failed unit. Owner allchecksPASS inclCtrlAltT/native
+Esc/FnEsc/touch; pen pressure raw not captured. InterimXKBswap removed.
+Final sameboot afterownerUSBunplug77%31.6C/Good/discharging/GNOME+WiFi normal.
+Keep newkernel/GNOME; exact370 namespace original331 rollback remains available.
+369STOP preserved,25affectedhostPASS/reusedbuild. DCCoff, ADSPoffline, PPS/pumpN,
+chargingceilings unchanged. USBhelperpermanent/SSCrotation/fullport stillpending.
+Clock independently observed9days behind, Shanghai zonecorrect/noNTP; notyet
+corrected at370 acceptance. Next fixclock viaWiFi and registernewexactUSBscope.
+Evidence test-370-gmu-native-palm-escape/RESULTS.md and summary.json.
+
 2026-10-09 TEST369_STOP_READONLY_OVERLAY_ABSENT_TEST370_REGISTERED.
 369same33178ec original-overlay stopped because absent superseded gts9-pen
 helper was incorrectly required. ADB/WiFi/5partitions/181 original hashes passed;
