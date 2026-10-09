@@ -29,8 +29,8 @@ missing data, broken links and changed boots fail evidence. Even a bound result
 explicitly leaves service response and sensor discovery unverified. This helper
 does not start remoteproc, services or QMI transactions and does not write sysfs.
 
-Future independent SSC collection should pair this snapshot with the existing
-bounded QRTR nameserver inventory and upstream verbose hexagonrpc trace. A driver
+Future independent SSC collection should pair this snapshot with the corrected
+`qrtr-native-snapshot.py` nameserver inventory and upstream verbose hexagonrpc trace. A driver
 binding alone cannot prove Servreg answers, SSC service registration, accelerometer
 samples or desktop rotation. Test365's `Could not open oemconfig.so` also remains
 an observation, not a proved missing-library root cause. Fedora's same-model
@@ -53,3 +53,27 @@ inputs, kernel, modules, DTB, device services or charging policy. Host filesyste
 fixtures qualify observation behavior, not physical SSC operation. Deployment
 and an actual SSC lookup remain future independent evidence after the corrected
 kernel's normal desktop acceptance.
+
+## Native QRTR local-node correction
+
+A separate same-boot inventory attempt with the frozen `qrtr-snapshot.py`
+returned `EINVAL`, before receiving any reply. Pinned `net/qrtr/af_qrtr.c`
+initializes a fresh socket with the actual local node; `qrtr_bind()` rejects an
+address whose node differs. Node0 is not a wildcard. `qrtr_getname()` exposes the
+node before binding, so the corrected helper reads it and requests only an
+ephemeral port. It still checks the exact local nameserver origin, retains every
+raw reply, requires an explicit end marker, limits time/packet count and sends
+DEL_LOOKUP before closing. No QMI method is invoked.
+
+On the same Test331 boot with ADSP offline, the corrected helper completes in
+about11ms, local node1/port16387. It records one advertised service69/instance257
+at node7/port1 plus the explicit end marker. These numeric values are retained
+without claiming this is SSC or that it responds to a QMI method. Eight fixture
+tests pass, including a kernel-style bind guard for local node7 (neither a
+hardcoded0 nor1 is acceptable), timeout, malformed/foreign replies, bind failure
+cleanup and packet limits. Full raw before/after evidence lives in
+`reference/desktop-bringup/ssc-qrtr-offline-adsp/`.
+
+The old script remains byte-for-byte unchanged because Test366/369 registered
+inputs include it. Use the separate corrected helper in future SSC registration;
+do not reinterpret old stopped tests or change an already started scope.

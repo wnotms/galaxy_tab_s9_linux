@@ -1,0 +1,26 @@
+--- userspace/sensors/qrtr-snapshot.py
++++ userspace/sensors/qrtr-native-snapshot.py
+@@ -1,5 +1,8 @@
+ #!/usr/bin/env python3
+-"""Bounded QRTR nameserver lookup; no QMI method, PD mapper or DSP activation."""
++"""Bounded native-node QRTR lookup; no QMI method or DSP activation.
++
++Separate from the frozen Test366/369 qrtr-snapshot.py input.
++"""
+ import argparse
+ import json
+ from pathlib import Path
+@@ -41,7 +44,12 @@
+     rows = []; raw = []; complete = False; local = None
+     started = clock()
+     try:
+-        sock.bind((0, 0)); local = sock.getsockname()
++        # Linux net/qrtr/af_qrtr.c initializes the socket node before bind;
++        # qrtr_bind rejects a different node, including a guessed wildcard0.
++        # Read the kernel-assigned node, request an ephemeral port, then retain
++        # the actual bound address for nameserver attribution and cleanup.
++        node = sock.getsockname()[0]
++        sock.bind((node, 0)); local = sock.getsockname()
+         peer = (local[0], CTRL)
+         sock.sendto(packet(NEW_LOOKUP), peer)
+         while len(raw) < 256:

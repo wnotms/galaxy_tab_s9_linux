@@ -1,0 +1,13 @@
+test_bind_failure_does_not_send_or_leak_socket (test_native_qrtr_snapshot.NativeQRTRSnapshotTests.test_bind_failure_does_not_send_or_leak_socket) ... ok
+test_foreign_reply_retained_then_rejected (test_native_qrtr_snapshot.NativeQRTRSnapshotTests.test_foreign_reply_retained_then_rejected) ... ok
+test_invalid_deadline_opens_no_socket (test_native_qrtr_snapshot.NativeQRTRSnapshotTests.test_invalid_deadline_opens_no_socket) ... ok
+test_malformed_reply_rejected (test_native_qrtr_snapshot.NativeQRTRSnapshotTests.test_malformed_reply_rejected) ... ok
+test_packet_limit_without_marker_is_incomplete (test_native_qrtr_snapshot.NativeQRTRSnapshotTests.test_packet_limit_without_marker_is_incomplete) ... ok
+test_service_listing_preserves_raw_source_and_complete_marker (test_native_qrtr_snapshot.NativeQRTRSnapshotTests.test_service_listing_preserves_raw_source_and_complete_marker) ... ok
+test_timeout_is_incomplete_and_lookup_removed (test_native_qrtr_snapshot.NativeQRTRSnapshotTests.test_timeout_is_incomplete_and_lookup_removed) ... ok
+test_uses_kernel_assigned_node_not_zero_or_one (test_native_qrtr_snapshot.NativeQRTRSnapshotTests.test_uses_kernel_assigned_node_not_zero_or_one) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.009s
+
+OK

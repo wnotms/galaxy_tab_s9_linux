@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 QRTR_NATIVE_NODE_INVENTORY_FIXED_AND_LIVE_QUALIFIED.
+Frozen qrtr-snapshot bind(node0) returnedEINVAL on33178ec. Pinned qrtr_bind
+requires the socket's own local node; new qrtr-native-snapshot reads getsockname
+before ephemeral bind. Same boot complete inventory11ms/localnode1, one numeric
+service69/instance257/node7/port1 and raw terminator, no QMI method/ADSP start.
+8 affected fixture tests PASS/0skip incl actual bind guard for node7/cleanup/
+foreign/malformed/timeout/packet limit. Old366/369 controlled script unchanged;
+future SSC registrations use new helper. No service-response/sensor/rotation
+PASS inferred. No kernel/build/DT/config/USB/charging mutation.369 still awaits
+PC connection; USB permanent qualification and native keys remain pending.
+See reference/desktop-bringup/ssc-qrtr-offline-adsp/ and SSC_NATIVE_MAPPER_BINDING.md.
+
 2026-10-09 SSC_NATIVE_MAPPER_OBSERVER_CORRECTED_NO_RUNTIME_START.
 Test365's platform/qcom-pd-mapper lookup was wrong; pinned upstream registers
 auxiliary/qcom_pd_mapper.qcom-pdm-mapper. New read-only snapshot records actual

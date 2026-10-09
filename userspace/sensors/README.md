@@ -243,3 +243,9 @@ was incorrect; retain that historical evidence rather than interpreting its
 missing path as a missing mapper. Driver binding still needs a separate service
 and actual SSC sample check. See `docs/SSC_NATIVE_MAPPER_BINDING.md` for source
 provenance and the read-only current-device result.
+
+Future SSC registrations must use `qrtr-native-snapshot.py` for the bounded
+nameserver inventory. Its bind address uses the socket's kernel-assigned local
+node; the frozen `qrtr-snapshot.py` guessed node0 and returned EINVAL on this
+device. The corrected helper has a same-boot live complete inventory, with ADSP
+still offline; this proves the observer's wire path, not sensor discovery.
