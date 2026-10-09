@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test381（独立 SSC GLINK 初始化采集登记），窗口为 **Test372–Test381**；没有生成镜像的轮次仍占一轮。
+  编号为 Test382（GLINK 容量修正采集登记），窗口为 **Test373–Test382**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,19 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-10 TEST382_SOURCE_GEOMETRY_OBSERVER_REGISTERED_BEFORE_DEPLOYMENT.
+Independent corrected observer after381 failed beforeRPC;381STOP immutable.
+New namespaced helper validates exact4K/16B/4080B/33pages/131KiB perCPU, unchanged
+128K request/300s boot deadline/rawlossstats/sixGLINKevents/boot ownership.
+Read-only370 header confirms16/4080/4K; no failed381actualcapacity claim.
+Watcher journals rawstate beforeadmission; host captures state, preserves first
+candidateID and historicalkernel via _TRANSPORT=kernel (no -k currentboot).
+ADBonly owner scope; SSH/hostNCM untested, no networkconfig. One earlycandidate/
+orderedRPC/60sSSC, restore370GNOME either result.158affectedhostPASS/no skips;
+exact kernel/config/DTB/181/charging/USB reused/no build/CI.83f8c0a8 100%26C/Good.
+No deployment yet; DCC/PPS/pumpOFF; sensors/rotation/fullport unfinished.
+See test-382-ssc-glink-geometry/README.md.
 
 2026-10-10 TEST381_ADB_ATTEMPT_STOP_TRACE_OBSERVER_RESTORED370.
 Owner ADB amendmentecb0f2b4/40affectedPASS pushed then onecandidate e1d13b92.
