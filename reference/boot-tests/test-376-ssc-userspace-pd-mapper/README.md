@@ -19,7 +19,7 @@ not proven required firmware; no other-device binaries or stock persist writes.
 
 Register/push before mutation. Verify one fresh actual identity, all five
 partitions,181 module hashes, ADB/device NCM/authenticated WiFi and no Code43.
-Good battery20–85%,10–<42°C,3.4–<4.44V; DCC/PPS/direct OFF and Sink/Device.
+Good battery20–100%,10–<42°C,3.4–<4.44V; DCC/PPS/direct OFF and Sink/Device. The upper bound is 100% because this scope is passive SSC discovery and does not change charging policy.
 Keep exact enabled USB lifecycle profile/helper across the unchanged kernel.
 
 1. One qualified recovery entry; install only owned copied assets and five-file
