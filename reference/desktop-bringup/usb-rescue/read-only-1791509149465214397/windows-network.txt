@@ -1,0 +1,36 @@
+
+
+InterfaceAlias : vEthernet (Default Switch)
+IPAddress      : 172.26.32.1
+PrefixLength   : 20
+
+InterfaceAlias : 蓝牙网络连接 2
+IPAddress      : 169.254.125.231
+PrefixLength   : 16
+
+InterfaceAlias : 以太网 5
+IPAddress      : 169.254.113.246
+PrefixLength   : 16
+
+InterfaceAlias : 本地连接* 13
+IPAddress      : 169.254.73.198
+PrefixLength   : 16
+
+InterfaceAlias : 本地连接* 12
+IPAddress      : 169.254.36.57
+PrefixLength   : 16
+
+InterfaceAlias : WLAN
+IPAddress      : 10.30.179.182
+PrefixLength   : 16
+
+InterfaceAlias : 以太网
+IPAddress      : 192.168.137.1
+PrefixLength   : 24
+
+InterfaceAlias : 以太网
+IPAddress      : 169.254.124.66
+PrefixLength   : 16
+
+
+

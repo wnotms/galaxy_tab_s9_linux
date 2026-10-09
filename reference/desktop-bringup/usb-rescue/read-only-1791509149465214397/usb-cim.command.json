@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "[Console]::OutputEncoding = New-Object System.Text.UTF8Encoding($false)\nGet-CimInstance Win32_PnPEntity -Filter \"PNPDeviceID LIKE 'USB%'\" | Where-Object {$_.Present} | Select-Object Name,PNPDeviceID,ConfigManagerErrorCode,Status | ConvertTo-Json -Depth 3"
+  ],
+  "ended_utc": "2026-10-09T02:18:36.875849+00:00",
+  "started_utc": "2026-10-09T02:18:24.935553+00:00",
+  "status": 0
+}

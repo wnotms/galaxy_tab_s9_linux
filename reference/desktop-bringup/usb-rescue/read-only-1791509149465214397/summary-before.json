@@ -1,0 +1,28 @@
+{
+  "state": "USB_HOST_NOT_ENUMERATED_DEVICE_CONFIGURED",
+  "boot_id": "78ec1906-4713-4837-9acc-fe245647d7cf",
+  "address": "10.49.219.210",
+  "authenticated_wifi": true,
+  "baseline": "Test331",
+  "battery_capacity": 98,
+  "battery_temp_decic": 277,
+  "device_udc": [
+    {
+      "name": "dummy_udc.0",
+      "state": "not attached",
+      "current_speed": "UNKNOWN",
+      "soft_connect": "[Errno 13] Permission denied: '/sys/class/udc/dummy_udc.0/soft_connect'"
+    },
+    {
+      "name": "a600000.usb",
+      "state": "configured",
+      "current_speed": "super-speed-plus",
+      "soft_connect": "[Errno 13] Permission denied: '/sys/class/udc/a600000.usb/soft_connect'"
+    }
+  ],
+  "usb_pnp_completed": true,
+  "code43": false,
+  "all_present_usb_property_probe": "timeout",
+  "kernel_rows": 1272,
+  "device_mutation": false
+}

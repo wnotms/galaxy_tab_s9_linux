@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "[Console]::OutputEncoding = New-Object System.Text.UTF8Encoding($false)\nGet-PnpDevice -PresentOnly -ErrorAction SilentlyContinue | Where-Object { $_.InstanceId -like 'USB*' } | ForEach-Object {\n$pc=Get-PnpDeviceProperty -InstanceId $_.InstanceId -KeyName DEVPKEY_Device_ProblemCode -ErrorAction SilentlyContinue\n$location=Get-PnpDeviceProperty -InstanceId $_.InstanceId -KeyName DEVPKEY_Device_LocationPaths -ErrorAction SilentlyContinue\n[PSCustomObject]@{Status=$_.Status; ProblemCode=$pc.Data; Class=$_.Class; Name=$_.FriendlyName; InstanceId=$_.InstanceId; Location=$location.Data}\n} | ConvertTo-Json -Depth 4"
+  ],
+  "ended_utc": "2026-10-09T02:17:49.221326+00:00",
+  "started_utc": "2026-10-09T02:17:24.192563+00:00",
+  "status": "timeout"
+}
