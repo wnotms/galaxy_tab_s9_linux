@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test379（RPC stat 元数据验证登记），窗口为 **Test370–Test379**；没有生成镜像的轮次仍占一轮。
+  编号为 Test380（独立 SSC RPC 元数据验证登记），窗口为 **Test371–Test380**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,17 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-09 TEST380_ENROLLED_PASSIVE_SSC_REGISTERED_BEFORE_DEPLOYMENT.
+Test379 STOP preserved/physical0. Independent380 exact existing fullsameboot
+journal/cursors includes one new ep0 diagnostic; adjacent lifecycleunbind then
+ADB/authWiFi recovered, source/receptiontime difference not a368 timingPASS.
+Alladditional severe/kernel/USB/CPU faults stillSTOP: no future regex/error waiver.
+Reuse samequalifiedRPCmetadata/earlyADSP370kernel181; only380-owned vendor/assets/
+texttrace. Same3.4..4.45V hostobservation bounds,4.44V float unchanged, PPS/pump/DCC
+OFF.120affectedhostPASS/no skips/rebuild/CI. Onefreshpreflight/onecandidate/60sSSC,
+restore370GNOME either result. Sensors/rotation/fullport still unfinished.
+See test-380-ssc-rpc-stat-enrolled/README.md.
 
 2026-10-09 TEST379_STOP_PREFLIGHT_NEW_EP0_NO_DEPLOYMENT.
 Revision2 voltage admission passed samea1e7570f100%/28.8°C/4.446V; fresh wholejournal

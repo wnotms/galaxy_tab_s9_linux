@@ -113,3 +113,11 @@ GNOME Wayland greeter with the built-in DSI monitor selected. Its screensaver
 was active and DRM output disabled when sampled. This is evidence of an idle
 greeter; it cannot establish what the user saw earlier or prove that a reported
 persistent log screen is fixed. User wake/visual confirmation remains separate.
+
+
+Test379 stopped before any device mutation on a newly recorded ep0out diagnostic.
+Test380 independently enrolls its exact full sameboot journal and existing rows,
+with actual transport recovery and120 affected checks. No future error waiver,
+USB patch, charging change or retry of a failed physical379 boot. The same
+qualified stat diagnostic gets one bounded early-ADSP/ordered-RPC attempt;
+registration and fresh live admission precede deployment.
