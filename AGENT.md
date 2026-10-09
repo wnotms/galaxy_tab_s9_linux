@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 USB_ENUMERATION_LOSS_RECOVERED_SAME_BOOT_NO_SOFTWARE_CHANGE.
+AuthenticatedWiFi10.49.219.210 same33178ec; deviceUDCconfigured/Windowsabsent.
+One registeredruntimeUDCunbind/rebind restoredADB shell + composite/ADB/NCMCode0
++ interfaceboundNCMSSHbanner. Descriptor/service/kernel/modules/charge unchanged;
+GDMactive/no reboot/PPS/pump. Rootcauseopen/notpermanentfix/Test366retry.
+Owner nowrequests persistentUSBfix and unplugged fornaturaldischarge.
+Last99%29.1C/VBATADC4.446V exceeds oldsensoradmission; no candidate/chargingPASS.
+NativeEsccompilednextphysicalnotdeployed; originalGMUpairsopen/sensorsunfinished.
+Evidence: reference/desktop-bringup/usb-rescue/read-only-1791509149465214397/.
+
+
 2026-10-09 TEST366_STOP_READ_ONLY_PREFLIGHT_BASELINE_GMU_HFI_ERRORS.
 Existing33178ec1906 contained2BWvote timeout/old-responsepairs at2334/2742s;
 full1171row rawkernel saved, CPUfaultcounts empty, rootcause notproven.
