@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "python3 -c 'import json, pathlib, subprocess\nP=pathlib.Path\ndef read(path):\n try: return P(path).read_text().strip()\n except OSError as e: return {\"unavailable\":str(e)}\ndef run(args):\n p=subprocess.run(args,capture_output=True,text=True,timeout=5)\n return {\"returncode\":p.returncode,\"stdout\":p.stdout,\"stderr\":p.stderr}\ndef inventory(root):\n result=[]\n for p in sorted(P(root).glob(\"*\")):\n  result.append({\"path\":str(p),\"resolved\":str(p.resolve()),\"name\":read(p/\"name\"),\"state\":read(p/\"state\"),\"driver\":str((p/\"driver\").resolve()) if (p/\"driver\").exists() else None})\n return result\nprint(json.dumps({\"boot_id\":read(\"/proc/sys/kernel/random/boot_id\"),\"uptime\":read(\"/proc/uptime\"),\"services\":run([\"systemctl\",\"is-active\",\"gdm\",\"gts9-adbd\",\"gts9-usb-lifecycle\",\"ssh\"]),\"remoteproc\":inventory(\"/sys/class/remoteproc\"),\"rpmsg\":inventory(\"/sys/bus/rpmsg/devices\"),\"power_supplies\":{str(p):read(p/\"uevent\") for p in P(\"/sys/class/power_supply\").glob(\"*\")},\"network\":run([\"ip\",\"-4\",\"-o\",\"addr\"]),\"device_operations\":\"read-only; no remoteproc start/stop, driver binding, packet send, reboot or write\"},indent=2))'"
+  ],
+  "returncode": 0,
+  "device_operations": false
+}

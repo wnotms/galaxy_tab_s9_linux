@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "python3 -c 'import json,subprocess,pathlib\nnames=[\"gdm\",\"gts9-adbd\",\"gts9-usb-acm\",\"gts9-usb-typec-lifecycle\",\"ssh\"]\nout={\"boot_id\":pathlib.Path(\"/proc/sys/kernel/random/boot_id\").read_text().strip(),\"services\":{}}\nfor n in names:\n p=subprocess.run([\"systemctl\",\"show\",n,\"--property=LoadState,ActiveState,SubState,Result\"],capture_output=True,text=True,timeout=5)\n out[\"services\"][n]={\"returncode\":p.returncode,\"stdout\":p.stdout,\"stderr\":p.stderr}\nprint(json.dumps(out,indent=2))'"
+  ],
+  "returncode": 0,
+  "device_operations": false
+}

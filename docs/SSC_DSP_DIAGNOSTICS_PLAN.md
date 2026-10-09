@@ -1,0 +1,110 @@
+# SSC initialization: next evidence boundary after Test380
+
+The Test380 failure remains unchanged: metadata matched, no SSC400 or actual
+accelerometer sample in the registered window, accepted Test370 restored.
+Do not rerun that profile, reset registry, guess bus addresses or late-start ADSP
+on the normal GNOME boot.
+
+## Evidence already available
+
+The new host replay follows actual sensor-PD FD lifetimes, each linear read and
+close. In boot `16971083-2297-4220-a24f-24e113ba612d`, PID1985 read **178/178
+nonempty cached groups**, **203 reads / 44,863 returned bytes**. Every individual
+session closed with exactly its frozen manifest length. `sensors_registry` is a
+zero-byte marker, not a 179th observed group read. The separate version-marker
+read is also not a cached group. The trace has no logged read failure, seek or
+write during these sessions.
+
+This proves logged returned lengths at the AP callback, **not** payload content
+delivery to DSP, valid DSP parsing, active hardware transport, IMU response,
+completed firmware initialization or SSC publication. The stat and read callbacks
+print before the listener's next response invocation; they do not expose the
+remote consumer's result. No root cause or electrical success follows from them.
+The existing four core IMU leaf comparisons remain separate input evidence.
+
+Exact raw inputs, per-file replay and qualification are in
+[ssc-registry-read](../reference/desktop-bringup/ssc-registry-read/RESULTS.md).
+Preserve all failed tests and their original manifests; this is a new derivative,
+not an edit to Test380 evidence.
+
+## Source comparison and rejected shortcuts
+
+* Fedora X710 HEAD remains `ab123e7d1dbc0cbcd35661f9761197e977b15aa9`.
+  Its root/sensor RPC ordering and registry mapping are already implemented in
+  Test380. Its ADSP DTS also drops the unresolved LPASS interconnect and assigns
+  hub4 pinctrl to remoteproc while hub3 uses GPI DMA. Re-copying those inputs
+  does not introduce a new tested hypothesis. No new Fedora hardware fix was
+  found in that comparison.
+* S9 Ultra snapshot `4ff9d4b0ba1ae40e7605ad54c0ffe561c1e26a60` is cross-model
+  evidence only. Its 64KiB listener patch is not a missing X710 fix: the
+  qualified Fedora listener already fetches larger input buffers in a second
+  invocation. Test380 has no logged oversized-buffer/decoder/method failure.
+  Do not copy Ultra's registry timestamp reset or treat its SPI description as
+  proof of X710's raw `bus_type` encoding.
+* Samsung `msm-kernel/drivers/char/adsprpc.c` routes sensors attach to PD2;
+  Linux `FASTRPC_IOCTL_INIT_ATTACH_SNS` uses the same PD2. Domain74 was actually
+  returned by native Servreg in Test380. This does not establish successful
+  sensor initialization and does not justify changing TCPM or DSP bus ownership.
+* The collected X710 stock DSP set has no `oemconfig.so`. Its failed lookup is
+  still of unknown necessity. No fabricated stub or foreign binary is justified.
+
+## DSP log transport: inspect before enabling
+
+The primary [linux-msm QRTR service table](https://github.com/linux-msm/qrtr/blob/master/src/lookup.c)
+identifies SSC as400, DIAG as4097, and769 as SLIMbus control. Test380's complete
+failure lookup has769 but **no4097**. Do not send diagnostic packets to769 or
+mislabel it a DIAG endpoint. Absence from this lookup does not establish that
+firmware offers no RPMSG diagnostic channel.
+
+Source-only examination of [linux-msm/diag at23c12c1](https://github.com/linux-msm/diag/tree/23c12c167e93215853af4e59c021551767f6fec8)
+finds RPMSG channels `DIAG`, `DIAG_CNTL`, `DIAG_CMD` and a QRTR backend for4097.
+Its control handler negotiates features and sends masks; running the router is
+**not passive read-only collection**. Its sample USB FunctionFS setup is not
+appropriate for the accepted ADB/NCM gadget. No router, udev rule, USB function,
+driver override or control packet has been installed or sent.
+
+Current accepted config has `RPMSG_CHAR=y`, `RPMSG_CTRL=n`.
+Linux7.2 `rpmsg_char` can create an endpoint when a matching RPMSG channel binds;
+this does not prove any X710 DIAG channel exists or qualify rebinding one.
+Do not enable RPMSG_CTRL or another kernel option just to satisfy old DIAG udev
+examples. First establish the actual channel names and endpoint topology.
+
+A fresh read-only probe on accepted boot178facf3 finds all six existing GLINK
+version/version-ack/open/open-ack/close/close-ack trace formats available, all
+disabled, tracer `nop`, no trace instances. ADSP is offline and the RPMSG list
+empty, so this inventory cannot answer which channels a running ADSP opens.
+It establishes that this next trace design does not need a new kernel option
+or kernel rebuild. Formats are preserved in `trace-capability.stdout`; no trace
+enable, mount, instance creation or ADSP start occurred.
+
+## Next independently registered scope
+
+The next physical scope must observe firmware/channel initialization, not
+repeat the config-stat question. A suitable bounded design is:
+
+1. Reuse exact accepted kernel/config/DTB/modules and qualified early-ADSP
+   vendor inputs; freeze any new trace setup before registering/pushing.
+2. Before early ADSP starts, use a dedicated bounded trace instance **only if
+   the existing kernel actually exposes** GLINK version/open/close events.
+   These events are defined in `drivers/rpmsg/qcom_glink_trace.h`; names and
+   format must be verified against that exact kernel. Preserve original trace
+   state and never trace all payload traffic. Missing events stop this plan
+   before deployment, rather than prompting an automatic kernel rebuild.
+3. Capture channel names/remote labels, RPMSG sysfs ancestry, driver bindings,
+   QRTR announcements and full kernel journal at early-start and after one
+   ordered root/sensors startup. Record source timestamps and trace overrun
+   statistics; an overwritten or un-attributed trace is not complete evidence.
+4. Cap observation at60s and collection at2MiB; no service restart or diagnostic
+   packet, RPMSG bind, bus probe, registry write, firmware replacement or retry.
+   A DIAG channel inventory is a diagnostic result, not a sensor PASS.
+5. Restore Test370/vendor and all owned trace/text/assets on either result,
+   then normal GNOME. Stop immediately for new CPU/kernel/USB fault, unexplained
+   reboot, lost rescue, or the existing battery/OFF gates. Preserve fixed-PD,
+   4.44V float, thermal fail-closed, DCC/PPS/pumpOFF.
+
+This design is **not yet a registered/qualified deployment**. There is no
+Test381 hardware acceptance or permission to silently add DIAG control traffic.
+If channels are absent, analyze their initialization/open handshake first. If
+present, separately qualify a bounded decoder/control protocol from actual
+X710/primary source before requesting firmware log masks. No automatic rotation
+claim is valid until actual accel samples and SensorProxy orientation pass.

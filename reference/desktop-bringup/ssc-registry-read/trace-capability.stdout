@@ -1,0 +1,70 @@
+{
+  "boot_id": "178facf3-7e1e-4004-8041-cd70eb48df6d\n",
+  "device_operations": false,
+  "trace_roots": {
+    "/sys/kernel/tracing": {
+      "resolved": "/sys/kernel/tracing",
+      "tracing_on": "1\n",
+      "current_tracer": "nop\n",
+      "events": {
+        "qcom_glink_cmd_version": {
+          "format": "name: qcom_glink_cmd_version\nID: 1148\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:__data_loc char[] remote;\toffset:8;\tsize:4;\tsigned:0;\n\tfield:u32 version;\toffset:12;\tsize:4;\tsigned:0;\n\tfield:u32 features;\toffset:16;\tsize:4;\tsigned:0;\n\tfield:bool tx;\toffset:20;\tsize:1;\tsigned:0;\n\nprint fmt: \"%s remote: %s version: %u features: %#x\", REC->tx ? \"tx\" : \"rx\", __get_str(remote), REC->version, REC->features\n",
+          "enabled": "0\n"
+        },
+        "qcom_glink_cmd_version_ack": {
+          "format": "name: qcom_glink_cmd_version_ack\nID: 1149\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:__data_loc char[] remote;\toffset:8;\tsize:4;\tsigned:0;\n\tfield:u32 version;\toffset:12;\tsize:4;\tsigned:0;\n\tfield:u32 features;\toffset:16;\tsize:4;\tsigned:0;\n\tfield:bool tx;\toffset:20;\tsize:1;\tsigned:0;\n\nprint fmt: \"%s remote: %s version: %u features: %#x\", REC->tx ? \"tx\" : \"rx\", __get_str(remote), REC->version, REC->features\n",
+          "enabled": "0\n"
+        },
+        "qcom_glink_cmd_open": {
+          "format": "name: qcom_glink_cmd_open\nID: 1150\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:__data_loc char[] remote;\toffset:8;\tsize:4;\tsigned:0;\n\tfield:__data_loc char[] channel;\toffset:12;\tsize:4;\tsigned:0;\n\tfield:u16 lcid;\toffset:16;\tsize:2;\tsigned:0;\n\tfield:u16 rcid;\toffset:18;\tsize:2;\tsigned:0;\n\tfield:bool tx;\toffset:20;\tsize:1;\tsigned:0;\n\nprint fmt: \"%s remote: %s channel: %s[%u/%u]\", REC->tx ? \"tx\" : \"rx\", __get_str(remote), __get_str(channel), REC->lcid, REC->rcid\n",
+          "enabled": "0\n"
+        },
+        "qcom_glink_cmd_open_ack": {
+          "format": "name: qcom_glink_cmd_open_ack\nID: 1152\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:__data_loc char[] remote;\toffset:8;\tsize:4;\tsigned:0;\n\tfield:__data_loc char[] channel;\toffset:12;\tsize:4;\tsigned:0;\n\tfield:u16 lcid;\toffset:16;\tsize:2;\tsigned:0;\n\tfield:u16 rcid;\toffset:18;\tsize:2;\tsigned:0;\n\tfield:bool tx;\toffset:20;\tsize:1;\tsigned:0;\n\nprint fmt: \"%s remote: %s channel: %s[%u/%u]\", REC->tx ? \"tx\" : \"rx\", __get_str(remote), __get_str(channel), REC->lcid, REC->rcid\n",
+          "enabled": "0\n"
+        },
+        "qcom_glink_cmd_close": {
+          "format": "name: qcom_glink_cmd_close\nID: 1151\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:__data_loc char[] remote;\toffset:8;\tsize:4;\tsigned:0;\n\tfield:__data_loc char[] channel;\toffset:12;\tsize:4;\tsigned:0;\n\tfield:u16 lcid;\toffset:16;\tsize:2;\tsigned:0;\n\tfield:u16 rcid;\toffset:18;\tsize:2;\tsigned:0;\n\tfield:bool tx;\toffset:20;\tsize:1;\tsigned:0;\n\nprint fmt: \"%s remote: %s channel: %s[%u/%u]\", REC->tx ? \"tx\" : \"rx\", __get_str(remote), __get_str(channel), REC->lcid, REC->rcid\n",
+          "enabled": "0\n"
+        },
+        "qcom_glink_cmd_close_ack": {
+          "format": "name: qcom_glink_cmd_close_ack\nID: 1158\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:__data_loc char[] remote;\toffset:8;\tsize:4;\tsigned:0;\n\tfield:__data_loc char[] channel;\toffset:12;\tsize:4;\tsigned:0;\n\tfield:u16 lcid;\toffset:16;\tsize:2;\tsigned:0;\n\tfield:u16 rcid;\toffset:18;\tsize:2;\tsigned:0;\n\tfield:bool tx;\toffset:20;\tsize:1;\tsigned:0;\n\nprint fmt: \"%s remote: %s channel: %s[%u/%u]\", REC->tx ? \"tx\" : \"rx\", __get_str(remote), __get_str(channel), REC->lcid, REC->rcid\n",
+          "enabled": "0\n"
+        }
+      },
+      "instances": []
+    },
+    "/sys/kernel/debug/tracing": {
+      "resolved": "/sys/kernel/debug/tracing",
+      "tracing_on": "1\n",
+      "current_tracer": "nop\n",
+      "events": {
+        "qcom_glink_cmd_version": {
+          "format": "name: qcom_glink_cmd_version\nID: 1148\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:__data_loc char[] remote;\toffset:8;\tsize:4;\tsigned:0;\n\tfield:u32 version;\toffset:12;\tsize:4;\tsigned:0;\n\tfield:u32 features;\toffset:16;\tsize:4;\tsigned:0;\n\tfield:bool tx;\toffset:20;\tsize:1;\tsigned:0;\n\nprint fmt: \"%s remote: %s version: %u features: %#x\", REC->tx ? \"tx\" : \"rx\", __get_str(remote), REC->version, REC->features\n",
+          "enabled": "0\n"
+        },
+        "qcom_glink_cmd_version_ack": {
+          "format": "name: qcom_glink_cmd_version_ack\nID: 1149\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:__data_loc char[] remote;\toffset:8;\tsize:4;\tsigned:0;\n\tfield:u32 version;\toffset:12;\tsize:4;\tsigned:0;\n\tfield:u32 features;\toffset:16;\tsize:4;\tsigned:0;\n\tfield:bool tx;\toffset:20;\tsize:1;\tsigned:0;\n\nprint fmt: \"%s remote: %s version: %u features: %#x\", REC->tx ? \"tx\" : \"rx\", __get_str(remote), REC->version, REC->features\n",
+          "enabled": "0\n"
+        },
+        "qcom_glink_cmd_open": {
+          "format": "name: qcom_glink_cmd_open\nID: 1150\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:__data_loc char[] remote;\toffset:8;\tsize:4;\tsigned:0;\n\tfield:__data_loc char[] channel;\toffset:12;\tsize:4;\tsigned:0;\n\tfield:u16 lcid;\toffset:16;\tsize:2;\tsigned:0;\n\tfield:u16 rcid;\toffset:18;\tsize:2;\tsigned:0;\n\tfield:bool tx;\toffset:20;\tsize:1;\tsigned:0;\n\nprint fmt: \"%s remote: %s channel: %s[%u/%u]\", REC->tx ? \"tx\" : \"rx\", __get_str(remote), __get_str(channel), REC->lcid, REC->rcid\n",
+          "enabled": "0\n"
+        },
+        "qcom_glink_cmd_open_ack": {
+          "format": "name: qcom_glink_cmd_open_ack\nID: 1152\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:__data_loc char[] remote;\toffset:8;\tsize:4;\tsigned:0;\n\tfield:__data_loc char[] channel;\toffset:12;\tsize:4;\tsigned:0;\n\tfield:u16 lcid;\toffset:16;\tsize:2;\tsigned:0;\n\tfield:u16 rcid;\toffset:18;\tsize:2;\tsigned:0;\n\tfield:bool tx;\toffset:20;\tsize:1;\tsigned:0;\n\nprint fmt: \"%s remote: %s channel: %s[%u/%u]\", REC->tx ? \"tx\" : \"rx\", __get_str(remote), __get_str(channel), REC->lcid, REC->rcid\n",
+          "enabled": "0\n"
+        },
+        "qcom_glink_cmd_close": {
+          "format": "name: qcom_glink_cmd_close\nID: 1151\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:__data_loc char[] remote;\toffset:8;\tsize:4;\tsigned:0;\n\tfield:__data_loc char[] channel;\toffset:12;\tsize:4;\tsigned:0;\n\tfield:u16 lcid;\toffset:16;\tsize:2;\tsigned:0;\n\tfield:u16 rcid;\toffset:18;\tsize:2;\tsigned:0;\n\tfield:bool tx;\toffset:20;\tsize:1;\tsigned:0;\n\nprint fmt: \"%s remote: %s channel: %s[%u/%u]\", REC->tx ? \"tx\" : \"rx\", __get_str(remote), __get_str(channel), REC->lcid, REC->rcid\n",
+          "enabled": "0\n"
+        },
+        "qcom_glink_cmd_close_ack": {
+          "format": "name: qcom_glink_cmd_close_ack\nID: 1158\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:__data_loc char[] remote;\toffset:8;\tsize:4;\tsigned:0;\n\tfield:__data_loc char[] channel;\toffset:12;\tsize:4;\tsigned:0;\n\tfield:u16 lcid;\toffset:16;\tsize:2;\tsigned:0;\n\tfield:u16 rcid;\toffset:18;\tsize:2;\tsigned:0;\n\tfield:bool tx;\toffset:20;\tsize:1;\tsigned:0;\n\nprint fmt: \"%s remote: %s channel: %s[%u/%u]\", REC->tx ? \"tx\" : \"rx\", __get_str(remote), __get_str(channel), REC->lcid, REC->rcid\n",
+          "enabled": "0\n"
+        }
+      },
+      "instances": []
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "python3 -c 'import pathlib,json\nP=pathlib.Path\ndef read(p):\n try:return p.read_text()\n except OSError as e:return {\"unavailable\":str(e)}\nnames=[\"qcom_glink_cmd_version\",\"qcom_glink_cmd_version_ack\",\"qcom_glink_cmd_open\",\"qcom_glink_cmd_open_ack\",\"qcom_glink_cmd_close\",\"qcom_glink_cmd_close_ack\"]\nroots=[P(\"/sys/kernel/tracing\"),P(\"/sys/kernel/debug/tracing\")]\nresult={\"boot_id\":read(P(\"/proc/sys/kernel/random/boot_id\")),\"device_operations\":False,\"trace_roots\":{}}\nfor root in roots:\n if not root.exists():continue\n result[\"trace_roots\"][str(root)]={\"resolved\":str(root.resolve()),\"tracing_on\":read(root/\"tracing_on\"),\"current_tracer\":read(root/\"current_tracer\"),\"events\":{name:{\"format\":read(root/\"events/qcom_glink\"/name/\"format\"),\"enabled\":read(root/\"events/qcom_glink\"/name/\"enable\")} for name in names},\"instances\":[p.name for p in (root/\"instances\").glob(\"*\")]}\nprint(json.dumps(result,indent=2))'"
+  ],
+  "returncode": 0,
+  "device_operations": false
+}

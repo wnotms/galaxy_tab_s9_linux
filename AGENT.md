@@ -98,6 +98,21 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 TEST380_REGISTRY_READ_LENGTHS_MATCH_OFFLINE_NEW_DIAGNOSTIC_BOUNDARY.
+Hash-bound replay of actual16971083/PID1985 trace:178/178nonemptycachegroups,
+203reads/44863returnedbytes, all individual linear sessions exactlength+closed.
+The179th archive registryfile is an empty marker, not an observedgroupread.
+No contents/DSPparse/electrical/SSC proof;380STOP unchanged, no registryreset or
+identicalretry.34affectedhost PASS/no skips; kernel/ARM64 qualification reused.
+Readonly178facf3 accepted370/GDM/ADB/SSH/permanentUSB active,100%26.1C4.440V,
+ADSPoffline/no RPMSG. Six existing GLINK control-event formats available/off;
+no new kernel option needed for future bounded channel-init trace. QRTR769 is
+SLIMbus, not DIAG4097; no4097 in380 lookup. Generaldiag router sends feature/mask
+controls, not passive. No traceenable/ADSPstart/bind/packet/reboot/flash/install.
+Next separate registered scope observes firmware/channel-init, not metadata.
+See docs/SSC_DSP_DIAGNOSTICS_PLAN.md and ssc-registry-read/RESULTS.md; fullport/
+sensors/rotation unfinished. Fixedcharging/thermal/DCC/PPS/pump unchanged.
+
 2026-10-09 TEST380_ACTUAL_RPC_METADATA_PASS_SSC_ABSENT_RESTORED370.
 One attributedcandidate16971083 earlyADSP/FastRPC/native519/nativeServreg6domain
 PASS; rootPD then sensorsPD both startedactive once. Actual35/35configstat exact

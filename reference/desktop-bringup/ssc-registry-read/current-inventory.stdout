@@ -1,0 +1,30 @@
+{
+  "boot_id": "178facf3-7e1e-4004-8041-cd70eb48df6d",
+  "uptime": "2407.67 19192.72",
+  "services": {
+    "returncode": 0,
+    "stdout": "active\nactive\ninactive\nactive\n",
+    "stderr": ""
+  },
+  "remoteproc": [
+    {
+      "path": "/sys/class/remoteproc/remoteproc0",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0",
+      "name": "adsp",
+      "state": "offline",
+      "driver": null
+    }
+  ],
+  "rpmsg": [],
+  "power_supplies": {
+    "/sys/class/power_supply/tcpm-source-psy-3-0033": "DEVTYPE=power_supply\nOF_NAME=usbpd\nOF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33\nOF_COMPATIBLE_0=siliconmitus,sm5714-usbpd\nOF_COMPATIBLE_N=1\nPOWER_SUPPLY_NAME=tcpm-source-psy-3-0033\nPOWER_SUPPLY_TYPE=USB\nPOWER_SUPPLY_ONLINE=1\nPOWER_SUPPLY_VOLTAGE_MAX=5000000\nPOWER_SUPPLY_VOLTAGE_MIN=5000000\nPOWER_SUPPLY_VOLTAGE_NOW=5000000\nPOWER_SUPPLY_CURRENT_MAX=1800000\nPOWER_SUPPLY_CURRENT_NOW=1800000\nPOWER_SUPPLY_TYPE=USB\nPOWER_SUPPLY_USB_TYPE=C [PD] PD_PPS PD_SPR_AVS PD_PPS_SPR_AVS",
+    "/sys/class/power_supply/sm5714-battery": "DEVTYPE=power_supply\nOF_NAME=charger\nOF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49\nOF_COMPATIBLE_0=siliconmitus,sm5714\nOF_COMPATIBLE_N=1\nPOWER_SUPPLY_NAME=sm5714-battery\nPOWER_SUPPLY_TYPE=Battery\nPOWER_SUPPLY_STATUS=Full\nPOWER_SUPPLY_HEALTH=Good\nPOWER_SUPPLY_PRESENT=1\nPOWER_SUPPLY_TECHNOLOGY=Li-ion\nPOWER_SUPPLY_VOLTAGE_MAX_DESIGN=4440000\nPOWER_SUPPLY_VOLTAGE_MIN_DESIGN=3400000\nPOWER_SUPPLY_VOLTAGE_NOW=4440000\nPOWER_SUPPLY_VOLTAGE_AVG=4440000\nPOWER_SUPPLY_VOLTAGE_OCV=4390000\nPOWER_SUPPLY_CURRENT_NOW=5000\nPOWER_SUPPLY_CURRENT_AVG=5000\nPOWER_SUPPLY_CHARGE_FULL_DESIGN=8160000\nPOWER_SUPPLY_CAPACITY=100\nPOWER_SUPPLY_TEMP=261\nPOWER_SUPPLY_TYPE=Battery",
+    "/sys/class/power_supply/sm5714-usb": "DEVTYPE=power_supply\nOF_NAME=charger\nOF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49\nOF_COMPATIBLE_0=siliconmitus,sm5714\nOF_COMPATIBLE_N=1\nPOWER_SUPPLY_NAME=sm5714-usb\nPOWER_SUPPLY_TYPE=USB\nPOWER_SUPPLY_ONLINE=1\nPOWER_SUPPLY_INPUT_CURRENT_LIMIT=1800000\nPOWER_SUPPLY_TYPE=USB\nPOWER_SUPPLY_USB_TYPE=Unknown [SDP] DCP CDP PD PD_PPS"
+  },
+  "network": {
+    "returncode": 0,
+    "stdout": "1: lo    inet 127.0.0.1/8 scope host lo\\       valid_lft forever preferred_lft forever\n14: usb0    inet 169.254.42.1/16 scope global usb0\\       valid_lft forever preferred_lft forever\n15: wlp1s0    inet 10.49.219.77/24 brd 10.49.219.255 scope global dynamic noprefixroute wlp1s0\\       valid_lft 3007sec preferred_lft 3007sec\n16: docker0    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\\       valid_lft forever preferred_lft forever\n",
+    "stderr": ""
+  },
+  "device_operations": "read-only; no remoteproc start/stop, driver binding, packet send, reboot or write"
+}
