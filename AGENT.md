@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test378（native Servreg 域响应及完整 RPC 启动登记），窗口为 **Test369–Test378**；没有生成镜像的轮次仍占一轮。
+  编号为 Test379（RPC stat 元数据验证登记），窗口为 **Test370–Test379**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,20 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-09 TEST379_RPC_STAT_METADATA_REGISTERED_STAGED_NOT_DEPLOYED.
+Reuse accepted370/181/USB/GNOME and earlyADSP vendor; only new isolated RPC daemon
+e1e9faa4 plus own379 trace/text/assets. One native domain query/both RPC starts,
+60s SSC/120s trace +exact35 sameboot sensorsPD stat size/mtime gate. Metadata pass
+is not SSC acceptance; first failure restores370 normal GNOME.112 affectedhost
+PASS/no skips, unchanged ARM64/kernel qualification reused.28 files staged only
+under D:/android/gts9-active/gts9-test379. Readonly admission currenta1e7570f:
+GNOME/SSH/ADB active/no failedunits,100%27.5C VBAT4.444V exceeds registered<4.44V
+and BLOCKS deployment. Requested natural unplug/discharge; no gate relaxation,
+reboot/flash/device mutation yet. Fresh full preflight required after actual
+voltage returns within bounds; user reboot requires new enrollment. Native
+root/domain passed378 but SSC absent; do not repeat unchanged378 binary/registry
+reset/late ADSP. Fullport/sensors incomplete. See test-379-ssc-rpc-stat/README.md.
 
 2026-10-09 RPC_STAT_DIAGNOSTIC_HOST_PROVEN_COMPILED_NOT_DEPLOYED.
 Accepted370 remains unchanged; no new physical test/reboot/install. Separate
