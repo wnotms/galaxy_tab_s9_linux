@@ -11,6 +11,12 @@ It is not the SE re-arm patch `0007` documented below.
 
 ## Dispositions
 
+The historical `0008-drm-msm-a6xx-fix-stale-rpmh-votes-after-suspend.patch`
+remains here as an unchanged record. Its one-hunk adaptation is superseded by
+active0023: the supposed existing normal-shutdown reset was actually only in
+force-off. Do not apply this incomplete candidate. The complete merged
+upstream fix is now built offline; physical acceptance is separate.
+
 | Patch | Disposition |
 | --- | --- |
 | `qmp-ufs-clear-tx-pull-down-on-power-on.patch` | NOT NEEDED FOR NORMAL BOOT - POSSIBLY USEFUL FOR SUSPEND, UNRESOLVED |

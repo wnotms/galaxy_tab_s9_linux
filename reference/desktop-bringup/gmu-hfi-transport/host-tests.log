@@ -1,0 +1,39 @@
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:600: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  """An anchored `^\[` reported 0 while the capture held kernel lines."""
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:738: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  a bad regex (`^\[` against `<timestamp> RECV  [`-prefixed lines) and
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:2207: SyntaxWarning: invalid decimal literal
+  self.assertIn(boot, read(f"reference/boot-tests/{d}/round-{1if d.startswith('test-195') else 4}.txt"))
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:3439: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  The metric anchored on `^\[` reported 0 while the capture held kernel
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:3494: SyntaxWarning: "\$" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\$"? A raw string is also an option.
+  self.assertNotIn("boot_id=\$(cat /proc/sys/kernel/random/boot_id)", text)
+test_idle_failure_uses_existing_force_off_path (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_idle_failure_uses_existing_force_off_path) ... ok
+test_no_firmware_start_does_not_write (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_no_firmware_start_does_not_write) ... ok
+test_normal_shutdown_resets_cm3_before_rpmh_stop (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_normal_shutdown_resets_cm3_before_rpmh_stop) ... ok
+test_slumber_failure_uses_existing_force_off_path (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_slumber_failure_uses_existing_force_off_path) ... ok
+test_started_firmware_retracts_votes_and_marks_sleep (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_started_firmware_retracts_votes_and_marks_sleep) ... ok
+test_stop_is_idempotent (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_stop_is_idempotent) ... ok
+test_timeout_reports_and_clears_request (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_timeout_reports_and_clears_request) ... ok
+test_upstream_a840_ack_bit_preserved (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_upstream_a840_ack_bit_preserved) ... ok
+test_it_is_upstream_code_and_not_ours (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_it_is_upstream_code_and_not_ours)
+Patch 0007 touches device_link_add, nowhere near a6xx_rpmh_stop. ... ok
+test_the_active_candidate_carries_full_upstream_provenance (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_active_candidate_carries_full_upstream_provenance) ... ok
+test_the_active_candidate_corrects_force_off_shutdown_confusion (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_active_candidate_corrects_force_off_shutdown_confusion) ... ok
+test_the_candidate_applies_cleanly_and_changes_nothing (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_candidate_applies_cleanly_and_changes_nothing) ... ok
+test_the_doc_does_not_claim_the_wedge (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_doc_does_not_claim_the_wedge) ... ok
+test_the_doc_names_the_decoy (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_doc_names_the_decoy)
+a6xx_gmu_rpmh_off polls but retracts nothing, and ignores failures. ... ok
+test_the_doc_records_the_caller_path (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_doc_records_the_caller_path) ... ok
+test_the_doc_requires_the_read_only_checks_first (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_doc_requires_the_read_only_checks_first)
+If the GPU never autosuspends, the defect cannot bite. ... ok
+test_the_historical_candidate_is_pending_but_full_fix_is_active (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_historical_candidate_is_pending_but_full_fix_is_active)
+Do not revive the incomplete pending adaptation. ... ok
+test_the_pinned_tree_still_has_the_inverted_condition (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_pinned_tree_still_has_the_inverted_condition)
+If a future rebase fixes this, the doc and the candidate must notice. ... ok
+test_the_plan_doc_links_it_without_reopening_closed_directions (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_plan_doc_links_it_without_reopening_closed_directions) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.288s
+
+OK

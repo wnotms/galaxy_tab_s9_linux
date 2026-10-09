@@ -22,6 +22,14 @@ Prefer one purpose per patch. Record origin/upstream status in the patch header 
 
 ## Current queue
 
+- `0023-drm-msm-a6xx-fix-rpmh-stop-lifecycle.patch` — complete backport of merged
+  upstreamd9108bfdb746, present in Fedora X710's Linux7.2 stable base. Corrects
+  the RPMh-stop guard and adds CM3 reset to normal shutdown. It supersedes the
+  incomplete historical pending0008 adaptation, which confused force-off with
+  normal shutdown. No OPP, frequency, voltage, timeout or firmware change; not
+  a proof of all HFI/CPU-fault causes. See
+  [current audit](../../docs/A6XX_STALE_RPMH_VOTES.md).
+
 - `0001-arm64-dts-qcom-sm8550-add-samsung-abl-labels.patch` — carries the
   minimal Samsung ABL DTBO symbol compatibility identified in
   Azkali's SM-X710 work. Re-check and drop it once the pinned upstream

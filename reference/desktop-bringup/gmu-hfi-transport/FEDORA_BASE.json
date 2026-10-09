@@ -1,0 +1,32 @@
+{
+  "path": "/home/ms/Samsung/gts9wifi-fedora-linux/kernel/kernel.spec",
+  "sha256": "8b869b1495944c83331e487057f8f9e5bc2eb70e2d62413b8a7ebcd89a0c6a93",
+  "commit": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "remote_HEAD": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "kernel_version_lines": [
+    [
+      7,
+      "%define kversion 7.2.0"
+    ],
+    [
+      10,
+      "Version:        7.2.0"
+    ],
+    [
+      62,
+      "* Sun Sep 20 2026 nacht20-de <318505313+nacht20-de@users.noreply.github.com> - 7.2.0-0.1"
+    ],
+    [
+      63,
+      "- Rebase onto the 7.2 stable release.  The 7.2.6 kernel loses the WCN6855"
+    ],
+    [
+      65,
+      "  itself; 7.2 is the base while that regression is chased separately."
+    ],
+    [
+      67,
+      "* Sat Aug 29 2026 nacht20-de <318505313+nacht20-de@users.noreply.github.com> - 7.2.0-0.1.rc3"
+    ]
+  ]
+}

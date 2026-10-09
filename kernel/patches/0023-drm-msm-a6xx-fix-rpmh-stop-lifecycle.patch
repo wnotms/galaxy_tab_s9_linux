@@ -1,0 +1,44 @@
+From: Shivam Rawat <shivrawa@qti.qualcomm.com>
+Subject: [PATCH] drm/msm/a6xx: Fix stale rpmh votes after suspend
+
+Backport upstream commit d9108bfdb746edacdb05bd27959a4ae63c6c7f3f,
+merged 2026-07-16. The pinned Linux 7.2-rc3 predates it; the Linux 7.2
+stable base used by the same-model Fedora X710 port contains both changes.
+
+Upstream fixes an inverted firmware-start guard that skips the RPMh stop
+sequence and halts the GMU CM3 in the normal shutdown path before retracting
+votes. Carry both hunks. The old pending one-hunk adaptation incorrectly
+treated the reset in a6xx_gmu_force_off() as covering a6xx_gmu_shutdown().
+Those are different paths; the normal shutdown still lacked that reset.
+
+Source: https://github.com/torvalds/linux/commit/d9108bfdb746edacdb05bd27959a4ae63c6c7f3f
+Message-ID: <20260605-assorted-fixes-june-v1-1-2caa04f7287c@oss.qualcomm.com>
+Fixes: f248d5d5159a ("drm/msm/a6xx: Fix PDC sleep sequence")
+Signed-off-by: Shivam Rawat <shivrawa@qti.qualcomm.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+
+No OPP, voltage, frequency, regulator, timeout, HFI protocol or firmware
+change. This fixes the confirmed lifecycle defect; it is not proof that
+all observed HFI timeouts or any historical CPU stalls had this cause.
+
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -642,7 +642,7 @@ static void a6xx_rpmh_stop(struct a6xx_gmu *gmu)
+ 	int ret;
+ 	u32 val;
+ 
+-	if (test_and_clear_bit(GMU_STATUS_FW_START, &gmu->status))
++	if (!test_and_clear_bit(GMU_STATUS_FW_START, &gmu->status))
+ 		return;
+ 
+ 	if (adreno_is_a840(adreno_gpu))
+@@ -1465,6 +1465,9 @@ static void a6xx_gmu_shutdown(struct a6xx_gmu *gmu)
+ 	/* Stop the interrupts and mask the hardware */
+ 	a6xx_gmu_irq_disable(gmu);
+ 
++	/* Halt the gmu cm3 core */
++	gmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 1);
++
+ 	/* Tell RPMh to power off the GPU */
+ 	a6xx_rpmh_stop(gmu);
+ 

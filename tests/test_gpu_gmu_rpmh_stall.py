@@ -1769,13 +1769,15 @@ class A6xxStaleRpmhVoteTests(unittest.TestCase):
     the normal case, so the whole RSCC power-off handshake is skipped on every GPU
     runtime suspend.  Upstream inverts it and says the consequence is stale RPMH
     (BCM) votes.  These checks re-derive all of that from the pinned tree rather
-    than trusting the prose, and they pin the candidate as *not applied*.
+    than trusting the prose. The historical one-hunk candidate is superseded;
+    the active backport must retain both upstream shutdown fixes.
     """
 
     DOC = "docs/A6XX_STALE_RPMH_VOTES.md"
     PENDING = ("kernel/patches/pending/"
                "0008-drm-msm-a6xx-fix-stale-rpmh-votes-after-suspend.patch")
-    GMU = ".work/build/linux-src-gts9wifi/drivers/gpu/drm/msm/adreno/a6xx_gmu.c"
+    GMU = ".work/build/linux-src-x710-charging/drivers/gpu/drm/msm/adreno/a6xx_gmu.c"
+    ACTIVE = "kernel/patches/0023-drm-msm-a6xx-fix-rpmh-stop-lifecycle.patch"
     PATCH7 = "kernel/patches/0007-drm-msm-adreno-a6xx-mark-cxpd-device-link-stateless.patch"
 
     BUGGY = "\tif (test_and_clear_bit(GMU_STATUS_FW_START, &gmu->status))"
@@ -1791,7 +1793,10 @@ class A6xxStaleRpmhVoteTests(unittest.TestCase):
         path = ROOT / self.GMU
         if not path.is_file():
             self.skipTest("kernel worktree is not present")
-        text = path.read_text()
+        import subprocess
+        tree = ROOT / ".work/build/linux-src-x710-charging"
+        text = subprocess.check_output(["git", "show", "HEAD:drivers/gpu/drm/msm/adreno/a6xx_gmu.c"],
+                                       cwd=tree, text=True)
         self.assertIn(self.BUGGY, text)
         self.assertNotIn(self.FIXED, text)
 
@@ -1802,8 +1807,8 @@ class A6xxStaleRpmhVoteTests(unittest.TestCase):
         self.assertNotIn("GMU_STATUS_FW_START", text)
         self.assertNotIn("a6xx_rpmh_stop", text)
 
-    def test_the_candidate_is_pending_and_definitely_not_applied(self):
-        """`pending/` is ignored by prepare-kernel.sh; the default queue is not."""
+    def test_the_historical_candidate_is_pending_but_full_fix_is_active(self):
+        """Do not revive the incomplete pending adaptation."""
         self.assertTrue((ROOT / self.PENDING).is_file())
         self.assertFalse(
             (ROOT / "kernel/patches" / pathlib.Path(self.PENDING).name).exists(),
@@ -1811,35 +1816,41 @@ class A6xxStaleRpmhVoteTests(unittest.TestCase):
         )
         text = read(self.PENDING)
         self.assertIn("PENDING, NOT APPLIED", text)
+        self.assertTrue((ROOT / self.ACTIVE).is_file())
 
-    def test_the_candidate_carries_one_line_and_full_provenance(self):
-        text = read(self.PENDING)
+    def test_the_active_candidate_carries_full_upstream_provenance(self):
+        text = read(self.ACTIVE)
         self.assertIn("-" + self.BUGGY, text)
         self.assertIn("+" + self.FIXED, text)
-        # One line of fix, and the header has to say where it came from.
+        # Full merged commit, not merely the old mailing-list candidate.
         for needle in (
             "20260605-assorted-fixes-june-v1-1-2caa04f7287c@oss.qualcomm.com",
             "Shivam Rawat",
             "Akhil P Oommen",
             "Fixes: f248d5d5159a",
-            "Assorted fixes - June/26",
-            "latest   v1",
-            "lore.kernel.org",
+            "d9108bfdb746edacdb05bd27959a4ae63c6c7f3f",
+            "github.com/torvalds/linux/commit/",
+            "+\tgmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 1);",
         ):
             with self.subTest(needle=needle):
                 self.assertIn(needle, text)
 
-    def test_the_candidate_records_the_backport_adaptation(self):
-        """Hunk 2 is already present in a later upstream form."""
-        self.contains(self.PENDING, "Hunk 2", "ALREADY has that write",
-                      "a6xx_gmu.c:1158", "one line")
+    def test_the_active_candidate_corrects_force_off_shutdown_confusion(self):
+        self.contains(self.ACTIVE, "a6xx_gmu_force_off()", "a6xx_gmu_shutdown()",
+                      "Carry both hunks", "Those are different paths")
+        text = (ROOT / self.GMU).read_text()
+        start = text.index("static void a6xx_gmu_shutdown(")
+        body = text[start:text.index("\n}\n", start)]
+        self.assertLess(body.index("REG_A6XX_GMU_CM3_SYSRESET"),
+                        body.index("a6xx_rpmh_stop(gmu)"))
+        self.assertIn(self.FIXED, text)
 
     def test_the_candidate_applies_cleanly_and_changes_nothing(self):
         import subprocess
-        tree = ROOT / ".work/build/linux-src-gts9wifi"
+        tree = ROOT / ".work/build/linux-src-x710-charging"
         if not (tree / "drivers/gpu/drm/msm/adreno/a6xx_gmu.c").is_file():
             self.skipTest("kernel worktree is not present")
-        proc = subprocess.run(["git", "apply", "--check", str(ROOT / self.PENDING)],
+        proc = subprocess.run(["git", "apply", "--reverse", "--check", str(ROOT / self.ACTIVE)],
                               cwd=tree, capture_output=True, text=True)
         self.assertEqual(proc.returncode, 0, proc.stderr)
 

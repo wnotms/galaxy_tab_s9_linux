@@ -98,6 +98,27 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 GPU_RPMH_FULL_UPSTREAM_FIX_COMPILED_PAIRED_NOT_DEPLOYED.
+Test368 read-only STOP remains immutable. Complete upstream d9108bf backport
+corrects the firmware-start guard and resets CM3 in normal GMU shutdown; old
+pending one-hunk adaptation confused force-off with normal shutdown and stays
+inactive. Fedora X710 Linux7.2 stable already carries both hunks. Exact Test331
+boot78ec read-only sample confirms real GPU/GMU autosuspend and matching firmware;
+last snapshot80%/28.2C/Good/discharging. No claim all HFI/CPU faults share this cause.
+Standard ARM64 build and GMU W=1 pass; config/DTB/181 module payloads/export CRCs
+identical native-Escape candidate, only QCOM_SOCINFO n->y versus accepted331.
+26 affected unit tests PASS/0skip; 12 input gate +9 mapping unit +4 exact identity
+cases PASS. Initial mock ACK-bit and nonexistent test-name failures preserved.
+Independent boot bundle uses accepted331 vendor, not early ADSP; paired input
+loaders/new-notes mapping qualified, native Escape included as owner requested.
+No flash/reboot/device overlay/PPS/pump/config/DT/firmware/USB/charging changes.
+USB permanent reconnect fix, native keys on new kernel, sensors/rotation/full
+port still pending. Register independent boot scope before physical mutation;
+do not retry366/368 or patch their frozen gates. Existing GNOME remains endpoint.
+Evidence reference/desktop-bringup/gmu-hfi-transport/RESULTS.md. No new test number
+or retention-window change; artifacts are offline current work, not deployed.
+
+
 2026-10-09 TEST368_STOP_READONLY_NEW_GMU_PAIRS_NO_MUTATION.
 Same33178ec94%30.5C/Good/discharging/GNOME+WiFi+adbd active. Five new
 BW_PERF_VOTE timeout/oldresponsepairs(seq3296/166/249/3587/883) preserved

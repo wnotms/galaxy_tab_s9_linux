@@ -1,0 +1,47 @@
+test_idle_failure_uses_existing_force_off_path (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_idle_failure_uses_existing_force_off_path) ... ok
+test_no_firmware_start_does_not_write (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_no_firmware_start_does_not_write) ... ok
+test_normal_shutdown_resets_cm3_before_rpmh_stop (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_normal_shutdown_resets_cm3_before_rpmh_stop) ... ok
+test_slumber_failure_uses_existing_force_off_path (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_slumber_failure_uses_existing_force_off_path) ... ok
+test_started_firmware_retracts_votes_and_marks_sleep (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_started_firmware_retracts_votes_and_marks_sleep) ... ok
+test_stop_is_idempotent (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_stop_is_idempotent) ... ok
+test_timeout_reports_and_clears_request (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_timeout_reports_and_clears_request) ... ok
+test_upstream_a840_ack_bit_preserved (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_upstream_a840_ack_bit_preserved) ... ok
+test_it_is_upstream_code_and_not_ours (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_it_is_upstream_code_and_not_ours)
+Patch 0007 touches device_link_add, nowhere near a6xx_rpmh_stop. ... ok
+test_the_active_candidate_carries_full_upstream_provenance (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_active_candidate_carries_full_upstream_provenance) ... ok
+test_the_active_candidate_corrects_force_off_shutdown_confusion (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_active_candidate_corrects_force_off_shutdown_confusion) ... ok
+test_the_candidate_applies_cleanly_and_changes_nothing (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_candidate_applies_cleanly_and_changes_nothing) ... ok
+test_the_doc_does_not_claim_the_wedge (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_doc_does_not_claim_the_wedge) ... ok
+test_the_doc_names_the_decoy (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_doc_names_the_decoy)
+a6xx_gmu_rpmh_off polls but retracts nothing, and ignores failures. ... ok
+test_the_doc_records_the_caller_path (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_doc_records_the_caller_path) ... ok
+test_the_doc_requires_the_read_only_checks_first (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_doc_requires_the_read_only_checks_first)
+If the GPU never autosuspends, the defect cannot bite. ... ok
+test_the_historical_candidate_is_pending_but_full_fix_is_active (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_historical_candidate_is_pending_but_full_fix_is_active)
+Do not revive the incomplete pending adaptation. ... ok
+test_the_pinned_tree_still_has_the_inverted_condition (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_pinned_tree_still_has_the_inverted_condition)
+If a future rebase fixes this, the doc and the candidate must notice. ... ok
+test_the_plan_doc_links_it_without_reopening_closed_directions (test_gpu_gmu_rpmh_stall.A6xxStaleRpmhVoteTests.test_the_plan_doc_links_it_without_reopening_closed_directions) ... ok
+test_cleanup_releases_translated_keys_without_swapping_again (test_pogo_keyboard.PogoPackets.test_cleanup_releases_translated_keys_without_swapping_again) ... ok
+test_irq_packets (test_pogo_keyboard.PogoPackets.test_irq_packets) ... /tmp/tmpp_q8ijz9/pogo.c:46:12: warning: unused function 'gpiod_get_value_cansleep' [-Wunused-function]
+   46 | static int gpiod_get_value_cansleep(int *x) { return *x; }
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmpp_q8ijz9/pogo.c:47:13: warning: unused function 'disable_irq_nosync' [-Wunused-function]
+   47 | static void disable_irq_nosync(int irq) { (void)irq; }
+      |             ^~~~~~~~~~~~~~~~~~
+2 warnings generated.
+14 packet/error cases and all-key mapping passed
+ok
+test_irq_path_is_quiet_by_default (test_pogo_keyboard.PogoPackets.test_irq_path_is_quiet_by_default)
+No per-key or per-packet line may reach dmesg at info level. ... ok
+test_boot_entry_clears_probe_before_commands (test_pogo_startup.PogoStartup.test_boot_entry_clears_probe_before_commands) ... ok
+test_startup (test_pogo_startup.PogoStartup.test_startup) ... ok
+test_watch_work_leaves_the_bootloader_alone (test_pogo_startup.PogoStartup.test_watch_work_leaves_the_bootloader_alone)
+The watchdog must not read 0x51 unless the diagnostics are opted in. ... ok
+test_suspend_resume_lifecycle (test_pogo_suspend.PogoSuspend.test_suspend_resume_lifecycle) ... pogo suspend/resume lifecycle cases passed
+ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 1.790s
+
+OK

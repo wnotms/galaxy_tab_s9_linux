@@ -1,0 +1,58 @@
+test_idle_failure_uses_existing_force_off_path (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_idle_failure_uses_existing_force_off_path) ... ok
+test_no_firmware_start_does_not_write (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_no_firmware_start_does_not_write) ... ok
+test_normal_shutdown_resets_cm3_before_rpmh_stop (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_normal_shutdown_resets_cm3_before_rpmh_stop) ... ok
+test_slumber_failure_uses_existing_force_off_path (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_slumber_failure_uses_existing_force_off_path) ... ok
+test_started_firmware_retracts_votes_and_marks_sleep (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_started_firmware_retracts_votes_and_marks_sleep) ... ERROR
+test_stop_is_idempotent (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_stop_is_idempotent) ... ERROR
+test_timeout_reports_and_clears_request (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_timeout_reports_and_clears_request) ... ERROR
+test_upstream_a840_ack_bit_preserved (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_upstream_a840_ack_bit_preserved) ... ok
+
+======================================================================
+ERROR: test_started_firmware_retracts_votes_and_marks_sleep (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_started_firmware_retracts_votes_and_marks_sleep)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gmu_rpmh_stop.py", line 109, in test_started_firmware_retracts_votes_and_marks_sleep
+    def test_started_firmware_retracts_votes_and_marks_sleep(self):self.run_case(2)
+                                                                   ~~~~~~~~~~~~~^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gmu_rpmh_stop.py", line 107, in run_case
+    subprocess.run([str(self.exe),str(n)],check=True,capture_output=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/tmp/tmpz12l1nk6/actual-gmu', '2']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_stop_is_idempotent (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_stop_is_idempotent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gmu_rpmh_stop.py", line 110, in test_stop_is_idempotent
+    def test_stop_is_idempotent(self):self.run_case(3)
+                                      ~~~~~~~~~~~~~^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gmu_rpmh_stop.py", line 107, in run_case
+    subprocess.run([str(self.exe),str(n)],check=True,capture_output=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/tmp/tmpz12l1nk6/actual-gmu', '3']' died with <Signals.SIGABRT: 6>.
+
+======================================================================
+ERROR: test_timeout_reports_and_clears_request (test_gmu_rpmh_stop.GmuRpmhNativeTests.test_timeout_reports_and_clears_request)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gmu_rpmh_stop.py", line 112, in test_timeout_reports_and_clears_request
+    def test_timeout_reports_and_clears_request(self):self.run_case(5)
+                                                      ~~~~~~~~~~~~~^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gmu_rpmh_stop.py", line 107, in run_case
+    subprocess.run([str(self.exe),str(n)],check=True,capture_output=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/tmp/tmpz12l1nk6/actual-gmu', '5']' died with <Signals.SIGABRT: 6>.
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.256s
+
+FAILED (errors=3)

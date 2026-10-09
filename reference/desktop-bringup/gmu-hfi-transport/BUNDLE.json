@@ -1,0 +1,224 @@
+{
+  "verdict": "OFFLINE_ASSEMBLED_NOT_DEPLOYED",
+  "device_operations": [],
+  "boot": {
+    "path": "out/boot-bundle-x710-gmu-rpmh/boot.img",
+    "sha256": "823555189f2f1f18bf331789671b33d2f06fc89294e775b304f824f9d8649f21",
+    "bytes": 100663296
+  },
+  "vendor_boot": {
+    "path": "out/boot-bundle-x710-263-passive/vendor_boot.img",
+    "sha256": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1",
+    "reused_accepted_Test331": true,
+    "early_ADSP": false
+  },
+  "AVB_verified": true,
+  "exact_payload": true,
+  "boot_metadata_unchanged": true,
+  "paired_modules": {
+    "pen": {
+      "path": "out/ssc-native-input-pair/pen/wacom-wez01.ko",
+      "sha256": "6ddebabd6cd38d1d4e8b13610b32f0f4fb737d7c939c14854afac876b70c86e5",
+      "imports_checked": 29,
+      "vermagic": "7.2.0-rc3-gts9wifi-dirty SMP preempt mod_unload modversions aarch64"
+    },
+    "palm-touch": {
+      "path": "out/ssc-native-input-pair/palm-touch/fts1ba90a.ko",
+      "sha256": "590c1a3e3a215e0dbfbdc9986697a2ef3dd82f64bb21e29539b328cf18746253",
+      "imports_checked": 38,
+      "vermagic": "7.2.0-rc3-gts9wifi-dirty SMP preempt mod_unload modversions aarch64"
+    }
+  },
+  "staged_loaders": {
+    "pen": {
+      "path": "reference/desktop-bringup/gmu-hfi-transport/pen-loader.py",
+      "sha256": "590d2f0d1bc40845862ff9ead008c4b33dab75a6c5a3e725b9b0485fca8bd706",
+      "template_sha256": "3930beb37cddde052e1e6c470e47283894374eeeb7c06cc9b25e58e86dea4f17",
+      "AST_only_assignment": "PROFILE",
+      "profile": {
+        "release": "7.2.0-rc3-gts9wifi-dirty",
+        "config_sha256": "599ca47ab41a29469c3d5830e475049fca9f33bd2ab0923ad014e5ba3fa6ec6c",
+        "notes_sha256": "5c0e82337affafefff586613d4a84c4f1388c9716ce251fe69d3c70aad18a518",
+        "module_sha256": "6ddebabd6cd38d1d4e8b13610b32f0f4fb737d7c939c14854afac876b70c86e5"
+      },
+      "mock_checks": [
+        "exact kernel/config/modules ready",
+        "proc/config.gz alteration rejected",
+        "sys/kernel/notes alteration rejected",
+        "proc/cmdline alteration rejected",
+        "usr/local/lib/gts9-desktop/wacom-wez01.ko alteration rejected",
+        "sys/class/power_supply/sm5714-battery/temp alteration rejected"
+      ]
+    },
+    "palm": {
+      "path": "reference/desktop-bringup/gmu-hfi-transport/palm-loader.py",
+      "sha256": "8c6044a74c4113ed1870be17bd543a0e5e05252ab1493185fcc3be0f7b448d8c",
+      "template_sha256": "3d2c9022b0a6726970ba07c517bdcad18c3d040e91183da22a74abc829f89157",
+      "AST_only_assignment": "PROFILE",
+      "profile": {
+        "release": "7.2.0-rc3-gts9wifi-dirty",
+        "config_sha256": "599ca47ab41a29469c3d5830e475049fca9f33bd2ab0923ad014e5ba3fa6ec6c",
+        "notes_sha256": "5c0e82337affafefff586613d4a84c4f1388c9716ce251fe69d3c70aad18a518",
+        "pen_sha256": "6ddebabd6cd38d1d4e8b13610b32f0f4fb737d7c939c14854afac876b70c86e5",
+        "touch_sha256": "590c1a3e3a215e0dbfbdc9986697a2ef3dd82f64bb21e29539b328cf18746253"
+      },
+      "mock_checks": [
+        "exact kernel/config/modules ready",
+        "proc/config.gz alteration rejected",
+        "sys/kernel/notes alteration rejected",
+        "proc/cmdline alteration rejected",
+        "usr/local/lib/gts9-desktop/wacom-wez01.ko alteration rejected",
+        "sys/class/power_supply/sm5714-battery/temp alteration rejected"
+      ]
+    }
+  },
+  "mapping": {
+    "path": "reference/desktop-bringup/gmu-hfi-transport/select-driver.py",
+    "sha256": "706a7392e79be8c4446fcaacb091da9c8ba5c9ab0e7e78955cfd6448047da9f9",
+    "template_sha256": "8f68c593b8592c8c890a980caf09335f27b0966964317669bd77e9e650875267",
+    "AST_only_assignment": "IDENTITIES",
+    "identities": {
+      "native": [
+        "599ca47ab41a29469c3d5830e475049fca9f33bd2ab0923ad014e5ba3fa6ec6c",
+        "5c0e82337affafefff586613d4a84c4f1388c9716ce251fe69d3c70aad18a518"
+      ],
+      "interim": [
+        "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+        "03c9c46e21fcc587dbfd5a337f5c9cf68d9cbfa605e074d5a74d2f9a8073dc95"
+      ]
+    },
+    "behavioural_tests": {
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "exact_identity_checks": [
+      "candidate accepted",
+      "old notes rejected",
+      "wrong config rejected",
+      "changed boot rejected"
+    ]
+  },
+  "commands": [
+    {
+      "argv": [
+        "modprobe",
+        "--dump-modversions",
+        "/home/ms/Samsung/galaxy_tab_s9_linux/out/ssc-native-input-pair/pen/wacom-wez01.ko"
+      ],
+      "stdout": "0x78509441\ti2c_register_driver\n0x08e35466\ti2c_del_driver\n0xcf100be8\tdevm_kmalloc\n0x6a8ddbba\tdevm_regulator_get_enable\n0x23a91482\tdevm_gpiod_get\n0xc38220a2\tdev_err_probe\n0xf9a482f9\tmsleep\n0xc0e44e1e\ti2c_transfer_buffer_flags\n0x3aa0b1ca\t_dev_warn\n0x631b88cd\t_dev_info\n0xf9ddb5d9\ttimer_init_key\n0x3f8704f0\tdevm_input_allocate_device\n0x5af9797b\tinput_set_capability\n0x077bf26f\tinput_set_abs_params\n0x7e0bb98f\tinput_alloc_absinfo\n0x0362e0a6\tinput_register_device\n0xcca4223c\tdevm_request_threaded_irq\n0xf0fdf6cb\t__stack_chk_fail\n0x6d192a8d\t__devm_add_action\n0xdf237453\ttimer_shutdown_sync\n0x82ee90dc\ttimer_delete_sync\n0xb4b4f7d8\tinput_event\n0x15ba50a6\tjiffies\n0xc38c83b8\tmod_timer\n0xa65c6def\talt_cb_patch_nops\n0x3ce4ca6f\tdisable_irq\n0xfcec0987\tenable_irq\n0xfcdc9c4a\tparam_ops_int\n0xb6dc421b\tmodule_layout\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "modinfo",
+        "-F",
+        "vermagic",
+        "/home/ms/Samsung/galaxy_tab_s9_linux/out/ssc-native-input-pair/pen/wacom-wez01.ko"
+      ],
+      "stdout": "7.2.0-rc3-gts9wifi-dirty SMP preempt mod_unload modversions aarch64\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "modprobe",
+        "--dump-modversions",
+        "/home/ms/Samsung/galaxy_tab_s9_linux/out/ssc-native-input-pair/palm-touch/fts1ba90a.ko"
+      ],
+      "stdout": "0x78509441\ti2c_register_driver\n0x08e35466\ti2c_del_driver\n0xcf100be8\tdevm_kmalloc\n0xd9fdcc70\tdevm_regulator_get\n0xc38220a2\tdev_err_probe\n0x3f8704f0\tdevm_input_allocate_device\n0x5af9797b\tinput_set_capability\n0x077bf26f\tinput_set_abs_params\n0xb8abac3a\ttouchscreen_parse_properties\n0x4afa7a07\tinput_mt_init_slots\n0xcca4223c\tdevm_request_threaded_irq\n0x0362e0a6\tinput_register_device\n0x922997e8\tdevice_set_wakeup_capable\n0x19d532c6\tdevice_wakeup_enable\n0x4443dcc9\tdevm_device_add_group\n0xa93213da\tregulator_enable\n0xc3055d20\tusleep_range_state\n0xfe002def\tregulator_disable\n0x6d192a8d\t__devm_add_action\n0xc0e44e1e\ti2c_transfer_buffer_flags\n0x785b13d8\ti2c_transfer\n0xf9a482f9\tmsleep\n0x6ead9009\t_dev_err\n0xf0fdf6cb\t__stack_chk_fail\n0x631b88cd\t_dev_info\n0x3aa0b1ca\t_dev_warn\n0xb4b4f7d8\tinput_event\n0xb4d5284b\tinput_mt_report_slot_state\n0x08e411bc\twacom_wez01_should_suppress_touch\n0x3ec0d5b6\ttouchscreen_report_pos\n0xc047c744\tinput_mt_sync_frame\n0x7c4be7db\tpm_wakeup_dev_event\n0xe783e261\tsysfs_emit\n0x124bad4d\tkstrtobool\n0xce2840e7\tirq_set_irq_wake\n0x3ce4ca6f\tdisable_irq\n0xfcec0987\tenable_irq\n0xb6dc421b\tmodule_layout\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "modinfo",
+        "-F",
+        "vermagic",
+        "/home/ms/Samsung/galaxy_tab_s9_linux/out/ssc-native-input-pair/palm-touch/fts1ba90a.ko"
+      ],
+      "stdout": "7.2.0-rc3-gts9wifi-dirty SMP preempt mod_unload modversions aarch64\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/mkbootimg.py",
+        "--kernel",
+        "/tmp/gts9-gmu-boot-p7bu07w_/kernel",
+        "--cmdline",
+        "",
+        "--header_version",
+        "4",
+        "--os_version",
+        "13",
+        "--os_patch_level",
+        "2025-07",
+        "-o",
+        "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-gmu-rpmh/boot.img"
+      ],
+      "stdout": "",
+      "stderr": "",
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/avbtool.py",
+        "add_hash_footer",
+        "--image",
+        "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-gmu-rpmh/boot.img",
+        "--partition_name",
+        "boot",
+        "--partition_size",
+        "100663296",
+        "--salt",
+        "e93248b20ad6be1bd3b10aad436c1ab13a0b7a702ba04420827237391d48da1f"
+      ],
+      "stdout": "",
+      "stderr": "",
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/avbtool.py",
+        "verify_image",
+        "--image",
+        "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-gmu-rpmh/boot.img"
+      ],
+      "stdout": "Verifying image /home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-gmu-rpmh/boot.img using embedded public key\nvbmeta: Successfully verified footer and NONE vbmeta struct in /home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-gmu-rpmh/boot.img\nboot: Successfully verified sha256 hash of /home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-gmu-rpmh/boot.img for image of 22331392 bytes\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/unpack_bootimg.py",
+        "--boot_img",
+        "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-gmu-rpmh/boot.img",
+        "--out",
+        "/tmp/gts9-gmu-boot-p7bu07w_/new"
+      ],
+      "stdout": "boot magic: ANDROID!\nkernel_size: 22327042\nramdisk size: 0\nos version: 13.0.0\nos patch level: 2025-07\nboot image header version: 4\ncommand line args: \nboot.img signature size: 0\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/unpack_bootimg.py",
+        "--boot_img",
+        "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-fedora-snapshot-fix/boot.img",
+        "--out",
+        "/tmp/gts9-gmu-boot-p7bu07w_/old"
+      ],
+      "stdout": "boot magic: ANDROID!\nkernel_size: 22312998\nramdisk size: 0\nos version: 13.0.0\nos patch level: 2025-07\nboot image header version: 4\ncommand line args: \nboot.img signature size: 0\n",
+      "stderr": "",
+      "returncode": 0
+    }
+  ]
+}

@@ -1,5 +1,43 @@
 # The GPU never retracts its RPMh votes: an upstream bug that is live in this pin
 
+## Current correction (2026-10-09)
+
+The round21 analysis below is historical. Its claim that the second reset hunk
+was already covered is **incorrect**: the existing CM3 reset is inside
+`a6xx_gmu_force_off()`, while the upstream addition targets the separate normal
+`a6xx_gmu_shutdown()` path. Do not use the old one-hunk pending adaptation.
+
+The complete fix was merged upstream as
+[`d9108bfdb746`](https://github.com/torvalds/linux/commit/d9108bfdb746edacdb05bd27959a4ae63c6c7f3f)
+on 2026-07-16, after our pinned 7.2-rc3. Fedora X710 HEAD remains ab123e7d and its
+spec uses Linux 7.2 stable; the actual stable source has both corrections.
+`kernel/patches/0023-drm-msm-a6xx-fix-rpmh-stop-lifecycle.patch` now carries both
+unaltered upstream hunks in the active queue. The original pending file remains
+historical evidence, superseded and not applied. No timeout/OPP/frequency/voltage/
+firmware/USB/charging changes or experimental RPMh instrumentation.
+
+Read-only exact Test331 boot 78ec1906 confirms GPU+GMU control=auto and runtime
+suspended counters growing by 15,003 ms over 15 s, with 16,937 devfreq transitions
+already recorded. The required autosuspend precondition is fulfilled. Actual
+GPU firmware hashes match the previously qualified same-model firmware files.
+Test368 nevertheless stopped before installation on five new HFI timeout/old
+response pairs; do not rewrite it as passed or assume this fix proves their
+cause. HFI timeout and missed-response upstream fixes were already in the pin.
+
+Standard ARM64 Image/DTB/181module build with unchanged native-Escape config
+completed. Actual stop/shutdown C functions pass 8 ASan/UBSan host cases, and
+11 strengthened source/provenance checks pass. First harness expected the
+wrong default ACK bit1; actual pinned source uses BIT(16), corrected in the mock
+assertion with failure evidence retained. No driver behavior was changed to
+satisfy that fixture. Config/DT, paired artifact and protected-file audit are
+recorded in `reference/desktop-bringup/gmu-hfi-transport/`; hardware acceptance
+is pending. Native Escape remains part of the next kernel, as requested.
+
+This fixes the source-proven lifecycle defect. **Not established: that this
+causes the CPU wedge**, or that all GMU HFI timeouts share its cause. It is not
+a fix claim for all historical CPU stalls. Test247's proven DCC stall path
+remains separately fixed, CONFIG_HVC_DCC stays off. No failure-rate estimates.
+
 Found in round 21 while checking the Qualcomm GMU series' status. This is a
 **one-line inverted condition** in `drivers/gpu/drm/msm/adreno/a6xx_gmu.c`, it is
 present in the pinned `v7.2-rc3` **unmodified upstream**, and the upstream fix says

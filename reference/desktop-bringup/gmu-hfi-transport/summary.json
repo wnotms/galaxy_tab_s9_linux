@@ -1,0 +1,43 @@
+{
+  "verdict": "COMPILED_PACKAGED_NOT_DEPLOYED",
+  "baseline": "Test331",
+  "source_commit": "d6f103bc1e5b00d7fd5b5537a6ac7a26c31561a6",
+  "upstream_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "upstream_backport": "d9108bfdb746edacdb05bd27959a4ae63c6c7f3f",
+  "full_kernel_build": {
+    "executed": true,
+    "passed": true
+  },
+  "driver_W1": {
+    "executed": true,
+    "passed": true,
+    "new_warnings": []
+  },
+  "affected_host_tests": {
+    "executed": true,
+    "passed": 26,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0
+  },
+  "paired_input_gate_cases": 12,
+  "staged_mapping_unittests": 9,
+  "staged_mapping_real_identity_cases": 4,
+  "exhaustive_regression": {
+    "executed": false,
+    "reason": "Owner affected-only scope; routing unchanged. Historical all-run was not green and is not claimed reused PASS."
+  },
+  "sparse": {
+    "executed": false,
+    "reason": "sparse executable unavailable"
+  },
+  "device_mutations": [],
+  "physical_acceptance": false,
+  "USB_permanent_fix_verified": false,
+  "remaining": [
+    "independent boot registration and rescue preflight",
+    "new-kernel GNOME/native Escape/input acceptance",
+    "USB lifecycle helper on new exact kernel profile and physical reconnect acceptance",
+    "sensor discovery/rotation then higher-power charging"
+  ]
+}
