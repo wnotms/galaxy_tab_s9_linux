@@ -1,0 +1,33 @@
+{
+  "verdict": "ARM64_COMPILED_HOST_TESTED_NOT_DEPLOYED",
+  "device_operations": false,
+  "kernel_build_executed": false,
+  "upstream_meson_tests": {
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0
+  },
+  "image_id": "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+  "files": {
+    "usr/bin/hexagonrpcd": "e1e9faa47f77e738f34280ff9eeb2165939358b25042bafe5981517b867f86fb",
+    "usr/lib/aarch64-linux-gnu/libhexagonrpc.so.0.4": "1be44d2fe0c9b5ca785ef27730fba586a7f678f82f91cfbfb01613b3dad76f6e",
+    "usr/lib/systemd/system/hexagonrpcd-adsp-rootpd.service": "0a1452d20e48f4b58c342ae985e802b84445046dbdb9801f573af34857bfe2aa",
+    "usr/lib/systemd/system/hexagonrpcd-adsp-sensorspd.service": "6fb0c7503f18b3a58027cb0dbb40e163be9cee7168e81622763cac8c8ad95494",
+    "usr/lib/systemd/system/hexagonrpcd-sdsp.service": "4cc2248b2491fa59a967a0a3d637bed8a386ae696322c3d5ae455fdf0559fa75",
+    "usr/libexec/hexagonrpc/chrecd": "0f691660d01382a25ee8da5bd3423f74e6168240c7a42c599d60bad22d9f75c5",
+    "usr/share/man/man1/hexagonrpcd.1": "a27b06f62256d82db65c8065794d6238bb75a37e480441ddd09d7346c39effd9"
+  },
+  "library_byte_identical_to_378": true,
+  "input_hashes": {
+    "userspace/sensors/sources.json": "ffd7b47acf67e732d2c0ca0d3c614d908835e8c49e4c419acdbe73d9ae08b6a4",
+    "userspace/sensors/rpc_stat_profile.py": "c44c29c1c193c7acc2786e7ff6afd21593d511a1bf7b1051224ced304069c55e",
+    "userspace/sensors/diagnostics/rpc-stat.patch": "293d2b37615b477b37a36821a3e2d1ac1faf2a0e23793fbf79996e62f1fc1710",
+    "userspace/sensors/diagnostics/rpc-stat.json": "6f91f867e8569ca32676e1c4a013c99a69b2ba840eec8ac5bbde986b77acf77e",
+    "userspace/sensors/diagnostics/compile-rpc-stat.sh": "d853e57169174b9b3e1dd7bf8a7e5b2c334d66c9d0296dd1a5c687ee41a66e73",
+    "userspace/sensors/cross-arm64.ini": "22c6969c41a419a97aadb0ed70d459168fac2c5636126355407fdf9458c7767f"
+  },
+  "warnings": [
+    "Existing apps_mem.c %lx/__u64 format warning in unchanged source"
+  ],
+  "device_acceptance": false
+}

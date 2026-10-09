@@ -1,0 +1,20 @@
+[
+  "docker",
+  "run",
+  "--rm",
+  "--network=none",
+  "--security-opt=no-new-privileges",
+  "-e",
+  "HOST_UID=1000",
+  "-e",
+  "HOST_GID=1000",
+  "-v",
+  "/home/ms/Samsung/galaxy_tab_s9_linux/out/ssc-rpc-stat/sources:/inputs:ro",
+  "-v",
+  "/home/ms/Samsung/galaxy_tab_s9_linux/userspace/sensors:/recipe:ro",
+  "-v",
+  "/home/ms/Samsung/galaxy_tab_s9_linux/out/ssc-rpc-stat/build-output:/output",
+  "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+  "sh",
+  "/recipe/diagnostics/compile-rpc-stat.sh"
+]

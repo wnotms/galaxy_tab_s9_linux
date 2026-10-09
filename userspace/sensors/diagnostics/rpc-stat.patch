@@ -1,0 +1,48 @@
+--- a/hexagonrpcd/apps_std.c
++++ b/hexagonrpcd/apps_std.c
+@@ -21,6 +21,7 @@
+ 
+ #include <errno.h>
+ #include <fcntl.h>
++#include <inttypes.h>
+ #include <stdio.h>
+ #include <stdint.h>
+ #include <string.h>
+@@ -360,7 +361,9 @@
+ 	struct stat stats;
+ 	int fd, ret;
+ 
+-	if (((const char *) inbufs[1].p)[inbufs[1].s - 1] != 0)
++	if (!pathname || !inbufs[1].s ||
++	    pathname[inbufs[1].s - 1] != 0 ||
++	    !first_out || outbufs[0].s < sizeof(*first_out))
+ 		return AEE_EBADPARM;
+ 
+ 	fd = hexagonfs_openat(ctx->fds, ctx->rootfd, ctx->adsp_library_dirfd, pathname);
+@@ -371,16 +374,18 @@
+ 	}
+ 
+ 	ret = hexagonfs_fstat(ctx->fds, fd, &stats);
++	hexagonfs_close(ctx->fds, fd);
+ 	if (ret) {
+ 		fprintf(stderr, "Could not stat %s: %s\n",
+-				pathname, strerror(-fd));
+-		return AEE_EFAILED;
+-	}
+-
+-	hexagonfs_close(ctx->fds, fd);
+-
+-#ifdef HEXAGONRPC_VERBOSE
+-	printf("stat(%s)\n", pathname);
++				pathname, strerror(-ret));
++		return AEE_EFAILED;
++	}
++
++#ifdef HEXAGONRPC_VERBOSE
++	printf("stat(%s) -> size=%" PRIu64 " mtime=%" PRId64 ".%09" PRId64 "\n",
++	       pathname, (uint64_t) stats.st_size,
++	       (int64_t) stats.st_mtim.tv_sec,
++	       (int64_t) stats.st_mtim.tv_nsec);
+ #endif
+ 
+ 	first_out->tsz = 0;

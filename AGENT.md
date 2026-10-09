@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 RPC_STAT_DIAGNOSTIC_HOST_PROVEN_COMPILED_NOT_DEPLOYED.
+Accepted370 remains unchanged; no new physical test/reboot/install. Separate
+verified Fedora+3patch source copy changes only apps_std_stat: fstat-error FD
+cleanup/actual errno/buffer bounds/verbose size+mtime. Original actual C callback
+reproduces leak; patched1024 errors release every FD, successful96byte ABI and
+Qualcomm ctime encoding preserved. ARM64/2Meson +64affectedhost PASS; companion
+library byte-identical378. Archive35cached JSON mtimes match; not live DSP cache
+proof. No failure observed378 proves this as SSC cause. Preserve registry,
+production kernel/modules/DTS/USB/charging/GNOME. Before any new deployment,
+register exact new daemon e1e9faa4/rollback and one bounded metadata/init question;
+no identical378 retry or late ADSP on GNOME. Fullport/sensors still incomplete.
+See reference/desktop-bringup/ssc-rpc-stat/RESULTS.md.
+
 2026-10-09 TEST378_NATIVE_DOMAIN_RESPONSE_PASS_SSC_NOT_FOUND_ROLLED_BACK.
 One attributed candidate boot5b6c083c on exact370 passed earlyADSP/FastRPC,
 37.36s startup/ADB/deviceNCM/authenticatedWiFi. Exactly one native service64

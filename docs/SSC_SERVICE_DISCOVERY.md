@@ -71,6 +71,22 @@ Duplicate/invalid/negative answers stop before RPC; sensor discovery has one
 60s window. Restore baseline GNOME on either outcome. No extra userspace mapper,
 registry rebuilding, kernel change, charging escalation or late ADSP start.
 
+## RPC stat follow-up (offline)
+
+A separately pinned diagnostic now repairs the real fstat-error descriptor leak
+and incorrect errno reporting, and records successful size/mtime. The original
+C callback reproduces the leak in a filesystem fault harness; the patched one
+survives1024 injected failures. Successful96-byte metadata ABI, including the
+Qualcomm reference's unusual ctime encoding, is unchanged. Test378 did not record
+this failure, so this is not a proved SSC root-cause fix.
+
+The X710 archive's35 cached config mtimes all match their archived files. This
+is host-input evidence only; the next registered attempt must compare actual RPC
+size/mtime and initialization/publication, not reset the registry. The independent
+ARM64 diagnostic is compiled with an unchanged companion library,64 affected
+host tests pass, and nothing was deployed. Qualification and exact hashes:
+`reference/desktop-bringup/ssc-rpc-stat/RESULTS.md`.
+
 ## Desktop observation
 
 The read-only current snapshot records boot
