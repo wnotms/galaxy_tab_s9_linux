@@ -1,0 +1,20 @@
+{
+  "verdict": "FIRST_PC_ATTACHMENT_PASS_SERIES_IN_PROGRESS",
+  "boot_id": "d1977159-8330-4c90-b5be-e7cf8c67ea0f",
+  "first_attachment": true,
+  "detach_reattach_complete": false,
+  "permanent_enablement": false,
+  "scope": "temporary event helper only; same kernel/GNOME/adbd/charging state",
+  "adb": "actual shell matched machine and boot",
+  "ncm": "device usb0 169.254.42.1",
+  "kernel": "no new unclassified fault",
+  "initial_teardown": [
+    {
+      "classification": "source-explained empty ep0 teardown; pending transport gate",
+      "cursor": "s=0e9cc8651fa34ae5875adb1b7f906071;i=10329d;b=d197715983304c90b5bee7cf8c67ea0f;m=628a8a79;t=65d6405b1b712;x=b3c6ece82c0fdba5",
+      "message": "dwc3-qcom a600000.usb: request 00000000b3da69c2 was not queued to ep0out",
+      "source_monotonic": 1653.306339,
+      "unbind_monotonic": 1653.244927101
+    }
+  ]
+}

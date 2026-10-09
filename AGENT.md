@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 TEST371_TRANSIENT_STARTED_FIRST_PC_ATTACH_PASS.
+Formal same d197/preflight passed, three absent payloads installed and one
+bounded transient started, initial detached owned unbind classified exactly.
+First PC attach30s passed realADB same machine/boot and deviceNCM address,
+one bind/no Code43/new unclassifiedkernel fault. GNOME preserved. Await one
+unplug15s then reattach30s. No permanent enablement or completed371 claim yet;
+no flash/reboot/kernel/charging/SSC changes. StaticIP deferred per owner.
+
+
 2026-10-09 TEST371_OWNER_MANUAL_BOOT_REENROLLED_BEFORE_START.
 Owner hotspot/newDHCP10.49.219.156 recovered trustedSSH; confirms manual reboot
 from0cdf to d1977159-8330-4c90-b5be-e7cf8c67ea0f. Exact accepted370 config/notes,
