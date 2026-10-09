@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<string>", line 4, in <module>
+  File "F:\msys64\ucrt64\lib\python3.12\socket.py", line 865, in create_connection
+    raise exceptions[0]
+  File "F:\msys64\ucrt64\lib\python3.12\socket.py", line 850, in create_connection
+    sock.connect(sa)
+TimeoutError: timed out
+Connection closed by UNKNOWN port 65535

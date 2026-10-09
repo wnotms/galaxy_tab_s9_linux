@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test371（已接受 GMU 内核的 USB 重连验证），窗口为 **Test362–Test371**；没有生成镜像的轮次仍占一轮。
+  编号为 Test372（已接受 GMU 内核上的 SSC RPC 发现），窗口为 **Test363–Test372**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,22 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-09 TEST372_SSC_GMU_TRACE_REGISTERED_OFFLINE_NOT_DEPLOYED.
+Reuse accepted370 config599ca47a/notes5c0e8233/boot82355518/181 native inputs,
+permanentUSB enabled/active, clock/GNOME; only signed earlyADSP vendor158e3826
+plus328 owned stock copies/five trace-text files. Reuse Fedora verbose RPC,
+installed exact four packages: no kernel build/modules swap/TCPM/charging/USB
+or policy changes. Correct native QRTR node and auxiliary mapper observation;
+one60s real accel sample then15s proxy,120s daemon backstop/2MiB/no restart;
+restore only Test372/vendor on either outcome to370 GNOME. Prior365STOP and366
+unexecuted trace immutable. Same d197 inventory+source-explained old pogo transient
+and owned ep0 raw preserved, exact past journal enrollment/no future waiver.
+Owner PC reconnect realADB recovered76%27.1C; WiFi TCP timeout remains and blocks
+physical admission. No device writes/reboot yet; restore trusted wirelessSSH
+before one fresh preflight/deploy. Sensor/fullport unfinished; chargingOFF.
+Registration reference/boot-tests/test-372-ssc-gmu-trace/README.md.
+
 
 2026-10-09 USB_LIFECYCLE_PERMANENT_ENABLED_ACTIVE_CURRENT_BOOT_PASS.
 After371 actualPCcycle PASS/cleanup, separate6737a615 registration deployed

@@ -1,0 +1,17 @@
+{
+  "attempts": [
+    {
+      "elapsed_seconds": 3.551223696999955,
+      "index": 1,
+      "status": 255,
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 4, in <module>\n  File \"F:\\msys64\\ucrt64\\lib\\python3.12\\socket.py\", line 865, in create_connection\n    raise exceptions[0]\n  File \"F:\\msys64\\ucrt64\\lib\\python3.12\\socket.py\", line 850, in create_connection\n    sock.connect(sa)\nTimeoutError: timed out\nConnection closed by UNKNOWN port 65535\n",
+      "stdout": ""
+    }
+  ],
+  "boot_id": "d1977159-8330-4c90-b5be-e7cf8c67ea0f",
+  "deadline_seconds": 30,
+  "max_attempts": 3,
+  "reason": "SSH authentication/unknown failure",
+  "reboot_requested": false,
+  "verdict": "STOP"
+}
