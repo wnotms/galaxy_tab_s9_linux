@@ -48,3 +48,19 @@ patch. A host-tested, not-deployed Type-C lifecycle helper is described in
 [USB_TYPEC_RECONNECT.md](../../docs/USB_TYPEC_RECONNECT.md). It uses the unchanged
 patched daemon and only confirmed cable edges; it is not a change to Test253
 or authorization to reset a live gadget from the adbd restart path.
+
+## Qualified Type-C lifecycle service (2026-10-09)
+
+`gts9-usb-typec-lifecycle.service` is now enabled/active on the accepted Test370
+kernel. Test371 proved one actual PC attachment/unplug/reattachment cycle with
+real ADB and device NCM. The event-driven helper unbinds only a stable detached
+edge and binds only its owned empty UDC on stable attachment; it does not restart
+adbd, alter descriptors/roles, poll I2C continuously or reset a healthy link.
+
+Exact kernel config/notes/machine/role and direct-charge-OFF guards remain. Future
+kernel/charging candidates must explicitly qualify/update the profile or stop
+this service as a registered owned change; do not relax guards to make it start.
+Persistent deployment/owned link and current-boot acceptance are recorded in
+`reference/desktop-bringup/usb-lifecycle-permanent/`. Boot-start ordering and
+charger→PC recovery are separate unqualified physical scopes, not implied by
+enablement. Existing Test253 reconnect configuration is unchanged.

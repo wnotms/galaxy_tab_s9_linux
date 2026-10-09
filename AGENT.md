@@ -98,6 +98,21 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 USB_LIFECYCLE_PERMANENT_ENABLED_ACTIVE_CURRENT_BOOT_PASS.
+After371 actualPCcycle PASS/cleanup, separate6737a615 registration deployed
+exact helper/profile/unit plus one owned relative bootlink, independent ledger.
+Same d197/config599ca47a/notes5c0e8233, service enabled+active/Resultsuccess and
+19.79s bounded currentboot acceptance; zero healthy-PC UDCwrites, realADB same
+machine/boot/deviceNCM/noCode43/newkernelfault/failedunit/GNOME retained.10 new
+transaction/fault testsPASS; old helper/parser/adbd qualification reused; no
+build/full/Actions/flash/reboot/kernel/adbd/charging/ADSP/staticIP change.
+Futureboot/charger→PC not yet qualified, no universalUSBrootcause claim. Future
+kernels need exact profile qualification; registered owned cleanup for current
+boot, newboot cleanup requires fresh enrollment. Current permanentfiles+bootlink
+are accepted runtime baseline for nextSSC;371 remains closed, goal unfinished.
+Evidence reference/desktop-bringup/usb-lifecycle-permanent/RESULTS.md.
+
+
 2026-10-09 USB_LIFECYCLE_PERMANENT_DEPLOYMENT_REGISTERED_NOT_APPLIED.
 371 actual cablecycle PASS/temporarycleanup complete. Separate three exact
 absent payloads +one originally absent relative boot-enabled link, independent
