@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "ip -br addr; nmcli -t -f DEVICE,TYPE,STATE,CONNECTION device; journalctl -b -u NetworkManager -n 60 -o json --no-pager"
+  ],
+  "ended_utc": "2026-10-09T16:21:37.888953+00:00",
+  "started_utc": "2026-10-09T16:21:37.716210+00:00",
+  "status": 0
+}

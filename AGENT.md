@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST381_STOP_READONLY_PREFLIGHT_WIFI_NOT_DEPLOYED.
+Registered5585b2cf/pushed,174affectedhostPASS/no skips; exact kernel reused.
+Firstpreflight no wlp1s0 IPv4, NM ssid-not-found/disconnected; ADB+GDM active.
+Same178facf3 accepted370,100%26.0C4.439V/Good; fulljournal6newrows0newsevere/CPU.
+Physicalattempt0, no vendor/rootfs/modules write/reboot/traceenable/ADSP/RPC.
+Restore hotspot access then require fresh exact preflight; original STOP kept,
+no future waiver or sensor/rotation PASS. Charging/USB/kernel unchanged.
+See test-381-ssc-glink-initialization/RESULTS.md.
+
 2026-10-10 TEST381_GLINK_INIT_DIAGNOSTIC_REGISTERED_BEFORE_DEPLOYMENT.
 One independent earlyboot trace question after380 metadata/read-length PASS but
 SSC absent. Reuse370 Image/config/DTB/181/charging/USB; only earlyvendor two trace
