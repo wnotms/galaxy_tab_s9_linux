@@ -1,0 +1,47 @@
+{
+  "boot_id": "78ec1906-4713-4837-9acc-fe245647d7cf",
+  "before": {
+    "vendor": "0x0525",
+    "product": "0xa4a7",
+    "functions": [
+      "ffs.adb",
+      "ncm.usb0"
+    ],
+    "config_links": [
+      [
+        "configs/c.1/ffs.adb",
+        "/sys/kernel/config/usb_gadget/gts9/functions/ffs.adb"
+      ],
+      [
+        "configs/c.1/ncm.usb0",
+        "/sys/kernel/config/usb_gadget/gts9/functions/ncm.usb0"
+      ]
+    ]
+  },
+  "operation": "one shared UDC unbind/rebind",
+  "reboot": false,
+  "PPS": false,
+  "pump_ON": false,
+  "unbound_monotonic_seconds": 39867.288416314,
+  "after": {
+    "vendor": "0x0525",
+    "product": "0xa4a7",
+    "functions": [
+      "ffs.adb",
+      "ncm.usb0"
+    ],
+    "config_links": [
+      [
+        "configs/c.1/ffs.adb",
+        "/sys/kernel/config/usb_gadget/gts9/functions/ffs.adb"
+      ],
+      [
+        "configs/c.1/ncm.usb0",
+        "/sys/kernel/config/usb_gadget/gts9/functions/ncm.usb0"
+      ]
+    ]
+  },
+  "UDC": "a600000.usb",
+  "rebound_monotonic_seconds": 39867.816307772,
+  "same_boot": true
+}
