@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 TEST368_STOP_READONLY_NEW_GMU_PAIRS_NO_MUTATION.
+Same33178ec94%30.5C/Good/discharging/GNOME+WiFi+adbd active. Five new
+BW_PERF_VOTE timeout/oldresponsepairs(seq3296/166/249/3587/883) preserved
+fullkernel+source timestamps; firstfailure before ownership/install. No flash/
+reboot/UDC/unit/rootfs/modules/PPS/pump; no rollback needed, no PCcycle.53host
+PASS is not physicalacceptance.367payload/cache removed; ephemeral unitsoff.
+Do notretry368 or enlarge baselinecounts tohideGPUrecurrence. Next compare
+actual FedoraGPU/firmware/pinnedHFI; USBhelpers hostready notqualified, native
+Esc nextkernel/sensors/fullport stillopen. NormalendpointGNOME/chargecapsretained.
+Evidence reference/boot-tests/test-368-usb-cable-reconnect/RESULTS.md.
+
+
 2026-10-09 TEST368_REGISTERED_SOURCE_BOUNDED_EP0_CABLE_RECONNECT.
 367STOP preserved/no retry; three payloads and exact qualified generatedcache
 removed/originalUDC restored/same33178ec GNOME. Pinned7.2rc3 unchanged source
