@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test372（已接受 GMU 内核上的 SSC RPC 发现），窗口为 **Test363–Test372**；没有生成镜像的轮次仍占一轮。
+  编号为 Test378（native Servreg 域响应及完整 RPC 启动登记），窗口为 **Test369–Test378**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,24 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-09 TEST377_SSC_NOT_FOUND_ROLLED_BACK_TEST378_NATIVE_SERVREG_REGISTERED.
+Authoritative current device: accepted Test370, boot9d6d50ca, config599ca47a,
+notes5c0e8233/181 paired modules, GNOME/SSH/ADB and persistent USB lifecycle;
+ADSP offline, sensor gate absent, PPS/pump/DCC OFF. Test377 obtained no SSC400
+or accelerometer sample in its60s window and restored the baseline. Its duplicate
+service64 endpoints do not prove a cause. Corrected offline evidence: stock asset
+archive DOES contain3 X710 JSNs; Test373–377 accidentally skipped rootPD using
+UNITS[1:-1], not an established normal handoff. Test372 launched both and still
+failed. Preserve all historical failed verdicts; don't repeat the same profile.
+Test378 integrates one native GET_DOMAIN_LIST tms/servreg query (2s/raw wire,
+unique sameboot endpoint/sensor_pd74) then one explicit root-before-sensors RPC
+launch; no new kernel/modules/DTS/USB/charging/packages. Reuse exact Fedora
+userspace and preserve X710 registry timestamps/marker. Register/push before
+one physical attempt; never late-start ADSP on live GNOME. Restore370/GNOME on
+either result. Offline registration is not a hardware pass. Latest desktop read
+finds active GDM/Wayland greeter and active screensaver, visual wake confirmation
+pending. See docs/SSC_SERVICE_DISCOVERY.md and test-378-ssc-native-servreg/README.md.
 
 2026-10-09 TEST372_SSC_GMU_TRACE_REGISTERED_OFFLINE_NOT_DEPLOYED.
 Reuse accepted370 config599ca47a/notes5c0e8233/boot82355518/181 native inputs,

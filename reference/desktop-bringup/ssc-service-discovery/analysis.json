@@ -1,0 +1,128 @@
+{
+  "source_test": "Test377",
+  "hardware_sample_obtained": false,
+  "ssc_qmi_service_id": 400,
+  "ssc_qmi_source": "builder /usr/include/libqmi-glib/qmi-enums.h QMI_SERVICE_SSC=0x190",
+  "ssc_endpoints": {
+    "before": [],
+    "failure": []
+  },
+  "servreg_endpoints": {
+    "before": [
+      {
+        "instance": 257,
+        "node": 1,
+        "port": 16385,
+        "service": 64
+      }
+    ],
+    "failure": [
+      {
+        "instance": 257,
+        "node": 1,
+        "port": 16385,
+        "service": 64
+      },
+      {
+        "instance": 257,
+        "node": 1,
+        "port": 16388,
+        "service": 64
+      }
+    ]
+  },
+  "stock_servreg_jsons": {
+    "usr/lib/firmware/qcom/sm8550/adspr.jsn": {
+      "sha256": "66ce8531efb7979d234e0f0eabbe18d038ac97da771a8a194f613df8f0724e81",
+      "domain": {
+        "soc": "msm",
+        "domain": "adsp",
+        "subdomain": "root_pd",
+        "qmi_instance_id": 74
+      },
+      "services": [
+        {
+          "provider": "tms",
+          "service": "servreg",
+          "service_data_valid": 0,
+          "service_data": 0,
+          "dcomment": "data can be used to configure ACK timeout.Make data_valid 1 as well.Unit is second"
+        }
+      ]
+    },
+    "usr/lib/firmware/qcom/sm8550/adsps.jsn": {
+      "sha256": "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f",
+      "domain": {
+        "soc": "msm",
+        "domain": "adsp",
+        "subdomain": "sensor_pd",
+        "qmi_instance_id": 74
+      },
+      "services": [
+        {
+          "provider": "tms",
+          "service": "servreg",
+          "service_data_valid": 0,
+          "service_data": 0,
+          "dcomment": "data can be used to configure ACK timeout.Make data_valid 1 as well.Unit is second"
+        }
+      ]
+    },
+    "usr/lib/firmware/qcom/sm8550/adspua.jsn": {
+      "sha256": "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b",
+      "domain": {
+        "soc": "msm",
+        "domain": "adsp",
+        "subdomain": "audio_pd",
+        "qmi_instance_id": 74
+      },
+      "services": [
+        {
+          "provider": "tms",
+          "service": "servreg",
+          "service_data_valid": 0,
+          "service_data": 0,
+          "dcomment": "data can be used to configure ACK timeout.Make data_valid 1 as well.Unit is second"
+        },
+        {
+          "provider": "avs",
+          "service": "audio",
+          "service_data_valid": 0,
+          "service_data": 0,
+          "dcomment": "No comment"
+        }
+      ]
+    }
+  },
+  "runtime_launch_defect": "UNITS contains rootPD,sensorsPD,proxy; UNITS[1:-1] launches only sensorsPD",
+  "rootpd_handoff_proven": false,
+  "rpc_operation_counts": {
+    "Starting /usr/local/lib/gts9-test377/hexagonrpcd ": 1,
+    "stat": 223,
+    "openat": 185,
+    "read": 210,
+    "close": 184,
+    "opendir": 2,
+    "readdir": 220,
+    "closedir": 2
+  },
+  "oemconfig_lookup_observed": true,
+  "oemconfig_required_proven": false,
+  "cache_hit_proven": false,
+  "registry_rebuild_authorized": false,
+  "configuration_timestamps_to_preserve": true,
+  "next_scope": "Test378 native GET_DOMAIN_LIST + one explicit ordered root/sensor launch",
+  "source_sha256": {
+    "reference/boot-tests/test-377-ssc-userspace-pd-mapper/runtime.py": "2c90b02cf468dbf109cee179a72803352871f3739b6e3baff9e5cfdf99b0217b",
+    "reference/boot-tests/test-377-ssc-userspace-pd-mapper/runtime-discovery/qrtr-before.json": "6d72f1f8060bb143ebbb8cf1a604cbb3f0bba6148882e109b889fb1efe0c1ec5",
+    "reference/boot-tests/test-377-ssc-userspace-pd-mapper/runtime-discovery/qrtr-failure.json": "ae365dc04c1d6eff681b23122508ef8c13aa716b0cb0d3d2df6f3d56691450b4",
+    "reference/boot-tests/test-377-ssc-userspace-pd-mapper/runtime-discovery/runtime-start.json": "c8b05cf3c5bfafd0a2cde209759f20bf0ce51b8c33934f460414acf578d14a86",
+    "reference/boot-tests/test-377-ssc-userspace-pd-mapper/runtime-discovery/failure-unit-journal.txt": "739a016b2f8f7637c51959eaca2967fc6cd32111ea33eb8b37fd79fc4f6c52da",
+    "userspace/sensors/sources.json": "ffd7b47acf67e732d2c0ca0d3c614d908835e8c49e4c419acdbe73d9ae08b6a4",
+    "out/ssc-assets/sensor-assets.tar.gz": "6abc10ecdb82c6abe175461ae483670be0c82c8e038cb9acbf5eb5f8ae9231e5",
+    ".work/linux-mainline/drivers/soc/qcom/qcom_pd_mapper.c": "0e4dec946a56b3eb7f263c848503fdf1a222ba462b40ccf871b7bf4bca41c4fd",
+    ".work/linux-mainline/drivers/soc/qcom/qcom_pdr_msg.c": "8b98d76d855bdd7686d2b59424bea922b211d48c8119a884d27287e8004c703c",
+    ".work/linux-mainline/drivers/soc/qcom/qmi_encdec.c": "09dd70a08fdeb9191fb3e269602f8747ad5b7836868db9c62b6129b6b7546a90",
+    ".work/linux-mainline/include/linux/soc/qcom/pdr.h": "edc64a8952cd8214eb6f1acef75e37eeb3f8da9488232f284e3dc1b52799a771"
+  }
+}

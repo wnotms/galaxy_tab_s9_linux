@@ -1,0 +1,38 @@
+{
+  "executed": true,
+  "modules": [
+    "test_servreg_domain_snapshot",
+    "test_ssc_lifecycle",
+    "test_ssc_native_servreg_scope",
+    "test_native_qrtr_snapshot",
+    "test_native_mapper_snapshot",
+    "test_ssc_gmu_trace_scope"
+  ],
+  "tests": 105,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "seconds": 0.19142417700004444,
+  "full_regression_executed": false,
+  "kernel_build_executed": false,
+  "reason": "only host runner/parser changed; reuse exact Test370 build and unchanged native observers",
+  "device_operations": false,
+  "github_actions_started": false,
+  "source_sha256": {
+    "tests/test_servreg_domain_snapshot.py": "b12cbf686e9e8925ed0e8b7641a14167483a2cfb9b61dd3e03e8c94f0ddb9ae3",
+    "tests/test_ssc_lifecycle.py": "b663fa4b8e8b58a23c8e10197094b8d4d463f803999a42e738500617b98cf2e4",
+    "tests/test_ssc_native_servreg_scope.py": "573d94ae335116a9862bacc036608067cb42e9bd2538ea0a0219ebeac1aac4ae",
+    "tests/test_native_qrtr_snapshot.py": "b79352c877eb0c8381e6098660b22bda5260fa8e7553ec751bda89e3458b569d",
+    "tests/test_native_mapper_snapshot.py": "d6273e47503eea07626a59399b7d312822e37da700e4f2177599767a7260c703",
+    "tests/test_ssc_gmu_trace_scope.py": "2b0b8221ac5705136e58db3a02944ec184e379eff239b8684d9c134ab5f67bd7",
+    "userspace/sensors/servreg-domain-snapshot.py": "2c840b20d7ba6afb00953200f7eb437459e22f4c4530d798233ceb6de51dadba",
+    "userspace/sensors/ssc_lifecycle.py": "82df9b50b70d82c7ae6b9fa36ec74c6721011fada5840867af26d9566b8c8c0a",
+    "reference/boot-tests/test-378-ssc-native-servreg/host_flow.py": "d0b08c42f774cef0d67cefc77bfc786b3b9601fc2bb47ebafe62c97109d98f6f",
+    "reference/boot-tests/test-378-ssc-native-servreg/runtime.py": "07f0d7f6cf359c2f09ce9c343b7894a94b8448eda3025af477fd6addab324d2d"
+  },
+  "verdict": "OFFLINE_TEST378_READY_NOT_DEPLOYED",
+  "protected_kernel_inputs_changed": false,
+  "staged_files": 28,
+  "hardware_test_executed": false,
+  "build_reuse": "exact accepted Test370 and existing early ADSP vendor; no rebuild, no module/DTS/config change"
+}
