@@ -98,6 +98,13 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST387_READONLY_HISTORICAL_EP0_STOP_CLASSIFIED.
+Revision2 STOP preserved/zero writes,reboots,RPC. One historical1739s EP0dequeue
+error/cursor enrolled after source analysis and later sameboot healthytransport/
+no newerrors/CPU. Caller/raceunknown/noUSBfix. Revision3 freshpreflight required;
+futureerror guard unchanged. Single physical candidate still pending.
+
+
 2026-10-10 TEST387_READONLY_ADB_ABSENCE_STOP_CONNECTION_RESTORED.
 Original preflight STOP retained; zero writes/reboots/RPC/candidate attempts.
 Owner reconnected PC USB; ADB same370 bootd8654881/GDMactive/84%31C.

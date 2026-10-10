@@ -77,3 +77,19 @@ before the still-unexecuted single physical candidate. No source, artifact,
 safety gate, observation window or attempt limit changes. If fresh admission
 fails, stop again. Host tests executed:false for this documentation amendment;
 reuse the unchanged 60 qualified checks.
+
+## Admission revision 3 — retain and classify historical EP0 error
+
+Revision2 fresh preflight also stopped read-only, before recovery/install/reboot.
+Exactly one added priority3 row was emitted at uptime1739.050480s, more than
+10000s before this assessment: DWC3 EP0 request not queued. The pinned source
+dwc3_gadget_ep_dequeue logs this and returns -EINVAL when the requested object
+is absent from cancelled/pending/started lists. The triggering caller/race is
+unknown; no USB repair or harmlessness proof is claimed. Preserve STOP/raw
+evidence and revision2 inputs/enrollment. Later sameboot rootADB, configured
+UDC/deviceNCM, Windows ProblemCode0 and no failed units are observed; a complete
+journal comparison finds no later error or CPU signature. Register only the
+exact historical row/cursor as existing baseline, with original rows unchanged.
+Any subsequent error, including the same text at a new cursor, still stops.
+No guard/code/artifact/window changes, still zero physical candidates; fresh
+preflight after commit/push is required. No identical physical retry.

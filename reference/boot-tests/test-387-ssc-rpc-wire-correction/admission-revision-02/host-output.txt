@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-387-ssc-rpc-wire-correction/host_flow.py", line 651, in <module>
+    preflight(); install(); result=discover()
+    ~~~~~~~~~^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-387-ssc-rpc-wire-correction/host_flow.py", line 261, in preflight
+    preflight_scan(rec, d)
+    ~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-387-ssc-rpc-wire-correction/host_flow.py", line 239, in preflight_scan
+    guard.health(rows,original,plan['existing_errors'])
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-371-usb-lifecycle-gmu/host_flow.py", line 67, in health
+    raise ValueError('new kernel error; preserve first boot evidence')
+ValueError: new kernel error; preserve first boot evidence

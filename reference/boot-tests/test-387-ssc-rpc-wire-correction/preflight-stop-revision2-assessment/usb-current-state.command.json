@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; cat /proc/sys/kernel/random/boot_id; systemctl is-active gdm gts9-adbd gts9-usb-typec-lifecycle gts9-palm; cat /sys/class/net/usb0/operstate; cat /sys/class/udc/*/state; systemctl --failed --no-legend --plain; journalctl -b -u gts9-usb-typec-lifecycle -u gts9-adbd --no-pager -n 80"
+  ],
+  "ended_utc": "2026-10-10T06:16:29.218165+00:00",
+  "started_utc": "2026-10-10T06:16:27.266773+00:00",
+  "status": 0
+}

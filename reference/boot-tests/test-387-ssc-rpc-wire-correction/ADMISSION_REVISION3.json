@@ -1,0 +1,51 @@
+{
+  "CPU_signature": false,
+  "Windows_Code43": false,
+  "candidate_attempt_limit": 1,
+  "device_mutation": false,
+  "failed_units": false,
+  "fresh_preflight_required": true,
+  "guard_unchanged": true,
+  "historical_added_error_rows": [
+    {
+      "MESSAGE": "dwc3-qcom a600000.usb: request 00000000ac65cadb was not queued to ep0out",
+      "PRIORITY": "3",
+      "SYSLOG_FACILITY": "0",
+      "SYSLOG_IDENTIFIER": "kernel",
+      "_BOOT_ID": "d865488169bd460392ee8e14a3f81ad9",
+      "_HOSTNAME": "gts9",
+      "_KERNEL_DEVICE": "+platform:a600000.usb",
+      "_KERNEL_SUBSYSTEM": "platform",
+      "_MACHINE_ID": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+      "_RUNTIME_SCOPE": "system",
+      "_SOURCE_BOOTTIME_TIMESTAMP": "1739049934",
+      "_SOURCE_MONOTONIC_TIMESTAMP": "1739049934",
+      "_TRANSPORT": "kernel",
+      "_UDEV_SYSNAME": "a600000.usb",
+      "__CURSOR": "s=0e9cc8651fa34ae5875adb1b7f906071;i=14b289;b=d865488169bd460392ee8e14a3f81ad9;m=67a7cdf0;t=65d73892b6051;x=391dca0a6f75f104",
+      "__MONOTONIC_TIMESTAMP": "1739050480",
+      "__REALTIME_TIMESTAMP": "1791600664207441",
+      "__SEQNUM": "1356425",
+      "__SEQNUM_ID": "0e9cc8651fa34ae5875adb1b7f906071"
+    }
+  ],
+  "host_tests": {
+    "executed": false,
+    "reason": "Documentation/cursor enrollment only, 60 qualification reused; unchanged guard exercised on actual complete journals."
+  },
+  "later_added_errors": 0,
+  "original_verdict": "STOP_READONLY_NEW_KERNEL_ERROR",
+  "physical_candidates": 0,
+  "prior_commit": "15a4524b",
+  "revision": 3,
+  "same_boot_ADB": true,
+  "source_function": "dwc3_gadget_ep_dequeue",
+  "source_lines": [
+    2125,
+    2191
+  ],
+  "source_path": ".work/build/linux-src-x710-charging/drivers/usb/dwc3/gadget.c",
+  "source_semantics": "Absent request in cancelled/pending/started lists logs dev_err and returns -EINVAL. Triggering caller/race unknown; not a USB fix.",
+  "source_sha256": "8b8f9a7e96e1d09e13242f75849cfd997ee8a4ee88243f6d4803627119c2e4e6",
+  "verdict": "HISTORICAL_EP0_DEQUEUE_ROW_ENROLLED_NO_FUTURE_WAIVER"
+}
