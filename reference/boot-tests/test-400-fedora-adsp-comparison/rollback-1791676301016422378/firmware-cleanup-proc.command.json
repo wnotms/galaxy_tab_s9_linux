@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; mount -o bind /proc /mnt/debian/tmp/gts9-test400-fw/proc; mount -o remount,bind,ro /mnt/debian/tmp/gts9-test400-fw/proc; grep -F ' /mnt/debian/tmp/gts9-test400-fw/proc proc ro,' /proc/mounts"
+  ],
+  "ended_utc": "2026-10-10T23:52:27.407827+00:00",
+  "started_utc": "2026-10-10T23:52:27.311861+00:00",
+  "status": 0
+}

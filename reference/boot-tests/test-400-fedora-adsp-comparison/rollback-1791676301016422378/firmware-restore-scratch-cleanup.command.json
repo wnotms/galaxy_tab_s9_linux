@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; if test -e /mnt/debian/tmp/gts9-test400-fw; then test \"$(cat /mnt/debian/tmp/gts9-test400-fw/.owner)\" = gts9-test400-fw; if grep -Fq ' /mnt/debian/tmp/gts9-test400-fw/proc ' /proc/mounts; then umount /mnt/debian/tmp/gts9-test400-fw/proc; fi; rmdir /mnt/debian/tmp/gts9-test400-fw/proc; rm -f /mnt/debian/tmp/gts9-test400-fw/adsp_firmware_transaction.py /mnt/debian/tmp/gts9-test400-fw/original-assets.tar.gz /mnt/debian/tmp/gts9-test400-fw/sensor-assets.tar.gz /mnt/debian/tmp/gts9-test400-fw/.owner; rmdir /mnt/debian/tmp/gts9-test400-fw; fi"
+  ],
+  "ended_utc": "2026-10-10T23:52:27.077961+00:00",
+  "started_utc": "2026-10-10T23:52:26.959482+00:00",
+  "status": 0
+}

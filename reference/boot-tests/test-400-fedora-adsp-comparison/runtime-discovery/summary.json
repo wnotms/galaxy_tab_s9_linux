@@ -1,0 +1,87 @@
+{
+  "ADB": true,
+  "PPS": false,
+  "SSC_service_present": false,
+  "accelerometer_sample": null,
+  "after_state": "UP",
+  "before_state": "UP",
+  "boot_id": "3ff4d010-adab-48b2-b34d-0bde9a50b472",
+  "control_transport": "adb",
+  "device_NCM_present": true,
+  "kernel_fault_counts": {},
+  "listener_registered": false,
+  "notifier_cycles": 2,
+  "observation_seconds": 33.98644543599994,
+  "physical_rotation_tested": false,
+  "provider": {
+    "SSC_publication_proved": false,
+    "absent_event_proves_negotiation_failure": false,
+    "adsp_device": "smp2p-adsp",
+    "adsp_events": [
+      {
+        "cpu": 7,
+        "device": "smp2p-adsp",
+        "event": "smp2p_negotiate",
+        "features": 1,
+        "timestamp": "0.567258"
+      },
+      {
+        "client": "slave-kernel",
+        "cpu": 7,
+        "device": "smp2p-adsp",
+        "event": "smp2p_notify_in",
+        "status": 0,
+        "timestamp": "0.640132",
+        "value": 0
+      },
+      {
+        "client": "slave-kernel",
+        "cpu": 7,
+        "device": "smp2p-adsp",
+        "event": "smp2p_notify_in",
+        "status": 2,
+        "timestamp": "0.641181",
+        "value": 2
+      },
+      {
+        "client": "slave-kernel",
+        "cpu": 7,
+        "device": "smp2p-adsp",
+        "event": "smp2p_notify_in",
+        "status": 6,
+        "timestamp": "0.655328",
+        "value": 6
+      },
+      {
+        "client": "slave-kernel",
+        "cpu": 7,
+        "device": "smp2p-adsp",
+        "event": "smp2p_notify_in",
+        "status": 6,
+        "timestamp": "0.701218",
+        "value": 6
+      }
+    ],
+    "adsp_negotiation_observed": true,
+    "boot_id": "3ff4d010-adab-48b2-b34d-0bde9a50b472",
+    "complete": true,
+    "diagnostic_only": true,
+    "glink_adsp_count": 17,
+    "native_smp2p_devices": [
+      "smp2p-adsp"
+    ],
+    "negotiation_timestamps": [
+      "0.567258"
+    ],
+    "observation": "NEGOTIATION_OBSERVED",
+    "record_count": 22,
+    "ssr_ack_count": 0,
+    "unconfigured_remote_entries_inventoried": false
+  },
+  "pump_ON": false,
+  "register_enable": 1,
+  "registered_query_window_seconds": 30,
+  "sensor_acceptance": false,
+  "unregister_enable": 0,
+  "verdict": "SSC_ABSENT"
+}

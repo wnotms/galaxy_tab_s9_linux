@@ -98,6 +98,24 @@
 
 ## Current state (2026-10-03)
 
+2026-10-11 TEST400_COMPLETE_FEDORA_PAIR_BOOTED_SSC_ABSENT_RETURNED370.
+Registrationa615b795 pushedbeforeone3ff4d010 candidate; complete52Fedora
+ADSP/DTB files/19differences, same399kernel/config/DT/181/daemon/order/provider.
+ActualTWRPreadonlyproc/root/PIDguardPASS; originalrootfs52absence preserved
+byexplicittransactionmode, remaining276assets/nineoverlay restoredaftertest.
+30s(33.986throughcollection)/twoUPPDRcycles;35metadata/178content/220replies/
+twoEOF/status69/fullcoveragePASS.22nativeevents(5ADSP SMP2P+17GLINK),eightCPU
+zero loss/agreement;CPU7negotiationfeature1/0,2,6,6 directlyobserved. SSC400
+absent/no accelerometersample/no rotationacceptance/no newseverekernelfault.
+Exactoriginal52absence/370vendor/allfive/181/config/notes restored; attributed
+9bb51abd GNOME/palm/ADB/deviceNCM/sshd20.186sreturnPASS,100%32.7C4.446V.
+46scopePASS0skip/reuse94component; results executed:false/no rebuild/fullrun/
+Actions.36Windowsstagefiles verifieddeleted,391–400/399comparisonprovider+
+400currentcomparison+370runtime retained. PPS/pump/DCCOFF/4.44float unchanged.
+Sensorsunfinished; next sourceinitialization/publication prerequisite comparison,
+notunchanged400replay; wholehistoricalrootcauseUNPROVED. See400RESULTS/summary.
+This completion supersedes400registration-only state below.
+
 2026-10-11 TEST400_COMPLETE_FEDORA_ADSP_PAIR_REGISTERED_NOT_DEPLOYED.
 One newcomplete52firmwarepair/19differences inmatched21d289fd earlyvendor and
 recovery-createdrootfs. Same399kernel/config/DT/181/daemon/library/order/provider,

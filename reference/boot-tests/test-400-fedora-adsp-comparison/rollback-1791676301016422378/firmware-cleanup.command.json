@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "chroot /mnt/debian /usr/bin/python3 /tmp/gts9-test400-fw/adsp_firmware_transaction.py cleanup --proc /tmp/gts9-test400-fw/proc --base /tmp/gts9-test400-fw/original-assets.tar.gz --candidate /tmp/gts9-test400-fw/sensor-assets.tar.gz --original-presence absent"
+  ],
+  "ended_utc": "2026-10-10T23:52:28.027891+00:00",
+  "started_utc": "2026-10-10T23:52:27.486560+00:00",
+  "status": 0
+}

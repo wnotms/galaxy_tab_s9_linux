@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "systemctl status --no-pager -l hexagonrpcd-adsp-rootpd hexagonrpcd-adsp-sensorspd iio-sensor-proxy; ls -l /dev/fastrpc*; ls -l /sys/bus/auxiliary/drivers/qcom_pd_mapper.qcom-pdm-mapper; ls -la /usr/share/qcom/sm8550/Samsung/gts9wifi/socinfo /usr/share/qcom/sm8550/Samsung/gts9wifi/sensors"
+  ],
+  "ended_utc": "2026-10-10T23:51:39.918991+00:00",
+  "started_utc": "2026-10-10T23:51:39.699159+00:00",
+  "status": 0
+}

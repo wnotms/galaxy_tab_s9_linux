@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "printf %s '8fefbba1b4fea3901bea8e6d7eefac92eaef19bd263856b6401ea3c309847c60  /mnt/debian/tmp/gts9-test400-fw/adsp_firmware_transaction.py\n6abc10ecdb82c6abe175461ae483670be0c82c8e038cb9acbf5eb5f8ae9231e5  /mnt/debian/tmp/gts9-test400-fw/original-assets.tar.gz\nd647dcdf5ecc010080dbd057cec2c9cc66368d9e241cc3883a532e3f648177b3  /mnt/debian/tmp/gts9-test400-fw/sensor-assets.tar.gz\n' | sha256sum -c -"
+  ],
+  "ended_utc": "2026-10-10T23:49:55.402804+00:00",
+  "started_utc": "2026-10-10T23:49:55.295679+00:00",
+  "status": 0
+}

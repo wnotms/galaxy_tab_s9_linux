@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "test": "Test400",
+  "machine_id": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+  "boot_id": "3ff4d010-adab-48b2-b34d-0bde9a50b472",
+  "phase": "start-requested",
+  "started": true,
+  "packages": [
+    "libprotobuf-c1",
+    "libssc2",
+    "gts9-hexagonrpc",
+    "iio-sensor-proxy"
+  ],
+  "qualified_passive_packages_retained": true,
+  "fastrpc_original": {
+    "uid": 987,
+    "gid": 987,
+    "mode": 384,
+    "rdev": 1051139
+  },
+  "native_mapping": {
+    "soc_id": "519\n",
+    "hw_platform": "MTP\n",
+    "platform_subtype": "Unknown\n",
+    "platform_subtype_id": "0\n",
+    "platform_version": "65536\n"
+  },
+  "account_uid": 987,
+  "account_gid": 987,
+  "proxy_started": false,
+  "rpc_requested": [
+    "hexagonrpcd-adsp-sensorspd.service",
+    "hexagonrpcd-adsp-rootpd.service"
+  ],
+  "rpc_active": [
+    "hexagonrpcd-adsp-sensorspd.service",
+    "hexagonrpcd-adsp-rootpd.service"
+  ]
+}

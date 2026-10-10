@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "python3 /tmp/gts9-test400/servreg-domain-snapshot.py --boot-id 3ff4d010-adab-48b2-b34d-0bde9a50b472 --inventory /tmp/gts9-test400/qrtr-inventory.json --node 1 --port 16385 --layout linux-7.2 --seconds 2"
+  ],
+  "ended_utc": "2026-10-10T23:51:06.280749+00:00",
+  "started_utc": "2026-10-10T23:51:06.158319+00:00",
+  "status": 0
+}

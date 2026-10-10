@@ -1,0 +1,139 @@
+{
+  "DCC": false,
+  "PPS": false,
+  "SSC_service_present": false,
+  "accelerometer_sample": null,
+  "actual_callback_counts": {
+    "EOF_replies": 2,
+    "known_missing_status69": 1,
+    "metadata_entries": 35,
+    "readdir_replies": 220,
+    "registry_sessions": 178
+  },
+  "attempts": 1,
+  "automatic_rotation_tested": false,
+  "callback_coverage": {
+    "metadata": true,
+    "readdir": true,
+    "registry": true
+  },
+  "candidate_boot_id": "3ff4d010-adab-48b2-b34d-0bde9a50b472",
+  "final_battery": {
+    "DEVTYPE": "power_supply",
+    "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+    "OF_COMPATIBLE_N": "1",
+    "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+    "OF_NAME": "charger",
+    "POWER_SUPPLY_CAPACITY": "100",
+    "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+    "POWER_SUPPLY_CURRENT_AVG": "154000",
+    "POWER_SUPPLY_CURRENT_NOW": "138000",
+    "POWER_SUPPLY_HEALTH": "Good",
+    "POWER_SUPPLY_NAME": "sm5714-battery",
+    "POWER_SUPPLY_PRESENT": "1",
+    "POWER_SUPPLY_STATUS": "Full",
+    "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+    "POWER_SUPPLY_TEMP": "327",
+    "POWER_SUPPLY_TYPE": "Battery",
+    "POWER_SUPPLY_VOLTAGE_AVG": "4446000",
+    "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+    "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+    "POWER_SUPPLY_VOLTAGE_NOW": "4446000",
+    "POWER_SUPPLY_VOLTAGE_OCV": "4390000"
+  },
+  "final_services": {
+    "gdm": "active",
+    "gts9-adbd": "active",
+    "gts9-palm": "active",
+    "gts9-pen": "inactive",
+    "gts9-usb-acm": "active",
+    "ssh": "active"
+  },
+  "firmware": {
+    "byte_different_files": 19,
+    "candidate_sha256": "21d289fd4e76ebcf2621267a6259c65449c4e9e262e62e43ad80bc61e3330082",
+    "exact_original_absence_restored": true,
+    "files": 52,
+    "original_rootfs_presence": "absent",
+    "owned_backups_removed": true,
+    "temporary_recovery_proc_verified": true
+  },
+  "firmware_substitution_not_SSC_restoration_within_window": true,
+  "kernel_fault_counts": {},
+  "native_provider": {
+    "SSC_publication_proved": false,
+    "absent_event_proves_negotiation_failure": false,
+    "adsp_device": "smp2p-adsp",
+    "adsp_events": [
+      {
+        "cpu": 7,
+        "device": "smp2p-adsp",
+        "event": "smp2p_negotiate",
+        "features": 1,
+        "timestamp": "0.567258"
+      },
+      {
+        "client": "slave-kernel",
+        "cpu": 7,
+        "device": "smp2p-adsp",
+        "event": "smp2p_notify_in",
+        "status": 0,
+        "timestamp": "0.640132",
+        "value": 0
+      },
+      {
+        "client": "slave-kernel",
+        "cpu": 7,
+        "device": "smp2p-adsp",
+        "event": "smp2p_notify_in",
+        "status": 2,
+        "timestamp": "0.641181",
+        "value": 2
+      },
+      {
+        "client": "slave-kernel",
+        "cpu": 7,
+        "device": "smp2p-adsp",
+        "event": "smp2p_notify_in",
+        "status": 6,
+        "timestamp": "0.655328",
+        "value": 6
+      },
+      {
+        "client": "slave-kernel",
+        "cpu": 7,
+        "device": "smp2p-adsp",
+        "event": "smp2p_notify_in",
+        "status": 6,
+        "timestamp": "0.701218",
+        "value": 6
+      }
+    ],
+    "adsp_negotiation_observed": true,
+    "boot_id": "3ff4d010-adab-48b2-b34d-0bde9a50b472",
+    "complete": true,
+    "diagnostic_only": true,
+    "glink_adsp_count": 17,
+    "native_smp2p_devices": [
+      "smp2p-adsp"
+    ],
+    "negotiation_timestamps": [
+      "0.567258"
+    ],
+    "observation": "NEGOTIATION_OBSERVED",
+    "record_count": 22,
+    "ssr_ack_count": 0,
+    "unconfigured_remote_entries_inventoried": false
+  },
+  "no_unchanged_replay": true,
+  "normal_GNOME_return_verified": true,
+  "observation_seconds": 33.98644543599994,
+  "pump_ON": false,
+  "registered_window_seconds": 30,
+  "return_boot_id": "9bb51abd-1096-4580-b6be-3844d4b112e8",
+  "return_observation_seconds": 20.186330644999998,
+  "sensor_acceptance": false,
+  "test": "Test400",
+  "verdict": "FEDORA_ADSP_PAIR_BOOTED_SSC_ABSENT_EXACT370_RESTORED",
+  "whole_historical_rootcause_proved": false
+}
