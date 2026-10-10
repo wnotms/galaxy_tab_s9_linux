@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "python3 /usr/local/lib/gts9-test393/glink_trace.py state --boot-id $(cat /proc/sys/kernel/random/boot_id)"
+  ],
+  "ended_utc": "2026-10-10T14:01:26.449038+00:00",
+  "started_utc": "2026-10-10T14:01:26.319435+00:00",
+  "status": 0
+}

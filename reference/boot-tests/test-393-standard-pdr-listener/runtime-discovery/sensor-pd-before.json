@@ -1,0 +1,61 @@
+{
+  "DSP_started": false,
+  "SSC_service_verified": false,
+  "accelerometer_verified": false,
+  "boot_id": "dc892d1d-6129-4db8-b1ea-423042c7210b",
+  "cleanup_seconds": 2,
+  "complete": true,
+  "domain": "msm/adsp/sensor_pd",
+  "domain_state": "UP",
+  "endpoint": [
+    5,
+    3
+  ],
+  "indications": [],
+  "instance": 74,
+  "listener_registered": false,
+  "local": [
+    1,
+    16388
+  ],
+  "operation": "register/state/ACK/unregister/close",
+  "raw_packets": [
+    {
+      "hex": "02010020000e0002040000000000100400ffffff1f",
+      "peer": [
+        5,
+        3
+      ],
+      "seconds": 0.0011854159999984404
+    },
+    {
+      "hex": "0202002000070002040000000000",
+      "peer": [
+        5,
+        3
+      ],
+      "seconds": 0.0016165099999980725
+    }
+  ],
+  "register_seconds": 2,
+  "registered_acknowledged": true,
+  "seconds": 0.025981769999994242,
+  "sent_packets": [
+    {
+      "hex": "00010020001900010100010212006d736d2f616473702f73656e736f725f7064",
+      "method": 32,
+      "seconds": 0.00013958299999927704,
+      "transaction": 1
+    },
+    {
+      "hex": "00020020001900010100000212006d736d2f616473702f73656e736f725f7064",
+      "method": 32,
+      "seconds": 0.0013285929999966584,
+      "transaction": 2
+    }
+  ],
+  "service": 66,
+  "socket_closed": true,
+  "state_value": 536870911,
+  "unregister_acknowledged": true
+}

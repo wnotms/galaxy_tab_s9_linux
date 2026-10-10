@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST393_PDR_UP_BEFORE_AFTER_SSC_ABSENT_RESTORED370.
+Candidate dc892d1d exactfive/181/config/notes/nativeADSP/mapper/ADBhealthy.
+Two standardprivate66instance74node5port3 cycles: initialUPbeforeRPC andafter30s;
+register/unregister acknowledged, socketsclosed;25.98/19.70ms. Noindications,
+so hardwareACKnotexercised; notcontinuousUPhistory/SSC/sample/rotationproof.
+OneorderedRPCstart,178returnedregistryhashes/35stat/status69ackPASS; complete
+GLINK/framing/noCPU/newseverefault, SSC400absent. Finalclosedirpendingnotack.
+Exact370/GNOME/palm/ADB/deviceNCMrestored;33Windowsstagefilescheckeddeleted.
+Results-onlyexecuted:false; reuse86observer/domain+14scope and unchangedbuild;
+no kernelbuild/fulltests/Actions. PPS/pump/DCCOFF, sensor/rotationunfinished.
+NextSNSinitialization/X710inputs/callbacksemantics versusFedora, notdomain
+readiness/reset/unchanged393startup replay. See393RESULTS.
+
 2026-10-10 TEST393_STANDARD_PDR_LISTENER_REGISTERED_NOT_DEPLOYED.
 One newprivatePDRclientlifecycle after392freshunregistererror9: registerenable1,
 initialstate/validindACK, sameclientunregisterenable0/close; 2sregister+2scleanup,

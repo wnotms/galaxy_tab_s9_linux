@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "sha256sum /dev/block/by-name/boot /dev/block/by-name/vendor_boot /dev/block/by-name/init_boot /dev/block/by-name/dtbo /dev/block/by-name/vbmeta"
+  ],
+  "ended_utc": "2026-10-10T14:01:02.839574+00:00",
+  "started_utc": "2026-10-10T14:01:02.584067+00:00",
+  "status": 0
+}
