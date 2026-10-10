@@ -1,0 +1,65 @@
+{
+  "etc/systemd/system/gdm.service.d/91-gts9-test399.conf": {
+    "incoming": "overlay-02",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "182f2421664e0fbd75b65a1e278730fb5bc18a00d15d7a96ae4e9c528773f9b0",
+    "source": "reference/boot-tests/test-399-ssc-smp2p-provider/text-condition.conf"
+  },
+  "etc/systemd/system/gts9-glink-test399.service": {
+    "incoming": "overlay-06",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "ffeda915a038f3ee00c1236a902663515aefb4297cf9b8a2cf10a57cfa7df9f1",
+    "source": "reference/boot-tests/test-399-ssc-smp2p-provider/glink-watch.service"
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-rootpd.service.d/91-gts9-test399.conf": {
+    "incoming": "overlay-03",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "e4fe1a966a999eae38132f0a51ca1d1522a80293e630e703245135c19aaa536b",
+    "source": "reference/boot-tests/test-399-ssc-smp2p-provider/hexagonrpcd-adsp-rootpd-trace.conf"
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-sensorspd.service.d/91-gts9-test399.conf": {
+    "incoming": "overlay-04",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "48832fe74512c1aeb87fb770c10c301df077eb5511c78b66a77adc7519f5517f",
+    "source": "reference/boot-tests/test-399-ssc-smp2p-provider/hexagonrpcd-adsp-sensorspd-trace.conf"
+  },
+  "etc/systemd/system/multi-user.target.d/91-gts9-test399.conf": {
+    "incoming": "overlay-07",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "d7de6b6970329d9a83051139dae70e691ae684249174f267351bb151078fd802",
+    "source": "reference/boot-tests/test-399-ssc-smp2p-provider/multi-user-trace.conf"
+  },
+  "usr/local/lib/gts9-test399/glink_trace.py": {
+    "incoming": "overlay-05",
+    "mode": 493,
+    "original_sha256": null,
+    "sha256": "41d09024b097ab871d7acafce442ed06d90200f76fae46548dba0f9091d055ac",
+    "source": "userspace/sensors/smp2p_trace.py"
+  },
+  "usr/local/lib/gts9-test399/glink_trace_382.py": {
+    "incoming": "overlay-08",
+    "mode": 493,
+    "original_sha256": null,
+    "sha256": "21a3ca57f89ca760439d30cb8896bf1aac40059247e2cd17e6064b9534f74303",
+    "source": "userspace/sensors/glink_trace_382.py"
+  },
+  "usr/local/lib/gts9-test399/hexagonrpcd": {
+    "incoming": "overlay-00",
+    "mode": 493,
+    "original_sha256": null,
+    "sha256": "78b356c96afb1f7ff75280810d9db88386b7b2d10ad4d71d818ab5f261752299",
+    "source": "out/rpc-readdir/build/stage/usr/bin/hexagonrpcd"
+  },
+  "var/lib/gts9-test399/text-scope": {
+    "incoming": "overlay-01",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "21d623756784f9d0b1a5c02e23c08b6023d1df1d9938e5f1915227a3eee9ac51",
+    "source": "reference/boot-tests/test-399-ssc-smp2p-provider/text-scope"
+  }
+}

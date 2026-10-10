@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test398（目录 EOF 回包初始化观察），窗口为 **Test389–Test398**；没有生成镜像的轮次仍占一轮。
+  编号为 Test399（原生 SMP2P provider 观察），窗口为 **Test390–Test399**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,18 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-11 TEST399_NATIVE_SMP2P_PROVIDER_REGISTERED_NOT_DEPLOYED.
+One earlytextboot/same398daemon/library/order/stockassets/181/config/DT, only
+vendortraceenrollmentnewgts9_ssc_provider/tenevents/128Krequest/131Kreport;
+threecomponents/allotherheaderargsunchanged/AVBverified, no kernelbuild.
+Nineownedoverlay (observer+unchanged382base), hostrechecksraw/provideragreement.
+29scope/runtimePASS0skip/reuse39component, firsttracefaultnotrecollected;
+one30s/twoPDRcycles/mandatory370GNOMEreturn, no unchangedretry/SMEMwrite/
+DSPcontrol/DIAGmodule/chargingchange/fullrun/Actions. Freshreadonlypreflight
+thenpushregistrationbeforemutation. Missingnegotiateeventnotfailureproof.
+390–399window/382explicitbuilderinput pendingend-scopeconsumercheck.
+SSC/sample/rotationunfinished/PPS/pump/DCCOFF. See399README.
 
 2026-10-11 SSC_NATIVE_PROVIDER_OBSERVER_HOST_QUALIFIED_NOT_DEPLOYED.
 Independent smp2p_trace.py reusesunchanged382 geometry/identity/stop/watch,
