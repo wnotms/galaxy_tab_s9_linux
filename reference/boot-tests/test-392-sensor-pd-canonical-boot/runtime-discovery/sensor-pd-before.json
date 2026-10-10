@@ -1,0 +1,33 @@
+{
+  "DSP_started": false,
+  "boot_id": "63a1a336-7a71-4354-9df9-54834e31a6be",
+  "complete": false,
+  "domain": "msm/adsp/sensor_pd",
+  "enable": 0,
+  "endpoint": [
+    5,
+    3
+  ],
+  "error": "notifier failure result=1 error=9",
+  "instance": 74,
+  "listener_registered": false,
+  "local": [
+    1,
+    16388
+  ],
+  "method": 32,
+  "operation": "unregister-own-client/read-optional-current-state",
+  "raw_packets": [
+    {
+      "hex": "0201002000070002040001000900",
+      "peer": [
+        5,
+        3
+      ],
+      "seconds": 0.001094999999999402
+    }
+  ],
+  "request_hex": "00010020001900010100000212006d736d2f616473702f73656e736f725f7064",
+  "seconds": 0.001116457999998488,
+  "service": 66
+}

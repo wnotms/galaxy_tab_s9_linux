@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test \"$(systemctl get-default)\" = graphical.target; systemctl is-active gdm gts9-palm"
+  ],
+  "ended_utc": "2026-10-10T13:42:00.511284+00:00",
+  "started_utc": "2026-10-10T13:42:00.407849+00:00",
+  "status": 0
+}

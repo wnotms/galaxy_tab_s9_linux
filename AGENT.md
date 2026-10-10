@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST392_NOTIFIER_ERROR9_STATE_UNKNOWN_RESTORED370.
+UUIDformatfixworks; candidate63a1a336 nativeADSP/domain/QRTR/five/181/config/
+notes/ADBhealthy. Oneprivateenable0requestto66instance74node5port3, samepeer
+reply0201002000070002040001000900/result1error9,1.095ms/no stateTLV.
+Initialunknown STOPbeforeRPC; prepared/deactivated/gated, no secondquery/
+subscribe/ACK/restart. NotdomainDOWN/UP orSSC/rootcauseproof. Socketclosed.
+Exact370/GNOME/palm/ADB/deviceNCMrestored; noCPU/newseverefault,32stagefiles
+checkeddeleted. Results-onlyexecuted:false; reuse13scope+50observer/domain and
+unchangedbuild qualification; no kernelbuild/fulltests/Actions. PPS/pump/DCCOFF.
+Next separatelyqualify standardPDRlistener register/state/ACK/unregister/close
+lifecycle, notfreshclientenable0replay; sensor/rotationgoalunfinished. See392RESULTS.
+
 2026-10-10 TEST392_CANONICAL_RUNTIME_BOOT_REGISTERED_NOT_DEPLOYED.
 OnehostUUIDnormalization after391pre-queryformatSTOP; actualcapturereproduces
 oldgate/passnormalized/wrongbootreject.13scopePASS/0skip,50observer/domain and
