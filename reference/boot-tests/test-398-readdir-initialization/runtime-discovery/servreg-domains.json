@@ -1,0 +1,70 @@
+{
+  "accelerometer_verified": false,
+  "boot_id": "24951e4d-eff8-49e4-a7ff-351076da9047",
+  "complete": true,
+  "database_revision": 1,
+  "domains": [
+    {
+      "instance": 74,
+      "name": "msm/adsp/audio_pd",
+      "service_data": 0,
+      "service_data_valid": false
+    },
+    {
+      "instance": 74,
+      "name": "msm/adsp/root_pd",
+      "service_data": 0,
+      "service_data_valid": false
+    },
+    {
+      "instance": 74,
+      "name": "msm/adsp/charger_pd",
+      "service_data": 0,
+      "service_data_valid": false
+    },
+    {
+      "instance": 74,
+      "name": "msm/adsp/sensor_pd",
+      "service_data": 0,
+      "service_data_valid": false
+    },
+    {
+      "instance": 76,
+      "name": "msm/cdsp/root_pd",
+      "service_data": 0,
+      "service_data_valid": false
+    },
+    {
+      "instance": 180,
+      "name": "msm/modem/root_pd",
+      "service_data": 0,
+      "service_data_valid": false
+    }
+  ],
+  "endpoint": [
+    1,
+    16385
+  ],
+  "layout": "linux-7.2",
+  "local": [
+    1,
+    16388
+  ],
+  "method": 33,
+  "raw_packets": [
+    {
+      "hex": "0201002100b800020400000000001002000600110200010012a40006116d736d2f616473702f617564696f5f70644a0000000000000000106d736d2f616473702f726f6f745f70644a0000000000000000136d736d2f616473702f636861726765725f70644a0000000000000000126d736d2f616473702f73656e736f725f70644a0000000000000000106d736d2f636473702f726f6f745f70644c0000000000000000116d736d2f6d6f64656d2f726f6f745f7064b40000000000000000",
+      "peer": [
+        1,
+        16385
+      ],
+      "seconds": 0.0010860940000014807
+    }
+  ],
+  "request_hex": "00010021000e00010b00746d732f73657276726567",
+  "seconds": 0.0011906249999995566,
+  "sensor_domain_present": true,
+  "service": "tms/servreg",
+  "ssc_service_verified": false,
+  "total_domains": 6
+}

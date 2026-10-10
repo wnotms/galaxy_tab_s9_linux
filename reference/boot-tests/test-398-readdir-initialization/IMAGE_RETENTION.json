@@ -1,0 +1,18 @@
+{
+  "window": "Test389\u2013Test398",
+  "deleted": [
+    {
+      "path": "out/boot-bundle-ssc-glink381/vendor_boot.img",
+      "sha256": "1fed3e4f2f792903d7e1a8939a6d9bb8c851768c28825950ac45942c14de75d0",
+      "bytes": 100663296,
+      "allocated_bytes": 20086784,
+      "reason": "Expired Test381 profile superseded by current Test382 geometry; no current userspace/scripts/tests or390\u2013398 registration consumer found; historical381 PACKAGE hash matched; no active file user",
+      "absent_after": true
+    }
+  ],
+  "retained_current_experiment": {
+    "path": "out/boot-bundle-ssc-glink382/vendor_boot.img",
+    "reason": "Explicit Test398 candidate artifact"
+  },
+  "no_archived_or_moved_image_copy": true
+}

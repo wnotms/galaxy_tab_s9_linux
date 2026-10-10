@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST398_READDIR_INITIALIZATION_VERIFIED_SSC_ABSENT_EXACT370_RETURNED.
+One24951e4d boot/sensor→root start,220initializedmethod28replies/twoEOFs match;
+35metadata/178content/status69/completeGLINK,twoUP PDRcycles,30s(33.789through
+collection), noCPU/newseverefault. SSC400absent/no sample/rotation; repairworks
+but notSSCrestoration/rootcauseproof. No unchangedretry. Exact370vendor/assets/
+eightoverlay restored, attributed0171a6e6 GDM/palm/ADB/deviceNCM/fullfive/181/
+config/notes/nofailedunit21.11s returnPASS;100%33.6C4.447Vwithin4.45observebound,
+4.44float unchanged.41scopePASS/reuse87component+16QEMU+2upstream; results
+executed:false/no kernel/fullrun/Actions.33Windowsstage verifieddeleted; expired381
+image matchedhistoricalhash/deleted,382explicitcurrentinput retained/389–398.
+PPS/pump/DCCOFF; sensorsunfinished. Next firmwareinitialization/provider evidence,
+notrepeating398 or registry/bus guessing. See398RESULTS.
+
 2026-10-10 TEST398_DETERMINISTIC_READDIR_REGISTERED_NOT_DEPLOYED.
 Onlymethod28 width/zero-init change over397 (new78b356c9daemon), library1be4/
 stockassets/kernel/config/DT/181/order/382geometry unchanged. Actual397seq954
