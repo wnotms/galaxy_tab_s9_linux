@@ -1,0 +1,37 @@
+{
+  "test": "Test395",
+  "purpose": "Read-only same-device stock sensor startup binary/init inputs for offline API comparison",
+  "boot_id": "26754f29-f759-472c-8098-16ad4cecdd62",
+  "baseline": "unchanged accepted Test370 returned by Test394",
+  "rounds": 1,
+  "ADB": "/mnt/d/android/platform-tools/adb.exe",
+  "transport": "ADB only",
+  "remote_export_seconds": 45,
+  "cleanup_grace_seconds": 15,
+  "host_export_seconds": 75,
+  "preflight_max_age_seconds": 600,
+  "enrolled_kernel": "reference/boot-tests/test-394-stock-socinfo/return/kernel.txt",
+  "source_partition": "stock super/vendor single read-only extent; validated LP checksums",
+  "writes": [
+    "owned ephemeral /run mount directory and loop setup, removed before archive output"
+  ],
+  "flashed": false,
+  "rebooted": false,
+  "DSP_started": false,
+  "RPC_started": false,
+  "binaries_executed": false,
+  "registry_written": false,
+  "PPS": false,
+  "pump_ON": false,
+  "DCC": false,
+  "partition_module_identity": "Reuse Test394 exact identity on this same boot; no writes since",
+  "stop_conditions": [
+    "boot/config/notes/ordinary safety drift",
+    "new kernel fault",
+    "Code43/ADB loss",
+    "unexpected LP/filesystem/path/symlink/size",
+    "read/cleanup/evidence failure"
+  ],
+  "rollback": "No image/config/module change to roll back; unmount/detach only owned read-only view. Unknown cleanup stops without blind reboot/forced unmount/replay.",
+  "success": "Hash-bound original startup inputs available for host ELF/init analysis and unchanged same-boot desktop; no SSC/sample/rotation claim"
+}

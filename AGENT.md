@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test394（原厂恢复 SoC 身份只读比较），窗口为 **Test385–Test394**；没有生成镜像的轮次仍占一轮。
+  编号为 Test395（原厂传感器启动输入只读采集），窗口为 **Test386–Test395**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,17 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-10 TEST395_STOCK_SENSOR_STARTUP_INPUTS_REGISTERED_NOT_EXECUTED.
+One read-only stock super/vendor startup-input export on returned370 boot26754f29,
+no DSP/RPC/reboot/flash/binary execution/registry/kernel/module/rootfs change.
+Same-device init/APPS libraries/daemon evidence for offline comparison; no inferred
+dynamic-loader call from ELF symbols. Qualcomm primary attach matches SNS ioctl.
+Temporary ro/noexec vendor view; ext4 noload, bounded selection, owned cleanup
+before output; timeout/cleanup UNKNOWN STOP/no replay. Fresh identity/health gates,
+reuse394 same-boot five/181 identity. Commit/push before one export; no fullbuild/
+fulltests/Actions. New395 uses no early image/Windowsstage;386–395 retention.
+PPS/pump/DCCOFF; SSC/sample/rotation unfinished. See395README.
 
 2026-10-10 TEST394_ACTUAL_STOCK_SOCINFO_MATCH_UNCHANGED370_RETURNED.
 OneBCBrecoveryroundtrip: actualSamsungTWRPf4d3264c soc_id519/hwMTP/subtype

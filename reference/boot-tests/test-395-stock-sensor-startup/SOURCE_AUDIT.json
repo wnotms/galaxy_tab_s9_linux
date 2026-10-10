@@ -1,0 +1,15 @@
+{
+  "qualcomm_url": "https://github.com/qualcomm/fastrpc",
+  "qualcomm_commit": "a56e9d4de3614a8d8f4b0e15ff561350c4b686e3",
+  "source_sha256": {
+    ".work/ssc-diagnostics/qualcomm-fastrpc/src/fastrpc_apps_user.c": "daee04f074418978e7e6f4ca450a66e0e32b395bc927e2165dc9940f58a75f71",
+    ".work/ssc-diagnostics/qualcomm-fastrpc/src/fastrpc_ioctl.c": "6f92fc95eb16e15aae2a8f0405483f3fa3896544e706977a3532259d86bd8f3c",
+    ".work/ssc-diagnostics/qualcomm-fastrpc/src/adsp_default_listener.c": "c74d7cc6087e6d971006ccd220200a9fcefe8ba6fa3220c27b34388de2eec274",
+    ".work/ssc-diagnostics/qualcomm-fastrpc/Docs/daemons.md": "3860fda728cd723b67f88361f907c29198ebe0d6b0cc0866da7e0655936d5c31",
+    "out/ssc-stock-symbol-audit/libsns_dynamic_loader_skel.so": "9eaba9222c704cdbbf8c57e39efe96a2ab64692c8348f453655aa0175208c764",
+    "out/ssc-stock-symbol-audit/libsns_remote_proc_state_skel.so": "90b5450207c0258101d479b0fb09ceb8c05409fd7f5a77dc07e4bd89ffe2c50a"
+  },
+  "stock_elf_audit": "host readelf only; no ELF execution or DSP call",
+  "finding": "SENSORS_STATICPD maps to INIT_ATTACH_SNS in current Qualcomm upstream-compatible ioctl wrapper, matching current Fedora-derived attach. No sns_dynamic_loader/proc-state explicit call in reviewed daemon start path; no mandatory extra initialization inferred.",
+  "sensor_acceptance": false
+}
