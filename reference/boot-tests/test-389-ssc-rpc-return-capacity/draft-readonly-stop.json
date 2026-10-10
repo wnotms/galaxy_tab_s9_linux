@@ -1,0 +1,20 @@
+{
+  "bounded_scan_succeeded": true,
+  "classification": "HOST_ONLY_UNBOUNDED_ENROLLMENT_HISTORY_SCAN",
+  "device_mutation": false,
+  "failure": "enrollment boot-history command exceeded8seconds",
+  "no_physical_retry": true,
+  "not_a_CPU_failure": true,
+  "physical_candidates": 0,
+  "post_failure_readonly_argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; systemctl is-active gdm gts9-adbd; cat /sys/class/remoteproc/remoteproc0/state"
+  ],
+  "post_failure_readonly_status": 0,
+  "post_failure_readonly_stdout": "60384db6-dca3-4db5-b85a-89005923f497\n860.39 6816.20\nactive\nactive\noffline\n",
+  "registered_history_command_unchanged": "timeout 8 journalctl --list-boots -n 5 --no-pager",
+  "same_boot_normal_device": true
+}

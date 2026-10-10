@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test388（RPC 返回内容有界观察登记），窗口为 **Test379–Test388**；没有生成镜像的轮次仍占一轮。
+  编号为 Test389（RPC 完整返回内容有界观察登记），窗口为 **Test380–Test389**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,17 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-10 TEST389_COMPLETE_RPC_RETURN_CONTENT_REGISTERED_NOT_DEPLOYED.
+One new v2 observerbf0a9fa1/1MiB process; strict inputcapacities and178hashes,
+35stat.80qualifiedsource/parser+27newscope=107PASS/0skip,2+6ARM64QEMU reused.
+Early370kernel/config/DTB/181+382vendor unchanged, one startup/60s/8MiBunit/
+2MiBGLINK; mandatoryexact370 normalGNOME restoration, firstnoncleanSTOP.
+Draft unbounded enrollment list exceeded8s; preserved/zero mutation, shortsameboot
+60384db6/GDM/ADB and bounded historyPASS. Actual -n5 runnercommand unchanged;
+no devicefailure/CPUclaim or physicalretry. No new kernelbuild/Actions.
+Freshpreflight/push beforeoneattempt. PPS/pump/DCCOFF, sensorsunfinished.
+No new Image; retention380–389. See389README.
 
 2026-10-10 SSC_RPC_CAPACITY_PARSER_V2_QUALIFIED_NOT_DEPLOYED.
 Qualcomm pack_out_lens/source plus all701 actualRX establish exact unaligned
