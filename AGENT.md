@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST389_COMPLETE_RPC_CONTENT_SSC_ABSENT_RESTORED370.
+One candidate3117b421 afterbddd8192;1030sensorcalls strictframesPASS,774391B.
+178/178 actualreturned registry hashes/closed+ackPASS,35statPASS,0capacity mismatch.
+SSC400/sample absent60s/21probes; finalpending replies notack/DSPparsingunknown.
+Oneoemconfig.so openstatus1, requirementunknown; noforeignblob/registryreset.
+Complete2534BGLINK/no loss and offline1108kernelrows/noCPU/new severe fault.
+Exact370 five/181/config/notes/8overlay/328assets restored, normal0f360b00GNOME/
+palm/ADB/deviceNCM active, ADSPoffline/RPCinactive.98%32.9C;31Windows225122705B
+duplicatesremoved.107qualification reused/resultsexecuted:false/no kernel/Actions.
+Next firmwareinitialization/selectedregistry semantics/exact hardwareprerequisite
+source boundary; no unchanged transportstartup replay. PPS/pump/DCCOFF,
+sensor/rotation unfinished. See389RESULTS. Goal remains active.
+
 2026-10-10 TEST389_COMPLETE_RPC_RETURN_CONTENT_REGISTERED_NOT_DEPLOYED.
 One new v2 observerbf0a9fa1/1MiB process; strict inputcapacities and178hashes,
 35stat.80qualifiedsource/parser+27newscope=107PASS/0skip,2+6ARM64QEMU reused.

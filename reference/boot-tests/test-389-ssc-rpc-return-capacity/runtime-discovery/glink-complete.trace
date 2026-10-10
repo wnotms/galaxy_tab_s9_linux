@@ -1,0 +1,29 @@
+# tracer: nop
+#
+# entries-in-buffer/entries-written: 17/17   #P:8
+#
+#                                _-----=> irqs-off/BH-disabled
+#                               / _----=> need-resched
+#                              | / _---=> hardirq/softirq
+#                              || / _--=> preempt-depth
+#                              ||| / _-=> migrate-disable
+#                              |||| /     delay
+#           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+#              | |         |   |||||     |         |
+     kworker/0:4-124     [000] .....     0.694057: qcom_glink_cmd_version: tx remote: lpass version: 1 features: 0x1
+     kworker/0:4-124     [000] .....     0.694170: qcom_glink_cmd_version: rx remote: lpass version: 1 features: 0x7
+     kworker/0:4-124     [000] .....     0.694172: qcom_glink_cmd_version_ack: tx remote: lpass version: 1 features: 0x1
+     kworker/0:4-124     [000] .....     0.694176: qcom_glink_cmd_version_ack: rx remote: lpass version: 1 features: 0x1
+     kworker/0:4-124     [000] .....     0.694280: qcom_glink_cmd_open: rx remote: lpass channel: pcie_drv[0/1]
+     kworker/0:4-124     [000] .....     0.694337: qcom_glink_cmd_open: rx remote: lpass channel: mhi_sat[0/2]
+     kworker/0:4-124     [000] .....     0.694379: qcom_glink_cmd_open: rx remote: lpass channel: IPCRTR[0/3]
+     kworker/0:4-124     [000] .....     0.694431: qcom_glink_cmd_open_ack: tx remote: lpass channel: IPCRTR[0/3]
+     kworker/0:4-124     [000] .....     0.694436: qcom_glink_cmd_open: tx remote: lpass channel: IPCRTR[1/3]
+          <idle>-0       [000] d.h1.     0.694512: qcom_glink_cmd_open_ack: rx remote: lpass channel: IPCRTR[1/3]
+     kworker/0:4-124     [000] .....     0.706793: qcom_glink_cmd_open: rx remote: lpass channel: sleepmonglink-apps-adsp[0/4]
+     kworker/0:4-124     [000] .....     0.707713: qcom_glink_cmd_open: rx remote: lpass channel: adsp_apps[0/5]
+     kworker/0:4-124     [000] .....     0.709092: qcom_glink_cmd_open: rx remote: lpass channel: fastrpcglink-apps-dsp[0/6]
+     kworker/0:4-124     [000] .....     0.709342: qcom_glink_cmd_open_ack: tx remote: lpass channel: fastrpcglink-apps-dsp[0/6]
+     kworker/0:4-124     [000] .....     0.709351: qcom_glink_cmd_open: tx remote: lpass channel: fastrpcglink-apps-dsp[2/6]
+          <idle>-0       [000] d.h1.     0.709439: qcom_glink_cmd_open_ack: rx remote: lpass channel: fastrpcglink-apps-dsp[2/6]
+     kworker/0:4-124     [000] .....     0.713974: qcom_glink_cmd_open: rx remote: lpass channel: LOOPBACK_CTL_LPASS[0/7]

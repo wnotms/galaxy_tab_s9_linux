@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test \"$(systemctl get-default)\" = graphical.target; systemctl is-active gdm gts9-palm; pgrep -a gnome-shell; test \"$(cat /sys/class/remoteproc/remoteproc0/state)\" = offline; ! pgrep -x hexagonrpcd; ! systemctl is-active --quiet hexagonrpcd-adsp-rootpd; ! systemctl is-active --quiet hexagonrpcd-adsp-sensorspd; test ! -e /var/lib/gts9-sensors/ready; test ! -d /usr/local/lib/gts9-test389"
+  ],
+  "ended_utc": "2026-10-10T07:14:43.873355+00:00",
+  "started_utc": "2026-10-10T07:14:43.629676+00:00",
+  "status": 0
+}

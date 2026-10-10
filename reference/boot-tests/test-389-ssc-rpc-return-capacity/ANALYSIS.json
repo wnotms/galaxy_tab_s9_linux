@@ -1,0 +1,57 @@
+{
+  "DSP_content_parsing_proved": false,
+  "GLINK_complete": true,
+  "GLINK_faults": [],
+  "GLINK_trace_bytes": 2534,
+  "SSC_publication_proved": false,
+  "accelerometer_probes": 21,
+  "actual_stat_entries": 35,
+  "callback_nonzero_statuses": [
+    {
+      "handle": 1,
+      "method": 19,
+      "sequence": 6,
+      "status": 1,
+      "string_arguments": [
+        "oemconfig.so"
+      ]
+    }
+  ],
+  "config_json_open_calls": 0,
+  "kernel_fault_counts": {},
+  "missing_registry_groups": 0,
+  "next_boundary": "firmware sensor-initialization, selected registry/config semantics and driver prerequisites; no unchanged transport replay or guessed hardware selector",
+  "offline_target_kernel_rows": 1108,
+  "output_capacity_mismatches": 0,
+  "pending_calls": [
+    {
+      "output_capacities": null,
+      "sequence": 0,
+      "transport_return": null,
+      "unit": "hexagonrpcd-adsp-rootpd.service"
+    },
+    {
+      "output_capacities": [],
+      "sequence": 1030,
+      "transport_return": null,
+      "unit": "hexagonrpcd-adsp-sensorspd.service"
+    }
+  ],
+  "raw_journal_bytes": 5274433,
+  "raw_journal_rows": 4124,
+  "registry_hash_matches": 178,
+  "registry_sessions": 178,
+  "strict_frames_complete": true,
+  "trace_processes": {
+    "hexagonrpcd-adsp-rootpd.service": {
+      "largest_frame_bytes": 0,
+      "message_bytes": 85,
+      "records": 1
+    },
+    "hexagonrpcd-adsp-sensorspd.service": {
+      "largest_frame_bytes": 536,
+      "message_bytes": 774391,
+      "records": 3091
+    }
+  }
+}

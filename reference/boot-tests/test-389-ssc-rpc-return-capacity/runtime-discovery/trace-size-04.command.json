@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "journalctl -b -u hexagonrpcd-adsp-rootpd -u hexagonrpcd-adsp-sensorspd -o json --no-pager | wc -c"
+  ],
+  "ended_utc": "2026-10-10T07:11:24.806889+00:00",
+  "started_utc": "2026-10-10T07:11:24.580672+00:00",
+  "status": 0
+}

@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "echo @@recovery-dmesg; dmesg; echo @@pstore; ls -la /sys/fs/pstore; for f in /sys/fs/pstore/* /proc/last_kmsg; do if test -f \"$f\"; then echo @@source=$f; cat \"$f\"; else echo unavailable=$f; fi; done"
+  ],
+  "ended_utc": "2026-10-10T07:09:58.785850+00:00",
+  "started_utc": "2026-10-10T07:09:58.653000+00:00",
+  "status": 0
+}
