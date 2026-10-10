@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test ! -e /run/gts9-ssc-test/ready; test ! -e /usr/local/lib/gts9-test383; test ! -e /var/lib/gts9-test383; test ! -e /etc/systemd/system/gts9-glink-test383.service; test ! -e /usr/share/qcom/sm8550/Samsung/gts9wifi; test \"$(cat /sys/class/remoteproc/remoteproc0/state)\" = offline; systemctl get-default; systemctl is-active gdm gts9-palm; systemctl is-active hexagonrpcd-adsp-rootpd hexagonrpcd-adsp-sensorspd iio-sensor-proxy || true"
+  ],
+  "ended_utc": "2026-10-10T01:25:34.074566+00:00",
+  "started_utc": "2026-10-10T01:25:34.002401+00:00",
+  "status": 1
+}

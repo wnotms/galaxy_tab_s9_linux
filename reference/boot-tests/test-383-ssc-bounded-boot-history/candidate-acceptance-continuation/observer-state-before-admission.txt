@@ -1,0 +1,23 @@
+{
+  "boot_id": "16d836fc-cf62-498a-8153-69162f346e54",
+  "instance": "gts9_test382",
+  "instance_symlink": false,
+  "instance_exists": true,
+  "current_tracer": "nop",
+  "buffer_size_kb": "131",
+  "buffer_subbuf_size_kb": "4",
+  "trace_clock": "[local] global counter uptime perf mono mono_raw boot tai",
+  "set_event": "qcom_glink:qcom_glink_cmd_version\nqcom_glink:qcom_glink_cmd_version_ack\nqcom_glink:qcom_glink_cmd_open\nqcom_glink:qcom_glink_cmd_close\nqcom_glink:qcom_glink_cmd_open_ack\nqcom_glink:qcom_glink_cmd_close_ack",
+  "tracing_on": "1",
+  "header_page": "field: u64 timestamp;\toffset:0;\tsize:8;\tsigned:0;\n\tfield: local_t commit;\toffset:8;\tsize:8;\tsigned:1;\n\tfield: char overwrite;\toffset:8;\tsize:1;\tsigned:0;\n\tfield: char data;\toffset:16;\tsize:4080;\tsigned:0;",
+  "per_cpu_buffer_size_kb": {
+    "cpu0": "131",
+    "cpu1": "131",
+    "cpu2": "131",
+    "cpu3": "131",
+    "cpu4": "131",
+    "cpu5": "131",
+    "cpu6": "131",
+    "cpu7": "131"
+  }
+}

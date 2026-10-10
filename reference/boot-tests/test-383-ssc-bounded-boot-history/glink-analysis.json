@@ -1,0 +1,261 @@
+{
+  "boot_id": "16d836fc-cf62-498a-8153-69162f346e54",
+  "trace_sha256": "73aeafe7ff396597fe74d12982f4ff751309de19c81a8423509a16c752a70d00",
+  "trace_bytes": 2534,
+  "trace_entries": 17,
+  "trace_complete": true,
+  "trace_clock": "[local] global counter uptime perf mono mono_raw boot tai",
+  "all_8_cpu_loss_zero": true,
+  "events": [
+    {
+      "cpu": 2,
+      "local_timestamp": "0.670035",
+      "event": "qcom_glink_cmd_version",
+      "direction": "tx",
+      "remote": "lpass",
+      "detail": "version: 1 features: 0x1"
+    },
+    {
+      "cpu": 0,
+      "local_timestamp": "0.670149",
+      "event": "qcom_glink_cmd_version",
+      "direction": "rx",
+      "remote": "lpass",
+      "detail": "version: 1 features: 0x7"
+    },
+    {
+      "cpu": 0,
+      "local_timestamp": "0.670152",
+      "event": "qcom_glink_cmd_version_ack",
+      "direction": "tx",
+      "remote": "lpass",
+      "detail": "version: 1 features: 0x1"
+    },
+    {
+      "cpu": 0,
+      "local_timestamp": "0.670156",
+      "event": "qcom_glink_cmd_version_ack",
+      "direction": "rx",
+      "remote": "lpass",
+      "detail": "version: 1 features: 0x1"
+    },
+    {
+      "cpu": 0,
+      "local_timestamp": "0.670264",
+      "event": "qcom_glink_cmd_open",
+      "direction": "rx",
+      "remote": "lpass",
+      "detail": "channel: pcie_drv[0/1]"
+    },
+    {
+      "cpu": 0,
+      "local_timestamp": "0.670337",
+      "event": "qcom_glink_cmd_open",
+      "direction": "rx",
+      "remote": "lpass",
+      "detail": "channel: mhi_sat[0/2]"
+    },
+    {
+      "cpu": 0,
+      "local_timestamp": "0.670384",
+      "event": "qcom_glink_cmd_open",
+      "direction": "rx",
+      "remote": "lpass",
+      "detail": "channel: IPCRTR[0/3]"
+    },
+    {
+      "cpu": 0,
+      "local_timestamp": "0.670434",
+      "event": "qcom_glink_cmd_open_ack",
+      "direction": "tx",
+      "remote": "lpass",
+      "detail": "channel: IPCRTR[0/3]"
+    },
+    {
+      "cpu": 0,
+      "local_timestamp": "0.670440",
+      "event": "qcom_glink_cmd_open",
+      "direction": "tx",
+      "remote": "lpass",
+      "detail": "channel: IPCRTR[1/3]"
+    },
+    {
+      "cpu": 0,
+      "local_timestamp": "0.670513",
+      "event": "qcom_glink_cmd_open_ack",
+      "direction": "rx",
+      "remote": "lpass",
+      "detail": "channel: IPCRTR[1/3]"
+    },
+    {
+      "cpu": 0,
+      "local_timestamp": "0.682391",
+      "event": "qcom_glink_cmd_open",
+      "direction": "rx",
+      "remote": "lpass",
+      "detail": "channel: sleepmonglink-apps-adsp[0/4]"
+    },
+    {
+      "cpu": 0,
+      "local_timestamp": "0.683259",
+      "event": "qcom_glink_cmd_open",
+      "direction": "rx",
+      "remote": "lpass",
+      "detail": "channel: adsp_apps[0/5]"
+    },
+    {
+      "cpu": 0,
+      "local_timestamp": "0.684889",
+      "event": "qcom_glink_cmd_open",
+      "direction": "rx",
+      "remote": "lpass",
+      "detail": "channel: fastrpcglink-apps-dsp[0/6]"
+    },
+    {
+      "cpu": 0,
+      "local_timestamp": "0.685072",
+      "event": "qcom_glink_cmd_open_ack",
+      "direction": "tx",
+      "remote": "lpass",
+      "detail": "channel: fastrpcglink-apps-dsp[0/6]"
+    },
+    {
+      "cpu": 0,
+      "local_timestamp": "0.685082",
+      "event": "qcom_glink_cmd_open",
+      "direction": "tx",
+      "remote": "lpass",
+      "detail": "channel: fastrpcglink-apps-dsp[2/6]"
+    },
+    {
+      "cpu": 0,
+      "local_timestamp": "0.685163",
+      "event": "qcom_glink_cmd_open_ack",
+      "direction": "rx",
+      "remote": "lpass",
+      "detail": "channel: fastrpcglink-apps-dsp[2/6]"
+    },
+    {
+      "cpu": 0,
+      "local_timestamp": "0.691805",
+      "event": "qcom_glink_cmd_open",
+      "direction": "rx",
+      "remote": "lpass",
+      "detail": "channel: LOOPBACK_CTL_LPASS[0/7]"
+    }
+  ],
+  "channel_names": [
+    "pcie_drv",
+    "mhi_sat",
+    "IPCRTR",
+    "sleepmonglink-apps-adsp",
+    "adsp_apps",
+    "fastrpcglink-apps-dsp",
+    "LOOPBACK_CTL_LPASS"
+  ],
+  "handshakes": {
+    "pcie_drv": false,
+    "mhi_sat": false,
+    "IPCRTR": true,
+    "sleepmonglink-apps-adsp": false,
+    "adsp_apps": false,
+    "fastrpcglink-apps-dsp": true,
+    "LOOPBACK_CTL_LPASS": false
+  },
+  "rpmsg": [
+    {
+      "driver": "/sys/bus/rpmsg/drivers/qcom_smd_qrtr",
+      "dst": "0xffffffff",
+      "modalias": "rpmsg:IPCRTR",
+      "name": "IPCRTR",
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.IPCRTR.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.IPCRTR.-1.-1",
+      "src": "0x0"
+    },
+    {
+      "driver": null,
+      "dst": "0xffffffff",
+      "modalias": "rpmsg:LOOPBACK_CTL_LPASS",
+      "name": "LOOPBACK_CTL_LPASS",
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.LOOPBACK_CTL_LPASS.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.LOOPBACK_CTL_LPASS.-1.-1",
+      "src": "0xffffffff"
+    },
+    {
+      "driver": null,
+      "dst": "0xffffffff",
+      "modalias": "of:NgprT(null)Cqcom,gpr",
+      "name": "adsp_apps",
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.adsp_apps.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.adsp_apps.-1.-1",
+      "src": "0xffffffff"
+    },
+    {
+      "driver": "/sys/bus/rpmsg/drivers/qcom,fastrpc",
+      "dst": "0xffffffff",
+      "modalias": "of:NfastrpcT(null)Cqcom,fastrpc",
+      "name": "fastrpcglink-apps-dsp",
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.fastrpcglink-apps-dsp.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.fastrpcglink-apps-dsp.-1.-1",
+      "src": "0x0"
+    },
+    {
+      "driver": null,
+      "dst": "0xffffffff",
+      "modalias": "rpmsg:mhi_sat",
+      "name": "mhi_sat",
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.mhi_sat.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.mhi_sat.-1.-1",
+      "src": "0xffffffff"
+    },
+    {
+      "driver": null,
+      "dst": "0xffffffff",
+      "modalias": "rpmsg:pcie_drv",
+      "name": "pcie_drv",
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.pcie_drv.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.pcie_drv.-1.-1",
+      "src": "0xffffffff"
+    },
+    {
+      "driver": null,
+      "dst": "0x0",
+      "modalias": "rpmsg:rpmsg_ctrl",
+      "name": "rpmsg_ctrl",
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.rpmsg_ctrl.0.0",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.rpmsg_ctrl.0.0",
+      "src": "0x0"
+    },
+    {
+      "driver": null,
+      "dst": "0xffffffff",
+      "modalias": "rpmsg:sleepmonglink-apps-adsp",
+      "name": "sleepmonglink-apps-adsp",
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.sleepmonglink-apps-adsp.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.sleepmonglink-apps-adsp.-1.-1",
+      "src": "0xffffffff"
+    }
+  ],
+  "DIAG_named_channel_observed": false,
+  "QRTR_services": [
+    15,
+    24,
+    43,
+    51,
+    64,
+    66,
+    69,
+    769
+  ],
+  "SSC400": false,
+  "DIAG4097": false,
+  "scope": "early boot through one ordered RPC startup and bounded SSC window; no exact cross-CPU duration claim",
+  "additional_channel_events_after_early_boot": false,
+  "not_proven": [
+    "hardware IMU response",
+    "DSP initialization success",
+    "DIAG firmware support or lack thereof",
+    "SSC root cause",
+    "automatic rotation"
+  ]
+}

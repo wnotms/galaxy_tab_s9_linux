@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "for p in /run/gts9-ssc-test/ready /usr/local/lib/gts9-test383 /var/lib/gts9-test383 /etc/systemd/system/gts9-glink-test383.service /usr/share/qcom/sm8550/Samsung/gts9wifi; do if test -e \"$p\"; then ls -ld \"$p\"; if test -d \"$p\"; then find \"$p\" -maxdepth 2 -type f; fi; else echo absent:$p; fi; done; cat /sys/class/remoteproc/remoteproc0/state; systemctl get-default; systemctl is-active gdm gts9-palm; systemctl is-active hexagonrpcd-adsp-rootpd hexagonrpcd-adsp-sensorspd iio-sensor-proxy"
+  ],
+  "ended_utc": "2026-10-10T01:25:51.694465+00:00",
+  "started_utc": "2026-10-10T01:25:51.530315+00:00",
+  "status": 3
+}

@@ -1,0 +1,33 @@
+{
+  "fault_counts": {},
+  "first_source_timestamp": "0",
+  "known_warning_count": 42,
+  "last_source_timestamp": "17633434",
+  "qca_baudrate_warning": {
+    "classification": "bounded-per-setup-cycle",
+    "cycles": [
+      {
+        "completion_source_seconds": 6.057045,
+        "events": [],
+        "setup_source_seconds": 5.139014
+      },
+      {
+        "completion_source_seconds": 7.515912,
+        "events": [],
+        "setup_source_seconds": 6.653272
+      }
+    ],
+    "event_count": 0,
+    "event_rows": [],
+    "setup_count": 2,
+    "state": "absent"
+  },
+  "rows": 1095,
+  "startup_variant_counts": {
+    "boot_register_warning": 1,
+    "smmu_context_fault": 10,
+    "smmu_fsr": 10,
+    "smmu_fsynr": 10
+  },
+  "suspects": []
+}

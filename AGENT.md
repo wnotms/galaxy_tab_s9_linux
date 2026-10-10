@@ -98,6 +98,23 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST383_GLINK_DIAGNOSTIC_COMPLETE_SSC_ABSENT_RESTORED370.
+Registration8263ebe2/r2 3b84687d pushed;55affectedPASS/0skip/no build/CI.
+OriginalreadonlyEP0STOP kept; exacthistoricalrowenrolled,no futurewaiver.
+Onecandidate16d836fc; hosthandle interrupted afterinstalled/readiness00, confirmed
+no liveprocess; sameboot28s resumed/newevidence/no secondinstall orreboot.
+Recent5 history uniquelyattributes. SixServregdomains/sensor74, orderedRPC active,
+35statmatch;60s SSC no400/noaccel. Raw2534B17/17GLINK/all8CPUloss0, nativeQRTR/
+FastRPC handshakecomplete, no extra channel throughRPC/noDIAG or4097. No new
+kernel fault. Not sensor/rootcause/rotation PASS. Exact370 restored0047b944,
+fivehashes/181/config/notes/fulljournal/GNOME/palm/ADB; ADSPoffline/runtimeOFF,
+allownedassets/overlaysremoved/emptylegerrmdir.31verifiedWindowscopies225MBcleaned.
+USBlarge rawlog losslessgzip/uncompressedSHAverified. Results-only testsfalse/
+reuse55. Kernel/DTS/USB/charging/input unchanged; PPS/pump/DCCOFF. No383repeat;
+next qualify APinitiated diagnosticchannel path, not blanketDIAGrouter/masks.
+Fedora resolvedRPMSG_CTRL=m vs currentn is an interface difference, not SSCfix.
+Goal/sensors/fullport unfinished. See383RESULTS/glink-analysis.
+
 2026-10-10 TEST383_READONLY_STOP_PRESERVED_ADMISSION_REVISION2.
 Original preflightSTOP/newEP0dequeue row at607.704s/no flash orreboot. Source
 DWC3 dequeue unmatchedrequest returnsEINVAL; caller/raceUNKNOWN/no USBfixclaim.
