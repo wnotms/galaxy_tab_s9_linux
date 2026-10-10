@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-11 SSC_QMI_PUBLICATION_TRIGGER_SOURCE_BOUNDARY_RECORDED.
+Four bounded originalflag/originalhash segment18 spans: namedresampler/sim
+lookup predicates reachbit6setter ifcontextflagclear; earlierthreadbit6 calls
+QMI-registration-boundary. Notregistrycompletionproof/notobserveddependency
+failure. Getterargs1/4/6 returnssegment19object b33e0d58/wordoffset8=400;
+rawbytes/MDTmapping bound, nooriginalstructsymbol/runtimecallbackreturn.
+No forcedsignal/RPC/DSP/SMEM/bus/registrychange. Sourceevidence executed:false,
+no build/fullrun/Actions/devicecommand/reboot; last399returned370GNOME retained.
+Next compareactualsame-modelFedora firmware inputs, notunchanged399 replay.
+See reference/desktop-bringup/ssc-qmi-publication/RESULTS.md.
+
 2026-10-11 TEST399_NATIVE_ADSP_NEGOTIATION_OBSERVED_SSC_ABSENT_RETURNED370.
 One24630e73 boot/same398sensor→root start; complete22trace records (5ADSP
 SMP2P+17GLINK)/eightCPUzero loss/host-device agreement. CPU7native negotiate

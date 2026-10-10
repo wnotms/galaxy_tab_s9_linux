@@ -1,0 +1,14 @@
+
+out/ssc-smp2p-audit/segment-18.elf:	file format elf32-hexagon
+
+Disassembly of section .text:
+
+b3200000 <.text>:
+b3238a2c: { 	p0 = cmp.eq(r2,#0x6)
+b3238a30:   	p1 = cmp.eq(r1,#0x4) }
+b3238a34: { 	immext(#0xb33e0d40)
+b3238a38:   	r2 = mux(p0,##-0x4cc1f2a8,#0x0)
+b3238a3c:   	p0 = cmp.eq(r0,#0x1) }
+b3238a40: { 	if (!p1) r2 = #0x0 }
+b3238a44: { 	if (!p0) r2 = #0x0 }
+b3238a48: { 	r0 = r2; 	jumpr r31 }

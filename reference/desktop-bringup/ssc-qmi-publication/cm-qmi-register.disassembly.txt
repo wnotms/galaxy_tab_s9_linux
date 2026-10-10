@@ -1,0 +1,40 @@
+
+out/ssc-smp2p-audit/segment-18.elf:	file format elf32-hexagon
+
+Disassembly of section .text:
+
+b3200000 <.text>:
+b32fc4f8: { 	call 0xb30bc840
+b32fc4fc:   	allocframe(#0x50) }
+b32fc500: { 	r17:16 = combine(#0x1,r0)
+b32fc504:   	r1:0 = combine(#0x4,#0x1)
+b32fc508:   	r2 = #0x6; 	r18 = memw(r0+#0xc) }
+b32fc50c: { 	call 0xb3238a2c <.text+0x38a2c> }
+b32fc510: { 	r3 = add(r29,#0x8)
+b32fc514:   	r5:4 = combine(#0x0,#0x23)
+b32fc518:   	memw(r29+#0x0) = r3.new }
+b32fc51c: { 	r3 = add(r18,#0x8)
+b32fc520:   	immext(#0xb32fc5c0)
+b32fc524:   	r1 = ##0xb32fc5c0; 	memd(r29+#0x8) = r5:4 }
+b32fc528: { 	r5 = add(r18,#0xc)
+b32fc52c:   	immext(#0xb32fc640)
+b32fc530:   	r2 = ##0xb32fc67c; 	memw(r29+#0x4) = r3 }
+b32fc534: { 	immext(#0xb32fc6c0)
+b32fc538:   	r3 = ##0xb32fc6d4; 	r4 = r16 }
+b32fc53c: { 	call 0xb32cf5c4 <.text+0xcf5c4>
+b32fc540:   	immext(#0xb32fc580)
+b32fc544:   	memw(r29+#0x28) = ##-0x4cd03a80
+b32fc548:   	memw(r29+#0x10) = #0xa }
+b32fc54c: { 	if (p0.new) r17 = #0x0
+b32fc550:   	p0 = cmp.eq(r0,#0x0); if (p0.new) jump:nt 0xb32fc564 <.text+0xfc564> }
+b32fc554: { 	immext(#0xb3123300)
+b32fc558:   	r3:2 = combine(##-0x4cedcce0,#0x1)
+b32fc55c:   	r1:0 = combine(r16,#0); 	memw(r29+#0x0) = r0 }
+b32fc560: { 	r4 = #0x1 ; jump 0xb32fc574 <.text+0xfc574> }
+b32fc564: { 	immext(#0xb33b24c0)
+b32fc568:   	r3:2 = combine(##-0x4cc4db34,#0x0)
+b32fc56c:   	r4 = #0x1; 	r1:0 = combine(r16,#0) }
+b32fc570: { 	memw(r29+#0x0) = #0x0 }
+b32fc574: { 	call 0xb312906c }
+b32fc578: { 	immext(#0xffdc0380)
+b32fc57c:   	r0 = r17 ; jump 0xb30bc930 }

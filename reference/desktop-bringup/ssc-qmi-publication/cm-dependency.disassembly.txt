@@ -1,0 +1,23 @@
+
+out/ssc-smp2p-audit/segment-18.elf:	file format elf32-hexagon
+
+Disassembly of section .text:
+
+b3200000 <.text>:
+b32f89e8: { 	call 0xb3134188
+b32f89ec:   	immext(#0xb337a3c0)
+b32f89f0:   	r1:0 = combine(##-0x4cc85c30,r19)
+b32f89f4:   	r2 = #0x0 }
+b32f89f8: { 	p0 = r0
+b32f89fc:   	if (p0.new) jump:t 0xb32f8a18 <.text+0xf8a18> }
+b32f8a00: { 	call 0xb3134188
+b32f8a04:   	immext(#0xb337b400)
+b32f8a08:   	r1:0 = combine(##-0x4cc84bd8,r18)
+b32f8a0c:   	r2 = #0x0 }
+b32f8a10: { 	p0 = r0
+b32f8a14:   	if (!p0.new) jump:t 0xb32f8a2c <.text+0xf8a2c> }
+b32f8a18: { 	r2 = memb(r17+#0x27b) }
+b32f8a1c: { 	p0 = cmp.eq(r2,#0x0)
+b32f8a20:   	if (p0.new) r0 = memw(r17+#0x4) }
+b32f8a24: { 	immext(#0xfffffa00)
+b32f8a28:   	if (p0) call 0xb32f8424 <.text+0xf8424> }

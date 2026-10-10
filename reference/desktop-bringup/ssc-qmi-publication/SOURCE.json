@@ -1,0 +1,87 @@
+{
+  "repository_start_head": "860d5ca95535dbf66b6e00e35707f5214a96a5b2",
+  "firmware_archive_sha256": "6abc10ecdb82c6abe175461ae483670be0c82c8e038cb9acbf5eb5f8ae9231e5",
+  "wrapper_qualification": "reference/desktop-bringup/ssc-smp2p-initialization/AUDIT.json",
+  "wrapper_sha256": "9950ca63c9b35b43b7fed1c52314b9513e728c2fd568d3a0a652047bc0ae0c7b",
+  "commands": [
+    {
+      "output": "cm-dependency.disassembly.txt",
+      "argv": [
+        "llvm-objdump",
+        "-d",
+        "--no-show-raw-insn",
+        "--start-address=0xb32f89e8",
+        "--stop-address=0xb32f8a2c",
+        "out/ssc-smp2p-audit/segment-18.elf"
+      ],
+      "returncode": 0
+    },
+    {
+      "output": "cm-bit6-setter.disassembly.txt",
+      "argv": [
+        "llvm-objdump",
+        "-d",
+        "--no-show-raw-insn",
+        "--start-address=0xb32f8414",
+        "--stop-address=0xb32f842c",
+        "out/ssc-smp2p-audit/segment-18.elf"
+      ],
+      "returncode": 0
+    },
+    {
+      "output": "cm-qmi-register.disassembly.txt",
+      "argv": [
+        "llvm-objdump",
+        "-d",
+        "--no-show-raw-insn",
+        "--start-address=0xb32fc4f8",
+        "--stop-address=0xb32fc580",
+        "out/ssc-smp2p-audit/segment-18.elf"
+      ],
+      "returncode": 0
+    },
+    {
+      "output": "service-object-getter.disassembly.txt",
+      "argv": [
+        "llvm-objdump",
+        "-d",
+        "--no-show-raw-insn",
+        "--start-address=0xb3238a2c",
+        "--stop-address=0xb3238a4c",
+        "out/ssc-smp2p-audit/segment-18.elf"
+      ],
+      "returncode": 0
+    }
+  ],
+  "static_dependency_strings": [
+    {
+      "VA": "0xb337a3d0",
+      "text": "resampler"
+    },
+    {
+      "VA": "0xb337b428",
+      "text": "sim"
+    }
+  ],
+  "service_object": {
+    "segment": "adsp.b19",
+    "VA": "0xb33e0d58",
+    "offset": "0x3d58",
+    "first40bytes": "06000000010000009001000040f200000300030002000000c80237b3e00237b3f80237b3040337b3",
+    "word_at_offset8": 400,
+    "structure_symbol_recovered": false
+  },
+  "runtime_dependency_failure_observed": false,
+  "SSC_rootcause_proven": false,
+  "device_operations": false,
+  "host_tests": {
+    "executed": false,
+    "reason": "Source/disassembly evidence only; no runtime runner change"
+  },
+  "new_kernel_build": false,
+  "original_members_sha256": {
+    "adsp.mdt": "7e7c1f22cc19a272f570a82c2a451b08fd626465aa8f57ba21912a91cda0e012",
+    "adsp.b18": "4d5d7cba49c912b2b34364a7b5ec7deaae29e557ce521c04523a3a0e7b42564b",
+    "adsp.b19": "c84486e1d27be46554b287714c86aed0a75aab09122d93aa6791f389176ff4a9"
+  }
+}
