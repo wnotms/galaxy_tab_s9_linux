@@ -1,0 +1,40 @@
+{
+  "boot_id": "65129696-de09-450b-863c-4d522465c5f3",
+  "confirmed_active": [
+    "hexagonrpcd-adsp-sensorspd.service",
+    "hexagonrpcd-adsp-rootpd.service"
+  ],
+  "journal_events": [
+    {
+      "message": "Started hexagonrpcd-adsp-sensorspd.service - Server for FastRPC remote procedure calls from Qualcomm ADSP - sensorspd.",
+      "monotonic_us": "39516270",
+      "unit": "hexagonrpcd-adsp-sensorspd.service"
+    },
+    {
+      "message": "Starting /usr/local/lib/gts9-test397/hexagonrpcd (INIT_ATTACH_SNS) on /dev/fastrpc-adsp",
+      "monotonic_us": "39551356",
+      "unit": "hexagonrpcd-adsp-sensorspd.service"
+    },
+    {
+      "message": "Started hexagonrpcd-adsp-rootpd.service - Server for FastRPC remote procedure calls from Qualcomm ADSP - RootPD.",
+      "monotonic_us": "39565874",
+      "unit": "hexagonrpcd-adsp-rootpd.service"
+    },
+    {
+      "message": "Starting /usr/local/lib/gts9-test397/hexagonrpcd (INIT_ATTACH) on /dev/fastrpc-adsp",
+      "monotonic_us": "39607032",
+      "unit": "hexagonrpcd-adsp-rootpd.service"
+    }
+  ],
+  "journal_sha256": "1eaedec2f60fea839219da6496a373438d3285e7e017a108d15d2689ed9a6d36",
+  "no_service_restart": true,
+  "not_claimed_equivalent_to_entire_Android_boot": true,
+  "registered": [
+    "hexagonrpcd-adsp-sensorspd.service",
+    "hexagonrpcd-adsp-rootpd.service"
+  ],
+  "requested": [
+    "hexagonrpcd-adsp-sensorspd.service",
+    "hexagonrpcd-adsp-rootpd.service"
+  ]
+}

@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST397_SENSOR_FIRST_SSC_ABSENT_EXACT370_RETURNED.
+One65129696 sensor→root explicitorderedstart (ledger+journal retained), same396
+binary/library/assets/kernel/config/DT/181/382geometry.30s/twoUP PDRcycles,
+35metadata/178content/status69/completeGLINK, noCPU/newseverefault; SSC400absent,
+no sample/rotation. No unchangedretry/restart; order change notrestorationwithin
+window, notglobaltimingproof. Exact370 vendor/assets/eightoverlay restored,
+attributed9fb7e2f3 GDM/palm/ADB/deviceNCM/fullfive/181/config/notes/nofailedunit
+return; no396hostnamedfailure recurrence thisround.39affectedPASS0skip; results
+executed:false/reusecomponent+observer, no kernelbuild/fullrun/Actions.33Windows
+stage verifieddeleted;388–397/PPS/pump/DCCOFF. Sensors unfinished; next stock
+firmwareinitialization/callback semantics, notunchanged397 flash. See397RESULTS.
+
 2026-10-10 TEST397_SENSOR_FIRST_REGISTERED_NOT_DEPLOYED.
 396 retainedlistener stillnoSSC; source-supported stocksscrpcd early_hal/rootmain
 order hypothesis, Fedoraunchangedab123e7 hasno root-before-sensor dependency.

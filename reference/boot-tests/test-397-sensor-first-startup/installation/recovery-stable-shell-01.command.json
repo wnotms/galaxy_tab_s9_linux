@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "getprop ro.product.device; uname -r; id -u; cat /proc/sys/kernel/random/boot_id; cat /proc/uptime"
+  ],
+  "ended_utc": "2026-10-10T15:18:58.719812+00:00",
+  "started_utc": "2026-10-10T15:18:58.622736+00:00",
+  "status": 0
+}

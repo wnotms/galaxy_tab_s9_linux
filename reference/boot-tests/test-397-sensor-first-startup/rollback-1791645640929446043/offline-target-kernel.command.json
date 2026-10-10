@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "chroot /mnt/debian /usr/bin/journalctl --directory=/var/log/journal _TRANSPORT=kernel _BOOT_ID=65129696de09450b863c4d522465c5f3 -o json --no-pager"
+  ],
+  "ended_utc": "2026-10-10T15:21:22.164028+00:00",
+  "started_utc": "2026-10-10T15:21:21.679149+00:00",
+  "status": 0
+}
