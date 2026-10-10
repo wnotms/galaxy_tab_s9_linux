@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 PDR_LISTENER_LIFECYCLE_HOST_QUALIFIED_NOT_DEPLOYED.
+Newhelper followsactualLinux registerenable1/initialstate/indACK/sameclient
+unregisterenable0/close; oldobserver and392history unchanged.2sregister+2scleanup,
+no retry/RPC/DSPstart/restart; ACKbodytoken/path/peer verified, interleaving and
+late replies bounded. Missingstate/unknowncleanup noncomplete; UPnotSSCproof.
+36new+30state+20domain=86hostPASS/0skip; hostmocks, firmwarecleanupunverified.
+No kernelbuild/fulltests/Actions/devicequery; PPS/pump/DCCOFF, goalunfinished.
+Next separatelyregister new393standardlistener boundary before physical use.
+See reference/desktop-bringup/ssc-pdr-listener/RESULTS.md.
+
 2026-10-10 TEST392_NOTIFIER_ERROR9_STATE_UNKNOWN_RESTORED370.
 UUIDformatfixworks; candidate63a1a336 nativeADSP/domain/QRTR/five/181/config/
 notes/ADBhealthy. Oneprivateenable0requestto66instance74node5port3, samepeer
