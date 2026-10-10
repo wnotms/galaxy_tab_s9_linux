@@ -98,6 +98,20 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 SSC_NATIVE_RPMSG_CONTROL_COMPILED_OFFLINE_NOT_DEPLOYED.
+After383 postRPC noDIAG/SSC, primaryGLINK source supports APinitiated endpoint;
+existingunboundrpmsg_ctrl parent/currentCTRLn vs FedoraCTRLm. Unmodified7.2ctrl
+externalARM64module built against exact370provider,32importsCRCmatch/W1clean;
+config/notes/providerhashes unchanged/no Imagebuild. No source/Kconfig/DTB/181
+module ordevicechange. Modulehash4538faee, buildIDnotes pinned. Futureloading
+is explicitlytemporary diagnostic/out-of-tree taint, not productionunchanged.
+One-shotDIAG-only UAPIhelper20hostPASS/0skip/syntax, no masks/payload writes/
+DIAG_CNTL/DIAG_CMD/load/unload/RPC/USB. Ledgerbeforeblockingopen/15s callerdeadline,
+read1s/64KiB, samFDdestroy; errorrequiresregisteredreboot/no reopen/liveunload.
+NotyetTest384registeredrunner/no hardwareacceptance. Reuse370/normalGNOME,
+PPS/pump/DCCOFF; noSSCrootcause orrotationclaim. Goalunfinished; next complete
+newhandshake registration beforedeploy. See ssc-rpmsg-control offlineRESULTS.
+
 2026-10-10 TEST383_GLINK_DIAGNOSTIC_COMPLETE_SSC_ABSENT_RESTORED370.
 Registration8263ebe2/r2 3b84687d pushed;55affectedPASS/0skip/no build/CI.
 OriginalreadonlyEP0STOP kept; exacthistoricalrowenrolled,no futurewaiver.

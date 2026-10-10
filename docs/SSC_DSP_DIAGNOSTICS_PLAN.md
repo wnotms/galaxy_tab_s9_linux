@@ -108,3 +108,38 @@ If channels are absent, analyze their initialization/open handshake first. If
 present, separately qualify a bounded decoder/control protocol from actual
 X710/primary source before requesting firmware log masks. No automatic rotation
 claim is valid until actual accel samples and SensorProxy orientation pass.
+
+## Test383 result and the next transport boundary (2026-10-10)
+
+Test383 now completed the registered early-to-post-RPC GLINK observation:
+17/17 events, zero loss on all eight CPUs, no additional channel events after
+the early QRTR/FastRPC handshakes. Both RPC roles started once, 35 config-stat
+checks match, no SSC400/sample in60s, no DIAG-named channel or QRTR4097. Exact
+Test370/GNOME restored. This is a bounded absence observation, not proof that
+firmware cannot respond to an AP-initiated diagnostic channel. Preserve the
+original preflight STOP, exact enrollment amendment and host interruption.
+
+Source-supported next route: upstream GLINK registers an rpmsg_ctrl parent
+even with the control driver disabled. Fedora X710 resolves RPMSG_CTRL=m;
+our config has it disabled. The unmodified Linux7.2 control module is now
+offline compiled against the accepted provider with32 matching CRCs and exact
+ELF/config identity. This does not enable an old udev recipe or fix SSC by
+itself. No module/endpoint/diagnostic router has been deployed. See
+[offline qualification](../reference/desktop-bringup/ssc-rpmsg-control/RESULTS.md).
+
+Next Test384 should ask only whether the exact ADSP parent accepts one local
+DIAG endpoint OPEN. Register/push before loading the qualified temporary module
+in a controlled early-ADSP text boot. Admit exact boot/config/notes/module
+build-ID and unique controller ancestry. Use standard CREATE_EPT, then one
+read-only endpoint open (GLINK's5s+5s wait under15s external deadline); capture
+raw control events and at most one64KiB unsolicited packet with1s poll. No
+DIAG_CNTL/DIAG_CMD, feature/mask/data writes, driver override, RPC restart or
+foreign firmware. Close/destroy through the same FD; on failure don't reopen
+or unload a live control driver. Always restore370/vendor/owned overlay and
+normal GNOME by reboot. A temporary external module is diagnostic runtime,
+not unchanged production, despite an unchanged Image/config/181-file directory.
+
+This new offline helper is not yet a complete Test384 deployment runner. A
+positive handshake would justify a separately bounded decoder/control design
+from actual X710 responses; a negative result needs its first complete failure
+analysis. Neither permits silent full-router/mask activation or a sensor PASS.

@@ -1,0 +1,25 @@
+test_bad_scope_rejected_before_native_operations (test_ssc_rpmsg_control.EndpointProbeTests.test_bad_scope_rejected_before_native_operations) ... ok
+test_cleanup_fault_stops_and_requires_registered_reboot (test_ssc_rpmsg_control.EndpointProbeTests.test_cleanup_fault_stops_and_requires_registered_reboot) ... ok
+test_create_failure_never_opens_endpoint (test_ssc_rpmsg_control.EndpointProbeTests.test_create_failure_never_opens_endpoint) ... ok
+test_create_open_passive_receive_destroy_same_fd (test_ssc_rpmsg_control.EndpointProbeTests.test_create_open_passive_receive_destroy_same_fd) ... ok
+test_created_ledger_is_saved_before_blocking_kernel_open (test_ssc_rpmsg_control.EndpointProbeTests.test_created_ledger_is_saved_before_blocking_kernel_open) ... ok
+test_evidence_cap_preserves_cleanup (test_ssc_rpmsg_control.EndpointProbeTests.test_evidence_cap_preserves_cleanup) ... ok
+test_failed_identity_never_creates_ledger_or_endpoint (test_ssc_rpmsg_control.EndpointProbeTests.test_failed_identity_never_creates_ledger_or_endpoint) ... ok
+test_forbidden_names_cannot_target_existing_transport_or_control (test_ssc_rpmsg_control.EndpointProbeTests.test_forbidden_names_cannot_target_existing_transport_or_control) ... ok
+test_linux_uapi_layout_and_ioctl_values (test_ssc_rpmsg_control.EndpointProbeTests.test_linux_uapi_layout_and_ioctl_values) ... ok
+test_native_eof_is_a_failure_not_empty_success (test_ssc_rpmsg_control.EndpointProbeTests.test_native_eof_is_a_failure_not_empty_success) ... ok
+test_native_idle_channel_does_not_read (test_ssc_rpmsg_control.EndpointProbeTests.test_native_idle_channel_does_not_read) ... ok
+test_no_packet_is_handshake_only_not_a_log_or_sensor_proof (test_ssc_rpmsg_control.EndpointProbeTests.test_no_packet_is_handshake_only_not_a_log_or_sensor_proof) ... ok
+test_open_timeout_requires_rollback_never_reopens_failed_endpoint (test_ssc_rpmsg_control.EndpointProbeTests.test_open_timeout_requires_rollback_never_reopens_failed_endpoint) ... ok
+test_read_fault_still_destroys_already_open_endpoint (test_ssc_rpmsg_control.EndpointProbeTests.test_read_fault_still_destroys_already_open_endpoint) ... ok
+test_stale_ledger_prevents_second_create (test_ssc_rpmsg_control.EndpointProbeTests.test_stale_ledger_prevents_second_create) ... ok
+test_unowned_or_duplicate_endpoint_stops_before_open (test_ssc_rpmsg_control.EndpointProbeTests.test_unowned_or_duplicate_endpoint_stops_before_open) ... ok
+test_crc_mismatch_and_unknown_symbol_are_rejected (test_ssc_rpmsg_control.ProviderCRCTests.test_crc_mismatch_and_unknown_symbol_are_rejected) ... ok
+test_duplicate_symbol_is_rejected (test_ssc_rpmsg_control.ProviderCRCTests.test_duplicate_symbol_is_rejected) ... ok
+test_empty_import_table_is_not_pairing_proof (test_ssc_rpmsg_control.ProviderCRCTests.test_empty_import_table_is_not_pairing_proof) ... ok
+test_matching_crc_is_accepted (test_ssc_rpmsg_control.ProviderCRCTests.test_matching_crc_is_accepted) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.006s
+
+OK
