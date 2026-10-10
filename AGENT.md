@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test392（sensor PD 主机身份修正登记），窗口为 **Test383–Test392**；没有生成镜像的轮次仍占一轮。
+  编号为 Test393（标准 PDR 监听观测登记），窗口为 **Test384–Test393**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,18 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-10 TEST393_STANDARD_PDR_LISTENER_REGISTERED_NOT_DEPLOYED.
+One newprivatePDRclientlifecycle after392freshunregistererror9: registerenable1,
+initialstate/validindACK, sameclientunregisterenable0/close; 2sregister+2scleanup,
+8shost, max2cycles aroundoneorderedRPCstartup/30shealth. Unknowninitialstate/
+ACK/cleanupSTOPbeforeRPC, no retries/DSPrestart; UPnotSSC/sampleproof.
+86observer/domain+14scope/realCLI/canonicalcapture/overlayPASS0skip, unchanged
+kernel/RPCqual reused.33Windowsstagefiles, no newkernel/Image/DT/modules/USB/
+charging/inputchange. Fresh5be5b179 five/181/config/notes/ADB/noCode43/noadded
+errorPASS100%33.6C4.445V. Mandatoryexact370/GNOMErestore; registrationpushbefore
+mutation; retention384–393/current382vendorconsumerexplicit. PPS/pump/DCCOFF.
+See393README; sensor/rotationgoalunfinished.
 
 2026-10-10 PDR_LISTENER_LIFECYCLE_HOST_QUALIFIED_NOT_DEPLOYED.
 Newhelper followsactualLinux registerenable1/initialstate/indACK/sameclient
