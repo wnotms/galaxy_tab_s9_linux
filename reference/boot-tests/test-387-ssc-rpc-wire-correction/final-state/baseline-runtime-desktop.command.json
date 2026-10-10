@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test \"$(cat /proc/sys/kernel/random/boot_id)\" = 622874b2-d925-4958-a84d-22b6c63a7787; test ! -e /run/gts9-ssc-test/ready; test ! -e /usr/local/lib/gts9-test387; test ! -e /etc/systemd/system/gts9-glink-test387.service; test ! -e /usr/lib/systemd/system/hexagonrpcd-adsp-rootpd.service.d/trace.conf; test ! -e /usr/lib/systemd/system/hexagonrpcd-adsp-sensorspd.service.d/trace.conf; printf \"DEFAULT=\"; systemctl get-default; systemctl is-active gdm gts9-palm gts9-adbd gts9-usb-typec-lifecycle; printf \"RUNTIME_UNITS\\n\"; systemctl is-active hexagonrpcd-adsp-rootpd hexagonrpcd-adsp-sensorspd iio-sensor-proxy || true; printf \"ADSP=\"; cat /sys/class/remoteproc/remoteproc0/state; printf \"GNOME_PROCESSES\\n\"; pgrep -a gnome-shell; printf \"FAILED_UNITS\\n\"; systemctl --failed --no-legend --plain"
+  ],
+  "ended_utc": "2026-10-10T06:22:39.541134+00:00",
+  "started_utc": "2026-10-10T06:22:39.370710+00:00",
+  "status": 0
+}

@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST387_CORRECTED_WIRE_SSC_ABSENT_RESTORED370.
+Singlecandidate0cc9ae94 afterpushed57126d10; priorreadonly2STOP preserved.
+Orderedroot/sensorPDactive,6domains/sensor74,35statPASS,210reads45226B; noSSC400
+or sample in60s/22probes. Complete2534B17/17GLINK zero8CPUloss; noCPU/newfault.
+Notcodec-trigger/rootcauseproof; do not replayunchanged orresetregistry.
+Exact370restored normalboot622874b2,5partitions/181/config/notes/GNOME/palm/ADB/
+deviceNCM; ownedassets/overlay/runtime removed, ADSPoffline.86%31.6C.
+31Windowsduplicates225122349B deleted. Qualification60PASS reused; results
+executed:false/no newkernel/fulltests/CI. PPS/pump/DCCOFF, goalunfinished.
+Next actualRPCreturn-path/firmwareinitialization source boundary. See387RESULTS.
+
+
 2026-10-10 TEST387_READONLY_HISTORICAL_EP0_STOP_CLASSIFIED.
 Revision2 STOP preserved/zero writes,reboots,RPC. One historical1739s EP0dequeue
 error/cursor enrolled after source analysis and later sameboot healthytransport/

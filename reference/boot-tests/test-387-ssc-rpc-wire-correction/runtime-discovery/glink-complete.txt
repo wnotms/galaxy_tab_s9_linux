@@ -1,0 +1,188 @@
+{
+  "boot_id": "0cc9ae94-6ffe-4417-b7e1-6ece7ba5ca59",
+  "uptime_seconds": 101.5,
+  "trace_geometry": {
+    "requested_bytes": 131072,
+    "page_bytes": 4096,
+    "header_bytes": 16,
+    "payload_bytes_per_page": 4080,
+    "pages_per_cpu": 33,
+    "reported_kb": 131,
+    "actual_payload_bytes_per_cpu": 134640
+  },
+  "trace_clock": "[local] global counter uptime perf mono mono_raw boot tai",
+  "per_cpu_stats": {
+    "cpu0": {
+      "entries": "16",
+      "overrun": "0",
+      "commit overrun": "0",
+      "bytes": "756",
+      "oldest event ts": "0.666371",
+      "now ts": "101.507954",
+      "dropped events": "0",
+      "read events": "0"
+    },
+    "cpu1": {
+      "entries": "0",
+      "overrun": "0",
+      "commit overrun": "0",
+      "bytes": "0",
+      "oldest event ts": "0.000000",
+      "now ts": "101.507975",
+      "dropped events": "0",
+      "read events": "0"
+    },
+    "cpu2": {
+      "entries": "1",
+      "overrun": "0",
+      "commit overrun": "0",
+      "bytes": "36",
+      "oldest event ts": "0.666261",
+      "now ts": "101.507993",
+      "dropped events": "0",
+      "read events": "0"
+    },
+    "cpu3": {
+      "entries": "0",
+      "overrun": "0",
+      "commit overrun": "0",
+      "bytes": "0",
+      "oldest event ts": "0.000000",
+      "now ts": "101.508012",
+      "dropped events": "0",
+      "read events": "0"
+    },
+    "cpu4": {
+      "entries": "0",
+      "overrun": "0",
+      "commit overrun": "0",
+      "bytes": "0",
+      "oldest event ts": "0.000000",
+      "now ts": "101.508030",
+      "dropped events": "0",
+      "read events": "0"
+    },
+    "cpu5": {
+      "entries": "0",
+      "overrun": "0",
+      "commit overrun": "0",
+      "bytes": "0",
+      "oldest event ts": "0.000000",
+      "now ts": "101.508047",
+      "dropped events": "0",
+      "read events": "0"
+    },
+    "cpu6": {
+      "entries": "0",
+      "overrun": "0",
+      "commit overrun": "0",
+      "bytes": "0",
+      "oldest event ts": "0.000000",
+      "now ts": "101.508064",
+      "dropped events": "0",
+      "read events": "0"
+    },
+    "cpu7": {
+      "entries": "0",
+      "overrun": "0",
+      "commit overrun": "0",
+      "bytes": "0",
+      "oldest event ts": "0.000000",
+      "now ts": "101.508082",
+      "dropped events": "0",
+      "read events": "0"
+    }
+  },
+  "raw_per_cpu_stats": {
+    "cpu0": "entries: 16\noverrun: 0\ncommit overrun: 0\nbytes: 756\noldest event ts:     0.666371\nnow ts:   101.507954\ndropped events: 0\nread events: 0\n",
+    "cpu1": "entries: 0\noverrun: 0\ncommit overrun: 0\nbytes: 0\noldest event ts:     0.000000\nnow ts:   101.507975\ndropped events: 0\nread events: 0\n",
+    "cpu2": "entries: 1\noverrun: 0\ncommit overrun: 0\nbytes: 36\noldest event ts:     0.666261\nnow ts:   101.507993\ndropped events: 0\nread events: 0\n",
+    "cpu3": "entries: 0\noverrun: 0\ncommit overrun: 0\nbytes: 0\noldest event ts:     0.000000\nnow ts:   101.508012\ndropped events: 0\nread events: 0\n",
+    "cpu4": "entries: 0\noverrun: 0\ncommit overrun: 0\nbytes: 0\noldest event ts:     0.000000\nnow ts:   101.508030\ndropped events: 0\nread events: 0\n",
+    "cpu5": "entries: 0\noverrun: 0\ncommit overrun: 0\nbytes: 0\noldest event ts:     0.000000\nnow ts:   101.508047\ndropped events: 0\nread events: 0\n",
+    "cpu6": "entries: 0\noverrun: 0\ncommit overrun: 0\nbytes: 0\noldest event ts:     0.000000\nnow ts:   101.508064\ndropped events: 0\nread events: 0\n",
+    "cpu7": "entries: 0\noverrun: 0\ncommit overrun: 0\nbytes: 0\noldest event ts:     0.000000\nnow ts:   101.508082\ndropped events: 0\nread events: 0\n"
+  },
+  "complete": true,
+  "faults": [],
+  "trace_bytes": 2534,
+  "trace_sha256": "b5a7fe047f21c8524198b842c24d3a15d6d9ef44e1eef28d25e9966ed4c00ce0",
+  "trace": "# tracer: nop\n#\n# entries-in-buffer/entries-written: 17/17   #P:8\n#\n#                                _-----=> irqs-off/BH-disabled\n#                               / _----=> need-resched\n#                              | / _---=> hardirq/softirq\n#                              || / _--=> preempt-depth\n#                              ||| / _-=> migrate-disable\n#                              |||| /     delay\n#           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION\n#              | |         |   |||||     |         |\n     kworker/2:2-111     [002] .....     0.666261: qcom_glink_cmd_version: tx remote: lpass version: 1 features: 0x1\n     kworker/0:1-10      [000] .....     0.666371: qcom_glink_cmd_version: rx remote: lpass version: 1 features: 0x7\n     kworker/0:1-10      [000] .....     0.666374: qcom_glink_cmd_version_ack: tx remote: lpass version: 1 features: 0x1\n     kworker/0:1-10      [000] .....     0.666379: qcom_glink_cmd_version_ack: rx remote: lpass version: 1 features: 0x1\n     kworker/0:1-10      [000] .....     0.666473: qcom_glink_cmd_open: rx remote: lpass channel: pcie_drv[0/1]\n     kworker/0:1-10      [000] .....     0.666556: qcom_glink_cmd_open: rx remote: lpass channel: mhi_sat[0/2]\n     kworker/0:1-10      [000] .....     0.666597: qcom_glink_cmd_open: rx remote: lpass channel: IPCRTR[0/3]\n     kworker/0:1-10      [000] .....     0.666655: qcom_glink_cmd_open_ack: tx remote: lpass channel: IPCRTR[0/3]\n     kworker/0:1-10      [000] .....     0.666660: qcom_glink_cmd_open: tx remote: lpass channel: IPCRTR[1/3]\n          <idle>-0       [000] d.h1.     0.666729: qcom_glink_cmd_open_ack: rx remote: lpass channel: IPCRTR[1/3]\n     kworker/0:2-194     [000] .....     0.678791: qcom_glink_cmd_open: rx remote: lpass channel: sleepmonglink-apps-adsp[0/4]\n     kworker/0:2-194     [000] .....     0.679782: qcom_glink_cmd_open: rx remote: lpass channel: adsp_apps[0/5]\n     kworker/0:2-194     [000] .....     0.681118: qcom_glink_cmd_open: rx remote: lpass channel: fastrpcglink-apps-dsp[0/6]\n     kworker/0:2-194     [000] .....     0.681182: qcom_glink_cmd_open_ack: tx remote: lpass channel: fastrpcglink-apps-dsp[0/6]\n     kworker/0:2-194     [000] .....     0.681187: qcom_glink_cmd_open: tx remote: lpass channel: fastrpcglink-apps-dsp[2/6]\n          <idle>-0       [000] d.h1.     0.681269: qcom_glink_cmd_open_ack: rx remote: lpass channel: fastrpcglink-apps-dsp[2/6]\n     kworker/0:2-194     [000] .....     0.684693: qcom_glink_cmd_open: rx remote: lpass channel: LOOPBACK_CTL_LPASS[0/7]\n",
+  "rpmsg": [
+    {
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.IPCRTR.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.IPCRTR.-1.-1",
+      "name": "IPCRTR",
+      "src": "0x0",
+      "dst": "0xffffffff",
+      "modalias": "rpmsg:IPCRTR",
+      "driver": "/sys/bus/rpmsg/drivers/qcom_smd_qrtr"
+    },
+    {
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.LOOPBACK_CTL_LPASS.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.LOOPBACK_CTL_LPASS.-1.-1",
+      "name": "LOOPBACK_CTL_LPASS",
+      "src": "0xffffffff",
+      "dst": "0xffffffff",
+      "modalias": "rpmsg:LOOPBACK_CTL_LPASS",
+      "driver": null
+    },
+    {
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.adsp_apps.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.adsp_apps.-1.-1",
+      "name": "adsp_apps",
+      "src": "0xffffffff",
+      "dst": "0xffffffff",
+      "modalias": "of:NgprT(null)Cqcom,gpr",
+      "driver": null
+    },
+    {
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.fastrpcglink-apps-dsp.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.fastrpcglink-apps-dsp.-1.-1",
+      "name": "fastrpcglink-apps-dsp",
+      "src": "0x0",
+      "dst": "0xffffffff",
+      "modalias": "of:NfastrpcT(null)Cqcom,fastrpc",
+      "driver": "/sys/bus/rpmsg/drivers/qcom,fastrpc"
+    },
+    {
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.mhi_sat.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.mhi_sat.-1.-1",
+      "name": "mhi_sat",
+      "src": "0xffffffff",
+      "dst": "0xffffffff",
+      "modalias": "rpmsg:mhi_sat",
+      "driver": null
+    },
+    {
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.pcie_drv.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.pcie_drv.-1.-1",
+      "name": "pcie_drv",
+      "src": "0xffffffff",
+      "dst": "0xffffffff",
+      "modalias": "rpmsg:pcie_drv",
+      "driver": null
+    },
+    {
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.rpmsg_ctrl.0.0",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.rpmsg_ctrl.0.0",
+      "name": "rpmsg_ctrl",
+      "src": "0x0",
+      "dst": "0x0",
+      "modalias": "rpmsg:rpmsg_ctrl",
+      "driver": null
+    },
+    {
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.sleepmonglink-apps-adsp.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.sleepmonglink-apps-adsp.-1.-1",
+      "name": "sleepmonglink-apps-adsp",
+      "src": "0xffffffff",
+      "dst": "0xffffffff",
+      "modalias": "rpmsg:sleepmonglink-apps-adsp",
+      "driver": null
+    }
+  ],
+  "trace_stopped": true,
+  "diagnostic_only": true,
+  "SSC_publication_proved": false
+}

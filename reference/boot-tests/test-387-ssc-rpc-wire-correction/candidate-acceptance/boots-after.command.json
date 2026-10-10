@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "timeout 8 journalctl --list-boots -n 5 --no-pager"
+  ],
+  "ended_utc": "2026-10-10T06:18:52.452336+00:00",
+  "started_utc": "2026-10-10T06:18:51.826689+00:00",
+  "status": 0
+}
