@@ -98,6 +98,20 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST395_STOCK_STARTUP_EXPORTED_SAME_BOOT_DESKTOP_UNCHANGED.
+One read-only stock super/vendor export69files; original archive3,247,385bytes
+6709a8a16f585c6f7f59f7e9deb234e2d9a1c9b5efe83beec7e2ec295b7eb6a4.
+Owned ro/noexec mount/loop removed before output, no flash/reboot/DSP/RPC/
+Android binary execution/registry/kernel/DT/modules/rootfs/charging/input change.
+Same26754f29 Test370 config/notes/GDM/ADB/deviceNCM healthy, no newkernelfault/
+failedunit; reuse394 five/181 identity, not new final rehash.31affectedhostPASS
+0skip; results reuseexecuted:false.59ELF +9init/script offline metadata analyzed,
+not SSC/sample/rotation proof. Stocksscrpcd sensorspd classearly_hal vsrootmain;
+SNS ioctl matches Qualcomm primary; no demonstrated mandatory extra loadercall.
+Next stocklistener lifetime/order/callback comparison, no guessed firmware/call/
+registry reset or unchanged393 replay. No build/fullrun/Actions/Windowsstage,
+386–395 retention, PPS/pump/DCCOFF; migrationgoalunfinished. See395RESULTS.
+
 2026-10-10 TEST395_STOCK_SENSOR_STARTUP_INPUTS_REGISTERED_NOT_EXECUTED.
 One read-only stock super/vendor startup-input export on returned370 boot26754f29,
 no DSP/RPC/reboot/flash/binary execution/registry/kernel/module/rootfs change.

@@ -1,0 +1,2265 @@
+{
+  "archive_sha256": "6709a8a16f585c6f7f59f7e9deb234e2d9a1c9b5efe83beec7e2ec295b7eb6a4",
+  "binaries_executed": false,
+  "device_contacted": false,
+  "files": {
+    "vendor/bin/adsprpcd": {
+      "elf_machine": 183,
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [
+        "    756 vendor/qcom/proprietary/adsprpc/src/adsprpcd.c:46:adsp_default_listener_start called",
+        "    84d adsp_default_listener_start",
+        "    952 libadsp_default_listener.so"
+      ],
+      "source_sha256": "4712285ce319e8cf1d59e8a24422114f81fa8663ac27cc48523e288e854ac853",
+      "symbols": []
+    },
+    "vendor/bin/hw/android.hardware.sensors-service.multihal": {
+      "elf_machine": 183,
+      "needed": [
+        "android.hardware.sensors@2.0-ScopedWakelock.so",
+        "android.hardware.sensors@2.0.so",
+        "android.hardware.sensors@2.1.so",
+        "android.hardware.sensors-V1-ndk.so",
+        "libbase.so",
+        "libcutils.so",
+        "libfmq.so",
+        "liblog.so",
+        "libpower.so",
+        "libutils.so",
+        "libbinder_ndk.so",
+        "libhidlbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "3326d45f870fec85904d74e5bf30a0e902355cc990e468007aa5f1bb3f41dca2",
+      "symbols": []
+    },
+    "vendor/bin/init.qcom.sensors.sh": {
+      "active_lines": [
+        "cp /vendor/etc/sensors/scripts/* /data/vendor/sensors/scripts/",
+        "chmod a+rw /data/vendor/sensors/scripts/*"
+      ],
+      "source_sha256": "51db37ac6088beb5cbc48c4d5e358f95c4dce79952750bdbe1b7b530ebf423b7"
+    },
+    "vendor/bin/sensors.qti": {
+      "elf_machine": 183,
+      "needed": [
+        "libprotobuf-cpp-lite-3.9.1.so",
+        "liblog.so",
+        "libdiag.so",
+        "libssc.so",
+        "libsensorslog.so",
+        "libcutils.so",
+        "libsnsapi.so",
+        "libsnsutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [
+        "   5e49 /sys/kernel/boot_slpi/ssr"
+      ],
+      "source_sha256": "155a9dc6ef3a969a80eefa9bdf7960949e8246392c57aa64f40bfd232398bedc",
+      "symbols": []
+    },
+    "vendor/bin/sscrpcd": {
+      "elf_machine": 183,
+      "needed": [
+        "liblog.so",
+        "libcutils.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [
+        "    7b7 adsp_default_listener_start",
+        "    7e7 /sys/kernel/boot_slpi",
+        "    842 libssc_default_listener.so",
+        "    85d libadsp_default_listener.so"
+      ],
+      "source_sha256": "906bba21295d550b84672d2574018bf50bcb64f18b11aa85eded9051bc2e9f5e",
+      "symbols": []
+    },
+    "vendor/etc/init/android.hardware.sensors-service-multihal.rc": {
+      "active_lines": [
+        "service vendor.sensors-hal-multihal /vendor/bin/hw/android.hardware.sensors-service.multihal",
+        "    class hal",
+        "    user system",
+        "    group system wakelock context_hub",
+        "    task_profiles ServiceCapacityLow",
+        "    capabilities BLOCK_SUSPEND",
+        "    rlimit rtprio 10 10",
+        "on property:vendor.sensor.restart=1",
+        "    setprop vendor.sensor.restart 0",
+        "    restart vendor.sensors-hal-multihal"
+      ],
+      "source_sha256": "4f2396dbad17906289edd78a296a13b1361222c1d281bbb09372392fd1891255"
+    },
+    "vendor/etc/init/init.vendor.sensors.rc": {
+      "active_lines": [
+        "on early-boot",
+        "    chown system system /mnt/vendor/persist/sensors",
+        "    chown system system /mnt/vendor/persist/sensors/sns.reg",
+        "    chown system system /mnt/vendor/persist/sensors/sensors_list.txt",
+        "    chown system system /mnt/vendor/persist/sensors/registry",
+        "    chown system system /mnt/vendor/persist/sensors/registry/registry",
+        "    chown system system /mnt/vendor/persist/sensors/registry/registry/sensors_registry",
+        "    chown system system /mnt/vendor/persist/sensors/sensors_settings",
+        "    chown system system /mnt/vendor/persist/sensors/registry/sns_reg_config",
+        "    chown system system /mnt/vendor/persist/sensors/registry/sns_reg_version",
+        "    chown system system /mnt/vendor/persist/sensors/registry/config",
+        "    chmod 0664 /mnt/vendor/persist/sensors/sensors_settings",
+        "    chown system system /sys/kernel/boot_adsp/ssr",
+        "on post-fs-data && property:ro.build.type=userdebug",
+        "    mkdir /data/vendor/sensors 0777 system system",
+        "    mkdir /data/vendor/sensors/scripts 0777 system system"
+      ],
+      "source_sha256": "b1da683e7eb475d88812230ae2052bfd3f7f85e40c4925658c9ffd8582e20734"
+    },
+    "vendor/etc/init/vendor.qsap.sensors.rc": {
+      "active_lines": [
+        "service vendor.qsap.sensors /vendor/bin/qsap_sensors",
+        "    class core",
+        "    user system",
+        "    group system wakelock",
+        "    capabilities BLOCK_SUSPEND"
+      ],
+      "source_sha256": "a9d1a4f3ea202e27c9f495cf7226c9e44354035a3a001fd497c5aa89f9be2815"
+    },
+    "vendor/etc/init/vendor.qti.adsprpc-guestos-service.rc": {
+      "active_lines": [
+        "service vendor.adsprpcd /vendor/bin/adsprpcd",
+        "   class main",
+        "   user system",
+        "   group media"
+      ],
+      "source_sha256": "540de9b329ea8bc4664b79cd80d3867a865e14d6fea8c430d1e75d98c796c829"
+    },
+    "vendor/etc/init/vendor.qti.audio-adsprpc-service.rc": {
+      "active_lines": [
+        "service vendor.audioadsprpcd_audiopd /vendor/bin/audioadsprpcd audiopd",
+        "   class main",
+        "   user media",
+        "   group media",
+        "on early-init",
+        "    start vendor.audioadsprpcd_audiopd"
+      ],
+      "source_sha256": "b2c6180a4ba5764b4ad3c4e1cb58da716f8c8cee2298868f690706195b54200a"
+    },
+    "vendor/etc/init/vendor.sensordebug.rc": {
+      "active_lines": [
+        "service vendor-sensordebug-sh /vendor/bin/init.vendor.sensordebug.sh",
+        "    user system",
+        "    group system",
+        "    oneshot",
+        "    disabled",
+        "on property:sys.sensordebug_enable=true",
+        "    start vendor-sensordebug-sh"
+      ],
+      "source_sha256": "12b78540677f1e3ab94bc854e45aba6182ff88c956c8f62889bd6d7a601bfadf"
+    },
+    "vendor/etc/init/vendor.sensors.qti.rc": {
+      "active_lines": [
+        "service vendor-sensor-sh /vendor/bin/init.qcom.sensors.sh",
+        "    class late_start",
+        "    user root",
+        "    oneshot"
+      ],
+      "source_sha256": "e9d6e56cc596819977083859529794cc9d19b3610e759704be90d11214ceacb2"
+    },
+    "vendor/etc/init/vendor.sensors.sscrpcd.rc": {
+      "active_lines": [
+        "service vendor.sensors /vendor/bin/sscrpcd sensorspd",
+        "    class early_hal",
+        "    user system",
+        "    group system wakelock",
+        "    capabilities BLOCK_SUSPEND",
+        "    shutdown critical"
+      ],
+      "source_sha256": "229f1998520806f079318a0053ee125f24c23746ad0704e2dfd525f59b62d701"
+    },
+    "vendor/lib/android.frameworks.sensorservice@1.0.so": {
+      "elf_machine": 40,
+      "needed": [
+        "android.hardware.sensors@1.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "b25cd10c7e74a84f64991c6e75af6b22a69b794a13144b62522161d307b8cde1",
+      "symbols": []
+    },
+    "vendor/lib/android.hardware.sensors@1.0.so": {
+      "elf_machine": 40,
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "43248f5a14b7ea85bf908afb5efc80a1a483f109c1dd062dcb0e551923b5ad6c",
+      "symbols": []
+    },
+    "vendor/lib/android.hardware.sensors@2.0-ScopedWakelock.so": {
+      "elf_machine": 40,
+      "needed": [
+        "android.hardware.sensors@1.0.so",
+        "android.hardware.sensors@2.0.so",
+        "android.hardware.sensors@2.1.so",
+        "libbase.so",
+        "libcutils.so",
+        "libfmq.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libpower.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "9ecb5f633ace445680b06d727680597c40bd2c4930e259e70a35d2b98c064f20",
+      "symbols": []
+    },
+    "vendor/lib/android.hardware.sensors@2.0.so": {
+      "elf_machine": 40,
+      "needed": [
+        "android.hardware.sensors@1.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "171e3a09c54128a36beb6f8d9dfe2f83bde84045b4b220a1097db57ce45978db",
+      "symbols": []
+    },
+    "vendor/lib/android.hardware.sensors@2.1.so": {
+      "elf_machine": 40,
+      "needed": [
+        "android.hardware.sensors@1.0.so",
+        "android.hardware.sensors@2.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "f4749d92f0b3d368e4ba05725d3beec50c177621fff2a592f27ce6156151d080",
+      "symbols": []
+    },
+    "vendor/lib/hw/sensors.dynamic_sensor_hal.so": {
+      "elf_machine": 40,
+      "needed": [
+        "libhidparser.so",
+        "android.hardware.sensors@2.0.so",
+        "android.hardware.sensors@2.0-ScopedWakelock.so",
+        "android.hardware.sensors@2.1.so",
+        "libhidlbase.so",
+        "libbase.so",
+        "libcutils.so",
+        "liblog.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "d35ffba122415eb5481c8bfd43396fbe99a8bd1b7fd5325b225baa05fef7538f",
+      "symbols": []
+    },
+    "vendor/lib/libadsp_default_listener.so": {
+      "elf_machine": 40,
+      "needed": [
+        "liblog.so",
+        "libadsprpc.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [
+        "    3b4 adsp_default_listener_start",
+        "    503 libadsp_default_listener.so",
+        "    5e0 '\":;./\\createstaticpd:",
+        "    5f8 '\":;./\\attachguestos",
+        "    62a vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:64::Error: 0x%x: NULL != name",
+        "    685 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:91:Error 0x%x: %s exiting",
+        "    6dc vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:79::Error: 0x%x: 0 < poll(&pfd, 1, -1)",
+        "    740 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:80::Error: 0x%x: 0 == eventfd_read(pfd.fd, &event)",
+        "    7b0 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:73::error: 0x%x: 0 == (nErr = remote_handle_open(ITRANSPORT_PREFIX \"geteventfd\", (remote_handle*)&pfd.fd))",
+        "    858 adsp_default_listener_start",
+        "    874 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:68::Error: 0x%x: !setenv(\"ADSP_LISTENER_MEM_CACHE_SIZE\", \"1048576\", 0)",
+        "    8f8 adsp_default_listener",
+        "    90e vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:71::error: 0x%x: 0 == (nErr = adsp_default_listener_register())",
+        "    98b vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:67:adsp_default_listener_start started",
+        "    9f7 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:69::error: 0x%x: 0 == (nErr = remote_handle_open(name, &fd))",
+        "    a71 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:70::error: 0x%x: 0 == (nErr = remote_handle_open(\"adsp_default_listener\", &listener_fd))",
+        "    b07 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:58::Error: 0x%x: NULL != name"
+      ],
+      "source_sha256": "2971816acbe4ae49cbdd3362d9eae7d36702faabd962ec7f0a40264de2565fb4",
+      "symbols": [
+        {
+          "defined": false,
+          "name": "remote_handle_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "adsp_default_listener_start",
+          "type": "FUNC"
+        }
+      ]
+    },
+    "vendor/lib/libadsprpc.so": {
+      "elf_machine": 40,
+      "needed": [
+        "libhidlbase.so",
+        "libhardware.so",
+        "libutils.so",
+        "vendor.qti.hardware.dsp@1.0.so",
+        "liblog.so",
+        "libc.so",
+        "libcutils.so",
+        "libdmabufheap.so",
+        "libvmmem.so",
+        "libc++.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [
+        "  1003c '\":;./\\createstaticpd",
+        "  1eb71 '\":;./\\attachguestos"
+      ],
+      "source_sha256": "e7c7d84f4f1767c9dd9f9ef149ba1a34acd6ac0d35695d3d15416cc7851caab0",
+      "symbols": [
+        {
+          "defined": true,
+          "name": "remote_handle_control",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle64_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle64_control",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle64_invoke_async",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle64_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle_invoke_async",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle64_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle_close",
+          "type": "FUNC"
+        }
+      ]
+    },
+    "vendor/lib/libegis_fp_normal_sensor_test.so": {
+      "elf_machine": 40,
+      "needed": [
+        "liblog.so",
+        "libc.so",
+        "libm.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "4c38b7e11d77611ff8f9a591d4abf02eef2bae48eb6cc35387a47664a7660206",
+      "symbols": []
+    },
+    "vendor/lib/libqfp_sensortest.so": {
+      "elf_machine": 40,
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "cba27e1cbf592a948d542ff7e937527eb0d6ded1e50851e3cb2d28c06db58b72",
+      "symbols": []
+    },
+    "vendor/lib/libsensorlistener.so": {
+      "elf_machine": 40,
+      "needed": [
+        "libbase.so",
+        "libcutils.so",
+        "libutils.so",
+        "libsensorndkbridge.so",
+        "liblog.so",
+        "libhardware.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "8bbf7e1cd724df69a510d424ec71027023aec6f70ee3efdc967f542f3a619b8b",
+      "symbols": []
+    },
+    "vendor/lib/libsensorndkbridge.so": {
+      "elf_machine": 40,
+      "needed": [
+        "libbase.so",
+        "libhidlbase.so",
+        "libutils.so",
+        "android.frameworks.sensorservice@1.0.so",
+        "android.hardware.sensors@1.0.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "1fe201506bcd6e56955f7b60bd81eeb57d2aa39fa2e9e187bc5ad9377454874e",
+      "symbols": []
+    },
+    "vendor/lib/libsensorslog.so": {
+      "elf_machine": 40,
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "11fade82195bcce21ba669194dfd98bcd054bc4dbbe23260a67f823d8b669bf0",
+      "symbols": []
+    },
+    "vendor/lib/libsfp_sensor.so": {
+      "elf_machine": 40,
+      "needed": [
+        "libbase.so",
+        "libcutils.so",
+        "libutils.so",
+        "libbinder_ndk.so",
+        "libhardware.so",
+        "libsfp_teegw.so",
+        "android.hardware.biometrics.fingerprint-V2-ndk.so",
+        "android.hardware.biometrics.common-V2-ndk.so",
+        "vendor.samsung.hardware.biometrics.fingerprint-V1-ndk.so",
+        "libsynaFpSensorTestNwd.so",
+        "libegis_fp_normal_sensor_test.so",
+        "libgf_in_system_lib.so",
+        "libqfp_sensortest.so",
+        "liblog.so",
+        "libcrypto.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "735802015d7a548127405886263514ece45ac1b0dd3d7792dba07cc2335b1df5",
+      "symbols": []
+    },
+    "vendor/lib/libsns_api.so": {
+      "elf_machine": 40,
+      "needed": [
+        "libnanopb.so",
+        "libqmi_common_so.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "12df607923b1dff38ed6f58197a432b4ec81442a46166608c5aadbd1aa80ee8e",
+      "symbols": [
+        {
+          "defined": true,
+          "name": "sns_std_sensor_physical_config_event_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_suid_sensor_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_attr_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_client_event_msg_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_client_request_msg_suspend_config_client_proc_type_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_suid_sensor_suid_high_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_request_is_passive_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_attr_event_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_error_event_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_threshold_client_config_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_request_batch_spec_max_batch_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_sensor_event_status_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_suid_event_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_client_request_msg_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_suid_sensor_suid_low_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_request_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_resampler_client_config_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_debug_resp_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_suid_req_default_only_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_client_request_msg_suspend_config_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_attr_value_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_client_request_msg_suspend_config_delivery_type_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_suid_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_request_batch_spec_flush_only_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_request_batch_spec_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_attr_req_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_debug_resp_partial_resp_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_debug_resp_binary_data_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_sensor_config_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_client_event_msg_sns_client_event_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_sensor_config_event_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_attr_value_data_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_suid_req_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_sensor_event_fields",
+          "type": "OBJECT"
+        }
+      ]
+    },
+    "vendor/lib/libsns_device_mode_stub.so": {
+      "elf_machine": 40,
+      "needed": [
+        "liblog.so",
+        "libc.so",
+        "libutils.so",
+        "libcutils.so",
+        "libcdsprpc.so",
+        "libc++.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "12f957b75bce612b9efdf8e9dc9f4fb6eb67d6df043efc791838a566d29d0716",
+      "symbols": [
+        {
+          "defined": false,
+          "name": "remote_handle64_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_device_mode_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_device_mode_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_device_mode_set",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_device_mode_slim",
+          "type": "OBJECT"
+        }
+      ]
+    },
+    "vendor/lib/libsns_direct_channel_stub.so": {
+      "elf_machine": 40,
+      "needed": [
+        "liblog.so",
+        "libc.so",
+        "libutils.so",
+        "libcutils.so",
+        "libcdsprpc.so",
+        "libc++.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "0dff64181bfa6867bb398ff53b43dabb00bdfc4f16119e19ebc98f650ee49cc2",
+      "symbols": [
+        {
+          "defined": false,
+          "name": "remote_handle64_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_direct_channel_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_direct_channel_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_direct_channel_create",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_direct_channel_config",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_direct_channel_delete",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_direct_channel_slim",
+          "type": "OBJECT"
+        }
+      ]
+    },
+    "vendor/lib/libsns_dynamic_loader_stub.so": {
+      "elf_machine": 40,
+      "needed": [
+        "liblog.so",
+        "libc.so",
+        "libutils.so",
+        "libcutils.so",
+        "libcdsprpc.so",
+        "libc++.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [
+        "    350 sns_dynamic_loader_open",
+        "    37d sns_dynamic_loader_close",
+        "    3ac sns_dynamic_loader_load_library",
+        "    3cc sns_dynamic_loader_load_sensor",
+        "    3eb sns_dynamic_loader_unload",
+        "    434 sns_dynamic_loader_slim",
+        "    4e4 libsns_dynamic_loader_stub.so"
+      ],
+      "source_sha256": "0c8d759583ae26c823c6b6f8d752760b9d8ad9b4be690e196ae30c6fe9764b49",
+      "symbols": [
+        {
+          "defined": false,
+          "name": "remote_handle64_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_dynamic_loader_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_dynamic_loader_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_dynamic_loader_load_library",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_dynamic_loader_load_sensor",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_dynamic_loader_unload",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_dynamic_loader_slim",
+          "type": "OBJECT"
+        }
+      ]
+    },
+    "vendor/lib/libsns_registry_skel.so": {
+      "elf_machine": 40,
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "53cb8a9f0814d9f6ee341d1b3f7178e3907d758d06799f7f7941ac7efbb00d8e",
+      "symbols": [
+        {
+          "defined": true,
+          "name": "sns_registry_get_property",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_registry_skel_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_registry_slim",
+          "type": "OBJECT"
+        }
+      ]
+    },
+    "vendor/lib/libsns_remote_proc_state_stub.so": {
+      "elf_machine": 40,
+      "needed": [
+        "liblog.so",
+        "libc.so",
+        "libutils.so",
+        "libcutils.so",
+        "libcdsprpc.so",
+        "libc++.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [
+        "    2d8 sns_remote_proc_state_open",
+        "    308 sns_remote_proc_state_close",
+        "    33a sns_remote_proc_state_set_time_offset",
+        "    383 sns_remote_proc_state_slim",
+        "    420 libsns_remote_proc_state_stub.so"
+      ],
+      "source_sha256": "9e578d1db28f6a13878a0b6b206580d2719ab930ae73c1d48ff2a440d2fcf862",
+      "symbols": [
+        {
+          "defined": false,
+          "name": "remote_handle64_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_remote_proc_state_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_remote_proc_state_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_remote_proc_state_set_time_offset",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_remote_proc_state_slim",
+          "type": "OBJECT"
+        }
+      ]
+    },
+    "vendor/lib/libsnsapi.so": {
+      "elf_machine": 40,
+      "needed": [
+        "libprotobuf-cpp-lite-3.9.1.so",
+        "libcutils.so",
+        "libutils.so",
+        "libqmi_common_so.so",
+        "libqmi_cci.so",
+        "libqmi_encdec.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "64b85442a066d293e84625d165bb7094eb1fc0eafe2cbd6918f0da6eb1b1d11b",
+      "symbols": []
+    },
+    "vendor/lib/libsnsdiaglog.so": {
+      "elf_machine": 40,
+      "needed": [
+        "libprotobuf-cpp-lite-3.9.1.so",
+        "liblog.so",
+        "libdiag.so",
+        "libsensorslog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libsnsutils.so",
+        "libssc.so",
+        "libsnsapi.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "9cb38da93d079c5e86ca39b4604227e0913ac6819f23cbb77a82a205a99ddd1f",
+      "symbols": []
+    },
+    "vendor/lib/libsnsutils.so": {
+      "elf_machine": 40,
+      "needed": [
+        "libutils.so",
+        "libcutils.so",
+        "liblog.so",
+        "libsensorslog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "32935373fb77187837556514179b21d9cee17f30d4aac6cfc15695a2d177406b",
+      "symbols": []
+    },
+    "vendor/lib/libssc.so": {
+      "elf_machine": 40,
+      "needed": [
+        "libprotobuf-cpp-lite-3.9.1.so",
+        "liblog.so",
+        "libsensorslog.so",
+        "libcutils.so",
+        "libutils.so",
+        "libqmi_common_so.so",
+        "libqmi_cci.so",
+        "libqmi_encdec.so",
+        "libsnsutils.so",
+        "libsnsapi.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [
+        "   6f91 %s:%d, failed to write sys/kernel/boot_slpi/ssr",
+        "   74fe %s:%d, failed to write sys/kernel/boot_slpi/ssr",
+        "   7991 /sys/kernel/boot_slpi/ssr"
+      ],
+      "source_sha256": "a7a86bce2969266d9a963c3299a291e64c2869d9b73bb6cf70aab0d73d8f4c6d",
+      "symbols": []
+    },
+    "vendor/lib/libssc_default_listener.so": {
+      "elf_machine": 40,
+      "needed": [
+        "liblog.so",
+        "libsdsprpc.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [
+        "    3b4 adsp_default_listener_start",
+        "    503 libssc_default_listener.so",
+        "    5e0 '\":;./\\createstaticpd:",
+        "    5f8 '\":;./\\attachguestos",
+        "    62a vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:64::Error: 0x%x: NULL != name",
+        "    685 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:91:Error 0x%x: %s exiting",
+        "    6dc vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:79::Error: 0x%x: 0 < poll(&pfd, 1, -1)",
+        "    740 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:80::Error: 0x%x: 0 == eventfd_read(pfd.fd, &event)",
+        "    7b0 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:73::error: 0x%x: 0 == (nErr = remote_handle_open(ITRANSPORT_PREFIX \"geteventfd\", (remote_handle*)&pfd.fd))",
+        "    858 adsp_default_listener_start",
+        "    874 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:68::Error: 0x%x: !setenv(\"ADSP_LISTENER_MEM_CACHE_SIZE\", \"1048576\", 0)",
+        "    8f8 adsp_default_listener",
+        "    90e vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:71::error: 0x%x: 0 == (nErr = adsp_default_listener_register())",
+        "    98b vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:67:adsp_default_listener_start started",
+        "    9f7 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:69::error: 0x%x: 0 == (nErr = remote_handle_open(name, &fd))",
+        "    a71 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:70::error: 0x%x: 0 == (nErr = remote_handle_open(\"adsp_default_listener\", &listener_fd))",
+        "    b07 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:58::Error: 0x%x: NULL != name"
+      ],
+      "source_sha256": "b25080fd0d0ce39807ca0e9260bdea2f43308bceff49c4a8367a6ccfc6c12757",
+      "symbols": [
+        {
+          "defined": false,
+          "name": "remote_handle_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "adsp_default_listener_start",
+          "type": "FUNC"
+        }
+      ]
+    },
+    "vendor/lib/sensors.grip.so": {
+      "elf_machine": 40,
+      "needed": [
+        "liblog.so",
+        "libcutils.so",
+        "libutils.so",
+        "libfmq.so",
+        "libhidlbase.so",
+        "libhardware.so",
+        "android.hardware.sensors@2.0.so",
+        "android.hardware.sensors@2.0-ScopedWakelock.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "742eee6c70383c65ac823ae1774838a67cb21ce3a5d3e05e2b38e84f18d282bc",
+      "symbols": []
+    },
+    "vendor/lib/sensors.ssc.so": {
+      "elf_machine": 40,
+      "needed": [
+        "libsns_direct_channel_stub.so",
+        "libcdsprpc.so",
+        "libprotobuf-cpp-lite-3.9.1.so",
+        "liblog.so",
+        "libsnsapi.so",
+        "libssc.so",
+        "libsnsdiaglog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libsensorslog.so",
+        "libhardware.so",
+        "libhidlbase.so",
+        "android.hardware.sensors@2.0.so",
+        "android.hardware.sensors@2.1.so",
+        "android.hardware.sensors@2.0-ScopedWakelock.so",
+        "android.hardware.graphics.mapper@4.0.so",
+        "vendor.qti.hardware.display.mapper@4.0.so",
+        "libsnsutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [
+        "  2d2f6 /sys/kernel/boot_slpi",
+        "  2f0f7 '\":;./\\createstaticpd:sensorspd&_dom=sdsp",
+        "  3089c '\":;./\\createstaticpd:sensorspd&_dom=adsp"
+      ],
+      "source_sha256": "9a654fcbadcd5e0dbabba8d7ddc14c7d424cb32ac414de1abcfac3b402ed44ca",
+      "symbols": [
+        {
+          "defined": false,
+          "name": "sns_direct_channel_create",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "sns_direct_channel_delete",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "sns_direct_channel_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "sns_direct_channel_config",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "sns_direct_channel_close",
+          "type": "FUNC"
+        }
+      ]
+    },
+    "vendor/lib64/android.frameworks.sensorservice@1.0.so": {
+      "elf_machine": 183,
+      "needed": [
+        "android.hardware.sensors@1.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "3af77da56cddf56ab75fa5c2e5dd08e73dae81a3a509970eb2cfbf0132a65174",
+      "symbols": []
+    },
+    "vendor/lib64/android.hardware.sensors@1.0.so": {
+      "elf_machine": 183,
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "eb1f7eab50ffed04217912dcd0547d51b99bdafda3d2ab50421640e0fc19c5d3",
+      "symbols": []
+    },
+    "vendor/lib64/android.hardware.sensors@2.0-ScopedWakelock.so": {
+      "elf_machine": 183,
+      "needed": [
+        "android.hardware.sensors@1.0.so",
+        "android.hardware.sensors@2.0.so",
+        "android.hardware.sensors@2.1.so",
+        "libbase.so",
+        "libcutils.so",
+        "libfmq.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libpower.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "b99bac3b79b48af13eb2524c57e8f34b97b53a456f886224766f3eb485982d36",
+      "symbols": []
+    },
+    "vendor/lib64/android.hardware.sensors@2.0.so": {
+      "elf_machine": 183,
+      "needed": [
+        "android.hardware.sensors@1.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "ae820d018973c668fc8639e0b35af991fd8b34f50779a114cf50413109170714",
+      "symbols": []
+    },
+    "vendor/lib64/android.hardware.sensors@2.1.so": {
+      "elf_machine": 183,
+      "needed": [
+        "android.hardware.sensors@1.0.so",
+        "android.hardware.sensors@2.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "434b7f5faa8ae96cfede49a3523ac3e17a3bf9411febd58a83dfb5e405f07ea7",
+      "symbols": []
+    },
+    "vendor/lib64/hw/sensors.dynamic_sensor_hal.so": {
+      "elf_machine": 183,
+      "needed": [
+        "libhidparser.so",
+        "android.hardware.sensors@2.0.so",
+        "android.hardware.sensors@2.0-ScopedWakelock.so",
+        "android.hardware.sensors@2.1.so",
+        "libhidlbase.so",
+        "libbase.so",
+        "libcutils.so",
+        "liblog.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "ea327ed493cfb24fbb3619d85774e1f1fe55fec42520e8ebc3e8f63baa339b97",
+      "symbols": []
+    },
+    "vendor/lib64/libadsp_default_listener.so": {
+      "elf_machine": 183,
+      "needed": [
+        "liblog.so",
+        "libadsprpc.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [
+        "    60c adsp_default_listener_start",
+        "    762 libadsp_default_listener.so",
+        "    97d vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:64::Error: 0x%x: NULL != name",
+        "    9d8 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:91:Error 0x%x: %s exiting",
+        "    a2f vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:79::Error: 0x%x: 0 < poll(&pfd, 1, -1)",
+        "    a93 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:80::Error: 0x%x: 0 == eventfd_read(pfd.fd, &event)",
+        "    b03 '\":;./\\createstaticpd:",
+        "    b1a vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:73::error: 0x%x: 0 == (nErr = remote_handle_open(ITRANSPORT_PREFIX \"geteventfd\", (remote_handle*)&pfd.fd))",
+        "    bcd adsp_default_listener_start",
+        "    be9 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:68::Error: 0x%x: !setenv(\"ADSP_LISTENER_MEM_CACHE_SIZE\", \"1048576\", 0)",
+        "    c6d adsp_default_listener",
+        "    c83 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:71::error: 0x%x: 0 == (nErr = adsp_default_listener_register())",
+        "    d00 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:67:adsp_default_listener_start started",
+        "    d6c vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:69::error: 0x%x: 0 == (nErr = remote_handle_open(name, &fd))",
+        "    de6 '\":;./\\attachguestos",
+        "    dfb vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:70::error: 0x%x: 0 == (nErr = remote_handle_open(\"adsp_default_listener\", &listener_fd))",
+        "    e91 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:58::Error: 0x%x: NULL != name"
+      ],
+      "source_sha256": "e80ca007306edb362473d88c999c97f8ff80e80ff3b783a50d6464220df5082b",
+      "symbols": [
+        {
+          "defined": false,
+          "name": "remote_handle_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "adsp_default_listener_start",
+          "type": "FUNC"
+        }
+      ]
+    },
+    "vendor/lib64/libadsprpc.so": {
+      "elf_machine": 183,
+      "needed": [
+        "libhidlbase.so",
+        "libhardware.so",
+        "libutils.so",
+        "vendor.qti.hardware.dsp@1.0.so",
+        "liblog.so",
+        "libc.so",
+        "libcutils.so",
+        "libdmabufheap.so",
+        "libvmmem.so",
+        "libc++.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [
+        "  10d25 '\":;./\\createstaticpd",
+        "  1f890 '\":;./\\attachguestos"
+      ],
+      "source_sha256": "6d47664a1db9ed85fd354992a38b9d707729913bbecd685790e9f5d0025db7aa",
+      "symbols": [
+        {
+          "defined": true,
+          "name": "remote_handle_control",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle64_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle64_control",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle64_invoke_async",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle64_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle_invoke_async",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle64_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "remote_handle_close",
+          "type": "FUNC"
+        }
+      ]
+    },
+    "vendor/lib64/libegis_fp_normal_sensor_test.so": {
+      "elf_machine": 183,
+      "needed": [
+        "liblog.so",
+        "libc.so",
+        "libm.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "80505b738f3552cd9abe0d5c1a5dfd658ee0a2de650ddc7db26cbb1022274a3b",
+      "symbols": []
+    },
+    "vendor/lib64/libnetmgr_sscm3.so": {
+      "elf_machine": 183,
+      "needed": [
+        "libdsutils.so",
+        "libconfigdb.so",
+        "libdiag.so",
+        "libcutils.so",
+        "liblog.so",
+        "libnetmgr.so",
+        "libnetmgr_common.so",
+        "libnlnetmgr.so",
+        "libqmiservices.so",
+        "libqmi_common_so.so",
+        "libqmi_cci.so",
+        "libqmi_client_helper.so",
+        "libqmi.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "7836745e00623070bfd96b5483e69b19cc3252b4cf3043149f68daf80ab2dc1d",
+      "symbols": []
+    },
+    "vendor/lib64/libqfp_sensortest.so": {
+      "elf_machine": 183,
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "f599cead7c5a966cc1cb592265e921c9dd3118e784a1ecd29cf21722b2e91cd3",
+      "symbols": []
+    },
+    "vendor/lib64/libsensorlistener.so": {
+      "elf_machine": 183,
+      "needed": [
+        "libbase.so",
+        "libcutils.so",
+        "libutils.so",
+        "libsensorndkbridge.so",
+        "liblog.so",
+        "libhardware.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "5a517fd63cd7069f8b3274e2aa8553828a81ab4f3435aa489e9cd114afe24a09",
+      "symbols": []
+    },
+    "vendor/lib64/libsensorndkbridge.so": {
+      "elf_machine": 183,
+      "needed": [
+        "libbase.so",
+        "libhidlbase.so",
+        "libutils.so",
+        "android.frameworks.sensorservice@1.0.so",
+        "android.hardware.sensors@1.0.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "4e6874e56c708200f909df97cc56d6ef9b8d4d4275c0a923e4c8591ece3b94df",
+      "symbols": []
+    },
+    "vendor/lib64/libsensorslog.so": {
+      "elf_machine": 183,
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "ee552259ed845b6f3d0952804fa1d3c20f566698b965624d215b4f273cbc6934",
+      "symbols": []
+    },
+    "vendor/lib64/libsfp_sensor.so": {
+      "elf_machine": 183,
+      "needed": [
+        "libbase.so",
+        "libcutils.so",
+        "libutils.so",
+        "libbinder_ndk.so",
+        "libhardware.so",
+        "libsfp_teegw.so",
+        "android.hardware.biometrics.fingerprint-V2-ndk.so",
+        "android.hardware.biometrics.common-V2-ndk.so",
+        "vendor.samsung.hardware.biometrics.fingerprint-V1-ndk.so",
+        "libsynaFpSensorTestNwd.so",
+        "libegis_fp_normal_sensor_test.so",
+        "libgf_in_system_lib.so",
+        "libqfp_sensortest.so",
+        "liblog.so",
+        "libcrypto.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "abba8b59621f1f8e7e6bcd5be676290ee1727baa829fe2f538c1a26b3e8f9e7c",
+      "symbols": []
+    },
+    "vendor/lib64/libsns_api.so": {
+      "elf_machine": 183,
+      "needed": [
+        "libnanopb.so",
+        "libqmi_common_so.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "9bac50399d1bca2373a50c225a2958af872e7a619deb859728583242b730bfc8",
+      "symbols": [
+        {
+          "defined": true,
+          "name": "sns_std_sensor_physical_config_event_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_suid_sensor_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_attr_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_client_event_msg_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_client_request_msg_suspend_config_client_proc_type_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_suid_sensor_suid_high_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_request_is_passive_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_attr_event_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_error_event_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_threshold_client_config_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_request_batch_spec_max_batch_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_sensor_event_status_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_suid_event_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_client_request_msg_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_suid_sensor_suid_low_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_request_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_resampler_client_config_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_debug_resp_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_suid_req_default_only_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_client_request_msg_suspend_config_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_attr_value_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_client_request_msg_suspend_config_delivery_type_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_suid_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_request_batch_spec_flush_only_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_request_batch_spec_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_attr_req_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_debug_resp_partial_resp_default",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_debug_resp_binary_data_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_sensor_config_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_client_event_msg_sns_client_event_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_sensor_config_event_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_attr_value_data_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_suid_req_fields",
+          "type": "OBJECT"
+        },
+        {
+          "defined": true,
+          "name": "sns_std_sensor_event_fields",
+          "type": "OBJECT"
+        }
+      ]
+    },
+    "vendor/lib64/libsns_device_mode_stub.so": {
+      "elf_machine": 183,
+      "needed": [
+        "liblog.so",
+        "libc.so",
+        "libutils.so",
+        "libcutils.so",
+        "libcdsprpc.so",
+        "libc++.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "4879a9fa96fc02519b4fc33e652052944a8512388445abeb2df9f52c79f79c77",
+      "symbols": [
+        {
+          "defined": false,
+          "name": "remote_handle64_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_device_mode_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_device_mode_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_device_mode_set",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_device_mode_slim",
+          "type": "OBJECT"
+        }
+      ]
+    },
+    "vendor/lib64/libsns_direct_channel_stub.so": {
+      "elf_machine": 183,
+      "needed": [
+        "liblog.so",
+        "libc.so",
+        "libutils.so",
+        "libcutils.so",
+        "libcdsprpc.so",
+        "libc++.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "29cf3ca070f6bbaedc8fad1070715570d3f1958007bc10f3dc8b8843cde84d23",
+      "symbols": [
+        {
+          "defined": false,
+          "name": "remote_handle64_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_direct_channel_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_direct_channel_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_direct_channel_create",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_direct_channel_config",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_direct_channel_delete",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_direct_channel_slim",
+          "type": "OBJECT"
+        }
+      ]
+    },
+    "vendor/lib64/libsns_dynamic_loader_stub.so": {
+      "elf_machine": 183,
+      "needed": [
+        "liblog.so",
+        "libc.so",
+        "libutils.so",
+        "libcutils.so",
+        "libcdsprpc.so",
+        "libc++.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [
+        "    510 sns_dynamic_loader_open",
+        "    53d sns_dynamic_loader_close",
+        "    56c sns_dynamic_loader_load_library",
+        "    58c sns_dynamic_loader_load_sensor",
+        "    5ab sns_dynamic_loader_unload",
+        "    5f4 sns_dynamic_loader_slim",
+        "    67c libsns_dynamic_loader_stub.so"
+      ],
+      "source_sha256": "7ad443458f14b22ea1bff68386fd58f846c1f1af1dee7a9a1d4b5ca67fb28019",
+      "symbols": [
+        {
+          "defined": false,
+          "name": "remote_handle64_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_dynamic_loader_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_dynamic_loader_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_dynamic_loader_load_library",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_dynamic_loader_load_sensor",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_dynamic_loader_unload",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_dynamic_loader_slim",
+          "type": "OBJECT"
+        }
+      ]
+    },
+    "vendor/lib64/libsns_registry_skel.so": {
+      "elf_machine": 183,
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "f6e767e564a2fb7e2631ca3a96b51adebe94a9a663fc731b53c333397cca7632",
+      "symbols": [
+        {
+          "defined": true,
+          "name": "sns_registry_get_property",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_registry_skel_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_registry_slim",
+          "type": "OBJECT"
+        }
+      ]
+    },
+    "vendor/lib64/libsns_remote_proc_state_stub.so": {
+      "elf_machine": 183,
+      "needed": [
+        "liblog.so",
+        "libc.so",
+        "libutils.so",
+        "libcutils.so",
+        "libcdsprpc.so",
+        "libc++.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [
+        "    498 sns_remote_proc_state_open",
+        "    4c8 sns_remote_proc_state_close",
+        "    4fa sns_remote_proc_state_set_time_offset",
+        "    543 sns_remote_proc_state_slim",
+        "    5ce libsns_remote_proc_state_stub.so"
+      ],
+      "source_sha256": "36c25412ec24a4fc30ee7333e2f37d5506a2c671ebe5bb190e03caa23421c535",
+      "symbols": [
+        {
+          "defined": false,
+          "name": "remote_handle64_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_remote_proc_state_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_remote_proc_state_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_remote_proc_state_set_time_offset",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "sns_remote_proc_state_slim",
+          "type": "OBJECT"
+        }
+      ]
+    },
+    "vendor/lib64/libsnsapi.so": {
+      "elf_machine": 183,
+      "needed": [
+        "libprotobuf-cpp-lite-3.9.1.so",
+        "libcutils.so",
+        "libutils.so",
+        "libqmi_common_so.so",
+        "libqmi_cci.so",
+        "libqmi_encdec.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "a328b1b55d2c14d9529bc67fa32cb115220bf9bf90bc58db412c2e6cde09ed95",
+      "symbols": []
+    },
+    "vendor/lib64/libsnsdiaglog.so": {
+      "elf_machine": 183,
+      "needed": [
+        "libprotobuf-cpp-lite-3.9.1.so",
+        "liblog.so",
+        "libdiag.so",
+        "libsensorslog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libsnsutils.so",
+        "libssc.so",
+        "libsnsapi.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "bbc1b84080c8d87f0b9a340510553060d6ae09962a35d4f73d8bcb3a8c2074bf",
+      "symbols": []
+    },
+    "vendor/lib64/libsnsutils.so": {
+      "elf_machine": 183,
+      "needed": [
+        "libutils.so",
+        "libcutils.so",
+        "liblog.so",
+        "libsensorslog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "3d542d674814442dfb490b0af3011343e611e280fd1689b3055ef619516879d4",
+      "symbols": []
+    },
+    "vendor/lib64/libssc.so": {
+      "elf_machine": 183,
+      "needed": [
+        "libprotobuf-cpp-lite-3.9.1.so",
+        "liblog.so",
+        "libsensorslog.so",
+        "libcutils.so",
+        "libutils.so",
+        "libqmi_common_so.so",
+        "libqmi_cci.so",
+        "libqmi_encdec.so",
+        "libsnsutils.so",
+        "libsnsapi.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [
+        "   7fa9 %s:%d, failed to write sys/kernel/boot_slpi/ssr",
+        "   8516 %s:%d, failed to write sys/kernel/boot_slpi/ssr",
+        "   89a9 /sys/kernel/boot_slpi/ssr"
+      ],
+      "source_sha256": "54d9bb31fbd581cc957d748469d072edbb2ae477bc79814ddaf0f143e69e212e",
+      "symbols": []
+    },
+    "vendor/lib64/libssc_default_listener.so": {
+      "elf_machine": 183,
+      "needed": [
+        "liblog.so",
+        "libsdsprpc.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [
+        "    60c adsp_default_listener_start",
+        "    762 libssc_default_listener.so",
+        "    97d vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:64::Error: 0x%x: NULL != name",
+        "    9d8 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:91:Error 0x%x: %s exiting",
+        "    a2f vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:79::Error: 0x%x: 0 < poll(&pfd, 1, -1)",
+        "    a93 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:80::Error: 0x%x: 0 == eventfd_read(pfd.fd, &event)",
+        "    b03 '\":;./\\createstaticpd:",
+        "    b1a vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:73::error: 0x%x: 0 == (nErr = remote_handle_open(ITRANSPORT_PREFIX \"geteventfd\", (remote_handle*)&pfd.fd))",
+        "    bcd adsp_default_listener_start",
+        "    be9 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:68::Error: 0x%x: !setenv(\"ADSP_LISTENER_MEM_CACHE_SIZE\", \"1048576\", 0)",
+        "    c6d adsp_default_listener",
+        "    c83 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:71::error: 0x%x: 0 == (nErr = adsp_default_listener_register())",
+        "    d00 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:67:adsp_default_listener_start started",
+        "    d6c vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:69::error: 0x%x: 0 == (nErr = remote_handle_open(name, &fd))",
+        "    de6 '\":;./\\attachguestos",
+        "    dfb vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:70::error: 0x%x: 0 == (nErr = remote_handle_open(\"adsp_default_listener\", &listener_fd))",
+        "    e91 vendor/qcom/proprietary/adsprpc/src/adsp_default_listener.c:58::Error: 0x%x: NULL != name"
+      ],
+      "source_sha256": "c615dd9bda3c7a908d3938d8b3d433669becc423277f2c220ad786dab63ba2ed",
+      "symbols": [
+        {
+          "defined": false,
+          "name": "remote_handle_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle_invoke",
+          "type": "FUNC"
+        },
+        {
+          "defined": true,
+          "name": "adsp_default_listener_start",
+          "type": "FUNC"
+        }
+      ]
+    },
+    "vendor/lib64/sensors.grip.so": {
+      "elf_machine": 183,
+      "needed": [
+        "liblog.so",
+        "libcutils.so",
+        "libutils.so",
+        "libfmq.so",
+        "libhidlbase.so",
+        "libhardware.so",
+        "android.hardware.sensors@2.0.so",
+        "android.hardware.sensors@2.0-ScopedWakelock.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [],
+      "source_sha256": "c7d39a7a89de1b031505a723141b80ab14cc06c54a4b6162f2ed672f22f5ebc2",
+      "symbols": []
+    },
+    "vendor/lib64/sensors.ssc.so": {
+      "elf_machine": 183,
+      "needed": [
+        "libsns_direct_channel_stub.so",
+        "libcdsprpc.so",
+        "libprotobuf-cpp-lite-3.9.1.so",
+        "liblog.so",
+        "libsnsapi.so",
+        "libssc.so",
+        "libsnsdiaglog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libsensorslog.so",
+        "libhardware.so",
+        "libhidlbase.so",
+        "android.hardware.sensors@2.0.so",
+        "android.hardware.sensors@2.1.so",
+        "android.hardware.sensors@2.0-ScopedWakelock.so",
+        "android.hardware.graphics.mapper@4.0.so",
+        "vendor.qti.hardware.display.mapper@4.0.so",
+        "libsnsutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "sns_related_strings": [
+        "  2f44b /sys/kernel/boot_slpi",
+        "  31232 '\":;./\\createstaticpd:sensorspd&_dom=sdsp",
+        "  3299b '\":;./\\createstaticpd:sensorspd&_dom=adsp"
+      ],
+      "source_sha256": "5720eee25dfece057ac0388f92a7ed6975289668202017200d42b66767ea80bc",
+      "symbols": [
+        {
+          "defined": false,
+          "name": "sns_direct_channel_create",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "sns_direct_channel_delete",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "sns_direct_channel_open",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "remote_handle64_close",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "sns_direct_channel_config",
+          "type": "FUNC"
+        },
+        {
+          "defined": false,
+          "name": "sns_direct_channel_close",
+          "type": "FUNC"
+        }
+      ]
+    }
+  },
+  "llvm_version": "Ubuntu LLVM version 21.1.8\n  Optimized build.\n",
+  "sensor_acceptance": false,
+  "symbol_policy": "summary: sns_/remote_handle/adsp_default_listener prefixes; complete dynsym retained in compressed readelf"
+}
