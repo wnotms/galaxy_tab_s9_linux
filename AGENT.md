@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 SSC_INIT_INPUT_REPLAY_BYTES_MATCH_NOT_SENSOR_ACCEPTANCE.
+New offline389 namespace:7/7 actual initialization byte hashes match native/stock;
+6/7 closed+ack sessions, config329B/fd2 unclosed in bounded capture, complete:false.
+178/178 registry replay retained; no DSP parsing/rootcause/SSC/rotation proof.
+114 affected host tests PASS/0skip, including8 new exact-path/lifecycle cases;
+no daemon/kernel build/fulltests/Actions. Original389 raw/verdict/seal unchanged.
+ShortADB read same370 boot0f360b00/GDMactive/ADSPoffline/RPCinactive,100%31.8C.
+No device mutation/registry reset/guessed selectors/chargingUSBinput changes.
+Next firmware initialization/selected semantics/exactX710 prerequisite source;
+no unchanged physical startup replay. PPS/pump/DCCOFF, goalunfinished.
+See reference/desktop-bringup/ssc-init-inputs/RESULTS.md.
+
 2026-10-10 TEST389_COMPLETE_RPC_CONTENT_SSC_ABSENT_RESTORED370.
 One candidate3117b421 afterbddd8192;1030sensorcalls strictframesPASS,774391B.
 178/178 actualreturned registry hashes/closed+ackPASS,35statPASS,0capacity mismatch.

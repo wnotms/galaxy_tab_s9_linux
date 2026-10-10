@@ -339,6 +339,84 @@ class RegistryContentsTests(unittest.TestCase):
         with self.assertRaises(ValueError): self.result()
 
 
+class InitializationContentsTests(unittest.TestCase):
+    def setUp(self):
+        self.path = '/sys/devices/soc0/soc_id'
+        self.data = b'519\n'
+        self.expected = {self.path: {'bytes': len(self.data),
+                                    'sha256': hashlib.sha256(self.data).hexdigest()}}
+        self.calls = []
+        self.open(self.path)
+        self.add(4, [struct.pack('<II', 4, 32)],
+                 [struct.pack('<II', 4, 1), self.data + b'X' * 28])
+        self.add(3, [struct.pack('<I', 4)], [])
+
+    add = RegistryContentsTests.add
+
+    def open(self, path):
+        self.add(19, [b'\0' * 16, b'ADSP_LIBRARY_PATH\0', b';\0',
+                      path.encode() + b'\0', b'r\0'], [struct.pack('<I', 4)])
+
+    def result(self):
+        return E.file_contents({'complete': True, 'streams': [
+            {'unit': 'hexagonrpcd-adsp-sensorspd.service', 'calls': self.calls,
+             'pending_final_call': None}]}, self.expected)
+
+    def test_exact_input_and_padding(self):
+        result = self.result()
+        self.assertTrue(result['complete'], result)
+        self.assertEqual(result['expected_files'], 1)
+        self.assertEqual(result['sessions'][0]['returned_bytes'], 4)
+        self.assertFalse(result['DSP_content_parsing_proved'])
+
+    def test_version_marker_parent_alias(self):
+        path = '/mnt/vendor/persist/sensors/registry/sns_reg_version'
+        self.expected = {path: next(iter(self.expected.values()))}
+        self.calls[0]['response_to']['buffers_hex'][3] = (
+            '/mnt/vendor/persist/sensors/registry/registry/../sns_reg_version\0').encode().hex()
+        self.assertTrue(self.result()['complete'])
+
+    def test_other_path_cannot_substitute_expected_input(self):
+        self.calls[0]['response_to']['buffers_hex'][3] = b'/sys/devices/soc0/other\0'.hex()
+        self.assertFalse(self.result()['complete'])
+
+    def test_matching_bytes_without_close_are_not_completed_session(self):
+        self.calls.pop()
+        result = self.result()
+        self.assertFalse(result['complete'])
+        self.assertTrue(result['sessions'][0]['returned_bytes_match'])
+        self.assertFalse(result['sessions'][0]['content_matches'])
+
+    def test_missing_failed_unacknowledged_and_corrupt_inputs(self):
+        original = copy.deepcopy(self.calls)
+        for mode in ('missing', 'failed-open', 'failed-read', 'pending-close', 'corrupt'):
+            self.calls = copy.deepcopy(original)
+            if mode == 'missing': self.calls = []
+            elif mode == 'failed-open': self.calls[0]['status'] = 1
+            elif mode == 'failed-read': self.calls[1]['status'] = 1
+            elif mode == 'pending-close': self.calls[2]['transport_return'] = None
+            else: self.calls[1]['returned_buffers_hex'][1] = (b'520\n' + b'X' * 28).hex()
+            with self.subTest(mode=mode): self.assertFalse(self.result()['complete'])
+
+    def test_unrelated_open_reusing_tracked_descriptor_is_fault(self):
+        self.open('/unrelated')
+        self.calls.insert(1, self.calls.pop())
+        self.assertFalse(self.result()['complete'])
+
+    def test_manifest_requires_canonical_absolute_paths_and_real_lengths(self):
+        original = copy.deepcopy(self.expected)
+        for path in ('relative', '/sys/devices/soc0/../soc_id'):
+            self.expected = {path: next(iter(original.values()))}
+            with self.subTest(path=path), self.assertRaises(ValueError): self.result()
+        self.expected = original
+        self.expected[self.path]['bytes'] = True
+        with self.assertRaises(ValueError): self.result()
+
+    def test_empty_manifest_is_not_success(self):
+        self.expected = {}
+        self.assertFalse(self.result()['complete'])
+
+
 class ReturnBudgetV2Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

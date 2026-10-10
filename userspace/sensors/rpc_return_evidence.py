@@ -176,6 +176,30 @@ def registry_contents(evidence, manifest):
             raise ValueError('invalid registry manifest')
         if item['bytes']:
             expected[virtual + leaf] = item
+    result = file_contents(evidence, expected, strict_prefix=virtual)
+    result['expected_nonempty_groups'] = result.pop('expected_files')
+    return result
+
+
+def file_contents(evidence, expected, *, strict_prefix=None):
+    """Replay an exact virtual-path allowlist, including initialization inputs.
+
+    No device access or path remapping: callers supply independently qualified
+    hashes. Normalize observed paths (the stock version marker uses ../), but
+    require canonical absolute expected paths. An optional strict namespace
+    preserves the registry observer's rejection of unlisted registry files.
+    This proves returned bytes and host transport acknowledgement, not DSP use.
+    """
+    for path, item in expected.items():
+        if (not isinstance(path, str) or not path.startswith('/') or
+                posixpath.normpath(path) != path or not isinstance(item, dict) or
+                type(item.get('bytes')) is not int or item['bytes'] < 0 or
+                not isinstance(item.get('sha256'), str) or
+                not re.fullmatch('[0-9a-f]{64}', item['sha256'])):
+            raise ValueError('invalid file manifest')
+    if strict_prefix is not None and (not strict_prefix.startswith('/') or
+            posixpath.normpath(strict_prefix) + '/' != strict_prefix):
+        raise ValueError('invalid strict namespace')
     faults, sessions = [], []
     for stream in evidence['streams']:
         if stream['unit'] != 'hexagonrpcd-adsp-sensorspd.service':
@@ -194,10 +218,14 @@ def registry_contents(evidence, manifest):
                     if len(incoming) != 5 or not incoming[3].endswith(b'\0'):
                         raise ValueError('invalid open arguments')
                     path = posixpath.normpath(incoming[3][:-1].decode('utf-8'))
-                    if not path.startswith(virtual):
-                        continue
                     if path not in expected:
-                        raise ValueError('registry file absent from manifest')
+                        if strict_prefix is not None and path.startswith(strict_prefix):
+                            raise ValueError('registry file absent from manifest')
+                        if (not call['status'] and call['transport_return'] == 0 and
+                                len(outgoing) == 1 and len(outgoing[0]) == 4 and
+                                struct.unpack('<I', outgoing[0])[0] in live):
+                            raise ValueError('tracked descriptor reused by unrelated open')
+                        continue
                     if call['status'] or call['transport_return'] != 0 or len(outgoing) != 1 or len(outgoing[0]) != 4:
                         raise ValueError('registry open response unsuccessful/unacknowledged')
                     fd, = struct.unpack('<I', outgoing[0])
@@ -237,14 +265,15 @@ def registry_contents(evidence, manifest):
         session['returned_bytes'] = len(data)
         session['returned_sha256'] = hashlib.sha256(data).hexdigest()
         reference = expected[session['path']]
-        session['content_matches'] = (session['closed'] and session['read_calls'] > 0
-                                      and len(data) == reference['bytes']
-                                      and session['returned_sha256'] == reference['sha256'])
+        session['returned_bytes_match'] = (session['read_calls'] > 0
+                                          and len(data) == reference['bytes']
+                                          and session['returned_sha256'] == reference['sha256'])
+        session['content_matches'] = session['closed'] and session['returned_bytes_match']
         if not session['content_matches']:
             faults.append({'path': session['path'], 'reason': 'partial/unclosed/mismatched registry content'})
     missing = sorted(set(expected) - {s['path'] for s in sessions})
     return {'complete': bool(expected) and evidence['complete'] and not faults and not missing,
-            'expected_nonempty_groups': len(expected), 'observed_sessions': len(sessions),
+            'expected_files': len(expected), 'observed_sessions': len(sessions),
             'missing': missing, 'faults': faults, 'sessions': sessions,
             'DSP_content_parsing_proved': False, 'SSC_publication_proved': False}
 

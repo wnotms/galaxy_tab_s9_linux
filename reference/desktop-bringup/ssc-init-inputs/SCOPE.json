@@ -1,0 +1,15 @@
+{
+  "device_mutation": false,
+  "kernel_build": {
+    "executed": false,
+    "reason": "only host parser/tests and offline evidence changed; unchanged Test389 artifacts reused"
+  },
+  "full_regression": {
+    "executed": false,
+    "reason": "affected parser and consumers executed directly under current owner workflow"
+  },
+  "github_actions": false,
+  "protected_tree_changes": [],
+  "original_evidence_changes": [],
+  "hardware_result": "sensor publication remains absent in prior Test389; no new physical sensor test"
+}
