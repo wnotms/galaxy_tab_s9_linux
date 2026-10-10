@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-11 SSC_NATIVE_PROVIDER_OBSERVER_HOST_QUALIFIED_NOT_DEPLOYED.
+Independent smp2p_trace.py reusesunchanged382 geometry/identity/stop/watch,
+tennativeevents/ownedgts9_ssc_provider/no filter, verifiesraw/header/eightCPU
+counts/loss/localtimestamps/formats.39affectedPASS0skip (24new+15historical382),
+syntaxPASS; actual39817events lacksSMP2P observation, notfailednegotiationclaim.
+Mocksproveonlyownedtracing_on write; CDSPnotADSP, malformedrawretained/STOP.
+No kernel/DT/module/firmware/registry/USB/charging/inputchange/build/fulltests/
+routing/Actions/deviceactivation. Next separatelyregisteroneearlytext boot with
+398daemon/twoPDRsnapshots/30s andmandatory370GNOMEreturn. Notregistered399;
+SSC/sample/rotationunfinished/PPS/pump/DCCOFF. See ssc-provider-traceRESULTS.
+
 2026-10-11 SSC_SMP2P_SOURCE_BOUNDARY_AND_NATIVE_TRACE_CAPABILITY_RECORDED.
 Read-only same0171a6e6 GNOME/ADB healthy;100%34.2C4.445V/ADSPoffline.
 ActualstockDT/downstream sleepstate bit12 agrees with signedfirmware names;

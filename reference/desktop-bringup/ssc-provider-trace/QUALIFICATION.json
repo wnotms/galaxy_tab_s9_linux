@@ -1,0 +1,27 @@
+{
+  "verdict": "HOST_QUALIFIED_NOT_DEPLOYED",
+  "source_hashes": {
+    "userspace/sensors/smp2p_trace.py": "41d09024b097ab871d7acafce442ed06d90200f76fae46548dba0f9091d055ac",
+    "userspace/sensors/glink_trace_382.py": "21a3ca57f89ca760439d30cb8896bf1aac40059247e2cd17e6064b9534f74303",
+    "tests/test_smp2p_trace.py": "6918bbfa67d9518422b4711c3f810555b789084203ac20390d4959e735a55527",
+    "tests/test_glink_trace_382.py": "bb124aa07849de3b467e25fb32e2575c121079640a5ee83035355377e38a1bd9",
+    "reference/desktop-bringup/ssc-smp2p-initialization/trace-capability.stdout": "f4e22c36d8d0354069de8acf3c7d5aa77ce06f7e48d3b0861e8165b52198c379",
+    ".work/linux-mainline/drivers/soc/qcom/trace-smp2p.h": "59c5b9e6838e9d426557b38363008456c9ae70813ce21fd77c3e140051f4f45b",
+    ".work/linux-mainline/kernel/trace/trace_output.c": "4fa9a5b2ad62fcfcf7819c4b216fe6bad0caf08e35886325bb0ab8abfab519f8",
+    "reference/boot-tests/test-398-readdir-initialization/runtime-discovery/glink-complete.json": "5e58a7a6eabe7b257cf54adf2d05a751618c682702926519fcbdb7550448cf83"
+  },
+  "host_tests": "HOST_TESTS.json",
+  "new_tests": 24,
+  "reused_geometry_tests": 15,
+  "syntax_checked": [
+    "userspace/sensors/smp2p_trace.py",
+    "tests/test_smp2p_trace.py"
+  ],
+  "kernel_build_executed": false,
+  "routing_changed": false,
+  "device_activated": false,
+  "kernel_changed": false,
+  "new_instance": "gts9_ssc_provider",
+  "early_event_filter": "none; actual device attribution in derived evidence",
+  "hardware_acceptance": false
+}
