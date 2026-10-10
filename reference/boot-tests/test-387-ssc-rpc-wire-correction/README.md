@@ -65,3 +65,15 @@ Freeze inputs, stage/verify all files, commit and push origin/test before the
 physical attempt. `host_flow.py run` performs preflight/install/discover once and
 mandatory recovery. A negative result requires new source/evidence analysis,
 not another identical60s wait or a rootcause assertion from this repair.
+
+## Admission revision 2 — physical connection restored
+
+The original read-only preflight stopped with ADB device absent; no installation,
+partition write, reboot or RPC start occurred. Its command, stderr and STOP remain
+unchanged, with original registration/seal archived in admission-revision-01.
+The owner replied “已接电脑”; ADB now enumerates the same accepted Test370 boot
+d8654881. This external connection change permits a new fresh admission check
+before the still-unexecuted single physical candidate. No source, artifact,
+safety gate, observation window or attempt limit changes. If fresh admission
+fails, stop again. Host tests executed:false for this documentation amendment;
+reuse the unchanged 60 qualified checks.

@@ -98,6 +98,13 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST387_READONLY_ADB_ABSENCE_STOP_CONNECTION_RESTORED.
+Original preflight STOP retained; zero writes/reboots/RPC/candidate attempts.
+Owner reconnected PC USB; ADB same370 bootd8654881/GDMactive/84%31C.
+Admission revision2 only, unchanged artifacts/60tests/safety; fresh preflight
+required before the single pending candidate. Not hardwarePASS/no automaticretry.
+
+
 2026-10-10 TEST387_CORRECTED_RPC_STARTUP_REGISTERED_NOT_DEPLOYED.
 Compose qualifiedwire repair with unchangedstat observer: 55exactARM64sources,
 onlyiobuffer.c differs from acceptedstat, daemon94e943f9/library1be44d2funchanged.

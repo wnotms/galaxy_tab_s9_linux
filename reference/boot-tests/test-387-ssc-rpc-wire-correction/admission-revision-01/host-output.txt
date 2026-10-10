@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-387-ssc-rpc-wire-correction/host_flow.py", line 651, in <module>
+    preflight(); install(); result=discover()
+    ~~~~~~~~~^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-387-ssc-rpc-wire-correction/host_flow.py", line 255, in preflight
+    d = snapshot(rec, 'current-state', 'baseline')
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-387-ssc-rpc-wire-correction/host_flow.py", line 178, in snapshot
+    raw, _ = rec.adb(name, CAPTURE, timeout=15)
+             ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/production_reboot_stability.py", line 160, in adb
+    return self.command(name, [ADB, "-s", SERIAL, "shell", script], timeout, required)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/production_reboot_stability.py", line 156, in command
+    raise CaptureError(f"{name}: status={status}; {stderr[-300:]!r}")
+production_reboot_stability.CaptureError: current-state: status=1; b"* daemon not running; starting now at tcp:5037\r\n* daemon started successfully\r\nadb.exe: device 'gts9wifi-0001' not found\r\n"
