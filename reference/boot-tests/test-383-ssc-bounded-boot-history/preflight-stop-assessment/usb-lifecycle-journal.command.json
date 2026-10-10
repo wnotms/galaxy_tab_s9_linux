@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "journalctl -b -u gts9-usb-typec-lifecycle -u gts9-adbd --no-pager -o json"
+  ],
+  "ended_utc": "2026-10-10T01:16:03.715465+00:00",
+  "started_utc": "2026-10-10T01:15:55.919814+00:00",
+  "status": 0
+}

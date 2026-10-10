@@ -385,5 +385,35 @@ class BoundedBootHistoryTests(unittest.TestCase):
         self.assertEqual(H.PLAN['ssc_readiness_seconds'],60)
 
 
+
+class ClosedBaselineErrorTests(unittest.TestCase):
+    def setUp(self):
+        self.guard = H.load('ssc383_closed_baseline', ROOT / 'reference/boot-tests/test-371-usb-lifecycle-gmu/host_flow.py')
+        self.before = [json.loads(x) for x in (R / 'enrollment-kernel.txt').read_text().splitlines()]
+        self.closed = [json.loads(x) for x in (R / 'enrollment-r2-kernel.txt').read_text().splitlines()]
+
+    def test_original_preflight_error_remains_rejected(self):
+        with self.assertRaisesRegex(ValueError, 'new kernel error'):
+            self.guard.health(self.closed, self.before, {})
+
+    def test_exact_closed_history_can_be_enrolled_without_wildcard(self):
+        self.assertEqual(self.guard.health(self.closed, self.closed, {}), [])
+        changed = copy.deepcopy(self.closed)
+        changed[-1]['MESSAGE'] += ' changed'
+        with self.assertRaisesRegex(ValueError, 'baseline missing or changed'):
+            self.guard.health(changed, self.closed, {})
+
+    def test_future_same_message_error_is_still_failure(self):
+        old = {x['__CURSOR'] for x in self.before}
+        error = next(x for x in self.closed if x['__CURSOR'] not in old and int(x['PRIORITY']) <= 3)
+        later = dict(error, __CURSOR='new-future-row', __MONOTONIC_TIMESTAMP='99999999999')
+        with self.assertRaisesRegex(ValueError, 'new kernel error'):
+            self.guard.health(self.closed + [later], self.closed, {})
+
+    def test_cpu_signature_cannot_be_enrolled(self):
+        cpu = dict(self.closed[-1], MESSAGE='Kernel panic: CPU non-responsive', __CURSOR='cpu-fault')
+        with self.assertRaisesRegex(ValueError, 'CPU/panic signature'):
+            self.guard.health(self.closed + [cpu], self.closed + [cpu], {})
+
 if __name__ == '__main__':
     unittest.main()

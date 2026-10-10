@@ -1,0 +1,52 @@
+{
+  "revision": 2,
+  "reason": "Closed observed dequeue rejection; current ADB/USB healthy, no future error waiver",
+  "physical_attempts_before_amendment": 0,
+  "device_configuration_changed": false,
+  "source_path": ".work/build/linux-src-x710-charging/drivers/usb/dwc3/gadget.c",
+  "source_sha256": "8b8f9a7e96e1d09e13242f75849cfd997ee8a4ee88243f6d4803627119c2e4e6",
+  "source_function": "dwc3_gadget_ep_dequeue",
+  "source_return": "-EINVAL",
+  "trigger_cause": "UNKNOWN: no trace proving the caller or timing race",
+  "observed_boot_id": "23798bfb-fa61-4fac-8468-f656a8340969",
+  "exact_new_priority3_rows": [
+    {
+      "__CURSOR": "s=0e9cc8651fa34ae5875adb1b7f906071;i=118136;b=23798bfbfa614fac8468f656a8340969;m=2438d3d2;t=65d6b875f6c43;x=b0d9facaeca98ce6",
+      "__SEQNUM": "1147190",
+      "_KERNEL_DEVICE": "+platform:a600000.usb",
+      "__REALTIME_TIMESTAMP": "1791566274325571",
+      "_TRANSPORT": "kernel",
+      "SYSLOG_IDENTIFIER": "kernel",
+      "_UDEV_SYSNAME": "a600000.usb",
+      "SYSLOG_FACILITY": "0",
+      "MESSAGE": "dwc3-qcom a600000.usb: request 00000000e47eab21 was not queued to ep0out",
+      "_SOURCE_MONOTONIC_TIMESTAMP": "607707317",
+      "__MONOTONIC_TIMESTAMP": "607704018",
+      "PRIORITY": "3",
+      "_KERNEL_SUBSYSTEM": "platform",
+      "__SEQNUM_ID": "0e9cc8651fa34ae5875adb1b7f906071",
+      "_SOURCE_BOOTTIME_TIMESTAMP": "607707317",
+      "_BOOT_ID": "23798bfbfa614fac8468f656a8340969",
+      "_RUNTIME_SCOPE": "system",
+      "_MACHINE_ID": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+      "_HOSTNAME": "gts9"
+    }
+  ],
+  "ongoing_USB_failure": false,
+  "current_windows_Code43": false,
+  "ADB": true,
+  "failed_units": "",
+  "PPS": false,
+  "pump_ON": false,
+  "future_error_waiver": false,
+  "preflight_STOP_preserved": true,
+  "original_registration": "8263ebe2",
+  "new_baseline_path": "reference/boot-tests/test-383-ssc-bounded-boot-history/enrollment-r2-kernel.txt",
+  "new_baseline_sha256": "53d7e119ec45a01e0572478ef562c0169ddee72d0671dc733c885e76f2c3354f",
+  "Fedora_reference": {
+    "repository": "/home/ms/Samsung/gts9wifi-fedora-linux",
+    "commit": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+    "sensor_code_already_imported": true,
+    "no_new_unproven_sensor_fix": true
+  }
+}

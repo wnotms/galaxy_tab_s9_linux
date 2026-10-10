@@ -72,3 +72,19 @@ new host Python and mount shell. No full regression, kernel build or CI launch.
 Hash-bind registration, stage and verify offline; commit and push origin/test
 before any physical preflight/install. This registration does not execute a
 second candidate attempt after Test382's stop.
+
+## Admission revision 2 — before the first physical attempt
+
+The first read-only preflight stopped on one newly observed priority-3 DWC3
+EP0 dequeue rejection in accepted Test370. No flash, recovery or reboot occurred.
+Original registration/input seal and STOP/raw evidence are preserved. Source
+`dwc3_gadget_ep_dequeue` logs this exact error and returns -EINVAL for a request
+absent from cancelled/pending/started lists. The triggering caller/race is not
+proven, and this is not a USB root-cause fix. Later same-boot observation finds
+no additional severe row, root ADB works, Windows has no Code43 and no failed
+unit. Enrollment revision 2 includes only the actual cursor-bound historical
+row in a complete raw journal. The existing guard compares every baseline row
+verbatim: changed/missing rows, any later error even with the same text, or any
+CPU signature stop. No wildcard, severity reduction or future waiver is added.
+Fresh preflight is required after this amendment is committed and pushed. The
+first hardware attempt, qualified image and observation limits are unchanged.

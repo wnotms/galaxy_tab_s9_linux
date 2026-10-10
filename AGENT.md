@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST383_READONLY_STOP_PRESERVED_ADMISSION_REVISION2.
+Original preflightSTOP/newEP0dequeue row at607.704s/no flash orreboot. Source
+DWC3 dequeue unmatchedrequest returnsEINVAL; caller/raceUNKNOWN/no USBfixclaim.
+Later sameboot rootADB/WindowsCode0/no failedunit/no repeatsevere;73%33.1C.
+Originalregistration8263ebe2/inputs/seal preserved revision01; new enrollment
+exactcursor-bound historicalrow only. Futureerror evenidenticaltext/CPU/stale
+baseline stillSTOP;55affectedPASS/no skip, no kernelbuild/full/CI. Revision2
+beforefirstcandidate, freshpreflight required. PPS/pump/DCC remainOFF; unchanged
+Fedora RPC implementation/earlyvendor/helper/181 reused. Goal unfinished.
+
 2026-10-10 TEST383_BOUNDED_HISTORY_REGISTERED_NOT_DEPLOYED.
 Single host admission change: timeout8 journalctl list-boots n5, host10s;
 old boot must remain present and exactly one unique successor, no attribution

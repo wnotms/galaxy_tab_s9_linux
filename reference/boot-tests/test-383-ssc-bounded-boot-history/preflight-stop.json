@@ -1,0 +1,32 @@
+{
+  "verdict": "STOP_NEW_BASELINE_KERNEL_ERROR_NOT_DEPLOYED",
+  "preflight_folder": "preflight-1791594857983143348",
+  "error": "new kernel error; preserve first boot evidence",
+  "physical_attempts": 0,
+  "device_mutated": false,
+  "reboot_sent": false,
+  "existing_runtime": "accepted Test370 GNOME",
+  "new_error_rows": [
+    {
+      "__CURSOR": "s=0e9cc8651fa34ae5875adb1b7f906071;i=118136;b=23798bfbfa614fac8468f656a8340969;m=2438d3d2;t=65d6b875f6c43;x=b0d9facaeca98ce6",
+      "__SEQNUM": "1147190",
+      "_KERNEL_DEVICE": "+platform:a600000.usb",
+      "__REALTIME_TIMESTAMP": "1791566274325571",
+      "_TRANSPORT": "kernel",
+      "SYSLOG_IDENTIFIER": "kernel",
+      "_UDEV_SYSNAME": "a600000.usb",
+      "SYSLOG_FACILITY": "0",
+      "MESSAGE": "dwc3-qcom a600000.usb: request 00000000e47eab21 was not queued to ep0out",
+      "_SOURCE_MONOTONIC_TIMESTAMP": "607707317",
+      "__MONOTONIC_TIMESTAMP": "607704018",
+      "PRIORITY": "3",
+      "_KERNEL_SUBSYSTEM": "platform",
+      "__SEQNUM_ID": "0e9cc8651fa34ae5875adb1b7f906071",
+      "_SOURCE_BOOTTIME_TIMESTAMP": "607707317",
+      "_BOOT_ID": "23798bfbfa614fac8468f656a8340969",
+      "_RUNTIME_SCOPE": "system",
+      "_MACHINE_ID": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+      "_HOSTNAME": "gts9"
+    }
+  ]
+}
