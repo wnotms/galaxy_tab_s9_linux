@@ -1,0 +1,18 @@
+{
+  "executed": true,
+  "physical_mutation": false,
+  "failures": [
+    {
+      "gate": "new metadata mutation fixture",
+      "reason": "fixture mutated first generic DSP-library stat instead of a registered config stat",
+      "correction": "select an actual registered config stat; returned metadata mismatch remains fatal",
+      "raw": "initial-scope-failure.txt"
+    },
+    {
+      "gate": "first readonly preflight",
+      "reason": "incorrect new present-rootfs52 premise; all originalfiles absent in acceptedrootfs",
+      "correction": "53b1fdd2 separately qualified explicitabsence transaction and fresh preflight, no identity waiver",
+      "raw": "preflight-1791675638003927615/summary.json"
+    }
+  ]
+}

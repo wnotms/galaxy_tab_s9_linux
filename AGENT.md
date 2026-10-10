@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test399（原生 SMP2P provider 观察），窗口为 **Test390–Test399**；没有生成镜像的轮次仍占一轮。
+  编号为 Test400（Fedora 完整 ADSP 固件对照），窗口为 **Test391–Test400**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,23 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-11 TEST400_COMPLETE_FEDORA_ADSP_PAIR_REGISTERED_NOT_DEPLOYED.
+One newcomplete52firmwarepair/19differences inmatched21d289fd earlyvendor and
+recovery-createdrootfs. Same399kernel/config/DT/181/daemon/library/order/provider,
+276otherassets/calibration/PDmaps preserved. Originalrootfs52absence explicit,
+schema2transaction/newownedreadonlyprocbind/hashboundary/fullabsencereturn;
+originalpresentbackupguardunchanged. Fresh1f8302ac fullfive/181/config/notes/
+52absence/ADB/deviceNCM/noCode43/journal/healthPASS,100%33.2C4.443V.
+46scope/runtimePASS0skip/reuse94component; initialfixturewrongstat+initial
+readonlypresent-premise failures retained/corrected/no safetywaiver.
+Newfirmware callbackcounts observed/whole-reference coveragegaps retained;
+actualmetadata/content/status/framing/readdirfaults fatal; old399unchanged.
+Commit/push registrationbeforemutation; one30s/twoPDRcycles/15sreturn,
+mandatoryoriginal52absence/370vendor/normalGNOME. No unchangedretry/liveADSP
+restart/kernelbuild/fullrun/routing/Actions. Physicalprocbind/PAS/SSC/samples/
+rotationUNTESTED.391–400/current400+399comparisonprovider+370rollback.
+PPS/pump/DCCOFF/4.44float unchanged. See400README/QUALIFICATION.
 
 2026-10-11 FEDORA_ADSP_ORIGINAL_ROOTFS_ABSENCE_CONFIRMED_TRANSACTION_EXTENDED.
 First400draft readonlypreflight stopped: assumedoriginal52rootfiles allabsent,

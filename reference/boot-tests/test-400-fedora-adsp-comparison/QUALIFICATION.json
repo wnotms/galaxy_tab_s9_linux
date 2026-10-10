@@ -1,0 +1,35 @@
+{
+  "component_qualification": "reference/desktop-bringup/ssc-fedora-adsp-absent-rootfs/QUALIFICATION.json",
+  "component_reused_tests": 94,
+  "device_mutation": false,
+  "executed": true,
+  "firmware_PAS_tested": false,
+  "full_tests_executed": false,
+  "host_tests": {
+    "errors": 0,
+    "executed": true,
+    "failures": 0,
+    "patterns": [
+      "test_ssc_fedora_firmware_scope.py",
+      "test_ssc_fedora_firmware_runtime.py"
+    ],
+    "seconds": 1.818915272999675,
+    "skips": 0,
+    "success": true,
+    "tests": 46
+  },
+  "kernel_build_executed": false,
+  "physical_proc_bind_qualified": false,
+  "preflight_active": "preflight-1791676007464030601",
+  "registration_source_before_commit": "53b1fdd23d2cfdc281d67a0e9dbe8ee173527ed5",
+  "routing_changed": false,
+  "source_sha256": {
+    "reference/boot-tests/test-400-fedora-adsp-comparison/callback_evidence.py": "c65c76e832b838ac6898f85ca73943b96b3e3bd30f8656389b2fb9d560e87f19",
+    "reference/boot-tests/test-400-fedora-adsp-comparison/desktop.py": "0ac21f303e1a2c1c62eb0e0db697863fc2acce773cb698bda4c967d002ec213c",
+    "reference/boot-tests/test-400-fedora-adsp-comparison/host_flow.py": "9b5e6ecf3585fb0e8b6f4b9cbe855c9aabd82e70de06aef2cdcd3b104c441a2e",
+    "reference/boot-tests/test-400-fedora-adsp-comparison/runtime.py": "43ac09518ee3d1f1ca4e2a34069711d5e4dae1381220002ea64edcccdd7ab198",
+    "tests/test_ssc_fedora_firmware_runtime.py": "4ec05e12afe0520375bdd6235ffdbc6feba9796efe345c6c9a0656c2f623d97c",
+    "tests/test_ssc_fedora_firmware_scope.py": "6671f5083080f904ba773bc0ce573abfadabfce4a11db9615773cb353d2d7443"
+  },
+  "verdict": "REGISTERED_HOST_FLOW_QUALIFIED_NOT_HARDWARE_RESULT"
+}
