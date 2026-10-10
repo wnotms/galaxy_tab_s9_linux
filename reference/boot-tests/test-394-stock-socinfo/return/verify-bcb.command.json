@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "dd if=/dev/block/by-name/misc bs=2048 count=1 2>/dev/null | od -An -v -tx1"
+  ],
+  "ended_utc": "2026-10-10T14:25:33.534837+00:00",
+  "started_utc": "2026-10-10T14:25:33.450968+00:00",
+  "status": 0
+}

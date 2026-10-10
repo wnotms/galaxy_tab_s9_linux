@@ -1,0 +1,24 @@
+{
+  "SSC_verified": false,
+  "differences": {},
+  "expected": {
+    "hw_platform": "MTP\n",
+    "platform_subtype": "Unknown\n",
+    "platform_subtype_id": "0\n",
+    "platform_version": "65536\n",
+    "soc_id": "519\n"
+  },
+  "native_boot_id": "b8af4759-1bd2-444e-b33f-e8a0b1a81c86",
+  "observed": {
+    "hw_platform": "MTP\n",
+    "platform_subtype": "Unknown\n",
+    "platform_subtype_id": "0\n",
+    "platform_version": "65536\n",
+    "soc_id": "519\n"
+  },
+  "recovery_boot_id": "f4d3264c-cb14-4a57-9213-6da6494f05f2",
+  "rotation_verified": false,
+  "sensor_verified": false,
+  "source": "X710 TWRP Samsung socinfo sysfs; recovery, not Android boot",
+  "verdict": "STOCK_SOCINFO_EXACT_MATCH"
+}

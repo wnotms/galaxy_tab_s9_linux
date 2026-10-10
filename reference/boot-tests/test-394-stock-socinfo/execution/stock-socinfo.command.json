@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e\nprintf 'begin\t'; cat /proc/sys/kernel/random/boot_id\nprintf 'device\t'; getprop ro.product.device\nprintf 'kernel\t'; uname -r\nprintf 'uid\t'; id -u\nfor name in soc_id hw_platform platform_subtype platform_subtype_id platform_version; do\n    test -f /sys/devices/soc0/$name\n    printf '%s\t' \"$name\"\n    od -An -v -tx1 /sys/devices/soc0/$name | tr -d ' \n'\n    printf '\n'\ndone\nprintf 'end\t'; cat /proc/sys/kernel/random/boot_id\n"
+  ],
+  "ended_utc": "2026-10-10T14:25:32.967801+00:00",
+  "started_utc": "2026-10-10T14:25:32.646441+00:00",
+  "status": 0
+}

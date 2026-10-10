@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST394_ACTUAL_STOCK_SOCINFO_MATCH_UNCHANGED370_RETURNED.
+OneBCBrecoveryroundtrip: actualSamsungTWRPf4d3264c soc_id519/hwMTP/subtype
+Unknown/subtype_id0/platform_version65536 allfivebytesmatch nativeb8af4759.
+NoDSP/RPC/image/module/rootfs/registry/config/USB/charging/inputchange; only
+2048BCBrequest/clear/readback. Normal26754f29 exactfive/config/notes/GDM/palm/
+ADB/deviceNCM/no failedunit/CPU/newseverefault returned;100%31.4C4.446V.
+181hashes verifiedbefore, no modulewrite. Original393 and394registrationseals
+unchanged. Results-onlyexecuted:false/reuse53affected; no build/fullrun/Actions.
+NoWindowsstage/newimage; PPS/pump/DCCOFF. NotAndroidboot/SSC/sample/rotation
+proof. Next SNS/FastRPC/platform dependency comparison, notSoCvalueguess/replay.
+See394RESULTS; migrationgoalunfinished.
+
 2026-10-10 TEST394_STOCK_RECOVERY_SOCINFO_REGISTERED_NOT_EXECUTED.
 After393 twoUPsnapshots/noSSC, compare actual fiveSamsung recoverysysfs values
 withfresh nativeSoC mapping. One ordinaryBCBrecoveryroundtrip, unchanged370,
