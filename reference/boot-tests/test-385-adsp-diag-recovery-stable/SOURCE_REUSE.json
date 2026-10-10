@@ -1,0 +1,14 @@
+{
+  "base_runner_sha256": "242f1060f6fb6ea88cc9c310e692caf2d814e6b7c4f623f24acaa5053b85ee9e",
+  "base_runner_source": "reference/boot-tests/test-384-adsp-diag-handshake/core.py",
+  "derived_core_sha256": "7d537ab7bb18ff339ba755a01fad463b56386fe4b39fcf3c5c8009dec3c928ac",
+  "fault_evidence": "bounded device-list/kernel snapshot before cleanup, first capture never retried/overwritten",
+  "functional_change": "three same-boot recovery snapshots over8s before transfer/remount; separate exact registered probe ledger; no failed-command retry",
+  "kernel_build_executed": false,
+  "module_build": "reference/desktop-bringup/ssc-rpmsg-control/BUILD.json",
+  "module_build_executed": false,
+  "module_build_sha256": "b20f99328a6d199986624ae3b50bc7d28c45ea322231202b66299a174e402dd3",
+  "original_STOP_unchanged": "reference/boot-tests/test-384-adsp-diag-handshake/RESULTS.md",
+  "shared_trace_instance": "gts9_test382",
+  "vendor_packaging_executed": false
+}

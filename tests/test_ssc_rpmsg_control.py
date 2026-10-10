@@ -164,4 +164,27 @@ class ProviderCRCTests(unittest.TestCase):
             with self.assertRaises(ValueError):B.imported_versions(Path('module.ko'), self.sym)
 
 
+class LedgerNamespaceTests(unittest.TestCase):
+    def test_original_namespace_default_preserved(self):
+        with patch.object(Path, 'is_dir', return_value=True), patch.object(Path, 'is_symlink', return_value=False):
+            D.admit_ledger({}, Path('/run/gts9-test384/probe.json'))
+
+    def test_new_registered_namespace_is_exact(self):
+        with patch.object(Path, 'is_dir', return_value=True), patch.object(Path, 'is_symlink', return_value=False):
+            D.admit_ledger({'ledger_directory': '/run/gts9-test385'}, Path('/run/gts9-test385/probe.json'))
+            with self.assertRaises(ValueError):
+                D.admit_ledger({'ledger_directory': '/run/gts9-test385'}, Path('/run/gts9-test384/probe.json'))
+
+    def test_foreign_escaped_or_invalid_namespace_rejected(self):
+        for owner in ('/tmp/gts9-test385', '/run/gts9-test385/../other', '/run/gts9-test385/', None, 385):
+            with self.assertRaises(ValueError):
+                D.admit_ledger({'ledger_directory': owner}, Path('/run/gts9-test385/probe.json'))
+
+    def test_missing_symlink_parent_or_other_filename_rejected(self):
+        for directory, symlink, filename in ((False, False, 'probe.json'), (True, True, 'probe.json'), (True, False, 'another.json')):
+            with patch.object(Path, 'is_dir', return_value=directory), patch.object(Path, 'is_symlink', return_value=symlink):
+                with self.assertRaises(ValueError):
+                    D.admit_ledger({}, Path('/run/gts9-test384') / filename)
+
+
 if __name__ == '__main__':unittest.main()

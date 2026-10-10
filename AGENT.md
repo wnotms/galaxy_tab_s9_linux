@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test384（ADSP DIAG 握手登记），窗口为 **Test375–Test384**；没有生成镜像的轮次仍占一轮。
+  编号为 Test385（恢复连接稳定门禁登记），窗口为 **Test376–Test385**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,19 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-10 TEST385_RECOVERY_STABLE_DIAG_REGISTERED_NOT_DEPLOYED.
+After384 firstclosed beforeinstall/restored37056bddde7, new actual correction:
+three exactTWRP/recovery/root/sameboot samples over8s beforeinstallation and
+cleanup,30s gate; first failed action not retried. Bounded firstdevice-list/
+kernel evidence beforecleanup, no overwrite. This is transport admission,
+not USBrootcausefix/guarantee. New exact385probe ledger/default384 preserved.
+86affectedhostPASS/0skip+syntax; exact370 Image/config/DTB/181, nativecontrol
+module32CRC and382/383vendor reused/no build/fulltests/CI. OneDIAG handshake,
+15sdevice/19shost/1sread64KiB/zero writes or masks/RPC; no liveunload/reopen.
+Freshbaseline enrollment new1normalrow/no severefault; no future USBwaiver.
+Alwaysrestore370normalGNOME; PPS/pump/DCCOFF, noSSC/rotation acceptance.
+Goalunfinished; register/push before onephysical attempt. See385README.
 
 2026-10-10 TEST384_RECOVERY_ADB_CLOSED_BEFORE_INSTALL_RESTORED370.
 Registered ac338abb/2aa764bc;50 affected host PASS/0skip. One TWRP entry,

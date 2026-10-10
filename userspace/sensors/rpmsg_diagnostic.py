@@ -36,6 +36,15 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
+def admit_ledger(plan, ledger):
+    owner = plan.get('ledger_directory', '/run/gts9-test384')
+    if not isinstance(owner, str) or not re.fullmatch(r'/run/gts9-test[0-9]{3,5}', owner):
+        raise ValueError('invalid registered ledger namespace')
+    if (ledger != Path(owner) / 'probe.json' or not ledger.parent.is_dir() or
+            ledger.parent.is_symlink()):
+        raise ValueError('not the registered runner-owned ledger directory')
+
+
 class Native:
     def admit(self, plan):
         boot = Path('/proc/sys/kernel/random/boot_id').read_text().strip()
@@ -175,8 +184,7 @@ if __name__ == '__main__':
     if os.geteuid() != 0:
         raise ValueError('registered native device operation requires root')
     plan = json.loads(args.plan.read_text())
-    if args.ledger.parent != Path('/run/gts9-test384') or not args.ledger.parent.is_dir() or args.ledger.parent.is_symlink():
-        raise ValueError('not the registered runner-owned ledger directory')
+    admit_ledger(plan, args.ledger)
     result = probe(plan, Native(), args.ledger)
     print(json.dumps(result))
     raise SystemExit(0 if result['complete'] else 1)
