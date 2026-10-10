@@ -1,0 +1,77 @@
+{
+  "boot_id": "26ad9a13-4f2d-4a9a-a42f-9c8c7491027d",
+  "rpmsg": [
+    {
+      "driver": "/sys/bus/rpmsg/drivers/qcom_smd_qrtr",
+      "dst": "0xffffffff",
+      "modalias": "rpmsg:IPCRTR",
+      "name": "IPCRTR",
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.IPCRTR.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.IPCRTR.-1.-1",
+      "src": "0x0"
+    },
+    {
+      "driver": null,
+      "dst": "0xffffffff",
+      "modalias": "rpmsg:LOOPBACK_CTL_LPASS",
+      "name": "LOOPBACK_CTL_LPASS",
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.LOOPBACK_CTL_LPASS.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.LOOPBACK_CTL_LPASS.-1.-1",
+      "src": "0xffffffff"
+    },
+    {
+      "driver": null,
+      "dst": "0xffffffff",
+      "modalias": "of:NgprT(null)Cqcom,gpr",
+      "name": "adsp_apps",
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.adsp_apps.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.adsp_apps.-1.-1",
+      "src": "0xffffffff"
+    },
+    {
+      "driver": "/sys/bus/rpmsg/drivers/qcom,fastrpc",
+      "dst": "0xffffffff",
+      "modalias": "of:NfastrpcT(null)Cqcom,fastrpc",
+      "name": "fastrpcglink-apps-dsp",
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.fastrpcglink-apps-dsp.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.fastrpcglink-apps-dsp.-1.-1",
+      "src": "0x0"
+    },
+    {
+      "driver": null,
+      "dst": "0xffffffff",
+      "modalias": "rpmsg:mhi_sat",
+      "name": "mhi_sat",
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.mhi_sat.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.mhi_sat.-1.-1",
+      "src": "0xffffffff"
+    },
+    {
+      "driver": null,
+      "dst": "0xffffffff",
+      "modalias": "rpmsg:pcie_drv",
+      "name": "pcie_drv",
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.pcie_drv.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.pcie_drv.-1.-1",
+      "src": "0xffffffff"
+    },
+    {
+      "driver": "/sys/bus/rpmsg/drivers/rpmsg_ctrl",
+      "dst": "0x0",
+      "modalias": "rpmsg:rpmsg_ctrl",
+      "name": "rpmsg_ctrl",
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.rpmsg_ctrl.0.0",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.rpmsg_ctrl.0.0",
+      "src": "0x0"
+    },
+    {
+      "driver": null,
+      "dst": "0xffffffff",
+      "modalias": "rpmsg:sleepmonglink-apps-adsp",
+      "name": "sleepmonglink-apps-adsp",
+      "path": "/sys/bus/rpmsg/devices/6800000.remoteproc:glink-edge.sleepmonglink-apps-adsp.-1.-1",
+      "resolved": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.sleepmonglink-apps-adsp.-1.-1",
+      "src": "0xffffffff"
+    }
+  ]
+}

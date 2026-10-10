@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "chroot /mnt/debian /usr/bin/journalctl --directory=/var/log/journal -u hexagonrpcd-adsp-rootpd -u hexagonrpcd-adsp-sensorspd -u gts9-glink-test386.service _BOOT_ID=26ad9a134f2d4a9aa42f9c8c7491027d -o json --no-pager"
+  ],
+  "ended_utc": "2026-10-10T02:53:56.227426+00:00",
+  "started_utc": "2026-10-10T02:53:56.139246+00:00",
+  "status": 0
+}

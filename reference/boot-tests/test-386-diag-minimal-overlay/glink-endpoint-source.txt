@@ -1,0 +1,37 @@
+Linux7.2-rc3 drivers/rpmsg/qcom_glink_native.c SHA256 14a1b55234934beba5d9166c6113fd7064df45d14c91ac084c06cc4ca0ffc34e
+static struct rpmsg_endpoint *qcom_glink_create_ept(struct rpmsg_device *rpdev,
+						    rpmsg_rx_cb_t cb,
+						    void *priv,
+						    struct rpmsg_channel_info
+									chinfo)
+{
+	struct glink_channel *parent = to_glink_channel(rpdev->ept);
+	struct glink_channel *channel;
+	struct qcom_glink *glink = parent->glink;
+	struct rpmsg_endpoint *ept;
+	const char *name = chinfo.name;
+	int cid;
+	int ret;
+	unsigned long flags;
+
+	spin_lock_irqsave(&glink->idr_lock, flags);
+	idr_for_each_entry(&glink->rcids, channel, cid) {
+		if (!strcmp(channel->name, name))
+			break;
+	}
+	spin_unlock_irqrestore(&glink->idr_lock, flags);
+
+	if (!channel) {
+		channel = qcom_glink_create_local(glink, name);
+		if (IS_ERR(channel))
+			return NULL;
+	} else {
+		ret = qcom_glink_create_remote(glink, channel);
+		if (ret)
+			return NULL;
+	}
+
+	ept = &channel->ept;
+	ept->rpdev = rpdev;
+	ept->cb = cb;
+	ept->priv = priv;

@@ -1,0 +1,13 @@
+{"verdict": "EARLY_ADSP_NATIVE_IDENTITY_PASS", "boot_id": "26ad9a134f2d4a9aa42f9c8c7491027d"}
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import importlib.util,json; from pathlib import Path; r=Path('/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-386-diag-minimal-overlay'); s=importlib.util.spec_from_file_location('physical386',r/'host_flow.py'); h=importlib.util.module_from_spec(s); s.loader.exec_module(h); d=h.C.install(); print(json.dumps(dict(verdict=d['verdict'],boot_id=d['boot_id'])),flush=True); print(json.dumps(h.probe()),flush=True)
+                                                                                                                                                                                                                                                                                                                                                                                                                       ~~~~~~~^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-386-diag-minimal-overlay/host_flow.py", line 137, in probe
+    if error is not None:raise error
+                         ^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-386-diag-minimal-overlay/host_flow.py", line 108, in probe
+    result = diagnostic(rec, boot)
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-386-diag-minimal-overlay/host_flow.py", line 89, in diagnostic
+    raise ValueError('one DIAG helper failed/status='+str(status)+'; never retry or live-unload')
+ValueError: one DIAG helper failed/status=1; never retry or live-unload

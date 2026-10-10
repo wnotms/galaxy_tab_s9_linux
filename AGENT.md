@@ -98,6 +98,20 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST386_DIAG_ACK_ONLY_REMOTE_OPEN_ABSENT_RESTORED370.
+Registered80754a63/83affectedPASS incl12 realoverlaytransactions. StableTWRP/
+correct5fileminimaloverlay/328assets/oneearlyvendorPASS; candidate26ad9a13 exact
+config/notes/181/partitions/nativeADSP. Nativepairedcontrol loadedonce/liveIDPASS,
+oneDIAGcreate+open failedEINVAL5.22s; no payload/masks/RPC/reopen/liveunload.
+Raw2754B19/19zero8CPUloss: txOPEN DIAG3,rxACK3, no reciprocalrxOPEN. Mainline
+requiresACK+OPEN, supports second5s wait timeout/NULL->EINVAL; not firmware
+absence/SSCrootcauseproof. Firstsuspectfailed-open priority3 retained/noCLEAN.
+NoCPU/panic fault. Mandatoryexact370restore normalattributedbootd8654881,
+GNOME/palm/rootADB/usb0/fulljournal/fivepartitions/181/config/notes, ADSPoffline/
+module+ownedruntimegone.17Windowsduplicatesverifieddeleted. No moreidentical
+probe. Nextexactfirmware/DIAG initialization source comparison; sensor/rotation/
+goalunfinished,PPS/pump/DCCOFF. See386RESULTS/GLINK_ANALYSIS.
+
 2026-10-10 TEST386_MINIMAL_DIAG_OVERLAY_REGISTERED_NOT_DEPLOYED.
 Fix385 actualhostscopebug: installerALLOWED exactlyfive no-RPCmanifestpaths.
 12 realtemp-root transaction tests cover install/readbacks/restore/partialcopy/

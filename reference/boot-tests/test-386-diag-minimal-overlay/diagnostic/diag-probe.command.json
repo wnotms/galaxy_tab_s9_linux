@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "timeout --signal=TERM --kill-after=2 15 python3 /tmp/gts9-test386/rpmsg_diagnostic.py --plan /tmp/gts9-test386/diag-plan.json --ledger /run/gts9-test386/probe.json"
+  ],
+  "ended_utc": "2026-10-10T02:53:14.427694+00:00",
+  "started_utc": "2026-10-10T02:53:09.211172+00:00",
+  "status": 1
+}

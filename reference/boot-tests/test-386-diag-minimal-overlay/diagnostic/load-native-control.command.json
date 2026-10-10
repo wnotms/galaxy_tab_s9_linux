@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test ! -e /run/gts9-ssc-test/ready; test ! -e /sys/module/rpmsg_ctrl; test ! -e /sys/bus/rpmsg/drivers/rpmsg_ctrl; test ! -e /run/gts9-test386; mkdir -m700 /run/gts9-test386; insmod /tmp/gts9-test386/rpmsg_ctrl.ko"
+  ],
+  "ended_utc": "2026-10-10T02:53:09.016781+00:00",
+  "started_utc": "2026-10-10T02:53:08.931214+00:00",
+  "status": 0
+}

@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "python3 -c 'import json\nfrom pathlib import Path\np=Path('\"'\"'/sys/class/rpmsg'\"'\"')\nrows=[dict(path=str(x),resolved=str(x.resolve()),parent=str(x.resolve().parent.parent)) for x in p.glob('\"'\"'rpmsg_ctrl*'\"'\"')]\nprint(json.dumps(dict(boot_id=Path('\"'\"'/proc/sys/kernel/random/boot_id'\"'\"').read_text().strip(),controllers=rows)))'"
+  ],
+  "ended_utc": "2026-10-10T02:53:09.109539+00:00",
+  "started_utc": "2026-10-10T02:53:09.017094+00:00",
+  "status": 0
+}

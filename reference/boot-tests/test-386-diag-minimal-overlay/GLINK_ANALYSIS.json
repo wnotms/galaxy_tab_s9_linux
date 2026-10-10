@@ -1,0 +1,36 @@
+{
+  "DIAG_endpoint_complete": false,
+  "SSC_root_cause_proven": false,
+  "all_eight_cpu_loss_zero": true,
+  "boot_id": "26ad9a13-4f2d-4a9a-a42f-9c8c7491027d",
+  "events": [
+    {
+      "direction": "tx",
+      "event": "open",
+      "lcid": 3,
+      "raw": "         python3-1646    [007] .....    25.323490: qcom_glink_cmd_open: tx remote: lpass channel: DIAG[3/0]",
+      "rcid": 0,
+      "remote": "lpass"
+    },
+    {
+      "direction": "rx",
+      "event": "open_ack",
+      "lcid": 3,
+      "raw": "   systemd-udevd-452     [000] d.h..    25.323798: qcom_glink_cmd_open_ack: rx remote: lpass channel: DIAG[3/0]",
+      "rcid": 0,
+      "remote": "lpass"
+    }
+  ],
+  "helper_error": "[Errno 22] Invalid argument: '/dev/rpmsg0'",
+  "helper_status": 1,
+  "kernel_wait_model": "5s open_ack then5s open_req; observedACK/no remoteOPEN supports second wait timeout; endpoint returnsNULL then charopenmapsEINVAL",
+  "next": "compare same-firmware DIAG/SSC initialization and control channel lifecycle; do not repeat same probe or launch general mask-writing router",
+  "packet_received": false,
+  "permanent_channel_support_proven": false,
+  "protocol_writes": 0,
+  "trace_bytes": 2754,
+  "trace_clock": "local; no cross-CPU exact duration claim",
+  "trace_entries": 19,
+  "trace_entries_written": 19,
+  "verdict": "DIAG_LOCAL_OPEN_ACK_ONLY_NO_RECIPROCAL_REMOTE_OPEN"
+}

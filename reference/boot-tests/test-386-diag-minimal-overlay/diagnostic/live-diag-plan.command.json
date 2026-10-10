@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "python3 -c 'from pathlib import Path; Path('\"'\"'/tmp/gts9-test386/diag-plan.json'\"'\"').write_text('\"'\"'{\"boot_id\": \"26ad9a134f2d4a9aa42f9c8c7491027d\", \"cmdline\": \"console=tty0 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32 trace_instance=gts9_test382,qcom_glink:qcom_glink_cmd_version,qcom_glink:qcom_glink_cmd_version_ack,qcom_glink:qcom_glink_cmd_open,qcom_glink:qcom_glink_cmd_open_ack,qcom_glink:qcom_glink_cmd_close,qcom_glink:qcom_glink_cmd_close_ack trace_buf_size=128K  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277\", \"config_sha256\": \"599ca47ab41a29469c3d5830e475049fca9f33bd2ab0923ad014e5ba3fa6ec6c\", \"notes_sha256\": \"5c0e82337affafefff586613d4a84c4f1388c9716ce251fe69d3c70aad18a518\", \"module_build_id_note_sha256\": \"003068fc0a2f4a6cbf0d9792aa03be2c4a1b30ded9de5a81ddefc907639b8d95\", \"channel\": \"DIAG\", \"payload_writes\": false, \"rpmsg_parent\": \"/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/6800000.remoteproc:glink-edge/6800000.remoteproc:glink-edge.rpmsg_ctrl.0.0\", \"controller\": \"/sys/class/rpmsg/rpmsg_ctrl0\", \"ledger_directory\": \"/run/gts9-test386\"}'\"'\"')'"
+  ],
+  "ended_utc": "2026-10-10T02:53:09.210937+00:00",
+  "started_utc": "2026-10-10T02:53:09.109952+00:00",
+  "status": 0
+}

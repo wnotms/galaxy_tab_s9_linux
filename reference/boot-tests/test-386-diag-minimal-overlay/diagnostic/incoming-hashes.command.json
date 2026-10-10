@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "printf %s '4538faee7edee5153382cd2327e7da4b63651a70e34c56c0182685303c9f7154  /tmp/gts9-test386/rpmsg_ctrl.ko\n6ef083b4f4ab6123546eda18b30a40404b95c97fad5c54f4e387377c586fc6b3  /tmp/gts9-test386/rpmsg_diagnostic.py\n' | sha256sum -c -"
+  ],
+  "ended_utc": "2026-10-10T02:53:08.930959+00:00",
+  "started_utc": "2026-10-10T02:53:08.856945+00:00",
+  "status": 0
+}

@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "if test -f /mnt/debian/var/lib/gts9-test386/assets.json; then echo present; else echo absent; fi"
+  ],
+  "ended_utc": "2026-10-10T02:53:54.925368+00:00",
+  "started_utc": "2026-10-10T02:53:54.861634+00:00",
+  "status": 0
+}

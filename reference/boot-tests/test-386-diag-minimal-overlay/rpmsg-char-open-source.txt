@@ -1,0 +1,27 @@
+Linux7.2-rc3 drivers/rpmsg/rpmsg_char.c SHA256 615a16c524b749000a99444b48ef74e791eb63e5a1ff0ab739bb6e37f863e8de
+		return -EBUSY;
+	}
+
+	if (!eptdev->rpdev) {
+		mutex_unlock(&eptdev->ept_lock);
+		return -ENETRESET;
+	}
+
+	get_device(dev);
+
+	/*
+	 * If the default_ept is set, the rpmsg device default endpoint is used.
+	 * Else a new endpoint is created on open that will be destroyed on release.
+	 */
+	if (eptdev->default_ept)
+		ept = eptdev->default_ept;
+	else
+		ept = rpmsg_create_ept(rpdev, rpmsg_ept_cb, eptdev, eptdev->chinfo);
+
+	if (!ept) {
+		dev_err(dev, "failed to open %s\n", eptdev->chinfo.name);
+		put_device(dev);
+		mutex_unlock(&eptdev->ept_lock);
+		return -EINVAL;
+	}
+

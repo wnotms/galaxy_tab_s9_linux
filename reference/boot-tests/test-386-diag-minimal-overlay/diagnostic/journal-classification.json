@@ -1,0 +1,48 @@
+{
+  "fault_counts": {},
+  "first_source_timestamp": "0",
+  "known_warning_count": 42,
+  "last_source_timestamp": "30435129",
+  "qca_baudrate_warning": {
+    "classification": "bounded-per-setup-cycle",
+    "cycles": [
+      {
+        "completion_source_seconds": 4.96157,
+        "events": [],
+        "setup_source_seconds": 3.819672
+      },
+      {
+        "completion_source_seconds": 6.932034,
+        "events": [
+          {
+            "completion_source_seconds": 6.932034,
+            "event_source_seconds": 6.077865,
+            "recovery_seconds": 0.854169,
+            "row": 1068
+          }
+        ],
+        "setup_source_seconds": 6.003294
+      }
+    ],
+    "event_count": 1,
+    "event_rows": [
+      1068
+    ],
+    "setup_count": 2,
+    "state": "accepted"
+  },
+  "rows": 1108,
+  "startup_variant_counts": {
+    "boot_register_warning": 1,
+    "smmu_context_fault": 10,
+    "smmu_fsr": 10,
+    "smmu_fsynr": 10
+  },
+  "suspects": [
+    {
+      "message": "rpmsg rpmsg0: failed to open DIAG",
+      "priority": 3,
+      "row": 1108
+    }
+  ]
+}
