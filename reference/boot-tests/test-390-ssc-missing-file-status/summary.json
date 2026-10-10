@@ -1,0 +1,47 @@
+{
+  "PPS": false,
+  "SSC_service_present": false,
+  "accelerometer_probes": 21,
+  "accelerometer_sample": false,
+  "callback_status_proved": {
+    "DSP_parsing_proved": false,
+    "SSC_causality_proved": false,
+    "boot_id": "73210d4086e84c61a7444ca9c4d7da99",
+    "calls": [
+      {
+        "pid": "1787",
+        "sequence": 6,
+        "status": 69,
+        "transport_return": 0
+      }
+    ],
+    "verdict": "ONE_ACKNOWLEDGED_MISSING_FILE_STATUS69"
+  },
+  "candidate_boot": "73210d40-86e8-4c61-a744-4ca9c4d7da99",
+  "control_transport": "adb",
+  "elapsed_through_collection_and_verdict_seconds": 63.90545324300001,
+  "final_acceptance": "rollback-1791622186581515946/summary.json",
+  "full_regression": {
+    "executed": false,
+    "reason": "Results-only;32 namespace and105 callback qualification reused unchanged."
+  },
+  "github_actions": false,
+  "goal_complete": false,
+  "kernel_build": {
+    "executed": false
+  },
+  "kernel_fault_counts": {},
+  "last_probe_end_utc": "2026-10-10T08:49:42.111959+00:00",
+  "no_retry": true,
+  "physical_rotation_tested": false,
+  "pump_ON": false,
+  "raw_journal_bytes": 5274700,
+  "registered_attempts": 1,
+  "registered_query_window_seconds": 60,
+  "registry_matching_sessions": 178,
+  "restored_boot": "e43402eb08bc4528853bf5c423bd2974",
+  "runtime_start_end_utc": "2026-10-10T08:48:42.675344+00:00",
+  "stat_matching_entries": 35,
+  "trace_bytes": 2534,
+  "verdict": "STOP_STATUS69_SSC_ABSENT_RESTORED370"
+}

@@ -98,6 +98,20 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST390_STATUS69_ACK_SSC_ABSENT_RESTORED370.
+Onecandidate73210d40 after860a748a; exactoemconfigmethod19/env/rb seq6PID1787
+status69/transport0 ack; nootherfailedcallback.178registryhashes/35statPASS,
+1030sensorcalls/pendingfinalseparate. SSC400/sampleabsent21probes/60s query;
+lastprobe59.437s,63.905s includescollection/verdict. NotDSPparse/assetrequirement.
+Complete2534B17GLINK/zero8CPUloss; noCPU/newseverekernelfault. No physicalretry.
+Exact370 five/181/config/notes/8overlay/stockassets restored; normale43402eb
+GNOME/palm/ADB/deviceNCMactive,ADSPoffline. Resume100%35.3C4.446V/sameboot.
+31exactWindowsstaging225122695Bremoved.32+105host/18QEMU/2upstream reused;
+results-only executed:false/no kernelbuild/Actions. PPS/pump/DCCOFF.
+Nextfirmwareinitialization/selectedX710prerequisite; no unchanged390replay,
+no foreignoemconfig/no waitproxyvariablemix. Sensor/rotationgoalunfinished.
+See reference/boot-tests/test-390-ssc-missing-file-status/RESULTS.md.
+
 2026-10-10 TEST390_MISSING_FILE_STATUS_REGISTERED_NOT_DEPLOYED.
 One changed69callback startup comparison, notunchanged389retry; exactmethod19
 oemconfig.so/env/rb request mustack69 once, otherfailure/missingcontent STOP.
