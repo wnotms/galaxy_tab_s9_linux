@@ -1,0 +1,16 @@
+Wake a blocking default-context wait after completion on another thread.
+
+The imported wait fix blocks instead of spinning. Its condition signal wakes
+non-owner waiters, but cannot wake an owner blocked in the main context poll.
+GLib main-context wakeup also covers that completion without changing the
+result, finished flag, callback ownership, or QMI protocol.
+
+--- a/src/libssc-common.c
++++ b/src/libssc-common.c
+@@ -97,6 +97,7 @@
+ 	ctx->result = g_object_ref (result);
+ 	ctx->finished = TRUE;
+ 	g_cond_signal (&ctx->condition);
++	g_main_context_wakeup (g_main_context_default ());
+ 	g_mutex_unlock (&ctx->mutex);
+ }

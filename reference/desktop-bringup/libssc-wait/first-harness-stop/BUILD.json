@@ -1,0 +1,42 @@
+{
+  "image": "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network=none",
+    "--security-opt=no-new-privileges",
+    "-e",
+    "HOST_UID=1000",
+    "-e",
+    "HOST_GID=1000",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/ssc-sources/prepared-clean/libssc:/inputs/original:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/libssc-wait/reference:/inputs/reference:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/libssc-wait/sources:/inputs/final:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/userspace/sensors:/recipe:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/tests/fixtures:/fixtures:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/libssc-wait/build:/output",
+    "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+    "sh",
+    "/recipe/compile-libssc-wait.sh"
+  ],
+  "returncode": 1,
+  "seconds": 9.952792644500732,
+  "device_operations": false,
+  "kernel_rebuilt": false,
+  "hardware_tested": false,
+  "recipe_sha256": {
+    "userspace/sensors/libssc_wait_profile.py": "34fb4a864fca6e26bbc8df66943f89f14d17c21e1895bb05b69e0c150189a975",
+    "userspace/sensors/libssc-wait.json": "ce4f88dcf4b9cae85b02f699ab605f9df46bd49290553cffbbe589ec29896fe8",
+    "userspace/sensors/compile-libssc-wait.sh": "2f1fbdde0867d9ca9a488fb61edff6348b64a95b008af401891e25a8f37ad95a",
+    "tests/fixtures/libssc_wait_harness.c": "f8a237cb7d9d7a26192b6bc0d031578b25ec3c0da8a627c9525d7be94d203b29",
+    "tests/fixtures/run_libssc_wait.py": "59d78501af70df8c7eaae6f040a4c442aa2a85f414322a80bb468547d5560b49"
+  },
+  "successful": false
+}

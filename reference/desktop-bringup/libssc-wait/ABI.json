@@ -1,0 +1,20 @@
+{
+  "exports_identical": true,
+  "defined_export_count": 69,
+  "new_undefined_symbols": [
+    "g_cond_wait",
+    "g_main_context_acquire",
+    "g_main_context_release",
+    "g_main_context_wakeup"
+  ],
+  "removed_undefined_symbols": [],
+  "original": {
+    "path": "out/ssc-arm64/stage/usr/lib/aarch64-linux-gnu/libssc.so.2",
+    "sha256": "612ae69d03bb40c507db7368225e4dfa22c1090f1ac867399789561c25261194"
+  },
+  "candidate": {
+    "path": "out/libssc-wait/build/stage/usr/lib/aarch64-linux-gnu/libssc.so.2",
+    "sha256": "12ad645f6e5bbc52a5947f0934f3a0c6bec6c006abf1ffc8ddf63ec1af4aa54e"
+  },
+  "hardware_verified": false
+}

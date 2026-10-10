@@ -1,0 +1,287 @@
+[
+  {
+    "stage": "original",
+    "case": "owner",
+    "argv": [
+      "timeout",
+      "2",
+      "qemu-aarch64",
+      "-L",
+      "/usr/aarch64-linux-gnu",
+      "/output/wait-original",
+      "owner"
+    ],
+    "returncode": 0,
+    "stdout": "{\"polls\":29278,\"zero_polls\":29278,\"foreign_polls\":0,\"heartbeats\":5,\"finished\":true}\n",
+    "stderr": "",
+    "observation": {
+      "polls": 29278,
+      "zero_polls": 29278,
+      "foreign_polls": 0,
+      "heartbeats": 5,
+      "finished": true
+    }
+  },
+  {
+    "stage": "original",
+    "case": "foreign-completion",
+    "argv": [
+      "timeout",
+      "2",
+      "qemu-aarch64",
+      "-L",
+      "/usr/aarch64-linux-gnu",
+      "/output/wait-original",
+      "foreign-completion"
+    ],
+    "returncode": 0,
+    "stdout": "{\"polls\":43608,\"zero_polls\":43608,\"foreign_polls\":0,\"heartbeats\":0,\"finished\":true}\n",
+    "stderr": "",
+    "observation": {
+      "polls": 43608,
+      "zero_polls": 43608,
+      "foreign_polls": 0,
+      "heartbeats": 0,
+      "finished": true
+    }
+  },
+  {
+    "stage": "original",
+    "case": "unanswered",
+    "argv": [
+      "timeout",
+      "2",
+      "qemu-aarch64",
+      "-L",
+      "/usr/aarch64-linux-gnu",
+      "/output/wait-original",
+      "unanswered"
+    ],
+    "returncode": 0,
+    "stdout": "{\"polls\":29173,\"zero_polls\":29173,\"foreign_polls\":0,\"heartbeats\":5,\"finished\":false}\n",
+    "stderr": "",
+    "observation": {
+      "polls": 29173,
+      "zero_polls": 29173,
+      "foreign_polls": 0,
+      "heartbeats": 5,
+      "finished": false
+    }
+  },
+  {
+    "stage": "reference",
+    "case": "owner",
+    "argv": [
+      "timeout",
+      "2",
+      "qemu-aarch64",
+      "-L",
+      "/usr/aarch64-linux-gnu",
+      "/output/wait-reference",
+      "owner"
+    ],
+    "returncode": 0,
+    "stdout": "{\"polls\":6,\"zero_polls\":1,\"foreign_polls\":0,\"heartbeats\":4,\"finished\":true}\n",
+    "stderr": "",
+    "observation": {
+      "polls": 6,
+      "zero_polls": 1,
+      "foreign_polls": 0,
+      "heartbeats": 4,
+      "finished": true
+    }
+  },
+  {
+    "stage": "reference",
+    "case": "already",
+    "argv": [
+      "timeout",
+      "2",
+      "qemu-aarch64",
+      "-L",
+      "/usr/aarch64-linux-gnu",
+      "/output/wait-reference",
+      "already"
+    ],
+    "returncode": 0,
+    "stdout": "{\"polls\":0,\"zero_polls\":0,\"foreign_polls\":0,\"heartbeats\":0,\"finished\":true}\n",
+    "stderr": "",
+    "observation": {
+      "polls": 0,
+      "zero_polls": 0,
+      "foreign_polls": 0,
+      "heartbeats": 0,
+      "finished": true
+    }
+  },
+  {
+    "stage": "reference",
+    "case": "foreign-owner",
+    "argv": [
+      "timeout",
+      "2",
+      "qemu-aarch64",
+      "-L",
+      "/usr/aarch64-linux-gnu",
+      "/output/wait-reference",
+      "foreign-owner"
+    ],
+    "returncode": 0,
+    "stdout": "{\"polls\":2,\"zero_polls\":1,\"foreign_polls\":0,\"heartbeats\":0,\"finished\":true}\n",
+    "stderr": "",
+    "observation": {
+      "polls": 2,
+      "zero_polls": 1,
+      "foreign_polls": 0,
+      "heartbeats": 0,
+      "finished": true
+    }
+  },
+  {
+    "stage": "reference",
+    "case": "foreign-completion",
+    "argv": [
+      "timeout",
+      "2",
+      "qemu-aarch64",
+      "-L",
+      "/usr/aarch64-linux-gnu",
+      "/output/wait-reference",
+      "foreign-completion"
+    ],
+    "returncode": 124,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "stage": "final",
+    "case": "owner",
+    "argv": [
+      "timeout",
+      "2",
+      "qemu-aarch64",
+      "-L",
+      "/usr/aarch64-linux-gnu",
+      "/output/wait-final",
+      "owner"
+    ],
+    "returncode": 0,
+    "stdout": "{\"polls\":6,\"zero_polls\":1,\"foreign_polls\":0,\"heartbeats\":4,\"finished\":true}\n",
+    "stderr": "",
+    "observation": {
+      "polls": 6,
+      "zero_polls": 1,
+      "foreign_polls": 0,
+      "heartbeats": 4,
+      "finished": true
+    }
+  },
+  {
+    "stage": "final",
+    "case": "already",
+    "argv": [
+      "timeout",
+      "2",
+      "qemu-aarch64",
+      "-L",
+      "/usr/aarch64-linux-gnu",
+      "/output/wait-final",
+      "already"
+    ],
+    "returncode": 0,
+    "stdout": "{\"polls\":0,\"zero_polls\":0,\"foreign_polls\":0,\"heartbeats\":0,\"finished\":true}\n",
+    "stderr": "",
+    "observation": {
+      "polls": 0,
+      "zero_polls": 0,
+      "foreign_polls": 0,
+      "heartbeats": 0,
+      "finished": true
+    }
+  },
+  {
+    "stage": "final",
+    "case": "foreign-owner",
+    "argv": [
+      "timeout",
+      "2",
+      "qemu-aarch64",
+      "-L",
+      "/usr/aarch64-linux-gnu",
+      "/output/wait-final",
+      "foreign-owner"
+    ],
+    "returncode": 0,
+    "stdout": "{\"polls\":2,\"zero_polls\":1,\"foreign_polls\":0,\"heartbeats\":0,\"finished\":true}\n",
+    "stderr": "",
+    "observation": {
+      "polls": 2,
+      "zero_polls": 1,
+      "foreign_polls": 0,
+      "heartbeats": 0,
+      "finished": true
+    }
+  },
+  {
+    "stage": "final",
+    "case": "foreign-completion",
+    "argv": [
+      "timeout",
+      "2",
+      "qemu-aarch64",
+      "-L",
+      "/usr/aarch64-linux-gnu",
+      "/output/wait-final",
+      "foreign-completion"
+    ],
+    "returncode": 0,
+    "stdout": "{\"polls\":2,\"zero_polls\":1,\"foreign_polls\":0,\"heartbeats\":0,\"finished\":true}\n",
+    "stderr": "",
+    "observation": {
+      "polls": 2,
+      "zero_polls": 1,
+      "foreign_polls": 0,
+      "heartbeats": 0,
+      "finished": true
+    }
+  },
+  {
+    "stage": "final",
+    "case": "cancelled",
+    "argv": [
+      "timeout",
+      "2",
+      "qemu-aarch64",
+      "-L",
+      "/usr/aarch64-linux-gnu",
+      "/output/wait-final",
+      "cancelled"
+    ],
+    "returncode": 0,
+    "stdout": "{\"polls\":6,\"zero_polls\":1,\"foreign_polls\":0,\"heartbeats\":4,\"finished\":true}\n",
+    "stderr": "",
+    "observation": {
+      "polls": 6,
+      "zero_polls": 1,
+      "foreign_polls": 0,
+      "heartbeats": 4,
+      "finished": true
+    }
+  },
+  {
+    "stage": "final",
+    "case": "unanswered",
+    "argv": [
+      "timeout",
+      "2",
+      "qemu-aarch64",
+      "-L",
+      "/usr/aarch64-linux-gnu",
+      "/output/wait-final",
+      "unanswered"
+    ],
+    "returncode": 0,
+    "stdout": "{\"polls\":6,\"zero_polls\":1,\"foreign_polls\":0,\"heartbeats\":4,\"finished\":false}\n",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,106 @@
+Cleaning... 0 files.
+The Meson build system
+Version: 1.7.0
+Source dir: /output/work/libssc
+Build dir: /output/work/libssc-build
+Build type: cross build
+Project name: libssc
+Project version: 0.4.4
+C compiler for the host machine: aarch64-linux-gnu-gcc (gcc 14.2.0 "aarch64-linux-gnu-gcc (Debian 14.2.0-19) 14.2.0")
+C linker for the host machine: aarch64-linux-gnu-gcc ld.bfd 2.44
+C compiler for the build machine: cc (gcc 14.2.0 "cc (Debian 14.2.0-19) 14.2.0")
+C linker for the build machine: cc ld.bfd 2.44
+Build machine cpu family: x86_64
+Build machine cpu: x86_64
+Host machine cpu family: aarch64
+Host machine cpu: aarch64
+Target machine cpu family: aarch64
+Target machine cpu: aarch64
+Compiler for C supports arguments -Wno-unused-parameter: YES (cached)
+Compiler for C supports arguments -Wno-cast-function-type: YES (cached)
+Compiler for C supports arguments -Wno-packed: YES (cached)
+Dependency glib-2.0 found: YES 2.84.4 (cached)
+Dependency gio-unix-2.0 found: YES 2.84.4 (cached)
+Dependency qmi-glib found: YES 1.36.0 (cached)
+Dependency libprotobuf-c found: YES 1.5.1 (cached)
+Library m found: YES
+Program protoc found: YES (/usr/bin/protoc)
+Program protoc found: YES (/usr/bin/protoc)
+Dependency gio-2.0 found: YES 2.84.4 (cached)
+Dependency gobject-2.0 found: YES 2.84.4 (cached)
+Program python3 found: YES (/usr/bin/python3)
+Configuring ssc-server using configuration
+Program python3 found: YES (/usr/bin/python3)
+Configuring libssc-version-private.h using configuration
+Found pkg-config: YES (/usr/bin/pkgconf) 1.8.1
+Found CMake: NO
+Run-time dependency gobject-introspection-1.0 found: NO (tried pkgconfig and cmake)
+Build targets in project: 27
+
+libssc 0.4.4
+
+  User defined options
+    Cross files: /opt/ssc/cross-arm64.ini
+    buildtype  : release
+    libdir     : lib/aarch64-linux-gnu
+    prefix     : /usr
+
+Found ninja-1.12.1 at /usr/bin/ninja
+ninja: Entering directory `/output/work/libssc-build'
+[1/1] Generating mocking/ssc_server/ssc-mocking with a custom command
+INFO: autodetecting backend as ninja
+INFO: calculating backend command to run: /usr/bin/ninja -C /output/work/libssc-build -j 4
+ninja: Entering directory `/output/work/libssc-build'
+[1/1] Generating mocking/ssc_server/ssc-mocking with a custom command
+Compiling '/output/stage/usr/lib/python3/dist-packages/ssc_server/ssc_common_pb2.py'...
+Compiling '/output/stage/usr/lib/python3/dist-packages/ssc_server/ssc_sensor_suid_pb2.py'...
+Compiling '/output/stage/usr/lib/python3/dist-packages/ssc_server/ssc_sensor_proximity_pb2.py'...
+Compiling '/output/stage/usr/lib/python3/dist-packages/ssc_server/ssc_sensor_light_pb2.py'...
+Compiling '/output/stage/usr/lib/python3/dist-packages/ssc_server/ssc_sensor_accelerometer_pb2.py'...
+Compiling '/output/stage/usr/lib/python3/dist-packages/ssc_server/ssc_sensor_magnetometer_pb2.py'...
+Compiling '/output/stage/usr/lib/python3/dist-packages/ssc_server/ssc_sensor_rotationvector_pb2.py'...
+Compiling '/output/stage/usr/lib/python3/dist-packages/ssc_server/ssc_sensor_gyroscope_pb2.py'...
+Compiling '/output/stage/usr/lib/python3/dist-packages/ssc_server/qmi.py'...
+Compiling '/output/stage/usr/lib/python3/dist-packages/ssc_server/ssc.py'...
+Installing mocking/ssc_server/ssc_common_pb2.py to /output/stage/usr/lib/python3/dist-packages/ssc_server
+Installing mocking/ssc_server/ssc_sensor_suid_pb2.py to /output/stage/usr/lib/python3/dist-packages/ssc_server
+Installing mocking/ssc_server/ssc_sensor_proximity_pb2.py to /output/stage/usr/lib/python3/dist-packages/ssc_server
+Installing mocking/ssc_server/ssc_sensor_light_pb2.py to /output/stage/usr/lib/python3/dist-packages/ssc_server
+Installing mocking/ssc_server/ssc_sensor_accelerometer_pb2.py to /output/stage/usr/lib/python3/dist-packages/ssc_server
+Installing mocking/ssc_server/ssc_sensor_magnetometer_pb2.py to /output/stage/usr/lib/python3/dist-packages/ssc_server
+Installing mocking/ssc_server/ssc_sensor_rotationvector_pb2.py to /output/stage/usr/lib/python3/dist-packages/ssc_server
+Installing mocking/ssc_server/ssc_sensor_gyroscope_pb2.py to /output/stage/usr/lib/python3/dist-packages/ssc_server
+Installing data/ssc-common.pb-c.h to /output/stage/usr/include/libssc
+Installing data/ssc-sensor-suid.pb-c.h to /output/stage/usr/include/libssc
+Installing data/ssc-sensor-proximity.pb-c.h to /output/stage/usr/include/libssc
+Installing data/ssc-sensor-light.pb-c.h to /output/stage/usr/include/libssc
+Installing data/ssc-sensor-accelerometer.pb-c.h to /output/stage/usr/include/libssc
+Installing data/ssc-sensor-magnetometer.pb-c.h to /output/stage/usr/include/libssc
+Installing data/ssc-sensor-rotationvector.pb-c.h to /output/stage/usr/include/libssc
+Installing data/ssc-sensor-gyroscope.pb-c.h to /output/stage/usr/include/libssc
+Installing src/libssc.so.2 to /output/stage/usr/lib/aarch64-linux-gnu
+Installing src/ssccli to /output/stage/usr/bin
+Installing /output/work/libssc/src/libssc.h to /output/stage/usr/include/libssc
+Installing /output/work/libssc/src/libssc-sensor.h to /output/stage/usr/include/libssc
+Installing /output/work/libssc/src/libssc-sensor-proximity.h to /output/stage/usr/include/libssc
+Installing /output/work/libssc/src/libssc-sensor-light.h to /output/stage/usr/include/libssc
+Installing /output/work/libssc/src/libssc-sensor-accelerometer.h to /output/stage/usr/include/libssc
+Installing /output/work/libssc/src/libssc-sensor-magnetometer.h to /output/stage/usr/include/libssc
+Installing /output/work/libssc/src/libssc-sensor-compass.h to /output/stage/usr/include/libssc
+Installing /output/work/libssc/src/libssc-sensor-gyroscope.h to /output/stage/usr/include/libssc
+Installing /output/work/libssc/mocking/ssc_server/qmi.py to /output/stage/usr/lib/python3/dist-packages/ssc_server
+Installing /output/work/libssc/mocking/ssc_server/ssc.py to /output/stage/usr/lib/python3/dist-packages/ssc_server
+Installing /output/work/libssc-build/mocking/ssc_server/ssc-server to /output/stage/usr/libexec/installed-tests/libssc
+Installing /output/work/libssc/mocking/ssc_server/data/sensor-accelerometer.json to /output/stage/usr/lib/python3/dist-packages/ssc_server/data
+Installing /output/work/libssc/mocking/ssc_server/data/sensor-magnetometer.json to /output/stage/usr/lib/python3/dist-packages/ssc_server/data
+Installing /output/work/libssc/mocking/ssc_server/data/sensor-proximity.json to /output/stage/usr/lib/python3/dist-packages/ssc_server/data
+Installing /output/work/libssc/mocking/ssc_server/data/sensor-rotationvector.json to /output/stage/usr/lib/python3/dist-packages/ssc_server/data
+Installing /output/work/libssc/mocking/ssc_server/data/sensor-light.json to /output/stage/usr/lib/python3/dist-packages/ssc_server/data
+Installing /output/work/libssc/mocking/ssc_server/data/sensor-no-sample-rate.json to /output/stage/usr/lib/python3/dist-packages/ssc_server/data
+Installing /output/work/libssc/mocking/ssc_server/data/sensor-registry.json to /output/stage/usr/lib/python3/dist-packages/ssc_server/data
+Installing /output/work/libssc/mocking/ssc_server/data/sensor-unavailable.json to /output/stage/usr/lib/python3/dist-packages/ssc_server/data
+Installing /output/work/libssc-build/src/libssc-version-private.h to /output/stage/usr/include/libssc
+Installing /output/work/libssc-build/meson-private/libssc.pc to /output/stage/usr/lib/aarch64-linux-gnu/pkgconfig
+Installing symlink pointing to libssc.so.2 to /output/stage/usr/lib/aarch64-linux-gnu/libssc.so
+Running custom install script '/usr/bin/python3 /output/work/libssc-build/meson-private/pycompile.py python-3.13-installed.json 0'
+13 ARM64/GLib cases qualified; exact reference cross-thread timeout reproduced

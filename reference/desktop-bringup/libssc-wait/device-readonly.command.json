@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; systemctl is-active gdm hexagonrpcd-adsp-sensorspd.service; cat /sys/class/remoteproc/remoteproc0/state; cat /sys/class/power_supply/sm5714-battery/capacity /sys/class/power_supply/sm5714-battery/temp"
+  ],
+  "returncode": 0,
+  "device_mutation": false,
+  "epoch": 1791618800.089066
+}

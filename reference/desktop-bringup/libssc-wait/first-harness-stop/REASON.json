@@ -1,0 +1,7 @@
+{
+  "device_operations": false,
+  "kernel_build": false,
+  "library_compilation_succeeded": true,
+  "qualification_succeeded": false,
+  "reason": "Fixture created and returned a GTask on the completing thread, which independently queued a default-context source. This masked the completion-helper wakeup requirement; reference case unexpectedly succeeded. Correct fixture constructs its result before waiting and only invokes the actual completion helper from the foreign thread. Preserve original failure; no hardware inference."
+}

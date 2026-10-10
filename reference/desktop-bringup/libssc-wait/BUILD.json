@@ -1,0 +1,396 @@
+{
+  "image": "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network=none",
+    "--security-opt=no-new-privileges",
+    "-e",
+    "HOST_UID=1000",
+    "-e",
+    "HOST_GID=1000",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/ssc-sources/prepared-clean/libssc:/inputs/original:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/libssc-wait/reference:/inputs/reference:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/libssc-wait/sources:/inputs/final:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/userspace/sensors:/recipe:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/tests/fixtures:/fixtures:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/libssc-wait/build:/output",
+    "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+    "sh",
+    "/recipe/compile-libssc-wait.sh"
+  ],
+  "returncode": 0,
+  "seconds": 8.391743183135986,
+  "device_operations": false,
+  "kernel_rebuilt": false,
+  "hardware_tested": false,
+  "recipe_sha256": {
+    "userspace/sensors/libssc_wait_profile.py": "34fb4a864fca6e26bbc8df66943f89f14d17c21e1895bb05b69e0c150189a975",
+    "userspace/sensors/libssc-wait.json": "ce4f88dcf4b9cae85b02f699ab605f9df46bd49290553cffbbe589ec29896fe8",
+    "userspace/sensors/compile-libssc-wait.sh": "9f0b30b39d2e42e9eb08be7ed7b22a10c81fbcbc4dbcb3a4cf3144842a2aa288",
+    "tests/fixtures/libssc_wait_harness.c": "a48dfad6f223b6498686fd09ed8ebcba3c15ce55c3e6039c95c38246de9c48fd",
+    "tests/fixtures/run_libssc_wait.py": "a5478ae0a4e9aea4077fb13a7f7d2601398a8ec116c170d0074d1cb324af430f"
+  },
+  "files": {
+    "usr/bin/ssccli": "b33a7401fa35e87bd6d82e3ffc6f217cc28905eae72aa87c82f78447473b61ea",
+    "usr/include/libssc/libssc-sensor-light.h": "da7da1b56cfa4f46b2a834ae234a59b1fd7f4289172270e9f21680fe96ae45a4",
+    "usr/include/libssc/ssc-sensor-light.pb-c.h": "a3e2f652a1771b559ce5f4f9373eadb4b4791e4ca28fbc46ac0d2df3df04c095",
+    "usr/include/libssc/ssc-sensor-gyroscope.pb-c.h": "568a4d8705b20589d3d849fc988e0ad3530b03766637bb317d9e87a713e5408e",
+    "usr/include/libssc/libssc-sensor.h": "eea6b1a6b316c8fa8408e9d0a25f6e7b697859d7f4ed6564918c418c2dcf73b2",
+    "usr/include/libssc/ssc-sensor-magnetometer.pb-c.h": "3aeb864b8b50c9e805aca18144e501150896ce78f41f59c43043088f6c220860",
+    "usr/include/libssc/libssc-version-private.h": "feeee3f381e24672903e91c833aa7a75cb64153d8273b1a6e8f0461d05dbdc1b",
+    "usr/include/libssc/ssc-sensor-rotationvector.pb-c.h": "817fded870b28f42ef89bd81330db6c7d10fbf98c686c5f25210b8b070997f2e",
+    "usr/include/libssc/ssc-sensor-accelerometer.pb-c.h": "0056cabc72c03535ce6c94bbf62bd5335491e864ba698ddbbde2b5ca516d8c05",
+    "usr/include/libssc/libssc-sensor-compass.h": "e523d1517848816b2c8e14b60d4419242fd078f7100dfc424d4d70eba6ea93ad",
+    "usr/include/libssc/libssc-sensor-magnetometer.h": "720ab9807d9c8f9d1942964ee0bdd433cff511534c9aa45f98e57d55f6b5f661",
+    "usr/include/libssc/ssc-sensor-proximity.pb-c.h": "5006b1df0f810a8db34ea830b693e7a3a652946d104fecefdd720587bfb2791d",
+    "usr/include/libssc/libssc-sensor-gyroscope.h": "4749f32e68def1cc9f18b525e21ee519fcdc6fb21ed5dd44ed0add0b2588ccd1",
+    "usr/include/libssc/libssc-sensor-proximity.h": "a66ee1327b3de41f60aabd6f6e0247d0e8bd74e134912f9d839a19af26e25754",
+    "usr/include/libssc/libssc-sensor-accelerometer.h": "9bd3cb0821a115f57960f3893b3e3d38987aa73e00254de94f3b9e78744a4f57",
+    "usr/include/libssc/libssc.h": "0e471d9c815b6d7272e4023943799c3aa528b3c80927addb90aa5a63a4d69c4c",
+    "usr/include/libssc/ssc-common.pb-c.h": "d30bbfdca3aed11dd5e5ad72ecf4325632cf8aed517f47acc607225fc751e110",
+    "usr/include/libssc/ssc-sensor-suid.pb-c.h": "93c1bea141167184b032fd8d6f131ec90ece1cf8556615bd6ec1648e61a6246b",
+    "usr/lib/aarch64-linux-gnu/libssc.so.2": "12ad645f6e5bbc52a5947f0934f3a0c6bec6c006abf1ffc8ddf63ec1af4aa54e",
+    "usr/lib/aarch64-linux-gnu/pkgconfig/libssc.pc": "0037ec942fee09b97909d868d05a0ba7deda2d43e1783e53998a3c4804cd8b0d",
+    "usr/lib/python3/dist-packages/ssc_server/ssc_sensor_rotationvector_pb2.py": "03d3cde486758e3342451b7ec71544e2200e3724ad5105863e866fb642ccad39",
+    "usr/lib/python3/dist-packages/ssc_server/ssc_common_pb2.py": "f539aac385f85e5f2032ca30843d412055c4357b0a08d60fea04eb25b67f2c9d",
+    "usr/lib/python3/dist-packages/ssc_server/ssc_sensor_accelerometer_pb2.py": "321912dca48312e92f183f4031d00a877998ffcfac79db98bc760640c6d4f46f",
+    "usr/lib/python3/dist-packages/ssc_server/ssc_sensor_proximity_pb2.py": "d6831fc08790a76b2da0dbba0e1c49264426b6fa174dbb52c5dd407f1ccf328d",
+    "usr/lib/python3/dist-packages/ssc_server/ssc_sensor_suid_pb2.py": "20a93d7fd4a47772e8079dc7a61d51acea08108a9cb456d12f06da8d1f5577c9",
+    "usr/lib/python3/dist-packages/ssc_server/ssc_sensor_gyroscope_pb2.py": "55434ea29f2a567901269c3cb9c9badf68b8f88c51b91ff3ee4c2e6650a65da4",
+    "usr/lib/python3/dist-packages/ssc_server/ssc.py": "0e06c5c703aae0b4e0357d0b53f7a659d8c46c6b68bf2326cdd19382241530a2",
+    "usr/lib/python3/dist-packages/ssc_server/ssc_sensor_light_pb2.py": "9530590e5ffd5054005fadd98980d947f4901613a403aa319b4a16c2e876fea4",
+    "usr/lib/python3/dist-packages/ssc_server/qmi.py": "f516ca61f385cf5d66a09f204d03402a3144a89139b507819e679de8a63966c6",
+    "usr/lib/python3/dist-packages/ssc_server/ssc_sensor_magnetometer_pb2.py": "530a933c1d9ac84289bb3795adbcfe060eb2a936b88dc539186e0b42f8602c41",
+    "usr/lib/python3/dist-packages/ssc_server/data/sensor-light.json": "87d887e8b93bf9fb7c5e513d34ff2486652268ba65f79ff1c2736d8dec0d9969",
+    "usr/lib/python3/dist-packages/ssc_server/data/sensor-registry.json": "7869d22a4f1019fe41de0fd6e7d70fb1865f80d2b95c2af9413a4a4988cc8644",
+    "usr/lib/python3/dist-packages/ssc_server/data/sensor-magnetometer.json": "a78a896e157ea33270da3a4f954cb6dde46aa79defda34aa3c2a0c4a19914cf0",
+    "usr/lib/python3/dist-packages/ssc_server/data/sensor-unavailable.json": "915b70b3e57d1b03f3a4c5ebcbbd25692ab19803ea3d42310df969371df5fdbe",
+    "usr/lib/python3/dist-packages/ssc_server/data/sensor-no-sample-rate.json": "a66ba92884614052cdf06aeee23db38f7f873f57401ef430dd7aa05eb01b2d34",
+    "usr/lib/python3/dist-packages/ssc_server/data/sensor-accelerometer.json": "b47a3cac3d18eb2317680b93f5b3d76dbc937906da83eba1e325187663efc286",
+    "usr/lib/python3/dist-packages/ssc_server/data/sensor-proximity.json": "e770da3032190c5d8c4f4b275591241783dd86722b4890588bf2d3ad43f4c463",
+    "usr/lib/python3/dist-packages/ssc_server/data/sensor-rotationvector.json": "842fac4550e1c456fba0db6e91c362b6c2a1728d7b06fc38ce191543439a0e4c",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc_sensor_suid_pb2.cpython-313.pyc": "9f54a491fa3d46baa857bd6c01dac7c1b172b26b861f6401b8a49388e05357f8",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc_sensor_accelerometer_pb2.cpython-313.pyc": "79996efd3eed2b04edfa42064202f40e6696366956119ab3738ec36fffa7e185",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc.cpython-313.pyc": "c215a48f90c25df078e29917180158a7e03dcac06be0a7aebb649e55f723bcee",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc_sensor_magnetometer_pb2.cpython-313.pyc": "52eab0bea550780f79f0ed9a853fb7f58555c1fa64c53c787bd1f122dc923b88",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc_sensor_gyroscope_pb2.cpython-313.pyc": "4fc862e7686c37dde53125c968dc3defe9a6fd52c165960f51215f06cff2e8cb",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc_sensor_rotationvector_pb2.cpython-313.pyc": "0c98dad2503e10795fc0a4c7c1c1a8cee9ef467379bffcef5b7e7443b54baaa4",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/qmi.cpython-313.pyc": "90085421f58bd32a99ff48c0cfd97a4b2ec76a073f0afdd88d052571d70427bd",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc_sensor_proximity_pb2.cpython-313.pyc": "001d1c2d395f3f092bf6d27864622564154cd97aa05a37e36a57d2a9490def08",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc_common_pb2.cpython-313.pyc": "04a604bfeaac24db5e2246e5eda3c8cd38863e4517065f4b0969726d9c9d965a",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc_sensor_light_pb2.cpython-313.pyc": "75b9d6ab9a7693b7fc656f3741ebbb56d2fbe0f4885548c7cfc3ec4773d0f8ff",
+    "usr/share/doc/gts9-libssc-wait/LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "usr/libexec/installed-tests/libssc/ssc-server": "9e1cdfcdb33c2f304733f33b4c94cd06cb6408b5d2d3f3b83ba9d0177b20d7cb"
+  },
+  "links": {
+    "usr/lib/aarch64-linux-gnu/libssc.so": "libssc.so.2"
+  },
+  "qualification": {
+    "successful": true,
+    "cases": [
+      {
+        "stage": "original",
+        "case": "owner",
+        "argv": [
+          "timeout",
+          "2",
+          "qemu-aarch64",
+          "-L",
+          "/usr/aarch64-linux-gnu",
+          "/output/wait-original",
+          "owner"
+        ],
+        "returncode": 0,
+        "stdout": "{\"polls\":28595,\"zero_polls\":28595,\"foreign_polls\":0,\"heartbeats\":5,\"finished\":true}\n",
+        "stderr": "",
+        "observation": {
+          "polls": 28595,
+          "zero_polls": 28595,
+          "foreign_polls": 0,
+          "heartbeats": 5,
+          "finished": true
+        }
+      },
+      {
+        "stage": "original",
+        "case": "foreign-completion",
+        "argv": [
+          "timeout",
+          "2",
+          "qemu-aarch64",
+          "-L",
+          "/usr/aarch64-linux-gnu",
+          "/output/wait-original",
+          "foreign-completion"
+        ],
+        "returncode": 0,
+        "stdout": "{\"polls\":43774,\"zero_polls\":43774,\"foreign_polls\":0,\"heartbeats\":0,\"finished\":true}\n",
+        "stderr": "",
+        "observation": {
+          "polls": 43774,
+          "zero_polls": 43774,
+          "foreign_polls": 0,
+          "heartbeats": 0,
+          "finished": true
+        }
+      },
+      {
+        "stage": "original",
+        "case": "unanswered",
+        "argv": [
+          "timeout",
+          "2",
+          "qemu-aarch64",
+          "-L",
+          "/usr/aarch64-linux-gnu",
+          "/output/wait-original",
+          "unanswered"
+        ],
+        "returncode": 0,
+        "stdout": "{\"polls\":28926,\"zero_polls\":28926,\"foreign_polls\":0,\"heartbeats\":5,\"finished\":false}\n",
+        "stderr": "",
+        "observation": {
+          "polls": 28926,
+          "zero_polls": 28926,
+          "foreign_polls": 0,
+          "heartbeats": 5,
+          "finished": false
+        }
+      },
+      {
+        "stage": "reference",
+        "case": "owner",
+        "argv": [
+          "timeout",
+          "2",
+          "qemu-aarch64",
+          "-L",
+          "/usr/aarch64-linux-gnu",
+          "/output/wait-reference",
+          "owner"
+        ],
+        "returncode": 0,
+        "stdout": "{\"polls\":6,\"zero_polls\":1,\"foreign_polls\":0,\"heartbeats\":4,\"finished\":true}\n",
+        "stderr": "",
+        "observation": {
+          "polls": 6,
+          "zero_polls": 1,
+          "foreign_polls": 0,
+          "heartbeats": 4,
+          "finished": true
+        }
+      },
+      {
+        "stage": "reference",
+        "case": "already",
+        "argv": [
+          "timeout",
+          "2",
+          "qemu-aarch64",
+          "-L",
+          "/usr/aarch64-linux-gnu",
+          "/output/wait-reference",
+          "already"
+        ],
+        "returncode": 0,
+        "stdout": "{\"polls\":0,\"zero_polls\":0,\"foreign_polls\":0,\"heartbeats\":0,\"finished\":true}\n",
+        "stderr": "",
+        "observation": {
+          "polls": 0,
+          "zero_polls": 0,
+          "foreign_polls": 0,
+          "heartbeats": 0,
+          "finished": true
+        }
+      },
+      {
+        "stage": "reference",
+        "case": "foreign-owner",
+        "argv": [
+          "timeout",
+          "2",
+          "qemu-aarch64",
+          "-L",
+          "/usr/aarch64-linux-gnu",
+          "/output/wait-reference",
+          "foreign-owner"
+        ],
+        "returncode": 0,
+        "stdout": "{\"polls\":2,\"zero_polls\":1,\"foreign_polls\":0,\"heartbeats\":0,\"finished\":true}\n",
+        "stderr": "",
+        "observation": {
+          "polls": 2,
+          "zero_polls": 1,
+          "foreign_polls": 0,
+          "heartbeats": 0,
+          "finished": true
+        }
+      },
+      {
+        "stage": "reference",
+        "case": "foreign-completion",
+        "argv": [
+          "timeout",
+          "2",
+          "qemu-aarch64",
+          "-L",
+          "/usr/aarch64-linux-gnu",
+          "/output/wait-reference",
+          "foreign-completion"
+        ],
+        "returncode": 124,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "stage": "final",
+        "case": "owner",
+        "argv": [
+          "timeout",
+          "2",
+          "qemu-aarch64",
+          "-L",
+          "/usr/aarch64-linux-gnu",
+          "/output/wait-final",
+          "owner"
+        ],
+        "returncode": 0,
+        "stdout": "{\"polls\":6,\"zero_polls\":1,\"foreign_polls\":0,\"heartbeats\":4,\"finished\":true}\n",
+        "stderr": "",
+        "observation": {
+          "polls": 6,
+          "zero_polls": 1,
+          "foreign_polls": 0,
+          "heartbeats": 4,
+          "finished": true
+        }
+      },
+      {
+        "stage": "final",
+        "case": "already",
+        "argv": [
+          "timeout",
+          "2",
+          "qemu-aarch64",
+          "-L",
+          "/usr/aarch64-linux-gnu",
+          "/output/wait-final",
+          "already"
+        ],
+        "returncode": 0,
+        "stdout": "{\"polls\":0,\"zero_polls\":0,\"foreign_polls\":0,\"heartbeats\":0,\"finished\":true}\n",
+        "stderr": "",
+        "observation": {
+          "polls": 0,
+          "zero_polls": 0,
+          "foreign_polls": 0,
+          "heartbeats": 0,
+          "finished": true
+        }
+      },
+      {
+        "stage": "final",
+        "case": "foreign-owner",
+        "argv": [
+          "timeout",
+          "2",
+          "qemu-aarch64",
+          "-L",
+          "/usr/aarch64-linux-gnu",
+          "/output/wait-final",
+          "foreign-owner"
+        ],
+        "returncode": 0,
+        "stdout": "{\"polls\":2,\"zero_polls\":1,\"foreign_polls\":0,\"heartbeats\":0,\"finished\":true}\n",
+        "stderr": "",
+        "observation": {
+          "polls": 2,
+          "zero_polls": 1,
+          "foreign_polls": 0,
+          "heartbeats": 0,
+          "finished": true
+        }
+      },
+      {
+        "stage": "final",
+        "case": "foreign-completion",
+        "argv": [
+          "timeout",
+          "2",
+          "qemu-aarch64",
+          "-L",
+          "/usr/aarch64-linux-gnu",
+          "/output/wait-final",
+          "foreign-completion"
+        ],
+        "returncode": 0,
+        "stdout": "{\"polls\":2,\"zero_polls\":1,\"foreign_polls\":0,\"heartbeats\":0,\"finished\":true}\n",
+        "stderr": "",
+        "observation": {
+          "polls": 2,
+          "zero_polls": 1,
+          "foreign_polls": 0,
+          "heartbeats": 0,
+          "finished": true
+        }
+      },
+      {
+        "stage": "final",
+        "case": "cancelled",
+        "argv": [
+          "timeout",
+          "2",
+          "qemu-aarch64",
+          "-L",
+          "/usr/aarch64-linux-gnu",
+          "/output/wait-final",
+          "cancelled"
+        ],
+        "returncode": 0,
+        "stdout": "{\"polls\":6,\"zero_polls\":1,\"foreign_polls\":0,\"heartbeats\":4,\"finished\":true}\n",
+        "stderr": "",
+        "observation": {
+          "polls": 6,
+          "zero_polls": 1,
+          "foreign_polls": 0,
+          "heartbeats": 4,
+          "finished": true
+        }
+      },
+      {
+        "stage": "final",
+        "case": "unanswered",
+        "argv": [
+          "timeout",
+          "2",
+          "qemu-aarch64",
+          "-L",
+          "/usr/aarch64-linux-gnu",
+          "/output/wait-final",
+          "unanswered"
+        ],
+        "returncode": 0,
+        "stdout": "{\"polls\":6,\"zero_polls\":1,\"foreign_polls\":0,\"heartbeats\":4,\"finished\":false}\n",
+        "stderr": "",
+        "observation": {
+          "polls": 6,
+          "zero_polls": 1,
+          "foreign_polls": 0,
+          "heartbeats": 4,
+          "finished": false
+        }
+      }
+    ],
+    "hardware_tested": false,
+    "notes": "Real GLib/GIO and original source; no QMI/ADSP server, no new protocol timeout."
+  },
+  "successful": true
+}

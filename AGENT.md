@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 LIBSSC_WAIT_FIX_ARM64_QUALIFIED_NOT_DEPLOYED.
+ExactS9U32273b0a public wait patch (freshHEAD916e2f13same) plus proven completion
+wakeup; one privatecommonCfile only, baseFedora/sources.json/389 unchanged.
+RealGLib/QEMU13cases reproduce originalspin/referenceforeigncompletiontimeout;
+final ordinary/cancel/foreign/contextowned/unanswered casesPASS, no protocol
+deadline invented.32affectedhostPASS/0skip, ARM64library/ssccli buildPASS/69same
+exports,3file64694B archive/notinstalled. Twohostfixture/license stops preserved.
+No kernelbuild/fulltests/CI/devicewrite/reboot/ADSPstart;370/GNOME retained.
+NotSSCrootcause/acceptance; nextfirmwareinit/X710prerequisite and earlyclaimrace.
+PPS/pump/DCCOFF, sensor/rotation goalunfinished. See libssc-wait/RESULTS.md.
+
 2026-10-10 SSC_INIT_INPUT_REPLAY_BYTES_MATCH_NOT_SENSOR_ACCEPTANCE.
 New offline389 namespace:7/7 actual initialization byte hashes match native/stock;
 6/7 closed+ack sessions, config329B/fd2 unclosed in bounded capture, complete:false.
