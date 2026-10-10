@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test395（原厂传感器启动输入只读采集），窗口为 **Test386–Test395**；没有生成镜像的轮次仍占一轮。
+  编号为 Test396（默认监听器引用生命周期观察），窗口为 **Test387–Test396**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,16 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-10 TEST396_RETAINED_DEFAULT_LISTENER_REGISTERED_NOT_DEPLOYED.
+Only daemon lifetime changes over393,49140bbd; unchanged library1be44d2f, kernel/
+DT/config/181 modules/assets/ordered RPC/382trace geometry. One30s SSC observation,
+two2s+2s PDRcycles, no retry.16scope/mock/overlay testsPASS0skip; reuse73host/
+16ARM64QEMU/2upstream+86observer. Fresh same26754f29 fullfive/181/config/notes/
+ADB/deviceNCM/noCode43/health gatePASS. Temporary396-owned eightoverlay only;
+mandatory exact370/GNOMEreturn. No fullrun/kernelbuild/Actions or device mutation
+yet; registrationpushbeforeinstall.387–396window/382vendorcurrentconsumer;
+PPS/pump/DCCOFF. SSC/sample/rotationunfinished. See396README.
 
 2026-10-10 RPC_DEFAULT_LISTENER_LIFETIME_HOST_QUALIFIED_NOT_DEPLOYED.
 Actual X710/Qualcomm hold registration reference during reverseRPC; existing

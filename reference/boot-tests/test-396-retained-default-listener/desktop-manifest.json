@@ -1,0 +1,58 @@
+{
+  "etc/systemd/system/gdm.service.d/91-gts9-test396.conf": {
+    "incoming": "overlay-02",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "fe0d29cbcb473361d707ac4dd15f734336a55f1ee1d45fefffbaf2ddf54a637d",
+    "source": "reference/boot-tests/test-396-retained-default-listener/text-condition.conf"
+  },
+  "etc/systemd/system/gts9-glink-test396.service": {
+    "incoming": "overlay-06",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "6505fb818fd8d4c5900dfd7e4ed6b35dea4724c5d7af0c4095735d2e95ab5dd8",
+    "source": "reference/boot-tests/test-396-retained-default-listener/glink-watch.service"
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-rootpd.service.d/91-gts9-test396.conf": {
+    "incoming": "overlay-03",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "84fcd2b8f9100cdb551b202cd7feb66e11d8ba9d8672060a686bb15ca92d35a5",
+    "source": "reference/boot-tests/test-396-retained-default-listener/hexagonrpcd-adsp-rootpd-trace.conf"
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-sensorspd.service.d/91-gts9-test396.conf": {
+    "incoming": "overlay-04",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "a7f069b904d10a18f3ee350511e8fb624e1fa2da54d56730c314e95324b9611b",
+    "source": "reference/boot-tests/test-396-retained-default-listener/hexagonrpcd-adsp-sensorspd-trace.conf"
+  },
+  "etc/systemd/system/multi-user.target.d/91-gts9-test396.conf": {
+    "incoming": "overlay-07",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "8054e645b5b3725dd79057a08220c32f00ca893223fd56857bbb98648d234c1b",
+    "source": "reference/boot-tests/test-396-retained-default-listener/multi-user-trace.conf"
+  },
+  "usr/local/lib/gts9-test396/glink_trace.py": {
+    "incoming": "overlay-05",
+    "mode": 493,
+    "original_sha256": null,
+    "sha256": "21a3ca57f89ca760439d30cb8896bf1aac40059247e2cd17e6064b9534f74303",
+    "source": "userspace/sensors/glink_trace_382.py"
+  },
+  "usr/local/lib/gts9-test396/hexagonrpcd": {
+    "incoming": "overlay-00",
+    "mode": 493,
+    "original_sha256": null,
+    "sha256": "49140bbd7fd954c7dd222bd57e03c793d4d6fac9ba3d682459bd93ee32083271",
+    "source": "out/rpc-listener-lifetime/build/stage/usr/bin/hexagonrpcd"
+  },
+  "var/lib/gts9-test396/text-scope": {
+    "incoming": "overlay-01",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "2d611667c8a37907e23d41b8a2eba0a19ded2a6c12a5f065d694395799f7355c",
+    "source": "reference/boot-tests/test-396-retained-default-listener/text-scope"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "etc/systemd/system/hexagonrpcd-adsp-rootpd.service.d/90-gts9-controlled-test.conf": "[Unit]\nConditionPathExists=/run/gts9-ssc-test/ready\nStartLimitIntervalSec=infinity\nStartLimitBurst=1\n\n[Service]\nRestart=no\nTimeoutStopSec=10s\nExecStart=\nExecStart=/usr/bin/hexagonrpcd -f /dev/fastrpc-adsp -d adsp -R /usr/share/qcom/sm8550/Samsung/gts9wifi\nProtectSystem=strict\nProtectHome=yes\nReadWritePaths=/usr/share/qcom/sm8550/Samsung/gts9wifi/sensors\n",
+  "etc/systemd/system/hexagonrpcd-adsp-sensorspd.service.d/90-gts9-controlled-test.conf": "[Unit]\nConditionPathExists=/run/gts9-ssc-test/ready\nStartLimitIntervalSec=infinity\nStartLimitBurst=1\n\n[Service]\nRestart=no\nTimeoutStopSec=10s\nExecStart=\nExecStart=/usr/bin/hexagonrpcd -f /dev/fastrpc-adsp -d adsp -s -R /usr/share/qcom/sm8550/Samsung/gts9wifi\nProtectSystem=strict\nProtectHome=yes\nReadWritePaths=/usr/share/qcom/sm8550/Samsung/gts9wifi/sensors\n",
+  "etc/systemd/system/iio-sensor-proxy.service.d/90-gts9-controlled-test.conf": "[Unit]\nConditionPathExists=/run/gts9-ssc-test/ready\nStartLimitIntervalSec=infinity\nStartLimitBurst=1\n\n[Service]\nRestart=no\nTimeoutStopSec=10s\nEnvironment=G_MESSAGES_DEBUG=all\n",
+  "etc/systemd/system/hexagonrpcd-sdsp.service.d/90-gts9-controlled-test.conf": "[Unit]\nConditionPathExists=/run/gts9-ssc-test/sdsp-never-enabled\n\n[Service]\nRestart=no\n"
+}

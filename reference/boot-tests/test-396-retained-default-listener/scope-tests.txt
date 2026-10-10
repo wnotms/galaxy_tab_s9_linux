@@ -1,0 +1,21 @@
+test_completed_attempt_cannot_be_replayed (test_ssc_listener_lifetime_scope.DiscoveryTests.test_completed_attempt_cannot_be_replayed) ... ok
+test_failed_rpc_unit_stops_without_restart (test_ssc_listener_lifetime_scope.DiscoveryTests.test_failed_rpc_unit_stops_without_restart) ... ok
+test_initial_unknown_stops_before_rpc_and_restores (test_ssc_listener_lifetime_scope.DiscoveryTests.test_initial_unknown_stops_before_rpc_and_restores) ... ok
+test_journal_collection_failure_restores (test_ssc_listener_lifetime_scope.DiscoveryTests.test_journal_collection_failure_restores) ... ok
+test_new_failed_unit_during_observation_stops_and_restores (test_ssc_listener_lifetime_scope.DiscoveryTests.test_new_failed_unit_during_observation_stops_and_restores) ... ok
+test_real_sample_separately_reported_without_rotation_acceptance (test_ssc_listener_lifetime_scope.DiscoveryTests.test_real_sample_separately_reported_without_rotation_acceptance) ... ok
+test_second_unknown_no_retry_and_restores (test_ssc_listener_lifetime_scope.DiscoveryTests.test_second_unknown_no_retry_and_restores) ... ok
+test_ssc_publication_without_sample_is_not_sensor_acceptance (test_ssc_listener_lifetime_scope.DiscoveryTests.test_ssc_publication_without_sample_is_not_sensor_acceptance) ... ok
+test_two_queries_one_start_and_restore_without_false_acceptance (test_ssc_listener_lifetime_scope.DiscoveryTests.test_two_queries_one_start_and_restore_without_false_acceptance) ... ok
+test_unknown_rescue_marks_manual_recovery_without_another_start (test_ssc_listener_lifetime_scope.DiscoveryTests.test_unknown_rescue_marks_manual_recovery_without_another_start) ... ok
+test_missing_state_error_or_changed_boot_stops (test_ssc_listener_lifetime_scope.NotifierTests.test_missing_state_error_or_changed_boot_stops) ... ok
+test_raw_json_retained_and_standard_listener_cli (test_ssc_listener_lifetime_scope.NotifierTests.test_raw_json_retained_and_standard_listener_cli) ... ok
+test_real_helper_cli_accepts_actual_host_generated_argv (test_ssc_listener_lifetime_scope.NotifierTests.test_real_helper_cli_accepts_actual_host_generated_argv) ... ok
+test_actual_capture_runtime_identity_matches_normalized_stored_uuid (test_ssc_listener_lifetime_scope.RegistrationTests.test_actual_capture_runtime_identity_matches_normalized_stored_uuid) ... ok
+test_new_observable_boundary_and_no_hardware_change (test_ssc_listener_lifetime_scope.RegistrationTests.test_new_observable_boundary_and_no_hardware_change) ... ok
+test_real_renamed_overlay_transaction_restores_all_eight (test_ssc_listener_lifetime_scope.RegistrationTests.test_real_renamed_overlay_transaction_restores_all_eight) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.029s
+
+OK
