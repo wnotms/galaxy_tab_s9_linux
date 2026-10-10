@@ -1,0 +1,52 @@
+{
+  "verdict": "STOP_HOST_BOOT_ID_FORMAT_BEFORE_QUERY_RESTORED370",
+  "test": "Test391",
+  "candidate_boot_id": "9004368f-dd70-43f6-a2ad-c380df78c63b",
+  "restored_boot_id": "6fd099f917e949aab11688ec15478c6b",
+  "kernel_fault_counts": {},
+  "notifier_queries": 0,
+  "RPC_started": false,
+  "state_observed": false,
+  "sensor_acceptance": false,
+  "physical_rotation_tested": false,
+  "PPS": false,
+  "pump_ON": false,
+  "kernel_rebuilt": false,
+  "restore": "EXACT370_DEBIAN_RESTORED",
+  "services": {
+    "gdm": "active",
+    "gts9-adbd": "active",
+    "gts9-palm": "active",
+    "gts9-pen": "inactive",
+    "gts9-usb-acm": "active",
+    "ssh": "active"
+  },
+  "battery": {
+    "DEVTYPE": "power_supply",
+    "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+    "OF_COMPATIBLE_N": "1",
+    "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+    "OF_NAME": "charger",
+    "POWER_SUPPLY_CAPACITY": "100",
+    "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+    "POWER_SUPPLY_CURRENT_AVG": "341000",
+    "POWER_SUPPLY_CURRENT_NOW": "314000",
+    "POWER_SUPPLY_HEALTH": "Good",
+    "POWER_SUPPLY_NAME": "sm5714-battery",
+    "POWER_SUPPLY_PRESENT": "1",
+    "POWER_SUPPLY_STATUS": "Charging",
+    "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+    "POWER_SUPPLY_TEMP": "328",
+    "POWER_SUPPLY_TYPE": "Battery",
+    "POWER_SUPPLY_VOLTAGE_AVG": "4447000",
+    "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+    "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+    "POWER_SUPPLY_VOLTAGE_NOW": "4446000",
+    "POWER_SUPPLY_VOLTAGE_OCV": "4390000"
+  },
+  "host_tests": {
+    "executed": false,
+    "reason": "results only; reuse registered12scope+50observer/domain qualification"
+  },
+  "known_host_bug": "discover used UUID hex from mutation state, runtime validate compares canonical UUID string from capture"
+}

@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/tmp/gts9-test391/runtime.py", line 206, in <module>
+    if a.mode=='prepare':d=runner.prepare(a.incoming,json.loads((a.incoming/'runtime-packages.json').read_text()),json.loads((a.incoming/'runtime-overrides.json').read_text()))
+                           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/gts9-test391/runtime.py", line 79, in prepare
+    d=self.check()
+  File "/tmp/gts9-test391/runtime.py", line 72, in check
+    d=self.snapshot();validate(d,self.plan);return d
+                      ~~~~~~~~^^^^^^^^^^^^^
+  File "/tmp/gts9-test391/runtime.py", line 40, in validate
+    raise ValueError('live SSC identity/ordinary charging gate')
+ValueError: live SSC identity/ordinary charging gate

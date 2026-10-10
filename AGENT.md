@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST391_HOST_UUID_FORMAT_STOP_RESTORED370.
+Onecandidate9004368f startup/five/181/config/notes/ADSP/ADB/NCM/kernelPASS.
+Hostdiscover passedhexUUID, runtimecapturecanonicalUUID; firstidentitycheckSTOP
+beforeledger/gate/RPC/notifier. 0statequeries, readiness/SSC/sampleunknown.
+NoCPU/kernel/chargingfault claim; failuremetadata absentbecauseRPCnotstarted.
+Exact370/GNOME/palm/ADB/deviceNCMrestored, originalregistration/seal unchanged;
+32Windowsstagefilescheckeddeleted. Results-onlyexecuted:false, no newbuild/CI.
+Next normalizehostruntimeUUID withactualcapturedidentitytest before newattempt;
+no unchanged391retry. PPS/pump/DCCOFF; sensor/rotationgoalunfinished. See391RESULTS.
+
 2026-10-10 TEST391_PDR_STATE_REGISTERED_NOT_DEPLOYED.
 Newobserverboundary, notunchanged390repairretry: oneearly382vendorboot,
 max2privateREGISTER_LISTENERenable0 requests before/afteroneorderedRPCstart;
