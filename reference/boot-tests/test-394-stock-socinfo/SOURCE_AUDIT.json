@@ -1,0 +1,18 @@
+{
+  "fedora_HEAD": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "fedora_remote_checked": true,
+  "web_attempt": "GitHub blob cache miss; actual pinned local files and git ls-remote used",
+  "files": {
+    "userspace/sensors/map-socinfo.py": "4b3dc7fe842dc419b6660e680ba9c9926359ff72f3555224afcdf3170a0c9af7",
+    "userspace/sensors/stock-socinfo-compare.py": "aea1330817f77135180cc18f8f23c521c42fb8d3428eed9925252e4e7dad1faf",
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/soc/qcom/socinfo.c": "9742c68ef50f3d411718c1fbfa4992c475d91492c5189e4684014ebf48db584d",
+    "/home/ms/Samsung/gts9wifi-fedora-linux/specs/hexagonrpcd-samsung/patches/support-samsung-sensor-registry-writes.patch": "51f57f1fbd18895069506e38d4d6c2b5a038e39c56eca87c7551bbbfeeaa1ca1",
+    "/home/ms/Samsung/gts9wifi-fedora-linux/rootfs/overlay/etc/systemd/system/hexagonrpcd-adsp-sensorspd.service.d/10-gts9wifi-hexagonfs.conf": "f244a9ed9f98a72b1ad2883cad50128c5b182e47a5cfaa07a1dad8380a00a0c2"
+  },
+  "conclusions": [
+    "Samsung getters format raw u32 fields as decimal newline; platform/subtype names use Samsung string tables",
+    "Fedora 0.4.0 Samsung virtual path maps /sys/devices/soc0 to prefix/socinfo; no new vendor framework needed",
+    "previous host mapping and callback replay agree, but actual recovery sysfs values not captured",
+    "Test393 UP snapshots do not prove SNS initialization; test does not restart/reset DSP"
+  ]
+}

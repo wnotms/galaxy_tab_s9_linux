@@ -1,0 +1,28 @@
+{
+  "executed": true,
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "test_ssc_stock_socinfo_scope",
+    "test_stock_socinfo_compare",
+    "test_ssc_socinfo_mapping",
+    "test_ssc_recovery_admission",
+    "-v"
+  ],
+  "environment": {
+    "PYTHONPATH": "tests"
+  },
+  "tests": 53,
+  "skips": 0,
+  "status": 0,
+  "seconds": 0.46179639299953124,
+  "full_regression": {
+    "executed": false,
+    "reason": "scope-specific host reader/parser only, no routing change"
+  },
+  "kernel_build": {
+    "executed": false,
+    "reason": "no kernel/config/DTS/modules change"
+  }
+}

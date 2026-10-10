@@ -1,0 +1,64 @@
+{
+  "test": "Test394",
+  "purpose": "Read actual five Samsung recovery SoC identity attributes and compare with native mainline mapping",
+  "previous_test": "Test393",
+  "previous_verdict": "PDR_UP_BEFORE_AFTER_SSC_ABSENT_RESTORED370",
+  "before_boot_id": "b8af4759-1bd2-444e-b33f-e8a0b1a81c86",
+  "baseline": "accepted Test370 unchanged desktop/kernel/config/DTB/181 modules",
+  "owner_authorization": "standing sensor migration/testing/reboot authorization; temporary ADB-only scope; do not leave in TWRP",
+  "rounds": 1,
+  "readiness_seconds": 90,
+  "preflight_max_age_seconds": 600,
+  "recovery_observation": "one boot-bound read of five stock sysfs attributes; no DSP/RPC",
+  "control_transport": "Windows USB ADB",
+  "ADB": "/mnt/d/android/platform-tools/adb.exe",
+  "writes": [
+    "existing boot mode BCB request/clear at misc first2048 bytes only"
+  ],
+  "image_write": false,
+  "module_write": false,
+  "rootfs_write": false,
+  "registry_write": false,
+  "DSP_started": false,
+  "PPS": false,
+  "pump_ON": false,
+  "config_sha256": "599ca47ab41a29469c3d5830e475049fca9f33bd2ab0923ad014e5ba3fa6ec6c",
+  "notes_sha256": "5c0e82337affafefff586613d4a84c4f1388c9716ce251fe69d3c70aad18a518",
+  "expected_fields": [
+    "soc_id",
+    "hw_platform",
+    "platform_subtype",
+    "platform_subtype_id",
+    "platform_version"
+  ],
+  "observation_voltage_uv": [
+    3400000,
+    4450000
+  ],
+  "observation_temperature_decic": [
+    100,
+    420
+  ],
+  "SOC": [
+    20,
+    100
+  ],
+  "recovery_identity": {
+    "device": "gts9wifi",
+    "kernel": "5.15.94-Foldiby-+",
+    "uid": 0,
+    "serial": "R52X10045LT"
+  },
+  "enrolled_kernel": "reference/boot-tests/test-393-standard-pdr-listener/rollback-1791640951440049201/kernel-json.txt",
+  "enrolled_kernel_sha256": "f0f94656890c5ae8e460fc4fc4ffb298d7c35774a35b90f05c728a43aa1bf3d1",
+  "stop_conditions": [
+    "identity/boot mismatch",
+    "new CPU/kernel fault",
+    "Code43/ADB loss",
+    "battery safety violation",
+    "missing/malformed stock sysfs",
+    "evidence failure"
+  ],
+  "cleanup": "return unchanged Test370 once from verified same recovery; no image restore needed; manual recovery if rescue lost",
+  "success": "exact stock/native identity comparison and normal unchanged desktop return; not SSC/sample/rotation acceptance"
+}

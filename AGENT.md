@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test393（标准 PDR 监听观测登记），窗口为 **Test384–Test393**；没有生成镜像的轮次仍占一轮。
+  编号为 Test394（原厂恢复 SoC 身份只读比较），窗口为 **Test385–Test394**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,18 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-10 TEST394_STOCK_RECOVERY_SOCINFO_REGISTERED_NOT_EXECUTED.
+After393 twoUPsnapshots/noSSC, compare actual fiveSamsung recoverysysfs values
+withfresh nativeSoC mapping. One ordinaryBCBrecoveryroundtrip, unchanged370,
+noDSP/RPC/firmware/registry/image/module/rootfschange; BCBfirst2048only.
+53affectedhostPASS0skip, native/recovery/cleanup dependencies; no kernelbuild/
+fulltests/Actions. Readonlypreflight sameb8af4759 five/181/config/notes/desktop/
+ADB/deviceNCM/noCode43/noaddedkernelfaultPASS,100%33.4C4.444V.
+CommitpushbeforeBCB; oneattempt, firstfaultSTOP, verifiednormaldesktopreturn.
+NoWindowsstage/newimage,385–394window; current393consumes382earlyvendor.
+MatchingvaluesnotSNSparse/SSC/sample/rotationproof. PPS/pump/DCCOFF.
+See394README; goalunfinished.
 
 2026-10-10 TEST393_PDR_UP_BEFORE_AFTER_SSC_ABSENT_RESTORED370.
 Candidate dc892d1d exactfive/181/config/notes/nativeADSP/mapper/ADBhealthy.
