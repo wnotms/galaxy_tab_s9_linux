@@ -1,0 +1,37 @@
+{
+  "argv": [
+    "docker",
+    "run",
+    "--rm",
+    "--network=none",
+    "--security-opt=no-new-privileges",
+    "-e",
+    "HOST_UID=1000",
+    "-e",
+    "HOST_GID=1000",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/ssc-rpc-return-v2/sources/hexagonrpc:/inputs/original:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/rpc-open-error/sources:/inputs/final:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/userspace/sensors:/recipe:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/tests/fixtures:/fixtures:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/rpc-open-error/build:/output",
+    "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+    "sh",
+    "/recipe/compile-rpc-open-error.sh"
+  ],
+  "builder": "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+  "returncode": 0,
+  "seconds": 3.152908584001125,
+  "device_operations": false,
+  "kernel_rebuilt": false,
+  "source_profile_sha256": "c30b633927bf6f95fd52735673a7b4b5dbfddab8720ca3db08ed3dd39309ae83",
+  "recipe_sha256": {
+    "userspace/sensors/rpc_open_error_profile.py": "0aea07c545dce00f6a1f39cc5f177822c4c37a7984d93c56680e9516efe3619c",
+    "userspace/sensors/compile-rpc-open-error.sh": "7dd4efbc4a4fc985a31e8cd9cb680b342a2791fc1cc568f453012ce0180d0bb1",
+    "tests/fixtures/rpc_open_error_harness.c": "7319fb52ac2e02e056e4a421a4962e992e2b57ef8e796fc7989a4fcf9847d29d"
+  }
+}

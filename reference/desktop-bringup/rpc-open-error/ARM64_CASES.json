@@ -1,0 +1,188 @@
+{
+  "executed": true,
+  "cases": [
+    {
+      "profile": "original",
+      "case": "missing",
+      "status": 1,
+      "loops": 1,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "eadf45680823fdff5147875455d4941d5ecab5d6ce36bb8000d97ce12e207f46",
+      "stderr_sha256": "13a9cd983b631336ad03b5f0960d324f3480b3cc6b5aa824be5c7f1e8674c6c3"
+    },
+    {
+      "profile": "original",
+      "case": "present",
+      "status": 0,
+      "loops": 1,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "6fbdc2485a9572c38ce24df7a6377320414a9011f1c075b6255acdfa39f89979",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "profile": "original",
+      "case": "permission",
+      "status": 1,
+      "loops": 1,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "045a0ad4143476ecb4815184ba75b1971cc312aefe8532e6a11e24542efa4186",
+      "stderr_sha256": "452e00ed4b791dc2496fea52c69011becd550711b99d46a27161ed5720630334"
+    },
+    {
+      "profile": "original",
+      "case": "io-error",
+      "status": 1,
+      "loops": 1,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "8b900628e06744262400fdec0a5da2fb4f1d3ba40e1be53f882a20bf3bfae09b",
+      "stderr_sha256": "452e00ed4b791dc2496fea52c69011becd550711b99d46a27161ed5720630334"
+    },
+    {
+      "profile": "original",
+      "case": "readonly-write",
+      "status": 1,
+      "loops": 1,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "82443bcc213d64cd52e1a19553b28d411c01e8fa1a98fa89bffa2fb5aed54a0c",
+      "stderr_sha256": "bf34c8b0c4dd4273548f631677a02ff6964a9fd712f5bfabeef5887c1352e18a"
+    },
+    {
+      "profile": "original",
+      "case": "unknown-env",
+      "status": 14,
+      "loops": 1,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "727ac7a13ad9c88b91372615725671276cc497cca2d932a5c30c0c2c19be9dd4",
+      "stderr_sha256": "02578405460be9bd46ece34f675ceed3aa4d5e3919f7166ee55d876ab0bc17b4"
+    },
+    {
+      "profile": "original",
+      "case": "bad-mode",
+      "status": 14,
+      "loops": 1,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "b3af7e93ef4cb4a72764fd7e75f137896fe29ff85b7053027364faa2b1822887",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "profile": "original",
+      "case": "missing-dir",
+      "status": 1,
+      "loops": 1,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "d9d1697e5ae191795e0db2dd69a0d7b8994fa497461ef7ce998ac886b5c8f584",
+      "stderr_sha256": "2ea2861d98bc0067bee67132507bc5588cd08b26162a741564f934daeca8876a"
+    },
+    {
+      "profile": "original",
+      "case": "repeat-missing",
+      "status": 1,
+      "loops": 1024,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "e760902f9c8a804e627166543e6df06c82bda2cc2a5a072a2277d126cded0790",
+      "stderr_sha256": "f796ef18fa880aacfbdae037c5bc32de225aaea81e533b78e79843eabb6f5b9e"
+    },
+    {
+      "profile": "final",
+      "case": "missing",
+      "status": 69,
+      "loops": 1,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "f8d38ac54023707b1028acaafb75a2cf208e990e6c82dc6d9e217c6e22ca8d7d",
+      "stderr_sha256": "34c9aca068b58c0f81863bf6c2c164884c315f3a34f535311ff0bfbd6128d1ca"
+    },
+    {
+      "profile": "final",
+      "case": "present",
+      "status": 0,
+      "loops": 1,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "6fbdc2485a9572c38ce24df7a6377320414a9011f1c075b6255acdfa39f89979",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "profile": "final",
+      "case": "permission",
+      "status": 1,
+      "loops": 1,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "045a0ad4143476ecb4815184ba75b1971cc312aefe8532e6a11e24542efa4186",
+      "stderr_sha256": "cdb45859ac9a3be43d146ee9f4a3fd1e797b71c462960e44ede92dae36a190eb"
+    },
+    {
+      "profile": "final",
+      "case": "io-error",
+      "status": 1,
+      "loops": 1,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "8b900628e06744262400fdec0a5da2fb4f1d3ba40e1be53f882a20bf3bfae09b",
+      "stderr_sha256": "452e00ed4b791dc2496fea52c69011becd550711b99d46a27161ed5720630334"
+    },
+    {
+      "profile": "final",
+      "case": "readonly-write",
+      "status": 1,
+      "loops": 1,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "82443bcc213d64cd52e1a19553b28d411c01e8fa1a98fa89bffa2fb5aed54a0c",
+      "stderr_sha256": "c6419eb2a639b2548aa3cedb76bd65f53d985dac5cf7554ccbfd41019e2f3364"
+    },
+    {
+      "profile": "final",
+      "case": "unknown-env",
+      "status": 14,
+      "loops": 1,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "727ac7a13ad9c88b91372615725671276cc497cca2d932a5c30c0c2c19be9dd4",
+      "stderr_sha256": "02578405460be9bd46ece34f675ceed3aa4d5e3919f7166ee55d876ab0bc17b4"
+    },
+    {
+      "profile": "final",
+      "case": "bad-mode",
+      "status": 14,
+      "loops": 1,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "b3af7e93ef4cb4a72764fd7e75f137896fe29ff85b7053027364faa2b1822887",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "profile": "final",
+      "case": "missing-dir",
+      "status": 1,
+      "loops": 1,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "d9d1697e5ae191795e0db2dd69a0d7b8994fa497461ef7ce998ac886b5c8f584",
+      "stderr_sha256": "2ea2861d98bc0067bee67132507bc5588cd08b26162a741564f934daeca8876a"
+    },
+    {
+      "profile": "final",
+      "case": "repeat-missing",
+      "status": 69,
+      "loops": 1024,
+      "remaining_fds": 1,
+      "asserted": true,
+      "stdout_sha256": "fb32bb1707665b9c261421453ba66144fdf773e359188bfc399680d1a0366315",
+      "stderr_sha256": "51d5310f77b6d9d5c7ac4c7e62a1c326225882b00f486fe32c83531869ee3df0"
+    }
+  ],
+  "successful": true,
+  "real_C_and_VFS": true,
+  "hardware_or_DSP": false
+}

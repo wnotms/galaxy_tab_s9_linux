@@ -1,0 +1,28 @@
+{
+  "verdict": "RPC_ENOENT_ARM64_QUALIFIED_NOT_DEPLOYED",
+  "host_tests": 105,
+  "host_skips": 0,
+  "ARM64_cases": 18,
+  "upstream_tests": 2,
+  "compiled_sources": 56,
+  "changed_sources": [
+    "hexagonrpcd/aee_error.h",
+    "hexagonrpcd/apps_std.c"
+  ],
+  "missing_file_status": {
+    "before": 1,
+    "after": 69
+  },
+  "library_unchanged": true,
+  "DSP_or_SSC_effect_proved": false,
+  "hardware_tested": false,
+  "installed": false,
+  "kernel_build": {
+    "executed": false
+  },
+  "full_host_regression": {
+    "executed": false
+  },
+  "github_actions": false,
+  "goal_complete": false
+}

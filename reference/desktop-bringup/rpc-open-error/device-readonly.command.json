@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; uptime; systemctl is-active gdm3; for f in capacity temp voltage_now status; do printf \"%s=\" \"$f\"; cat /sys/class/power_supply/sm5714-battery/$f; done; cat /sys/class/remoteproc/remoteproc*/name; cat /sys/class/remoteproc/remoteproc*/state"
+  ],
+  "returncode": 0,
+  "seconds": 0.09790247799901408,
+  "readonly": true
+}

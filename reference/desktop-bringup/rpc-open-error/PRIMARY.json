@@ -1,0 +1,25 @@
+{
+  "sources": [
+    {
+      "url": "https://android.googlesource.com/platform/external/fastrpc/+/refs/tags/android-13.0.0_r77/inc/AEEStdErr.h?format=TEXT",
+      "sha256": "a7ffb57b3ec6e93f003fe186de396b94df8adf65401b623d364e8813c7a8ba01",
+      "bytes": 19930,
+      "relevant_excerpt": "#define AEE_EOFFSET\t\t 0x00000000\n#define AEE_ENOSUCHFILE\t\t     (AEE_EOFFSET + 0x045)   /// No such file",
+      "source_license": "BSD-3-Clause"
+    },
+    {
+      "url": "https://android.googlesource.com/platform/external/fastrpc/+/refs/tags/android-13.0.0_r77/src/apps_std_imp.c?format=TEXT",
+      "sha256": "10ad2589ba6e10df908d0e0943530980a6a46c6c8aa6cc964052a7adccbb3bac",
+      "bytes": 33508,
+      "relevant_excerpt": "__QAIC_IMPL_EXPORT int __QAIC_IMPL(apps_std_fopen)(const char* name, const char* mode, apps_std_FILE* psout) __QAIC_IMPL_ATTRIBUTE {\n   int nErr = AEE_SUCCESS;\n   FILE* stream = fopen(name, mode);\n   if(stream) {\n      return apps_std_FILE_alloc(stream, psout);\n   } else {\n      nErr = AEE_ENOSUCHFILE;\n   }\n   if(nErr != AEE_SUCCESS) {\n      // Ignoring this error, as fopen happens on all ADSP_LIBRARY_PATHs\n      VERIFY_IPRINTF(\"Error %x: fopen for %s failed. errno: %s\\n\", nErr, name, strerror(ERRNO));\n   }\n   return nErr;\n}\n\n",
+      "source_license": "BSD-3-Clause"
+    }
+  ],
+  "not_found_status": 69,
+  "reference_fopen_with_env": "delegates to apps_std_fopen and returns its final status",
+  "observed_Test389_sequence": 6,
+  "observed_status": 1,
+  "required_asset_or_SSC_causality_proved": false,
+  "Fedora_HEAD": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "S9U_HEAD": "916e2f13de00d0b5eba6c02c1a9d6e395e6b909e"
+}

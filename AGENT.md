@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 RPC_ENOENT_ARM64_QUALIFIED_NOT_DEPLOYED.
+Test389 actualmissing oemconfig.so seq6status1 differs Qualcomm ENOSUCHFILE69;
+private56fileprofile changesonly apps_std.c/internalerrorheader, log actualVFS
+error; onlyENOENT maps69, otherfailures/bytes/fdlifecycle/wire/stat unchanged.
+105affectedhostPASS/0skip, fullARM64daemon/library+2upstream+18QEMUPASS;
+daemon36fae649/lib1be44d2f unchanged.3filearchive notinstalled/default/history
+unchanged; originalsource frozen. Nativefixturepathname stop recorded.
+Same370boot0f360b00/GNOME/ADB100%31.5C4.432V/ADSPoffline, no devicewrite/reboot/
+ADSPstart/kernelbuild/fulltests/Actions. PPS/pump/DCCOFF; sensorsunfinished.
+Notassetrequirement/SSCcausalityproof. Next separatelyregister changedstatus
+singlecomparison, no unchanged389replay/no mixing wait/proxyvariables.
+See reference/desktop-bringup/rpc-open-error/RESULTS.md.
+
 2026-10-10 PROXY_EARLY_CLAIM_ARM64_DBUS_QUALIFIED_NOT_DEPLOYED.
 AdaptS9U32273earlyclaim overexactFedora3.9; preserve singlepostopenpolling,
 initializealltables/arraysbeforeexport, gateClaimandReleaseonopeneddevice.

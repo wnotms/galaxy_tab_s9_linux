@@ -1,0 +1,30 @@
+Only classify an actual ENOENT as Qualcomm AEE_ENOSUCHFILE.
+Do not fabricate optional libraries or alter successful file access.
+
+--- a/hexagonrpcd/apps_std.c
++++ b/hexagonrpcd/apps_std.c
+@@ -244,8 +244,10 @@
+ 	if (fd < 0) {
+ 		fprintf(stderr, "Could not open %s: %s\n",
+ 				(const char *) inbufs[3].p,
+-				strerror(errno));
+-		return AEE_EFAILED;
++				strerror(-fd));
++		/* Qualcomm apps_std_fopen[_with_env] reports AEE_ENOSUCHFILE
++		 * for a missing library. Keep other failures distinct from absence. */
++		return fd == -ENOENT ? AEE_ENOSUCHFILE : AEE_EFAILED;
+ 	}
+ 
+ #ifdef HEXAGONRPC_VERBOSE
+--- a/hexagonrpcd/aee_error.h
++++ b/hexagonrpcd/aee_error.h
+@@ -83,6 +83,9 @@
+ #define AEE_ECPUEXCEPTION	48
+ #define AEE_EREADONLY		49
+ 
++/* Qualcomm AEEStdErr.h, android-13.0.0_r77: AEE_EOFFSET + 0x045. */
++#define AEE_ENOSUCHFILE		0x045
++
+ extern const char *aee_strerror[];
+ 
+ #endif
