@@ -1,0 +1,12 @@
+[Unit]
+Description=Test384 bounded owned GLINK boot trace
+After=local-fs.target
+Before=multi-user.target
+ConditionPathExists=/var/lib/gts9-test384/text-scope
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /usr/local/lib/gts9-test384/glink_trace.py watch
+Restart=no
+TimeoutStopSec=3s
+RuntimeMaxSec=310s

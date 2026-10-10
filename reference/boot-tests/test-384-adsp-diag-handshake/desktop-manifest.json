@@ -1,0 +1,37 @@
+{
+  "var/lib/gts9-test384/text-scope": {
+    "incoming": "overlay-01",
+    "source": "reference/boot-tests/test-384-adsp-diag-handshake/text-scope",
+    "sha256": "f2025049a70d73c07c51b4a6a01a14fd59abcb9f7d23ae68ef6b8332a1607461",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/gdm.service.d/91-gts9-test384.conf": {
+    "incoming": "overlay-02",
+    "source": "reference/boot-tests/test-384-adsp-diag-handshake/text-condition.conf",
+    "sha256": "2fc484fbf60e2c6c086a6996fd1c4145251daf83fa6c6fbc56ef6a11ecfe0dd5",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "usr/local/lib/gts9-test384/glink_trace.py": {
+    "incoming": "overlay-05",
+    "source": "userspace/sensors/glink_trace_382.py",
+    "sha256": "21a3ca57f89ca760439d30cb8896bf1aac40059247e2cd17e6064b9534f74303",
+    "original_sha256": null,
+    "mode": 493
+  },
+  "etc/systemd/system/gts9-glink-test384.service": {
+    "incoming": "overlay-06",
+    "source": "reference/boot-tests/test-384-adsp-diag-handshake/glink-watch.service",
+    "sha256": "0d831dc1e049e83bee9a6f49d36d09ccb8bcbfc7e0ee76045bf3a250aae620c0",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/multi-user.target.d/91-gts9-test384.conf": {
+    "incoming": "overlay-07",
+    "source": "reference/boot-tests/test-384-adsp-diag-handshake/multi-user-trace.conf",
+    "sha256": "8b00f2f8c32d3fa89577d6eb9c134b873c5afc75c0143d7ae329a0b274f899e4",
+    "original_sha256": null,
+    "mode": 420
+  }
+}
