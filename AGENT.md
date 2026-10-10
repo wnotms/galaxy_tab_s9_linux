@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 SENSOR_PDR_STATE_OBSERVER_HOST_QUALIFIED_NOT_DEPLOYED.
+New privateQRTR client sendsoneREGISTER_LISTENER0x20 enable0, notGET_STATE;
+sourcepinnedLinux schema optionalcurr_state, service66/version1/instance74.
+FreshsamebootuniqueQRTR/domain evidence required; old390address fixtureonly.
+30new+20domainhostPASS/0skip; no kernelbuild/fulltests/Actions/devicequery.
+Kernelcurrentlyusesenabletrue; falsefirmwareresponseunknown, missingstate STOP,
+no subscribe/ACK/restart/escalation. UPdoesnotproveSSC/sample/rotation.
+ADB shortreadsame370e43402eb/GDMactive/ADSPoffline,100%32.9C4.434V.
+Next separatelyregister newlyobservablePDstateboundary; no unchanged390replay.
+PPS/pump/DCCOFF. See reference/desktop-bringup/ssc-pdr-state/RESULTS.md.
+
 2026-10-10 TEST390_STATUS69_ACK_SSC_ABSENT_RESTORED370.
 Onecandidate73210d40 after860a748a; exactoemconfigmethod19/env/rb seq6PID1787
 status69/transport0 ack; nootherfailedcallback.178registryhashes/35statPASS,
