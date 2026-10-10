@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test387（修正后 RPC 启动测试登记），窗口为 **Test378–Test387**；没有生成镜像的轮次仍占一轮。
+  编号为 Test388（RPC 返回内容有界观察登记），窗口为 **Test379–Test388**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,18 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-10 TEST388_RPC_RETURN_CONTENT_REGISTERED_NOT_DEPLOYED.
+New actualTX/next2/RX/content boundary after387noSSC; daemon9e988475/librarysame,
+70source/parser+25realoverlay/runtime/scope=95PASS,56ARM64sourcehashes/2+6QEMU.
+Explicitenvopt-in8192B/frame512KiB/process/2MiBjournal/300sbootdeadline.
+One orderedroot/sensor startup/60s, strict178groupbytehashes and35stat; noDSPparse
+claim from transport. Reuse370kernel/config/DTB/181+382vendor; no kernelbuild/
+DIAG/moduleload/registryreset/chargingUSBinputchange, PPS/pump/DCCOFF.
+Freshsame370622874b2/91%33.1C no newsevere enrolled; fresh preflight stillneeded.
+FirstnoncleanSTOP/mandatoryexact370normalGNOMErestore; push beforeoneattempt.
+Goalunfinished; no sample/rotationclaim. See388README.
+
 
 2026-10-10 SSC_RPC_RETURN_OBSERVER_COMPILED_NOT_DEPLOYED.
 After387noSSC, isolatedlistener/header observer logs actualTX/next2/RX; default
