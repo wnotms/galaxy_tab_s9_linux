@@ -469,5 +469,3 @@ def trace_collect(rec, boot, name='glink-complete'):
     write(rec.folder/(name+'.json'),value)
     (rec.folder/(name+'.trace')).write_text(value['trace'])
     return value
-
-

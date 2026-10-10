@@ -1,6 +1,11 @@
 {
-  "base_runner_source": "reference/boot-tests/test-383-ssc-bounded-boot-history/host_flow.py",
   "base_runner_sha256": "d289e4be5c2cd049639326fafa06762698725d4d322430ecf2705c3e4852ad6c",
+  "base_runner_source": "reference/boot-tests/test-383-ssc-bounded-boot-history/host_flow.py",
+  "derived_core_sha256": "242f1060f6fb6ea88cc9c310e692caf2d814e6b7c4f623f24acaa5053b85ee9e",
+  "kernel_build_executed": false,
+  "module_build": "reference/desktop-bringup/ssc-rpmsg-control/BUILD.json",
+  "module_build_sha256": "b20f99328a6d199986624ae3b50bc7d28c45ea322231202b66299a174e402dd3",
+  "namespace_change": "Test383 -> Test384, gts9-test383 -> gts9-test384, watcher service ->384",
   "removed_functions": [
     "collect_runtime",
     "discover",
@@ -11,11 +16,6 @@
     "servreg",
     "stage"
   ],
-  "namespace_change": "Test383 -> Test384, gts9-test383 -> gts9-test384, watcher service ->384",
   "shared_trace_instance": "gts9_test382",
-  "derived_core_sha256": "1517bb80d31d8a9157accecd7620c0d46a697747694a3f3ebf98ec864bc7448c",
-  "kernel_build_executed": false,
-  "vendor_packaging_executed": false,
-  "module_build": "reference/desktop-bringup/ssc-rpmsg-control/BUILD.json",
-  "module_build_sha256": "b20f99328a6d199986624ae3b50bc7d28c45ea322231202b66299a174e402dd3"
+  "vendor_packaging_executed": false
 }
