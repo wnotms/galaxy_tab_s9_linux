@@ -1,0 +1,89 @@
+Retain the default listener for the entire reverse-RPC session.
+No change to attach, message schemas, callback payloads or stock assets.
+
+--- a/hexagonrpcd/rpcd.c
++++ b/hexagonrpcd/rpcd.c
+@@ -110,24 +110,38 @@
+ 	fprintf(stderr, "Could not remotectl: %s\n", err);
+ }
+ 
+-static int register_fastrpc_listener(int fd)
+-{
+-	struct fastrpc_context *ctx;
++/* Keep the default listener open throughout the reverse-RPC loop.
++ * Qualcomm adsp_default_listener.c retains listener_fd until its poll loop
++ * exits (a56e9d4de3614a8d8f4b0e15ff561350c4b686e3). Test395's X710
++ * libadsp_default_listener.so also retains a registration handle; the close
++ * in its cached-handle path releases only an additional temporary reference.
++ */
++static int register_fastrpc_listener(int fd, struct fastrpc_context **listener)
++{
+ 	int ret;
+ 
+-	ret = remotectl_open(fd, "adsp_default_listener", &ctx, remotectl_err);
++	*listener = NULL;
++	ret = remotectl_open(fd, "adsp_default_listener", listener, remotectl_err);
+ 	if (ret)
+-		return 1;
+-
+-	ret = adsp_default_listener_register(ctx);
+-	if (ret) {
++		return ret;
++
++	ret = adsp_default_listener_register(*listener);
++	if (ret)
+ 		fprintf(stderr, "Could not register ADSP default listener\n");
+-		goto err;
+-	}
+-
+-err:
+-	remotectl_close(ctx, remotectl_err);
++
+ 	return ret;
++}
++
++static void release_fastrpc_listener(struct fastrpc_context *listener)
++{
++	if (!listener)
++		return;
++
++	/* remotectl_close destroys the local context only on success. A failed
++	 * remote close must still release our local ownership, without retrying.
++	 * The process's FastRPC fd/session owns final DSP teardown on exit. */
++	if (remotectl_close(listener, remotectl_err))
++		fastrpc_destroy_context(listener);
+ }
+ 
+ static void print_usage(const char *argv0)
+@@ -254,6 +268,7 @@
+ {
+ 	struct fastrpc_interface **ifaces;
+ 	struct hexagonfs_dirent *root_dir;
++	struct fastrpc_context *listener = NULL;
+ 	size_t n_ifaces = 3;
+ 	int ret;
+ 
+@@ -274,19 +289,16 @@
+ 	ifaces[1] = fastrpc_apps_std_init(root_dir);
+ 	ifaces[2] = fastrpc_apps_mem_init(fd);
+ 
+-	ret = register_fastrpc_listener(fd);
++	ret = register_fastrpc_listener(fd, &listener);
+ 	if (ret)
+ 		goto err;
+ 
++	/* The registration reference remains live while DSP callbacks run. */
+ 	run_fastrpc_listener(fd, n_ifaces, ifaces);
+ 
++err:
++	release_fastrpc_listener(listener);
+ 	fastrpc_localctl_deinit(ifaces[REMOTECTL_HANDLE]);
+-
+-	free(ifaces);
+-
+-	return NULL;
+-
+-err:
+ 	free(ifaces);
+ 
+ 	return NULL;

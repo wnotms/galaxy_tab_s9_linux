@@ -1,0 +1,7 @@
+{
+  "stage": "offline ARM64 report checker",
+  "error": "Original close-error cases retain a leaked context, contradicting overly broad original-held=false oracle",
+  "source_harness_tests_passed": true,
+  "device_operations": false,
+  "correction": "Check original normal/loop/repeat early release and original close-error leak separately; no source/build/test weakening"
+}

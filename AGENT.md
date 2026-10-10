@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 RPC_DEFAULT_LISTENER_LIFETIME_HOST_QUALIFIED_NOT_DEPLOYED.
+Actual X710/Qualcomm hold registration reference during reverseRPC; existing
+Fedora0.4 closes beforeloop. Onlyrpcd.c changed over393status69 profile; hold
+untilreturn, oncecleanup onopen/register/loop/close errors, no retry/localleak.
+73hostPASS0skip +16ARM64QEMU +2upstream; daemon compiled, companion library
+exact1be44d2f unchanged. Initial metadata oracle error retained/corrected; no
+source/test weakening. No kernel/config/DT/modules/rootfs/USB/charging/input
+change or deviceoperation/fullrun/Actions. Not proven SSC rootcause; next
+separately register new30s startup/unchanged370 return. PPS/pump/DCCOFF;
+sensor/rotationgoalunfinished. See ssc-listener-lifetimeRESULTS.
+
 2026-10-10 TEST395_STOCK_STARTUP_EXPORTED_SAME_BOOT_DESKTOP_UNCHANGED.
 One read-only stock super/vendor export69files; original archive3,247,385bytes
 6709a8a16f585c6f7f59f7e9deb234e2d9a1c9b5efe83beec7e2ec295b7eb6a4.
