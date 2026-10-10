@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST388_RPC_OBSERVER_BUDGET_STOP_RESTORED370.
+One candidate6b738d4a after0b46dd17, native root/sensors startup once.
+512KiB logger stopped seq701/2103records524052B; full JSON3961461B preserved.
+Original parser also rejects input out-capacity trailer; source/offline correction
+next, not firmware failure/rootcauseproof.35statPASS; noSSC/sample,60s incomplete.
+Complete GLINK and offline1111kernel rows/noCPU/new unclassifiedfault.
+Exact370 five/181/config/notes/overlay/assets restored; normal60384db6 GNOME/palm/
+ADB/deviceNCM active, ADSPoffline/RPCinactive.94%33.5C,31Windows225122696B removed.
+96qualification reused; resultsexecuted:false/no kernelbuild/Actions. PPS/pump/
+DCCOFF; sensor/rotation goalunfinished. No unchanged physical retry. See388RESULTS.
+
 2026-10-10 TEST388_RPC_RETURN_CONTENT_REGISTERED_NOT_DEPLOYED.
 New actualTX/next2/RX/content boundary after387noSSC; daemon9e988475/librarysame,
 70source/parser+26realoverlay/runtime/scope=96PASS,56ARM64sourcehashes/2+6QEMU.

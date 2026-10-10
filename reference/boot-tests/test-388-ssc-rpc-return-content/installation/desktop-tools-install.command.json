@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; test ! -e /mnt/debian/tmp/gts9-test388-desktop-install; mkdir /mnt/debian/tmp/gts9-test388-desktop-install; cp /tmp/gts9-test388/desktop.py /tmp/gts9-test388/desktop-manifest.json /tmp/gts9-test388/overlay-00 /tmp/gts9-test388/overlay-01 /tmp/gts9-test388/overlay-02 /tmp/gts9-test388/overlay-03 /tmp/gts9-test388/overlay-04 /tmp/gts9-test388/overlay-05 /tmp/gts9-test388/overlay-06 /tmp/gts9-test388/overlay-07 /mnt/debian/tmp/gts9-test388-desktop-install/"
+  ],
+  "ended_utc": "2026-10-10T06:49:24.704967+00:00",
+  "started_utc": "2026-10-10T06:49:24.609126+00:00",
+  "status": 0
+}

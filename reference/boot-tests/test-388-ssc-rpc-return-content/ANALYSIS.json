@@ -1,0 +1,49 @@
+{
+  "DSP_content_parsing_proved": false,
+  "GLINK_complete": true,
+  "GLINK_faults": [],
+  "actual_stat_entries": 35,
+  "config_metadata_complete": true,
+  "first_input_buffer_lengths": [
+    8,
+    9
+  ],
+  "first_input_bytes": 41,
+  "first_input_consumed_bytes": 33,
+  "first_input_scalars": "00020200",
+  "first_input_trailing_bytes_hex": "08000000ff000000",
+  "kernel_fault_counts": {},
+  "limits": [
+    "RPCRETURN_LIMIT seq=701 reason=budget"
+  ],
+  "next_source_boundary": "Qualcomm pack_out_lens after input buffers; reparse retained raw before any new physical run",
+  "no_unchanged_physical_retry": true,
+  "offline_target_kernel_rows": 1111,
+  "original_parser_faults": [
+    {
+      "message": "RPCRETURN_LIMIT seq=701 reason=budget",
+      "reason": "observer limit/error",
+      "row": 2807
+    },
+    {
+      "pid": "1787",
+      "reason": "extra frame bytes",
+      "unit": "hexagonrpcd-adsp-sensorspd.service"
+    }
+  ],
+  "raw_journal_bytes": 3961461,
+  "raw_journal_rows": 3137,
+  "registry_content_proved": false,
+  "trace_processes": {
+    "hexagonrpcd-adsp-rootpd.service": {
+      "largest_frame_bytes": 0,
+      "message_bytes": 85,
+      "records": 1
+    },
+    "hexagonrpcd-adsp-sensorspd.service": {
+      "largest_frame_bytes": 536,
+      "message_bytes": 524052,
+      "records": 2103
+    }
+  }
+}
