@@ -1,0 +1,58 @@
+{
+  "etc/systemd/system/gdm.service.d/91-gts9-test391.conf": {
+    "incoming": "overlay-02",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "104468705320ef45f6eee0f4506e058b505193a5a8bdda4f220a0307f1627077",
+    "source": "reference/boot-tests/test-391-sensor-pd-state/text-condition.conf"
+  },
+  "etc/systemd/system/gts9-glink-test391.service": {
+    "incoming": "overlay-06",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "c8023a3336f1eafaaaa095140a91c069f688253f8f6f747fa4c3dcb73cfa5b9c",
+    "source": "reference/boot-tests/test-391-sensor-pd-state/glink-watch.service"
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-rootpd.service.d/91-gts9-test391.conf": {
+    "incoming": "overlay-03",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "a0b96fedfcd54758fb3acf81f2fcd48a78e19ffbb56a79d70061af836db2ae29",
+    "source": "reference/boot-tests/test-391-sensor-pd-state/hexagonrpcd-adsp-rootpd-trace.conf"
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-sensorspd.service.d/91-gts9-test391.conf": {
+    "incoming": "overlay-04",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "1377631a275f0490cd9469804fa5582b129e6e802e05a0124cac1909af502cda",
+    "source": "reference/boot-tests/test-391-sensor-pd-state/hexagonrpcd-adsp-sensorspd-trace.conf"
+  },
+  "etc/systemd/system/multi-user.target.d/91-gts9-test391.conf": {
+    "incoming": "overlay-07",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "6a8e138b3620135ebc2261e090eb0885dd5d4a8ab9b0a5c66ffc87c61a4e4135",
+    "source": "reference/boot-tests/test-391-sensor-pd-state/multi-user-trace.conf"
+  },
+  "usr/local/lib/gts9-test391/glink_trace.py": {
+    "incoming": "overlay-05",
+    "mode": 493,
+    "original_sha256": null,
+    "sha256": "21a3ca57f89ca760439d30cb8896bf1aac40059247e2cd17e6064b9534f74303",
+    "source": "userspace/sensors/glink_trace_382.py"
+  },
+  "usr/local/lib/gts9-test391/hexagonrpcd": {
+    "incoming": "overlay-00",
+    "mode": 493,
+    "original_sha256": null,
+    "sha256": "36fae649be02137c156588dacf453ffa467de6a18d15b3b95167c1e7569627a1",
+    "source": "out/rpc-open-error/build/stage/usr/bin/hexagonrpcd"
+  },
+  "var/lib/gts9-test391/text-scope": {
+    "incoming": "overlay-01",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "0dbd285adb807510907f02df92b5a0f1f53be7aac1862e42409df79f41fc32f4",
+    "source": "reference/boot-tests/test-391-sensor-pd-state/text-scope"
+  }
+}

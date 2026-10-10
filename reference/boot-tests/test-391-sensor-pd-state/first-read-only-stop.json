@@ -1,0 +1,28 @@
+{
+  "verdict": "STOP_NEW_HISTORICAL_EP0_NOT_DEPLOYED",
+  "device_mutations": 0,
+  "registered_inputs_not_finalized": true,
+  "stage_attempt": "input drift rejected before staging",
+  "preflight_attempt": "input drift rejected before device checks",
+  "new_error": {
+    "_KERNEL_DEVICE": "+platform:a600000.usb",
+    "SYSLOG_FACILITY": "0",
+    "PRIORITY": "3",
+    "_TRANSPORT": "kernel",
+    "_HOSTNAME": "gts9",
+    "MESSAGE": "dwc3-qcom a600000.usb: request 00000000140e0e2b was not queued to ep0out",
+    "_MACHINE_ID": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+    "_SOURCE_BOOTTIME_TIMESTAMP": "102351539",
+    "_UDEV_SYSNAME": "a600000.usb",
+    "__SEQNUM": "1452842",
+    "__CURSOR": "s=0e9cc8651fa34ae5875adb1b7f906071;i=162b2a;b=e43402eb08bc4528853bf5c423bd2974;m=619b5b4;t=65d7804474d52;x=827b25bd4f79d546",
+    "__MONOTONIC_TIMESTAMP": "102348212",
+    "_RUNTIME_SCOPE": "system",
+    "__REALTIME_TIMESTAMP": "1791619909504338",
+    "_BOOT_ID": "e43402eb08bc4528853bf5c423bd2974",
+    "_SOURCE_MONOTONIC_TIMESTAMP": "102351539",
+    "__SEQNUM_ID": "0e9cc8651fa34ae5875adb1b7f906071",
+    "_KERNEL_SUBSYSTEM": "platform",
+    "SYSLOG_IDENTIFIER": "kernel"
+  }
+}

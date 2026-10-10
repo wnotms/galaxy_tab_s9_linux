@@ -1,0 +1,83 @@
+test_completed_attempt_cannot_be_replayed (test_ssc_pdr_state_scope.DiscoveryTests.test_completed_attempt_cannot_be_replayed) ... ok
+test_initial_unknown_stops_before_rpc_and_restores (test_ssc_pdr_state_scope.DiscoveryTests.test_initial_unknown_stops_before_rpc_and_restores) ... ok
+test_journal_collection_failure_restores (test_ssc_pdr_state_scope.DiscoveryTests.test_journal_collection_failure_restores) ... ERROR
+test_second_unknown_no_retry_and_restores (test_ssc_pdr_state_scope.DiscoveryTests.test_second_unknown_no_retry_and_restores) ... ok
+test_two_queries_one_start_and_restore_without_false_acceptance (test_ssc_pdr_state_scope.DiscoveryTests.test_two_queries_one_start_and_restore_without_false_acceptance) ... ERROR
+test_unknown_rescue_marks_manual_recovery_without_another_start (test_ssc_pdr_state_scope.DiscoveryTests.test_unknown_rescue_marks_manual_recovery_without_another_start) ... ok
+test_missing_state_error_or_changed_boot_stops (test_ssc_pdr_state_scope.NotifierTests.test_missing_state_error_or_changed_boot_stops) ... ok
+test_raw_json_retained_and_enable_zero_cli (test_ssc_pdr_state_scope.NotifierTests.test_raw_json_retained_and_enable_zero_cli) ... ok
+test_new_observable_boundary_and_no_hardware_change (test_ssc_pdr_state_scope.RegistrationTests.test_new_observable_boundary_and_no_hardware_change) ... ok
+test_real_renamed_overlay_transaction_restores_all_eight (test_ssc_pdr_state_scope.RegistrationTests.test_real_renamed_overlay_transaction_restores_all_eight) ... ok
+
+======================================================================
+ERROR: test_journal_collection_failure_restores (test_ssc_pdr_state_scope.DiscoveryTests.test_journal_collection_failure_restores)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-391-sensor-pd-state/host_flow.py", line 583, in discover
+    try:collect_runtime(rec,'failure-')
+        ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-391-sensor-pd-state/host_flow.py", line 566, in discover
+    collect_runtime(rec,'discovery-',require_metadata=True);trace_collect(rec,boot)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+ValueError: journal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_ssc_pdr_state_scope.py", line 131, in test_journal_collection_failure_restores
+    with self.assertRaises(ValueError): H.discover()
+                                        ~~~~~~~~~~^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-391-sensor-pd-state/host_flow.py", line 584, in discover
+    except Exception as e:write(rec.folder/'runtime-collection-error.json',dict(error=str(e)))
+                          ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-391-sensor-pd-state/host_flow.py", line 54, in write
+    path.write_text(json.dumps(value, indent=2, sort_keys=True)+'\n')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 810, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 772, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmprmy1b5dl/runtime-discovery/runtime-collection-error.json'
+
+======================================================================
+ERROR: test_two_queries_one_start_and_restore_without_false_acceptance (test_ssc_pdr_state_scope.DiscoveryTests.test_two_queries_one_start_and_restore_without_false_acceptance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_ssc_pdr_state_scope.py", line 104, in test_two_queries_one_start_and_restore_without_false_acceptance
+    d = H.discover()
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-391-sensor-pd-state/host_flow.py", line 578, in discover
+    write(rec.folder/'summary.json',result)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-391-sensor-pd-state/host_flow.py", line 54, in write
+    path.write_text(json.dumps(value, indent=2, sort_keys=True)+'\n')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 810, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 772, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpluyl39_t/runtime-discovery/summary.json'
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.024s
+
+FAILED (errors=2)

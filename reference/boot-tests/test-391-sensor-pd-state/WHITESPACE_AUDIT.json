@@ -1,0 +1,26 @@
+{
+  "source_diff_check": "PASS",
+  "paths": [
+    "AGENT.md",
+    "tests/test_ssc_pdr_state_scope.py",
+    "reference/boot-tests/test-391-sensor-pd-state/assets.py",
+    "reference/boot-tests/test-391-sensor-pd-state/glink-watch.service",
+    "reference/boot-tests/test-391-sensor-pd-state/runtime.py",
+    "reference/boot-tests/test-391-sensor-pd-state/desktop.py",
+    "reference/boot-tests/test-391-sensor-pd-state/capture.py",
+    "reference/boot-tests/test-391-sensor-pd-state/host_flow.py",
+    "reference/boot-tests/test-391-sensor-pd-state/mount-debian.sh",
+    "reference/boot-tests/test-391-sensor-pd-state/hexagonrpcd-adsp-sensorspd-trace.conf",
+    "reference/boot-tests/test-391-sensor-pd-state/README.md",
+    "reference/boot-tests/test-391-sensor-pd-state/text-condition.conf",
+    "reference/boot-tests/test-391-sensor-pd-state/hexagonrpcd-adsp-rootpd-trace.conf",
+    "reference/boot-tests/test-391-sensor-pd-state/multi-user-trace.conf",
+    "reference/boot-tests/test-391-sensor-pd-state/missing_file_evidence.py"
+  ],
+  "raw_diff_check": {
+    "exit_code": 2,
+    "reason": "Preserved CRLF/raw Windows and ADB evidence reports trailing whitespace; authored source clean; no normalization"
+  },
+  "prior_commit_created": false,
+  "device_mutations": 0
+}

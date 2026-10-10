@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test390（缺失文件返回状态比较登记），窗口为 **Test381–Test390**；没有生成镜像的轮次仍占一轮。
+  编号为 Test391（sensor PD 执行状态观测登记），窗口为 **Test382–Test391**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,19 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-10 TEST391_PDR_STATE_REGISTERED_NOT_DEPLOYED.
+Newobserverboundary, notunchanged390repairretry: oneearly382vendorboot,
+max2privateREGISTER_LISTENERenable0 requests before/afteroneorderedRPCstart;
+2squery/30shealth. Initialunknown STOPbeforeRPC, no subscribe/ACK/DSPreset.
+Reuse370kernel/181/config/DTB,390daemon/library/assets; eight391ownedoverlay;
+mandatoryexact370/GNOMErestore.12scopePASS/0skip +50observer/domain reused;
+105host/18ARM64/2upstream unchanged qualification reused; no kernelbuild/Actions.
+Read-onlyfirstenrollment STOPonehistorical102.348sEP0dequeue, preservedexactrow;
+callerunknown/noUSBfix/nofuturewaiver, laterrootADB/NCM/noCode43/noaddederror.
+Revision2freshfive/181/config/notes/preflight PASSsamee43402eb,100%32.9C4.434V.
+32Windowsstagefiles; registration push beforemutation; retention382–391.
+PPS/pump/DCCOFF; noSSC/rotationacceptance fromdomainUP. See391README.
 
 2026-10-10 SENSOR_PDR_STATE_OBSERVER_HOST_QUALIFIED_NOT_DEPLOYED.
 New privateQRTR client sendsoneREGISTER_LISTENER0x20 enable0, notGET_STATE;

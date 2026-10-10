@@ -1,0 +1,37 @@
+{
+  "executed": true,
+  "tests_run": 12,
+  "selected": [
+    "test_ssc_pdr_state_scope.DiscoveryTests.test_completed_attempt_cannot_be_replayed",
+    "test_ssc_pdr_state_scope.DiscoveryTests.test_failed_rpc_unit_stops_without_restart",
+    "test_ssc_pdr_state_scope.DiscoveryTests.test_initial_unknown_stops_before_rpc_and_restores",
+    "test_ssc_pdr_state_scope.DiscoveryTests.test_journal_collection_failure_restores",
+    "test_ssc_pdr_state_scope.DiscoveryTests.test_new_failed_unit_during_observation_stops_and_restores",
+    "test_ssc_pdr_state_scope.DiscoveryTests.test_second_unknown_no_retry_and_restores",
+    "test_ssc_pdr_state_scope.DiscoveryTests.test_two_queries_one_start_and_restore_without_false_acceptance",
+    "test_ssc_pdr_state_scope.DiscoveryTests.test_unknown_rescue_marks_manual_recovery_without_another_start",
+    "test_ssc_pdr_state_scope.NotifierTests.test_missing_state_error_or_changed_boot_stops",
+    "test_ssc_pdr_state_scope.NotifierTests.test_raw_json_retained_and_enable_zero_cli",
+    "test_ssc_pdr_state_scope.RegistrationTests.test_new_observable_boundary_and_no_hardware_change",
+    "test_ssc_pdr_state_scope.RegistrationTests.test_real_renamed_overlay_transaction_restores_all_eight"
+  ],
+  "skips": [],
+  "failures": 0,
+  "errors": 0,
+  "successful": true,
+  "seconds": 0.030245459000070696,
+  "reused": [
+    "c7009074: 30 notifier +20 domain snapshot host tests",
+    "10e29334 /4c1a75ef: corrected RPC daemon/library +105 host,18ARM64,2upstream",
+    "Test390 unchanged kernel/modules/vendor/assets/restore flow"
+  ],
+  "kernel_build": {
+    "executed": false,
+    "reason": "no kernel/config/DT/module changes"
+  },
+  "full_host_tests": {
+    "executed": false,
+    "reason": "direct affected suites; no routing change"
+  },
+  "first_draft_failure": "Mock Recorder omitted real directory creation; 2 fixture errors retained; fixed mock to match actual Recorder, not a device failure"
+}
