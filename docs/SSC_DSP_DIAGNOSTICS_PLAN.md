@@ -143,3 +143,53 @@ This new offline helper is not yet a complete Test384 deployment runner. A
 positive handshake would justify a separately bounded decoder/control design
 from actual X710 responses; a negative result needs its first complete failure
 analysis. Neither permits silent full-router/mask activation or a sensor PASS.
+
+## Test386: ACK alone is not an endpoint (2026-10-10)
+
+The earlier next384 plan is historical. Test384 stopped on recovery ADB closure
+before candidate installation; Test385 passed stable recovery admission but
+found an inherited8-file installer allowlist versus5-file minimal manifest.
+Both first failures and recovery evidence are preserved. Test386 corrected that
+actual host defect and exercised12 real temporary-root install/restore/fault
+cases before physical deployment;83 affected host tests passed, zero skips.
+No Image/config/DTB/181-module rebuild or USB/charging driver change.
+
+One attributed candidate `26ad9a13-4f2d-4a9a-a42f-9c8c7491027d` loaded the matched
+native control module and issued exactly one local DIAG open. The complete
+zero-loss GLINK trace contains19/19 events (2754bytes): `tx OPEN DIAG[3/0]`,
+`rx OPEN_ACK DIAG[3/0]`, **no reciprocal remote OPEN**. The character-device
+open returnedEINVAL after about5.22s of host command time. Stock7.2 GLINK waits
+first forACK, then forremoteOPEN,5s each. Timeout returnsERR_PTR, create_ept
+maps that toNULL, and rpmsg_char mapsNULL toEINVAL with `failed to open DIAG`.
+This supports a second-stage wait timeout; it does not show malformed UAPI,
+complete application service, firmware's permanent lack of DIAG, or SSC rootcause.
+The trace clock islocal; do not subtract crossCPUtimestamps for exact latency.
+
+The first failed-open journal suspect remains intact. No payload/mask/feature
+request, RPC launch, endpoint reopen or live module unload occurred. Mandatory
+baseline reboot cleared the orphan endpoint/module. Exact Test370/GNOME was
+restored in boot `d8654881-69bd-4603-92ee-8e14a3f81ad9`, with all five partitions,
+181modules/config/notes/fullkernel/ADB/deviceusb0/palm accepted. WiFiSSH/hostNCM
+TCP were outside the currentADB-only scope. See
+[Test386 raw result](../reference/boot-tests/test-386-diag-minimal-overlay/RESULTS.md)
+and its `GLINK_ANALYSIS.json`/source excerpts/first failure/rollback evidence.
+
+The next source comparison must distinguish transport acknowledgement from
+remote application initialization. Check the exact X710 firmware's DIAG channel
+lifecycle and whether its stock/Fedora RPC startup or control-channel sequence
+actually supplies a documented prerequisite. The primary linux-msm/diag router
+opensDIAG beforeDIAG_CNTL/DIAG_CMD; a generic router is neither an explanation of
+this reciprocal-open gap nor passive collection. Its feature/mask writes remain
+outside all completed registrations. No demonstrated source prerequisite yet
+justifies those writes or a TCPM/USB/kernel change.
+
+Do not repeat the unchanged one-shot probe, guess firmware channel names, reset
+registry, fabricateoemconfig.so, or claim a sensor fix from this ACK. Select a
+new bounded action only after a source-supported difference or actual startup
+prerequisite is identified. Existing Fedora RPC implementation is already
+imported; reference reuse must introduce a real change rather than another
+unchanged60s SSC wait. Actual accelerometer samples and SensorProxy orientation
+remain required for sensor/rotation completion.
+
+Documentation-only update: `executed: false`; reuse Test386's83 host tests and
+exact build qualification. No device operation, build/full regression orCI.
