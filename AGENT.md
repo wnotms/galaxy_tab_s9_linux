@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 SSC_RPC_CAPACITY_PARSER_V2_QUALIFIED_NOT_DEPLOYED.
+Qualcomm pack_out_lens/source plus all701 actualRX establish exact unaligned
+output-capacity trailer; strict parser/harness corrected, no arbitrary extra bytes.
+Fresh offline388replay:130/178 returned registry hashes match,48missing and
+budget fault retained; noDSP/SSC/sampleproof and originalSTOP unchanged.
+Separatev2 1MiB/process header only; originalv1 512KiB/profile frozen/default.
+106affectedPASS/0skip,56exactARM64sources,2+6QEMUPASS,daemonbf0a9fa1/libunchanged.
+No kernel/config/DTS/charging/USB/input/devicechange/Actions;370GNOME restored.
+Next register new bounded fullcontent boundary beforeonecandidate; no unchanged
+physicalretry, PPS/pump/DCCOFF. See ssc-rpc-return-capacity/RESULTS.md.
+
 2026-10-10 TEST388_RPC_OBSERVER_BUDGET_STOP_RESTORED370.
 One candidate6b738d4a after0b46dd17, native root/sensors startup once.
 512KiB logger stopped seq701/2103records524052B; full JSON3961461B preserved.

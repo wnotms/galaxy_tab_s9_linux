@@ -19,12 +19,14 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def prepare(sources, output):
+def prepare(sources, output, profile_name='rpc-return'):
     sources = Path(sources).resolve()
     output = Path(output).absolute()
-    profile = json.loads((BASE / 'diagnostics/rpc-return.json').read_text())
+    if profile_name not in ('rpc-return', 'rpc-return-v2'):
+        raise ValueError('unknown return observer profile')
+    profile = json.loads((BASE / ('diagnostics/' + profile_name + '.json')).read_text())
     patch = BASE / 'diagnostics/rpc-return.patch'
-    header = BASE / 'diagnostics/rpc-return-trace.h'
+    header = BASE / ('diagnostics/' + profile.get('header_file', 'rpc-return-trace.h'))
     if sha(patch) != profile['patch_sha256'] or sha(header) != profile['header_sha256']:
         raise ValueError('return observer input mismatch')
     if output.exists() or output.is_symlink() or output.resolve().is_relative_to(sources):
@@ -56,7 +58,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--sources', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
+    parser.add_argument('--profile', choices=('rpc-return', 'rpc-return-v2'), default='rpc-return')
     args = parser.parse_args()
-    result = prepare(args.sources, args.output)
+    result = prepare(args.sources, args.output, args.profile)
     print(json.dumps({'changed_files': result['composition']['changes_from_wire_stat'],
                       'device_operations': False}, indent=2))

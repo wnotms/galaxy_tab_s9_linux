@@ -15,7 +15,7 @@ UNITS = {'hexagonrpcd-adsp-rootpd.service', 'hexagonrpcd-adsp-sensorspd.service'
 FRAME_MAX = 8192
 
 
-def buffers(frame, count):
+def _packed_buffers(frame, count):
     """Independent Qualcomm listener2 framing; alignment applies to payload only."""
     offset, decoded = 0, []
     if len(frame) > FRAME_MAX:
@@ -31,9 +31,28 @@ def buffers(frame, count):
                 raise ValueError('missing buffer payload')
         decoded.append(frame[offset:offset + size])
         offset += size
+    return decoded, offset
+
+
+def buffers(frame, count):
+    decoded, offset = _packed_buffers(frame, count)
     if offset != len(frame):
         raise ValueError('extra frame bytes')
     return decoded
+
+
+def invocation(frame, scalars):
+    """Qualcomm pack_in_bufs followed by unaligned uint32 pack_out_lens.
+
+    listener_buf.h, Android13 r77 blob ee95b1d768fe6ba923dc1bdaf9ebb6c2210f366c.
+    These are output capacities, not another packed input buffer or padding.
+    """
+    decoded, offset = _packed_buffers(frame, (scalars >> 16) & 255)
+    count = (scalars >> 8) & 255
+    if len(frame) - offset != 4 * count:
+        raise ValueError('missing/extra output capacity descriptors')
+    capacities = list(struct.unpack_from('<' + 'I' * count, frame, offset)) if count else []
+    return decoded, capacities
 
 
 def inspect(raw, boot):
@@ -98,8 +117,10 @@ def inspect(raw, boot):
                                'response_to': (None if previous is None else {
                                    'handle': previous['handle'], 'scalars': previous['scalars'],
                                    'rctx': previous['rctx'], 'buffers_hex':
-                                   [p.hex() for p in buffers(previous['frame'],
-                                                            (previous['scalars'] >> 16) & 255)]}),
+                                   [p.hex() for p in invocation(previous['frame'],
+                                                               previous['scalars'])[0]],
+                                   'output_capacities': invocation(previous['frame'],
+                                                                   previous['scalars'])[1]}),
                                'returned_buffer_lengths': [len(p) for p in payloads],
                                'returned_buffer_sha256': [hashlib.sha256(p).hexdigest() for p in payloads],
                                'returned_buffers_hex': [p.hex() for p in payloads]}
@@ -121,10 +142,11 @@ def inspect(raw, boot):
                         raise ValueError('incoming frame without successful next2')
                     if any(event[k] != pending['next_request_metadata'][k] for k in ('rctx', 'handle', 'scalars')):
                         raise ValueError('next2/incoming metadata mismatch')
-                    payloads = buffers(event['frame'], (event['scalars'] >> 16) & 255)
+                    payloads, capacities = invocation(event['frame'], event['scalars'])
                     pending['request'] = {'handle': event['handle'], 'scalars': event['scalars'],
                                           'rctx': event['rctx'], 'buffer_lengths': [len(p) for p in payloads],
-                                          'buffers_hex': [p.hex() for p in payloads]}
+                                          'buffers_hex': [p.hex() for p in payloads],
+                                          'output_capacities': capacities}
                     calls.append(pending)
                     pending, previous = None, event
             if pending is not None and pending['transport_return'] is not None:

@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "docker",
+    "run",
+    "--rm",
+    "--network=none",
+    "--security-opt=no-new-privileges",
+    "-e",
+    "HOST_UID=1000",
+    "-e",
+    "HOST_GID=1000",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/ssc-rpc-return-v2/sources:/inputs:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/tests/fixtures:/fixtures:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/ssc-rpc-return-v2/build-output:/output",
+    "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+    "sh",
+    "-c",
+    "set -eu\naarch64-linux-gnu-gcc -std=gnu11 -Wall -Wextra -Werror -Wno-unused-function -Wno-unused-parameter -ffunction-sections -fdata-sections -DHEXAGONRPC_BUILD_METHOD_DEFINITIONS=1 -I/inputs/hexagonrpc/include -I/inputs/hexagonrpc/hexagonrpcd /fixtures/rpc_return_harness.c /inputs/hexagonrpc/hexagonrpcd/iobuffer.c -Wl,--gc-sections -o /output/return-harness\nfor test_case in normal large transport-error frame-limit budget; do\n HEXAGONRPC_RETURN_TRACE=1 qemu-aarch64 -L /usr/aarch64-linux-gnu /output/return-harness \"$test_case\" > \"/output/return-$test_case.stdout\" 2> \"/output/return-$test_case.stderr\"\ndone\nqemu-aarch64 -L /usr/aarch64-linux-gnu /output/return-harness normal > /output/return-disabled.stdout 2> /output/return-disabled.stderr\nchown -R \"$HOST_UID:$HOST_GID\" /output/return-*\n"
+  ],
+  "device_operations": false
+}

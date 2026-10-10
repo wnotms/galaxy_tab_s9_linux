@@ -6,7 +6,7 @@
 
 static unsigned calls;
 static int large_input, transport_failure;
-static unsigned char incoming[316];
+static unsigned char incoming[324];
 static size_t incoming_size;
 
 static void put32(unsigned char *p, uint32_t value)
@@ -94,6 +94,10 @@ int main(int argc, char **argv)
     put32(incoming + 12, large_input ? 300 : 0);
     if (large_input) memset(incoming + 16, 0x5a, 300);
     incoming_size = large_input ? 316 : 16;
+    /* Qualcomm pack_out_lens follows pack_in_bufs, without alignment. */
+    put32(incoming + incoming_size, 8);
+    put32(incoming + incoming_size + 4, 4);
+    incoming_size += 8;
     uint32_t rctx = 0, handle = 0, sc = 0;
     uint32_t numbers[] = {4, 1};
     struct fastrpc_io_buffer returned[] = {{sizeof(numbers), numbers}, {4, "abcd"}};

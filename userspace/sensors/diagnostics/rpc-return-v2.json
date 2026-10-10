@@ -1,0 +1,20 @@
+{
+  "base_file_sha256": "e37aa15bb97fb0efd2ebdfb159edf70cc465d252b6a9fcacb57b7ccbf3e1ee7d",
+  "budget_source": "Test388 actual2103records524052bytes/701calls; 130/178groups observed. 1MiB bounded diagnostic budget, not unrestricted logging.",
+  "changed_files": [
+    "hexagonrpcd/listener.c",
+    "hexagonrpcd/rpc-return-trace.h"
+  ],
+  "deployment_authorized_by_profile": false,
+  "diagnostic_only": true,
+  "header_file": "rpc-return-trace-v2.h",
+  "header_sha256": "c5d75666749c5b08d054741cba46ebfa0dcb232d03f40060b7841bc2be8e4ce5",
+  "next2_success_is_DSP_parsing_proof": false,
+  "opt_in_environment": "HEXAGONRPC_RETURN_TRACE=1",
+  "patch_sha256": "fcaf186ba59efd765694fcec6c236210b4858089ff71e98b5e70c99c34fcb5fb",
+  "patched_file_sha256": "2c80c8c41bb0f037e7fca7548b7e10eb921070fca787a3e3c79fd5d6f481cc9d",
+  "per_frame_bytes": 8192,
+  "per_process_trace_bytes": 1048576,
+  "previous_profile": "rpc-return.json",
+  "wire_semantics_changed": false
+}
