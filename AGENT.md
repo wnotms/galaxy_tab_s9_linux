@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test385（恢复连接稳定门禁登记），窗口为 **Test376–Test385**；没有生成镜像的轮次仍占一轮。
+  编号为 Test386（最小诊断安装修正登记），窗口为 **Test377–Test386**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,17 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-10 TEST386_MINIMAL_DIAG_OVERLAY_REGISTERED_NOT_DEPLOYED.
+Fix385 actualhostscopebug: installerALLOWED exactlyfive no-RPCmanifestpaths.
+12 realtemp-root transaction tests cover install/readbacks/restore/partialcopy/
+wrongroot/foreignfile/hash/symlink/legacyRPC/reinstall; total83affectedPASS/0skip.
+Keep385firstSTOP/oldscript. Reuse8s/three-rootTWRPsamples/no retry/evidence gate,
+exact370 Image/config/DTB/181,382/383earlyvendor/nativecontrol32CRC; no build.
+One DIAG open only,15sdevice/19shost/1s64KiB/zero masks/writes/RPC, no liveunload.
+Fresh37088dce57b baseline/new1normalrow/no severe; no future USBwaiver.
+Alwaysrestore370normalGNOME. PPS/pump/DCCOFF/no sensor/rotationacceptance.
+Goalunfinished; registrationpush beforeonephysicalattempt. See386README.
 
 2026-10-10 TEST385_HOST_OVERLAY_SCOPE_STOP_RESTORED370.
 Registratione86ffa40/86affectedPASS. TWRPthree samples8.49s/root/samebootPASS,

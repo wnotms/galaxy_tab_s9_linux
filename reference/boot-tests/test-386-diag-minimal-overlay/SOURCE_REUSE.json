@@ -1,0 +1,13 @@
+{
+  "base_runner_source": "reference/boot-tests/test-385-adsp-diag-recovery-stable/core.py",
+  "base_runner_sha256": "7d537ab7bb18ff339ba755a01fad463b56386fe4b39fcf3c5c8009dec3c928ac",
+  "derived_core_sha256": "d33c6b2c3d2e26a249f5df6839f38bc726597c8f5a0eb7b9712e28020ede098f",
+  "functional_change": "desktop allowlist exactly five registered minimal no-RPC files; actual offline install/restore host replay added",
+  "recovery_gate_reused": true,
+  "first_STOP_preserved": "reference/boot-tests/test-385-adsp-diag-recovery-stable/first-failure.json",
+  "kernel_build_executed": false,
+  "module_build_executed": false,
+  "vendor_packaging_executed": false,
+  "module_build": "reference/desktop-bringup/ssc-rpmsg-control/BUILD.json",
+  "module_build_sha256": "b20f99328a6d199986624ae3b50bc7d28c45ea322231202b66299a174e402dd3"
+}

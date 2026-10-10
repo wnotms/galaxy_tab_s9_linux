@@ -1,0 +1,32 @@
+{
+  "boot_id": "88dce57b-a010-47c3-bc3b-44be289242a1",
+  "battery": {
+    "DEVTYPE": "power_supply",
+    "OF_NAME": "charger",
+    "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+    "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+    "OF_COMPATIBLE_N": "1",
+    "POWER_SUPPLY_NAME": "sm5714-battery",
+    "POWER_SUPPLY_TYPE": "Battery",
+    "POWER_SUPPLY_STATUS": "Charging",
+    "POWER_SUPPLY_HEALTH": "Good",
+    "POWER_SUPPLY_PRESENT": "1",
+    "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+    "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+    "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+    "POWER_SUPPLY_VOLTAGE_NOW": "4318000",
+    "POWER_SUPPLY_VOLTAGE_AVG": "4318000",
+    "POWER_SUPPLY_VOLTAGE_OCV": "4263000",
+    "POWER_SUPPLY_CURRENT_NOW": "1136000",
+    "POWER_SUPPLY_CURRENT_AVG": "1048000",
+    "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+    "POWER_SUPPLY_CAPACITY": "87",
+    "POWER_SUPPLY_TEMP": "323"
+  },
+  "prior_accepted_kernel": "reference/boot-tests/test-385-adsp-diag-recovery-stable/final-acceptance/kernel-json.txt",
+  "enrolled_rows": 1100,
+  "new_rows": 1,
+  "new_severe_rows": 0,
+  "physical_attempts": 0,
+  "future_error_waiver": false
+}
