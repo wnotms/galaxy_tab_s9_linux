@@ -100,8 +100,9 @@
 
 2026-10-10 TEST388_RPC_RETURN_CONTENT_REGISTERED_NOT_DEPLOYED.
 New actualTX/next2/RX/content boundary after387noSSC; daemon9e988475/librarysame,
-70source/parser+25realoverlay/runtime/scope=95PASS,56ARM64sourcehashes/2+6QEMU.
-Explicitenvopt-in8192B/frame512KiB/process/2MiBjournal/300sbootdeadline.
+70source/parser+26realoverlay/runtime/scope=96PASS,56ARM64sourcehashes/2+6QEMU.
+Explicitenvopt-in8192B/frame512KiB/process/8MiBunitjournal,2MiBGLINK/300sdeadline.
+Revision2 beforephysical: actual JSONenvelope estimate~4.7MiB; originaldraft kept.
 One orderedroot/sensor startup/60s, strict178groupbytehashes and35stat; noDSPparse
 claim from transport. Reuse370kernel/config/DTB/181+382vendor; no kernelbuild/
 DIAG/moduleload/registryreset/chargingUSBinputchange, PPS/pump/DCCOFF.

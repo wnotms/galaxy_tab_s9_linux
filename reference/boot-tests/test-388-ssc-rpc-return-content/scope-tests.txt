@@ -17,6 +17,7 @@ test_wrong_machine_cannot_write (test_ssc_rpc_return_scope.OverlayTransactionTes
 test_complete_content_recorded_without_relabeling_as_sensor_pass (test_ssc_rpc_return_scope.ReturnCollectionTests.test_complete_content_recorded_without_relabeling_as_sensor_pass) ... ok
 test_corrupt_content_stops_despite_correct_stat (test_ssc_rpc_return_scope.ReturnCollectionTests.test_corrupt_content_stops_despite_correct_stat) ... ok
 test_missing_frames_stops_preserves_successful_stat_and_return_error (test_ssc_rpc_return_scope.ReturnCollectionTests.test_missing_frames_stops_preserves_successful_stat_and_return_error) ... ok
+test_unit_journal_limit_stops_before_parser (test_ssc_rpc_return_scope.ReturnCollectionTests.test_unit_journal_limit_stops_before_parser) ... ok
 test_100_percent_soc_permitted_for_passive_discovery (test_ssc_rpc_return_scope.RuntimeStartupTests.test_100_percent_soc_permitted_for_passive_discovery) ... ok
 test_actual_runtime_starts_both_roles_root_first_no_mapper (test_ssc_rpc_return_scope.RuntimeStartupTests.test_actual_runtime_starts_both_roles_root_first_no_mapper) ... ok
 test_missing_helper_blocks_without_runtime_start (test_ssc_rpc_return_scope.RuntimeStartupTests.test_missing_helper_blocks_without_runtime_start) ... ok
@@ -25,6 +26,6 @@ test_second_runtime_start_refused (test_ssc_rpc_return_scope.RuntimeStartupTests
 test_trace_drift_blocks_before_gate (test_ssc_rpc_return_scope.RuntimeStartupTests.test_trace_drift_blocks_before_gate) ... ok
 
 ----------------------------------------------------------------------
-Ran 25 tests in 0.067s
+Ran 26 tests in 0.089s
 
 OK

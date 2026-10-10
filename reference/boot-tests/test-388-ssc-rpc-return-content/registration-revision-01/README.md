@@ -15,7 +15,7 @@ candidate boot,15s health,native Servreg64/257 sensor_pd74,ordered root/sensors 
 once,maximum60s SSC/sample observation. No sample is STOP, never sensor PASS.
 
 Record TX/next2-return/RX exact context/scalars/bytes. Cap8192B per frame,512KiB
-per daemon; explicit limit/error stops, total unitjournal8MiB. Preserve full raw
+per daemon; explicit limit/error stops, total unitjournal2MiB. Preserve full raw
 unit/kernel/QRTR and loss-free GLINK; observer deadline300s/geometry unchanged.
 Strict parser rejects sequence/process/attribution/context/length gaps or limits.
 Compare all178 nonempty stock registry files from actual linear open/read/close
@@ -34,12 +34,3 @@ No new kernel/full regression/Actions. Freeze/stage/commit/push origin/test befo
 physical run. Archive first result/cleanup verified Windows staging. Retention
 Test379–Test388; no new Image. This is a changed evidence boundary, not another
 unchanged Test387 hypothesis or startup retry. Default GNOME is restored.
-
-## Registration revision2 — bound the actual JSON envelope
-
-Before physical deployment,1170361B Test387 raw unitjournal and mean1129B JSON
-metadata/row imply ~4.7MB for new three-record-per-call observation. Initial2MiB
-unit budget would stop the changed observation prematurely. Set a separate8MiB
-unit journal bound, leave GLINK2MiB/sourceframe8192B/process512KiB/60s/300s and
-all safety gates unchanged. Original draft/input/seal retained; zero physical
-attempts. Requalify only affected host integration; no daemon or kernel rebuild.

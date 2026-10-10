@@ -483,6 +483,8 @@ def runtime(rec,mode,boot):
 
 def collect_runtime(rec, prefix='', *, require_metadata=False):
     raw,_ = rec.adb(prefix+'unit-journal','journalctl -b -u hexagonrpcd-adsp-rootpd -u hexagonrpcd-adsp-sensorspd -u iio-sensor-proxy -o json --no-pager',timeout=15)
+    if len(raw.encode()) > PLAN['unit_journal_max_bytes']:
+        raise ValueError('bounded unit journal size exceeded')
     try:
         metadata=stat_evidence.inspect(raw, read(R/'mutation-state.json')['boot_id'], read(R/'registry-metadata.json'))
         write(rec.folder/(prefix+'rpc-stat-metadata.json'),metadata)
@@ -532,7 +534,7 @@ def discover():
             current=snapshot(rec,'ssc-health-%02d'%index,'candidate',boot);native_gate(current)
             if current['failed_units']: raise ValueError('new failed unit during SSC discovery')
             size,_=rec.adb('trace-size-%02d'%index, 'journalctl -b -u hexagonrpcd-adsp-rootpd -u hexagonrpcd-adsp-sensorspd -o json --no-pager | wc -c', timeout=5)
-            if int(size.strip()) > PLAN['trace_max_bytes']: raise ValueError('bounded trace size exceeded')
+            if int(size.strip()) > PLAN['unit_journal_max_bytes']: raise ValueError('bounded unit journal size exceeded')
             limits,_=rec.adb('return-limit-%02d'%index, "journalctl -b -u hexagonrpcd-adsp-rootpd -u hexagonrpcd-adsp-sensorspd -o cat --no-pager | grep -c '^RPCRETURN_LIMIT' || true", timeout=5)
             if limits.strip() != '0': raise ValueError('RPC return observer limit/error')
             remaining=PLAN['ssc_readiness_seconds']-(time.monotonic()-started)

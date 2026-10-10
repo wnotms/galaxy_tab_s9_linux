@@ -1,7 +1,7 @@
 {
   "PPS": false,
   "SSH_tested": false,
-  "admission_revision": 2,
+  "admission_revision": 1,
   "alias": "gts9-test292",
   "attempts": 1,
   "baseline": "accepted Test370 kernel/modules/native input + persistent USB lifecycle",
@@ -92,8 +92,6 @@
   "trace_library_sha256": "1be44d2fe0c9b5ca785ef27730fba586a7f678f82f91cfbfb01613b3dad76f6e",
   "trace_max_bytes": 2097152,
   "trace_sha256": "9e9884754d5032f0410ea5ac94e2e6f0fd9ea95e3fafec9b8ae30cbab49c1eb3",
-  "unit_journal_budget_reason": "Test387 actual1170361B/1129B mean row metadata implies ~4.7MB for three additional frame records per ~1000calls. Separate8MiB unit cap; GLINK remains2MiB.",
-  "unit_journal_max_bytes": 8388608,
   "usb_lifecycle": {
     "active": "active",
     "enabled": "enabled",

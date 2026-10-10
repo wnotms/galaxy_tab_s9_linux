@@ -168,6 +168,8 @@ class DeploymentScopeTests(unittest.TestCase):
             self.assertIn('Environment=HEXAGONRPC_RETURN_TRACE=1\n', (R / name).read_text())
         self.assertEqual(H.PLAN['return_trace_frame_bytes'], 8192)
         self.assertEqual(H.PLAN['return_trace_per_process_bytes'], 524288)
+        self.assertEqual(H.PLAN['unit_journal_max_bytes'], 8388608)
+        self.assertEqual(H.PLAN['trace_max_bytes'], 2097152)
 
     def test_corrected_daemon_with_same_library_and_exact_eight_file_scope(self):
         manifest = H.read(R / 'desktop-manifest.json')
@@ -204,6 +206,14 @@ class DeploymentScopeTests(unittest.TestCase):
 
 
 class ReturnCollectionTests(unittest.TestCase):
+    def test_unit_journal_limit_stops_before_parser(self):
+        rec = Mock(); rec.adb.return_value = ('x' * 10, 0)
+        with patch.object(H, 'PLAN', H.PLAN | {'unit_journal_max_bytes': 9}), \
+             patch.object(H.stat_evidence, 'inspect') as parser:
+            with self.assertRaisesRegex(ValueError, 'journal size'):
+                H.collect_runtime(rec, require_metadata=True)
+            parser.assert_not_called()
+
     def collect(self, frames=True, contents=True):
         temporary = tempfile.TemporaryDirectory(); self.addCleanup(temporary.cleanup)
         folder = Path(temporary.name)
