@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test396（默认监听器引用生命周期观察），窗口为 **Test387–Test396**；没有生成镜像的轮次仍占一轮。
+  编号为 Test397（传感器进程优先启动观察），窗口为 **Test388–Test397**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,18 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-10 TEST397_SENSOR_FIRST_REGISTERED_NOT_DEPLOYED.
+396 retainedlistener stillnoSSC; source-supported stocksscrpcd early_hal/rootmain
+order hypothesis, Fedoraunchangedab123e7 hasno root-before-sensor dependency.
+Newindependent helper sensor→root exactoneattempt/durableintent, oldrootfirst
+unchanged.39affectedPASS0skip inclrealRuntime+failedorder/no retry; exact396
+binary/library/kernel/config/DT/181/assets/382vendor reused, no rebuild/fullrun/
+Actions. Fresh5b93e963 fullfive/181/config/notes/ADB/deviceNCM/noCode43/nofailedunit
+PASS; preserve396 transienthostnamed/percpu anomaly, no startupfailurewaiver.
+One30s/twoPDRcycles, noDSP restart/guess; mandatory exact370GNOMEreturn.
+Pushregistrationbeforemutation;388–397/382currentconsumer. PPS/pump/DCCOFF,
+sensor/sample/rotationunfinished. See397README/SOURCE_ORDER.
 
 2026-10-10 TEST396_RETAINED_LISTENER_SSC_ABSENT_RETURNED370_WITH_TRANSIENT_HOSTNAMED.
 One978319fe root→sensor start/30s, PDRUPbefore/after,35metadata/178content/status69/

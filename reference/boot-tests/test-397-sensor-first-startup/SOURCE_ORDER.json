@@ -1,0 +1,51 @@
+{
+  "fedora_files": {
+    "rootfs/overlay/etc/systemd/system/hexagonrpcd-adsp-rootpd.service.d/10-ordering.conf": {
+      "sha256": "3dfe79407ef4697e4d42c549035eedc2cd6ab96f399830faff8419c4a8654853",
+      "text": "[Unit]\n# Without this the ConditionPathExists=/dev/fastrpc-adsp check runs before the\n# ADSP is up and the unit is skipped every boot.\nAfter=gts9wifi-adsp-boot.service\n"
+    },
+    "rootfs/overlay/etc/systemd/system/hexagonrpcd-adsp-sensorspd.service.d/10-gts9wifi-hexagonfs.conf": {
+      "sha256": "f244a9ed9f98a72b1ad2883cad50128c5b182e47a5cfaa07a1dad8380a00a0c2",
+      "text": "[Unit]\nRequires=gts9wifi-adsp-boot.service\nAfter=gts9wifi-adsp-boot.service pd-mapper.service\n\n[Service]\nExecStart=\nExecStart=/usr/bin/hexagonrpcd -f /dev/fastrpc-adsp -d adsp -s -R /usr/share/qcom/sm8550/Samsung/gts9wifi\n# A failed sensor-PD attach can SSR the shared ADSP. Do not enter an automatic\n# crash loop: one controlled attempt per boot is enough, and audio can recover.\nRestart=no\n"
+    }
+  },
+  "fedora_remote_HEAD": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "hypothesis": "sensor-first then root-PD; no proof that declared Android class order is a hard mainline requirement",
+  "no_resume_restart_loop": true,
+  "remote_query": "git ls-remote origin HEAD",
+  "stock_analysis_path": "reference/boot-tests/test-395-stock-sensor-startup/offline-analysis/analysis.json",
+  "stock_analysis_sha256": "f75bce84c6e38f5bd901d0ff6d137aa2c98836137fe6af63cb9de3bdd867a375",
+  "stock_services": {
+    "vendor/etc/init/vendor.qti.adsprpc-guestos-service.rc": {
+      "active_lines": [
+        "service vendor.adsprpcd /vendor/bin/adsprpcd",
+        "   class main",
+        "   user system",
+        "   group media"
+      ],
+      "source_sha256": "540de9b329ea8bc4664b79cd80d3867a865e14d6fea8c430d1e75d98c796c829"
+    },
+    "vendor/etc/init/vendor.qti.audio-adsprpc-service.rc": {
+      "active_lines": [
+        "service vendor.audioadsprpcd_audiopd /vendor/bin/audioadsprpcd audiopd",
+        "   class main",
+        "   user media",
+        "   group media",
+        "on early-init",
+        "    start vendor.audioadsprpcd_audiopd"
+      ],
+      "source_sha256": "b2c6180a4ba5764b4ad3c4e1cb58da716f8c8cee2298868f690706195b54200a"
+    },
+    "vendor/etc/init/vendor.sensors.sscrpcd.rc": {
+      "active_lines": [
+        "service vendor.sensors /vendor/bin/sscrpcd sensorspd",
+        "    class early_hal",
+        "    user system",
+        "    group system wakelock",
+        "    capabilities BLOCK_SUSPEND",
+        "    shutdown critical"
+      ],
+      "source_sha256": "229f1998520806f079318a0053ee125f24c23746ad0704e2dfd525f59b62d701"
+    }
+  }
+}

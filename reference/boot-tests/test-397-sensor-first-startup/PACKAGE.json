@@ -1,0 +1,63 @@
+{
+  "artifacts": {
+    "hexagonrpcd-trace": {
+      "bytes": 80104,
+      "path": "out/rpc-listener-lifetime/build/stage/usr/bin/hexagonrpcd",
+      "sha256": "49140bbd7fd954c7dd222bd57e03c793d4d6fac9ba3d682459bd93ee32083271"
+    },
+    "rollback-vendor_boot.img": {
+      "bytes": 100663296,
+      "path": "out/boot-bundle-x710-263-passive/vendor_boot.img",
+      "sha256": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+    },
+    "sensor-assets.tar.gz": {
+      "bytes": 23361334,
+      "path": "out/ssc-assets/sensor-assets.tar.gz",
+      "sha256": "6abc10ecdb82c6abe175461ae483670be0c82c8e038cb9acbf5eb5f8ae9231e5"
+    },
+    "vendor_boot.img": {
+      "bytes": 100663296,
+      "path": "out/boot-bundle-ssc-glink382/vendor_boot.img",
+      "sha256": "37178ba27129d31d12331e4f7f8e67dc318a8732b1bb1b8daa2b6b5387d08f29"
+    }
+  },
+  "baseline_partitions": {
+    "boot": "823555189f2f1f18bf331789671b33d2f06fc89294e775b304f824f9d8649f21",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "candidate_build_link": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+  "candidate_partitions": {
+    "boot": "823555189f2f1f18bf331789671b33d2f06fc89294e775b304f824f9d8649f21",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "37178ba27129d31d12331e4f7f8e67dc318a8732b1bb1b8daa2b6b5387d08f29"
+  },
+  "cmdline_change_scope": "trace_instance=gts9_test382,qcom_glink:qcom_glink_cmd_version,qcom_glink:qcom_glink_cmd_version_ack,qcom_glink:qcom_glink_cmd_open,qcom_glink:qcom_glink_cmd_open_ack,qcom_glink:qcom_glink_cmd_close,qcom_glink:qcom_glink_cmd_close_ack trace_buf_size=128K",
+  "cmdline_changed": true,
+  "config_changed": false,
+  "dtb_changed": false,
+  "kernel_rebuilt": false,
+  "modules": 181,
+  "modules_changed": false,
+  "qualification_reused": [
+    "Test370 kernel/config/modules/native input",
+    "Test371 persistent USB lifecycle",
+    "Test378 early ADSP/vendor/assets/native domain/ordered RPC flow",
+    "Test382 vendor_boot/observer exact geometry/live raw buffer identity",
+    "Test383 metadata observer retained; new qualified wire correction only",
+    "Test385/386 stable recovery admission/first-fault capture",
+    "Test387 exact wire/stat/early flow; new bounded listener observer70",
+    "Test388 frozen flow/artifacts; newly qualified capacity parser/v2 header and80source/parser tests",
+    "Exact Test389 early flow/library/assets;105affected+18ARM64+2upstream qualified missing-file semantic repair in4c1a75ef",
+    "f3220073: retained default listener, 73 host +16 ARM64/QEMU +2 upstream; unchanged companion library",
+    "Exact Test396 retained-listener daemon/library/early vendor; new sensor-first Python launch helper only"
+  ],
+  "test": "Test397",
+  "write_partitions": [
+    "vendor_boot"
+  ]
+}
