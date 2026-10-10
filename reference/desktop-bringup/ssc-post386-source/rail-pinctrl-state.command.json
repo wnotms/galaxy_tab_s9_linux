@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; cat /proc/sys/kernel/random/boot_id; cat /sys/class/remoteproc/remoteproc0/state; cat /sys/kernel/debug/regulator/regulator_summary; cat /sys/kernel/debug/pinctrl/1500000.pinctrl/pinmux-pins"
+  ],
+  "ended_utc": "2026-10-10T03:02:19.963792+00:00",
+  "started_utc": "2026-10-10T03:02:19.769396+00:00",
+  "status": 1
+}

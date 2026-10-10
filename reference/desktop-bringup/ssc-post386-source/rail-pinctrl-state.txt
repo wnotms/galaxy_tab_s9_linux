@@ -1,0 +1,74 @@
+d8654881-69bd-4603-92ee-8e14a3f81ad9
+offline
+ regulator                      use open bypass  opmode voltage current     min     max
+---------------------------------------------------------------------------------------
+ regulator-dummy                 16   22      0 unknown     0mV     0mA     0mV     0mV 
+    1c00000.pcie-vddpe-3v3        1                                 0mA     0mV     0mV
+    1c00000.pcie-vdda             1                                 0mA     0mV     0mV
+    3d00000.gpu-vddcx             0                                 0mA     0mV     0mV
+    3d00000.gpu-vdd               0                                 0mA     0mV     0mV
+    vreg_l1c_1p1                  0    0      0  normal  1104mV     0mA  1104mV  1104mV 
+    vreg_l1e_0p88                 2    4      0  normal   880mV     0mA   880mV   880mV 
+       88e3000.phy-vdd            1                                 0mA     0mV     0mV
+       ae95000.phy-vdds           0                                98mA*    0mV     0mV
+       1d80000.phy-vdda-phy       0                               188mA*    0mV     0mV
+       1c06000.phy-vdda-phy       1                                 0mA     0mV     0mV
+    vreg_l3e_1p2                  3    5      0  normal  1200mV     0mA  1200mV  1200mV 
+       ae94000.dsi-vdda           0                                16mA*    0mV     0mV
+       88e3000.phy-vdda12         1                                 0mA     0mV     0mV
+       88e8000.phy-vdda-phy       1                                21mA     0mV     0mV
+       1d80000.phy-vdda-pll       0                                18mA*    0mV     0mV
+       1c06000.phy-vdda-pll       1                                 0mA     0mV     0mV
+    vreg_l3g_1p2                  0    1      0  normal  1200mV     0mA  1200mV  1200mV 
+       1d84000.ufshc-vdd-hba      0                                 0mA     0mV     0mV
+    vreg_l1b_1p8                  1    0      0  normal  1800mV     0mA  1800mV  1800mV 
+    vreg_l1g_1p2                  1    1      0    idle  1200mV     0mA  1200mV  1200mV 
+       1d84000.ufshc-vccq         1                                 1mA     0mV     0mV
+    vreg_l4b_1p8                  0    1      0  normal  1800mV     0mA  1800mV  1800mV 
+       rear_cam_vio               0    0      0 unknown  1800mV     0mA  1800mV  1800mV 
+    vreg_l5b_3p104                1    1      0  normal  3104mV     0mA  3104mV  3104mV 
+       8-004f-vdd3v3              1                                11mA     0mV     0mV
+    vreg_l8b_1p8                  1    1      0  normal  1800mV     0mA  1800mV  3000mV 
+       8804000.mmc-vqmmc          1                               325mA  1800mV  1950mV
+    vreg_l9b_2p9                  1    1      0  normal  3000mV     0mA  2960mV  3000mV 
+       8804000.mmc-vmmc           1                               800mA  3000mV  3000mV
+    vreg_l10b_1p8                 1    0      0  normal  1800mV     0mA  1800mV  1800mV 
+    vreg_l11b_1p1                 0    1      0  normal  1104mV     0mA  1104mV  1104mV 
+       ae94000.dsi.0-vdd          0                                 0mA     0mV     0mV
+    vreg_l12b_1p8                 1    2      0  normal  1800mV     0mA  1800mV  1800mV 
+       7-0049-vddio               1                                 0mA     0mV     0mV
+       ae94000.dsi.0-vddio        0                                 0mA     0mV     0mV
+    vreg_l13b_3p0                 1    2      0  normal  3000mV     0mA  3000mV  3000mV 
+       6-0056-avdd                1                                 0mA     0mV     0mV
+       ae94000.dsi.0-vci          0                                 0mA     0mV     0mV
+    vreg_l14b_3p3                 1    1      0  normal  3304mV     0mA  3304mV  3304mV 
+       7-0049-avdd                1                                 0mA     0mV     0mV
+    vreg_l15b_1p8                 2    2      0  normal  1800mV     0mA  1800mV  1800mV 
+       wcn6855-pmu-vddio          1                                 0mA     0mV     0mV
+       8-004f-vdd1v8              1                                55mA     0mV     0mV
+    vreg_l16b_3p0                 1    0      0  normal  3000mV     0mA  3000mV  3000mV 
+    vreg_l17b_2p5                 0    1      0    idle  2504mV     0mA  2504mV  2504mV 
+       1d84000.ufshc-vcc          0                                 0mA     0mV     0mV
+ vph_pwr                          6    5      0 unknown  3700mV     0mA  3700mV  3700mV 
+    vreg_s4e_0p952                2    2      0    fast   952mV     0mA   952mV   952mV 
+       wcn6855-pmu-vddrfa0p95     1                                 0mA     0mV     0mV
+       vreg_l3f_0p88              1    1      0  normal   880mV     0mA   880mV   912mV 
+          88e8000.phy-vdda-pll    1                                36mA     0mV     0mV
+    vreg_s2g_1p012                1    1      0    fast  1016mV     0mA  1016mV  1016mV 
+       wcn6855-pmu-vddaon         1                                 0mA     0mV     0mV
+    vreg_s4g_1p352                2    2      0    fast  1352mV     0mA  1352mV  1352mV 
+       wcn6855-pmu-vddpcie1p3     1                                 0mA     0mV     0mV
+       wcn6855-pmu-vddrfa1p3      1                                 0mA     0mV     0mV
+    vreg_s5g_0p966                3    3      0    fast   968mV     0mA   968mV   968mV 
+       wcn6855-pmu-vddpmucx       1                                 0mA     0mV     0mV
+       wcn6855-pmu-vddpmumx       1                                 0mA     0mV     0mV
+       wcn6855-pmu-vddpmu         1                                 0mA     0mV     0mV
+    vreg_s6g_1p904                2    2      0    fast  1904mV     0mA  1904mV  1904mV 
+       wcn6855-pmu-vddpcie1p9     1                                 0mA     0mV     0mV
+       wcn6855-pmu-vddrfa1p9      1                                 0mA     0mV     0mV
+ speaker_vdd                      1    0      0 unknown     0mV     0mA     0mV     0mV 
+ display_panel_avdd               0    1      0 unknown  5500mV     0mA  5500mV  5500mV 
+    ae94000.dsi.0-avdd            0                                 0mA     0mV     0mV
+ panel_ldo_en                     1    0      0 unknown  1800mV     0mA  1800mV  1800mV 
+ pogo-vdd                         1    1      0 unknown     0mV     0mA     0mV     0mV 
+    5-002a-vdd                    1                                 0mA     0mV     0mV

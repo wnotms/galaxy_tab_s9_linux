@@ -1,0 +1,8 @@
+{
+  "fedora_commit": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "hexagonrpc_audited_head": "da7a3742ab8d5273a281b70ee11f16fb2cb6a690",
+  "hexagonrpc_v040_to_head": "diff --git a/hexagonrpcd/iobuffer.c b/hexagonrpcd/iobuffer.c\nindex 6481651..0c36df6 100644\n--- a/hexagonrpcd/iobuffer.c\n+++ b/hexagonrpcd/iobuffer.c\n@@ -19,7 +19,8 @@\n  * along with this program.  If not, see <https://www.gnu.org/licenses/>.\n  */\n \n-#include <libhexagonrpc/fastrpc.h>\n+#include <endian.h>\n+#include <libhexagonrpc/hexagonrpc.h>\n #include <stdint.h>\n #include <stdio.h>\n #include <stdlib.h>\n@@ -39,6 +40,9 @@ static size_t consume_size(struct fastrpc_decoder_context *ctx,\n \tctx->size_off = (ctx->size_off + segment) % 4;\n \tctx->align = (ctx->align + segment) & 0x7;\n \n+\tif (ctx->size_off == 0)\n+\t\tctx->size = le32toh(ctx->size);\n+\n \treturn segment;\n }\n \n@@ -212,7 +216,7 @@ void outbufs_encode(size_t n_outbufs, const struct fastrpc_io_buffer *outbufs,\n \tsize_t i;\n \n \tfor (i = 0; i < n_outbufs; i++) {\n-\t\t*(uint32_t *) ptr = outbufs[i].s;\n+\t\t*(uint32_t *) ptr = htole32(outbufs[i].s);\n \t\tptr = &ptr[4];\n \t\talign = (align + 4) & 0x7;\n \n",
+  "wholesale_upgrade": false,
+  "reason": "Current upstream changes the RPC API/interfaces; empty-buffer defects still present. Keep proven Fedora0.4 transport and repair only demonstrated codec defect.",
+  "reference": "https://android.googlesource.com/platform/external/fastrpc/+/refs/tags/android-13.0.0_r77/inc/listener_buf.h"
+}

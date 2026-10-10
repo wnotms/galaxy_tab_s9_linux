@@ -1,0 +1,57 @@
+{
+  "verdict": "ARM64_COMPILED_HOST_PROVEN_NOT_DEPLOYED",
+  "kernel_rebuild": false,
+  "device_mutation": false,
+  "source_changes": [
+    "hexagonrpcd/iobuffer.c"
+  ],
+  "inputs": {
+    "userspace/sensors/rpc_wire_profile.py": "133b912c2fd30ed66bc4c8ecebf1e452def430b8a7cad041abec5b9c9a5d4e0b",
+    "userspace/sensors/sources.json": "ffd7b47acf67e732d2c0ca0d3c614d908835e8c49e4c419acdbe73d9ae08b6a4",
+    "userspace/sensors/diagnostics/rpc-wire.json": "5d574cd48e84ddda56e5f70c0c2a15da51031c55139dc9a5c36e80ef2cf89a99",
+    "userspace/sensors/diagnostics/rpc-wire.patch": "28243a2004280b4b3fcbe504b83f1addbd9371e43656bf34a4fb4e5c74b7ae71",
+    "userspace/sensors/diagnostics/compile-rpc-stat.sh": "d853e57169174b9b3e1dd7bf8a7e5b2c334d66c9d0296dd1a5c687ee41a66e73",
+    "userspace/sensors/cross-arm64.ini": "22c6969c41a419a97aadb0ed70d459168fac2c5636126355407fdf9458c7767f",
+    "tests/test_ssc_rpc_wire.py": "14bedcaf85c9cc46fbec2f66201c96582243a9f9f67a68134777a1fbacae2825"
+  },
+  "builder_id": "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+  "build_returncode": 0,
+  "upstream_tests": {
+    "passed": 2,
+    "skipped": 0,
+    "emulator": "qemu-aarch64"
+  },
+  "golden_arm64_returncode": 0,
+  "artifacts": {
+    "usr/bin/hexagonrpcd": {
+      "bytes": 79832,
+      "sha256": "e3845e823300577fd69ecbf84f83bbd07b7f618b4fe1e33a8c3cd83b48f78b8d"
+    },
+    "usr/lib/aarch64-linux-gnu/libhexagonrpc.so.0.4": {
+      "bytes": 70320,
+      "sha256": "1be44d2fe0c9b5ca785ef27730fba586a7f678f82f91cfbfb01613b3dad76f6e"
+    },
+    "usr/lib/systemd/system/hexagonrpcd-sdsp.service": {
+      "bytes": 285,
+      "sha256": "4cc2248b2491fa59a967a0a3d637bed8a386ae696322c3d5ae455fdf0559fa75"
+    },
+    "usr/lib/systemd/system/hexagonrpcd-adsp-sensorspd.service": {
+      "bytes": 439,
+      "sha256": "6fb0c7503f18b3a58027cb0dbb40e163be9cee7168e81622763cac8c8ad95494"
+    },
+    "usr/lib/systemd/system/hexagonrpcd-adsp-rootpd.service": {
+      "bytes": 468,
+      "sha256": "0a1452d20e48f4b58c342ae985e802b84445046dbdb9801f573af34857bfe2aa"
+    },
+    "usr/share/man/man1/hexagonrpcd.1": {
+      "bytes": 2130,
+      "sha256": "a27b06f62256d82db65c8065794d6238bb75a37e480441ddd09d7346c39effd9"
+    },
+    "usr/libexec/hexagonrpc/chrecd": {
+      "bytes": 71312,
+      "sha256": "0f691660d01382a25ee8da5bd3423f74e6168240c7a42c599d60bad22d9f75c5"
+    }
+  },
+  "ssc_rootcause_proved": false,
+  "real_boot_zero_length_invocation_observed": false
+}

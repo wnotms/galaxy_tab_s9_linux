@@ -1,0 +1,39 @@
+{
+  "reference_commit": "1ef11ef49a85acbd8d357799a826a2b111187fe0",
+  "files": {
+    "kernel/config/gts9wifi-mainline.fragment": {
+      "sha256": "79f77412aacc1f8bcdbb6e5ff9c8c42a9cfe5ab20152533b051f515462322f6c",
+      "unchanged": true
+    },
+    "kernel/dts/sm8550-samsung-gts9wifi.dts": {
+      "sha256": "20db96df3867501432bcfcbbdbd484918572d62f17990d4915f92a420617c45a",
+      "unchanged": true
+    },
+    "kernel/drivers/sm5714-battery.c": {
+      "sha256": "8b0ac6f263b562be5efc5c0eebe3dbe058e0dfc5aba001a9048150c562a232dc",
+      "unchanged": true
+    },
+    "kernel/drivers/sm5714_usbpd.c": {
+      "sha256": "06a039f26e1d1ded781022c01f2af1a88da3a94b23c51950283b5a9280d9f4cf",
+      "unchanged": true
+    },
+    "kernel/drivers/sm5440-direct.c": {
+      "sha256": "792cc34661cee6aa37c88dce4a24f8110ca0a7bd1c08c4b3e7d6c581bc6b41f0",
+      "unchanged": true
+    },
+    "userspace/sensors/sources.json": {
+      "sha256": "ffd7b47acf67e732d2c0ca0d3c614d908835e8c49e4c419acdbe73d9ae08b6a4",
+      "unchanged": true
+    },
+    "userspace/sensors/diagnostics/rpc-stat.json": {
+      "sha256": "6f91f867e8569ca32676e1c4a013c99a69b2ba840eec8ac5bbde986b77acf77e",
+      "unchanged": true
+    },
+    "userspace/sensors/diagnostics/rpc-stat.patch": {
+      "sha256": "293d2b37615b477b37a36821a3e2d1ac1faf2a0e23793fbf79996e62f1fc1710",
+      "unchanged": true
+    }
+  },
+  "kernel_build_executed": false,
+  "device_mutation": false
+}

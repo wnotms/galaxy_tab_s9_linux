@@ -25,3 +25,25 @@ does not change registry content/timestamps or implement a firmware substitute.
 Its error-path repair is host-proven, but not proved to explain Test378's missing
 SSC service. A future physical test needs its own registration before any
 runtime replacement or reboot.
+
+## Independent RPC wire correction (2026-10-10)
+
+`rpc-wire.json`/`rpc-wire.patch` define a separate candidate based on the frozen
+Fedora0.4 sources, not the historical stat diagnostic. The only changed file
+is `hexagonrpcd/iobuffer.c`: consume empty buffers, count their four-byte headers
+without payload alignment, and copy possibly unaligned size headers safely.
+The frozen `sources.json`, stat profile and previous physical results stay intact.
+
+```sh
+python3 userspace/sensors/rpc_wire_profile.py \
+  --sources out/ssc-sources/prepared-clean --output out/ssc-rpc-wire/sources
+```
+
+Compile with the same networkless `compile-rpc-stat.sh` recipe; that script
+consumes the verified `SOURCE.json` and does not apply the stat patch itself.
+The profile alone never deploys anything. Proven original-code failures,
+independent Qualcomm protocol vectors, native UBSan, ARM64/QEMU, all55 source
+hashes and artifact hashes are recorded in
+`reference/desktop-bringup/ssc-rpc-wire/`. No real DSP zero-length invocation has
+yet been identified; this fixes demonstrated codec defects, not a proven SSC
+initialization rootcause. A new physical registration is required before use.

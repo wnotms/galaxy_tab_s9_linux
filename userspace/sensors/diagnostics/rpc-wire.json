@@ -1,0 +1,17 @@
+{
+  "base_manifest_sha256": "ffd7b47acf67e732d2c0ca0d3c614d908835e8c49e4c419acdbe73d9ae08b6a4",
+  "patch_sha256": "28243a2004280b4b3fcbe504b83f1addbd9371e43656bf34a4fb4e5c74b7ae71",
+  "changed_files": [
+    "hexagonrpcd/iobuffer.c"
+  ],
+  "base_file_sha256": "b712239ee3ae5912e30773dee74145c9792ccb2fcdbec23a90d217d75ad86f6f",
+  "patched_file_sha256": "54a69be67fa820d02ece2ec1d3359267bd92318afbe351c83cbb4de284605860",
+  "diagnostic_only": true,
+  "deployment_authorized_by_profile": false,
+  "protocol_reference": "https://android.googlesource.com/platform/external/fastrpc/+/refs/tags/android-13.0.0_r77/inc/listener_buf.h",
+  "fixtures": {
+    "hexagonrpcd/iobuffer.c": "b712239ee3ae5912e30773dee74145c9792ccb2fcdbec23a90d217d75ad86f6f",
+    "hexagonrpcd/iobuffer.h": "740613209aced81098e6243e8da8a8a4374f4891909a9cdec973f3e4781dee44",
+    "include/libhexagonrpc/fastrpc.h": "5e4775eee2d2ae1fca1edd6c8e2d9d766627e21e5e00b662e7210bbeff11bc17"
+  }
+}

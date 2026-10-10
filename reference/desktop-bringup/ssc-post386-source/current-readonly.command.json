@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "python3 -c 'import json,pathlib,subprocess; P=pathlib.Path; print(json.dumps(dict(boot_id=P('\"'\"'/proc/sys/kernel/random/boot_id'\"'\"').read_text().strip(),uptime=P('\"'\"'/proc/uptime'\"'\"').read_text().strip(),uname=subprocess.check_output(['\"'\"'uname'\"'\"','\"'\"'-a'\"'\"'],text=True).strip(),adsp=P('\"'\"'/sys/class/remoteproc/remoteproc0/state'\"'\"').read_text().strip(),gdm=subprocess.run(['\"'\"'systemctl'\"'\"','\"'\"'is-active'\"'\"','\"'\"'gdm3.service'\"'\"'],capture_output=True,text=True).stdout.strip(),supplies={str(f.parent):f.read_text() for f in P('\"'\"'/sys/class/power_supply'\"'\"').glob('\"'\"'*/uevent'\"'\"')}),indent=2))'"
+  ],
+  "started_utc": "2026-10-10T03:10:48.930242+00:00",
+  "ended_utc": "2026-10-10T03:10:49.091791+00:00",
+  "status": 0,
+  "device_mutation": false
+}

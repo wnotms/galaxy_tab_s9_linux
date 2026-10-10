@@ -1,0 +1,37 @@
+--- a/hexagonrpcd/iobuffer.c
++++ b/hexagonrpcd/iobuffer.c
+@@ -49,6 +49,15 @@
+ 	// If we still need to process the size, don't do anything yet.
+ 	if (ctx->size_off)
+ 		return 0;
++
++	/* A zero-length buffer has a header but no alignment or payload.
++	 * Qualcomm listener_buf.h uses this layout for pack_in_bufs(). */
++	if (!ctx->size) {
++		ctx->inbufs[ctx->idx].s = 0;
++		ctx->inbufs[ctx->idx].p = NULL;
++		ctx->idx++;
++		return 0;
++	}
+ 
+ 	buf = malloc(ctx->size);
+ 	if (buf == NULL)
+@@ -195,7 +204,7 @@
+ 	for (i = 0; i < n_outbufs; i++) {
+ 		size += 4;
+ 
+-		if (size & 0x7)
++		if (outbufs[i].s && (size & 0x7))
+ 			size += 8 - (size & 0x7);
+ 		size += outbufs[i].s;
+ 	}
+@@ -212,7 +221,8 @@
+ 	size_t i;
+ 
+ 	for (i = 0; i < n_outbufs; i++) {
+-		*(uint32_t *) ptr = outbufs[i].s;
++		/* The previous payload can leave this header unaligned. */
++		memcpy(ptr, &outbufs[i].s, sizeof(outbufs[i].s));
+ 		ptr = &ptr[4];
+ 		align = (align + 4) & 0x7;
+ 

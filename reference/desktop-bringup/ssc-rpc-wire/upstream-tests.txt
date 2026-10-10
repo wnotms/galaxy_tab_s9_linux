@@ -1,0 +1,27 @@
+Log of Meson test suite run on 2026-10-10T03:08:37.968648
+
+Inherited environment: HOSTNAME=a2811fd2defb HOME=/root PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin HOST_GID=1000 DEBIAN_FRONTEND=noninteractive PWD=/ HOST_UID=1000 LC_CTYPE=C.UTF-8 
+
+==================================== 1/2 =====================================
+test:         iobuffer
+start time:   03:08:37
+duration:     0.03s
+result:       exit status 0
+command:      UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_EXE_WRAPPER=/usr/bin/qemu-aarch64 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 MESON_TEST_ITERATION=1 MALLOC_PERTURB_=107 /usr/bin/qemu-aarch64 /output/build/tests/test_iobuffer
+==============================================================================
+
+==================================== 2/2 =====================================
+test:         hexagonfs
+start time:   03:08:37
+duration:     0.03s
+result:       exit status 0
+command:      UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MALLOC_PERTURB_=205 MESON_EXE_WRAPPER=/usr/bin/qemu-aarch64 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 MESON_TEST_ITERATION=1 /usr/bin/qemu-aarch64 /output/build/tests/test_hexagonfs tests/sample_file.txt
+==============================================================================
+
+
+Ok:                 2   
+Expected Fail:      0   
+Fail:               0   
+Unexpected Pass:    0   
+Skipped:            0   
+Timeout:            0   

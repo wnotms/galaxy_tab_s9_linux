@@ -193,3 +193,25 @@ remain required for sensor/rotation completion.
 
 Documentation-only update: `executed: false`; reuse Test386's83 host tests and
 exact build qualification. No device operation, build/full regression orCI.
+
+## New offline RPC repair after the source comparison
+
+The Fedora0.4 transport is already in use (including Test378's exact verbose
+daemon); its current HEAD remains the auditedab123e7d. Comparing primary
+Qualcomm `listener_buf.h` against the actual pinned codec found an actionable
+wire defect: zero-length input parameters are not advanced, and zero-length
+output size calculation pads a header that the encoder does not pad. Odd-size
+payloads also leave the next size header unaligned. Native tests compile the
+original C and reproduce the first two failures, then verify a one-file patch
+against independent wire vectors. ARM64/QEMU and native UBSan pass. See
+[wire qualification](../reference/desktop-bringup/ssc-rpc-wire/RESULTS.md).
+
+This is a new source change, not an unchanged DIAG retry or wholesale RPC API
+upgrade. It is still **not an established SSC rootcause**: old text traces did
+not expose encoded buffer sizes or prove a real empty-parameter invocation.
+Do not retroactively claim a prior failure was explained. A future independently
+registered one-startup/60s SSC test can evaluate this corrected Fedora-derived
+daemon with the accepted Image/config/DTB/181 and isolated stock data unchanged.
+It needs actual400/sample/orientation evidence for acceptance and mandatory
+exact370/GNOME restore, first-failure preservation, no masks/restart loop/PPS.
+No new hardware attempt has been registered or performed in this offline step.

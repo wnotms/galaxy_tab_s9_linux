@@ -1,0 +1,31 @@
+{
+  "executed": true,
+  "passed": 44,
+  "failed": 0,
+  "skipped": 0,
+  "commands": [
+    "python3 -m unittest discover -s tests -p test_ssc_rpc_wire.py -v",
+    "python3 -m unittest discover -s tests -p test_ssc_source_preparation.py -v",
+    "python3 -m unittest discover -s tests -p test_ssc_cross_build.py -v"
+  ],
+  "suite_counts": {
+    "rpc_wire": 19,
+    "source_preparation": 10,
+    "cross_build": 15
+  },
+  "syntax": [
+    "py_compile rpc_wire_profile.py test_ssc_rpc_wire.py",
+    "bash -n userspace/sensors/diagnostics/compile-rpc-stat.sh"
+  ],
+  "full_regression": {
+    "executed": false,
+    "reason": "Independent user-space wire profile; no suite routing/kernel/package/deployment change. Affected native C, preparation and build-admission tests executed."
+  },
+  "kernel_build": {
+    "executed": false,
+    "reason": "No kernel inputs changed"
+  },
+  "github_actions": {
+    "executed": false
+  }
+}

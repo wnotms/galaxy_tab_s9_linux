@@ -98,6 +98,21 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 SSC_RPC_EMPTY_BUFFER_CORRECTION_COMPILED_NOT_DEPLOYED.
+ExactFedora0.4 alreadytested378; no unchangedDIAG/RPC replay. RealC reproduces
+emptyinput notconsumed/emptyoutput8vs4bytes; primaryQualcomm wire aligns only
+nonemptypayload. Separatehash-gated profile changesonlyiobuffer.c/unalignedheader
+memcpy; frozenFedora manifest/statprofile/results unchanged.19new nativeC/UBSan/
+transaction tests+10prepare+15buildgate=44PASS/0skip. NetworklessARM64 build,
+2upstreamQEMUtests+independent29bytegoldenARM64PASS/55exactsourcehashes.
+Daemon e3845e823300577fd69ecbf84f83bbd07b7f618b4fe1e33a8c3cd83b48f78b8d.
+No physicalzero-buffer trigger/rootcause/sampleproof; sensor/rotation unfinished.
+No devicechange/reboot/flash/ADSPstart, kernel/config/DTS/181/USB/charging frozen.
+Readonly370d8654881/GDMactive/ADSPoffline. Railssoftwarestate on, notvoltagemeasure.
+Next registerone correctedRPC startup beforedeployment, no unchangedprobe/restart
+loop/DIAGmasks. NotTest387registered/no hardwarePASS. PPS/pump/DCCOFF.
+See reference/desktop-bringup/ssc-rpc-wire and ssc-post386-source.
+
 2026-10-10 TEST386_DIAG_ACK_ONLY_REMOTE_OPEN_ABSENT_RESTORED370.
 Registered80754a63/83affectedPASS incl12 realoverlaytransactions. StableTWRP/
 correct5fileminimaloverlay/328assets/oneearlyvendorPASS; candidate26ad9a13 exact
