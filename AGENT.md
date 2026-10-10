@@ -98,6 +98,22 @@
 
 ## Current state (2026-10-03)
 
+2026-10-11 TEST399_NATIVE_ADSP_NEGOTIATION_OBSERVED_SSC_ABSENT_RETURNED370.
+One24630e73 boot/same398sensor→root start; complete22trace records (5ADSP
+SMP2P+17GLINK)/eightCPUzero loss/host-device agreement. CPU7native negotiate
+open/SSR_ACK at0.559857s,slave-kernel0/2/6/6; localclock notcrossCPUcausality,
+unconfiguredentriesnotinventoried/no sleepstate-rootcauseclaim.30s(33.800through
+collection)/twoUP PDRcycles/35metadata/178content/220initializedreplies/twoEOF/
+status69, SSC400absent/no sample/rotation/noCPU-newseverefault. Exact370vendor/
+assets/nineoverlay restored; attributed1f8302ac GNOME/palm/ADB/deviceNCM/fullfive/
+181/config/notes/no failedunit20.726s returnPASS;100%32.8C4.445V.29scope+39component
+reused, results executed:false/no rebuild/fullrun/Actions.34Windowsstage files
+verifieddeleted; superseded382vendor hashverifiedretired after399buildercomplete/
+allrecentmutationledgersterminal/no activeconsumer, source/hashmetadata retained.
+390–399/current399candidate+370rollback. PPS/pump/DCCOFF; sensorsunfinished.
+Next firmwareinitialization/QMI publication prerequisite, no unchanged399 replay.
+See399RESULTS; this completion supersedes its registration-only state below.
+
 2026-10-11 TEST399_NATIVE_SMP2P_PROVIDER_REGISTERED_NOT_DEPLOYED.
 One earlytextboot/same398daemon/library/order/stockassets/181/config/DT, only
 vendortraceenrollmentnewgts9_ssc_provider/tenevents/128Krequest/131Kreport;

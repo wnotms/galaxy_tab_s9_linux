@@ -1,0 +1,158 @@
+{
+  "test": "Test399",
+  "verdict": "NATIVE_ADSP_NEGOTIATION_OBSERVED_SSC_ABSENT_RESTORED370",
+  "registration_commit": "7441132308e7792f42df9f860c5a905798033465",
+  "runtime": {
+    "ADB": true,
+    "PPS": false,
+    "SSC_service_present": false,
+    "accelerometer_sample": null,
+    "after_state": "UP",
+    "before_state": "UP",
+    "boot_id": "24630e73-4186-4099-8531-80225306d38b",
+    "control_transport": "adb",
+    "device_NCM_present": true,
+    "kernel_fault_counts": {},
+    "listener_registered": false,
+    "notifier_cycles": 2,
+    "observation_seconds": 33.79961443099819,
+    "physical_rotation_tested": false,
+    "provider": {
+      "SSC_publication_proved": false,
+      "absent_event_proves_negotiation_failure": false,
+      "adsp_device": "smp2p-adsp",
+      "adsp_events": [
+        {
+          "cpu": 7,
+          "device": "smp2p-adsp",
+          "event": "smp2p_negotiate",
+          "features": 1,
+          "timestamp": "0.559857"
+        },
+        {
+          "client": "slave-kernel",
+          "cpu": 7,
+          "device": "smp2p-adsp",
+          "event": "smp2p_notify_in",
+          "status": 0,
+          "timestamp": "0.632741",
+          "value": 0
+        },
+        {
+          "client": "slave-kernel",
+          "cpu": 7,
+          "device": "smp2p-adsp",
+          "event": "smp2p_notify_in",
+          "status": 2,
+          "timestamp": "0.633813",
+          "value": 2
+        },
+        {
+          "client": "slave-kernel",
+          "cpu": 7,
+          "device": "smp2p-adsp",
+          "event": "smp2p_notify_in",
+          "status": 6,
+          "timestamp": "0.647874",
+          "value": 6
+        },
+        {
+          "client": "slave-kernel",
+          "cpu": 7,
+          "device": "smp2p-adsp",
+          "event": "smp2p_notify_in",
+          "status": 6,
+          "timestamp": "0.692869",
+          "value": 6
+        }
+      ],
+      "adsp_negotiation_observed": true,
+      "boot_id": "24630e73-4186-4099-8531-80225306d38b",
+      "complete": true,
+      "diagnostic_only": true,
+      "glink_adsp_count": 17,
+      "native_smp2p_devices": [
+        "smp2p-adsp"
+      ],
+      "negotiation_timestamps": [
+        "0.559857"
+      ],
+      "observation": "NEGOTIATION_OBSERVED",
+      "record_count": 22,
+      "ssr_ack_count": 0,
+      "unconfigured_remote_entries_inventoried": false
+    },
+    "pump_ON": false,
+    "register_enable": 1,
+    "registered_query_window_seconds": 30,
+    "sensor_acceptance": false,
+    "unregister_enable": 0,
+    "verdict": "SSC_ABSENT"
+  },
+  "provider_trace": {
+    "complete": true,
+    "raw_records": 22,
+    "ADSP_SMP2P_records": 5,
+    "ADSP_GLINK_records": 17,
+    "loss_records": 0,
+    "trace_sha256": "57edb31659d2b68143d57103c3d4cccf5fb76cadc0f5d745b628ea4aa364f441",
+    "unconfigured_remote_entries_inventoried": false
+  },
+  "deterministic_readdir": {
+    "complete": true,
+    "successful_replies": 220,
+    "eof_replies": 2,
+    "faults": []
+  },
+  "normal_return": {
+    "folder": "rollback-1791649772166786043",
+    "boot_id": "1f8302acb3574e488b26d786bb0de2dc",
+    "verdict": "EXACT370_DEBIAN_RESTORED",
+    "attributed": true,
+    "observation_seconds": 20.726292011000623,
+    "kernel_fault_counts": {},
+    "GDM": "active",
+    "ADB": true,
+    "device_NCM_present": true,
+    "failed_units": "",
+    "battery": {
+      "DEVTYPE": "power_supply",
+      "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+      "OF_COMPATIBLE_N": "1",
+      "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+      "OF_NAME": "charger",
+      "POWER_SUPPLY_CAPACITY": "100",
+      "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+      "POWER_SUPPLY_CURRENT_AVG": "102000",
+      "POWER_SUPPLY_CURRENT_NOW": "91000",
+      "POWER_SUPPLY_HEALTH": "Good",
+      "POWER_SUPPLY_NAME": "sm5714-battery",
+      "POWER_SUPPLY_PRESENT": "1",
+      "POWER_SUPPLY_STATUS": "Full",
+      "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+      "POWER_SUPPLY_TEMP": "328",
+      "POWER_SUPPLY_TYPE": "Battery",
+      "POWER_SUPPLY_VOLTAGE_AVG": "4446000",
+      "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+      "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+      "POWER_SUPPLY_VOLTAGE_NOW": "4445000",
+      "POWER_SUPPLY_VOLTAGE_OCV": "4390000"
+    },
+    "config_sha256": "599ca47ab41a29469c3d5830e475049fca9f33bd2ab0923ad014e5ba3fa6ec6c",
+    "notes_sha256": "5c0e82337affafefff586613d4a84c4f1388c9716ce251fe69d3c70aad18a518",
+    "all_five_partitions_verified": true,
+    "all_181_modules_verified": true
+  },
+  "sensor_acceptance": false,
+  "automatic_rotation_accepted": false,
+  "registration_seal_unchanged": true,
+  "physical_attempts": 1,
+  "install_exit": 0,
+  "discovery_exit": 0,
+  "PPS": false,
+  "pump_ON": false,
+  "kernel_rebuilt": false,
+  "full_regression": false,
+  "retention_window": "Test390\u2013Test399",
+  "next_scope": "Firmware sensor initialization/QMI publication prerequisite; native SMP2P negotiation now directly observed, no unchanged399 replay or inferred stock sleepstate fix"
+}

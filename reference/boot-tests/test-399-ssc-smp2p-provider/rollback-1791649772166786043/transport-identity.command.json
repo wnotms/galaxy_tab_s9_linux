@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /etc/machine-id; cat /proc/sys/kernel/random/boot_id; id -u; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "ended_utc": "2026-10-10T16:30:40.069386+00:00",
+  "started_utc": "2026-10-10T16:30:39.985768+00:00",
+  "status": 0
+}

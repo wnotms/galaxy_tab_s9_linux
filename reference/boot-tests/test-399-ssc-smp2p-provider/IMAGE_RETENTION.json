@@ -1,0 +1,22 @@
+{
+  "window": "Test390\u2013Test399",
+  "deleted": [
+    {
+      "path": "out/boot-bundle-ssc-glink382/vendor_boot.img",
+      "sha256": "37178ba27129d31d12331e4f7f8e67dc318a8732b1bb1b8daa2b6b5387d08f29",
+      "bytes": 100663296,
+      "allocated_bytes": 20086784,
+      "reason": "Test399 builder complete; new399 vendor supersedes382 trace enrollment;390\u2013399 mutation ledgers all terminal with rollback_required false; no userspace/scripts/tests path consumer or fuser file user; historical source/components/build/hash evidence retained",
+      "absent_after": true
+    }
+  ],
+  "retained_current_experiment": {
+    "path": "out/boot-bundle-ssc-provider399/vendor_boot.img",
+    "reason": "Newest399 candidate artifact"
+  },
+  "retained_production_rollback": {
+    "path": "out/boot-bundle-x710-263-passive/vendor_boot.img",
+    "reason": "Hash-exact installed Test370 baseline"
+  },
+  "no_archived_or_moved_image_copy": true
+}

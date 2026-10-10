@@ -1,0 +1,34 @@
+# tracer: nop
+#
+# entries-in-buffer/entries-written: 22/22   #P:8
+#
+#                                _-----=> irqs-off/BH-disabled
+#                               / _----=> need-resched
+#                              | / _---=> hardirq/softirq
+#                              || / _--=> preempt-depth
+#                              ||| / _-=> migrate-disable
+#                              |||| /     delay
+#           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+#              | |         |   |||||     |         |
+ irq/16-smp2p-ad-112     [007] .....     0.559857: smp2p_negotiate: smp2p-adsp: state=open out_features=SMP2P_FEATURE_SSR_ACK
+ irq/16-smp2p-ad-112     [007] .....     0.632741: smp2p_notify_in: smp2p-adsp: slave-kernel: status:0x0 val:0x0
+ irq/16-smp2p-ad-112     [007] .....     0.633813: smp2p_notify_in: smp2p-adsp: slave-kernel: status:0x2 val:0x2
+     kworker/4:1-116     [004] .....     0.633909: qcom_glink_cmd_version: tx remote: lpass version: 1 features: 0x1
+     kworker/0:0-9       [000] .....     0.634059: qcom_glink_cmd_version: rx remote: lpass version: 1 features: 0x7
+     kworker/0:0-9       [000] .....     0.634065: qcom_glink_cmd_version_ack: tx remote: lpass version: 1 features: 0x1
+     kworker/0:0-9       [000] .....     0.634073: qcom_glink_cmd_version_ack: rx remote: lpass version: 1 features: 0x1
+     kworker/0:0-9       [000] .....     0.634191: qcom_glink_cmd_open: rx remote: lpass channel: pcie_drv[0/1]
+     kworker/0:0-9       [000] .....     0.634364: qcom_glink_cmd_open: rx remote: lpass channel: mhi_sat[0/2]
+     kworker/0:0-9       [000] .....     0.634482: qcom_glink_cmd_open: rx remote: lpass channel: IPCRTR[0/3]
+     kworker/0:0-9       [000] .....     0.634629: qcom_glink_cmd_open_ack: tx remote: lpass channel: IPCRTR[0/3]
+     kworker/0:0-9       [000] .....     0.634640: qcom_glink_cmd_open: tx remote: lpass channel: IPCRTR[1/3]
+          <idle>-0       [000] d.h1.     0.634734: qcom_glink_cmd_open_ack: rx remote: lpass channel: IPCRTR[1/3]
+     kworker/0:0-9       [000] .....     0.646697: qcom_glink_cmd_open: rx remote: lpass channel: sleepmonglink-apps-adsp[0/4]
+     kworker/0:0-9       [000] .....     0.647712: qcom_glink_cmd_open: rx remote: lpass channel: adsp_apps[0/5]
+ irq/16-smp2p-ad-112     [007] .....     0.647874: smp2p_notify_in: smp2p-adsp: slave-kernel: status:0x6 val:0x6
+     kworker/0:0-9       [000] .....     0.649035: qcom_glink_cmd_open: rx remote: lpass channel: fastrpcglink-apps-dsp[0/6]
+     kworker/0:0-9       [000] .....     0.649229: qcom_glink_cmd_open_ack: tx remote: lpass channel: fastrpcglink-apps-dsp[0/6]
+     kworker/0:0-9       [000] .....     0.649238: qcom_glink_cmd_open: tx remote: lpass channel: fastrpcglink-apps-dsp[2/6]
+     kworker/0:2-155     [000] d.h1.     0.649318: qcom_glink_cmd_open_ack: rx remote: lpass channel: fastrpcglink-apps-dsp[2/6]
+     kworker/0:0-9       [000] .....     0.658766: qcom_glink_cmd_open: rx remote: lpass channel: LOOPBACK_CTL_LPASS[0/7]
+ irq/16-smp2p-ad-112     [007] .....     0.692869: smp2p_notify_in: smp2p-adsp: slave-kernel: status:0x6 val:0x6

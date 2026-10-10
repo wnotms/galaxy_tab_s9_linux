@@ -1,0 +1,87 @@
+{
+  "verdict": "SSC_ABSENT",
+  "boot_id": "24630e73-4186-4099-8531-80225306d38b",
+  "before_state": "UP",
+  "after_state": "UP",
+  "SSC_service_present": false,
+  "accelerometer_sample": null,
+  "sensor_acceptance": false,
+  "physical_rotation_tested": false,
+  "observation_seconds": 33.79961443099819,
+  "registered_query_window_seconds": 30,
+  "notifier_cycles": 2,
+  "register_enable": 1,
+  "unregister_enable": 0,
+  "listener_registered": false,
+  "ADB": true,
+  "device_NCM_present": true,
+  "control_transport": "adb",
+  "kernel_fault_counts": {},
+  "provider": {
+    "boot_id": "24630e73-4186-4099-8531-80225306d38b",
+    "complete": true,
+    "diagnostic_only": true,
+    "record_count": 22,
+    "glink_adsp_count": 17,
+    "adsp_device": "smp2p-adsp",
+    "native_smp2p_devices": [
+      "smp2p-adsp"
+    ],
+    "adsp_events": [
+      {
+        "cpu": 7,
+        "timestamp": "0.559857",
+        "event": "smp2p_negotiate",
+        "device": "smp2p-adsp",
+        "features": 1
+      },
+      {
+        "cpu": 7,
+        "timestamp": "0.632741",
+        "event": "smp2p_notify_in",
+        "device": "smp2p-adsp",
+        "client": "slave-kernel",
+        "status": 0,
+        "value": 0
+      },
+      {
+        "cpu": 7,
+        "timestamp": "0.633813",
+        "event": "smp2p_notify_in",
+        "device": "smp2p-adsp",
+        "client": "slave-kernel",
+        "status": 2,
+        "value": 2
+      },
+      {
+        "cpu": 7,
+        "timestamp": "0.647874",
+        "event": "smp2p_notify_in",
+        "device": "smp2p-adsp",
+        "client": "slave-kernel",
+        "status": 6,
+        "value": 6
+      },
+      {
+        "cpu": 7,
+        "timestamp": "0.692869",
+        "event": "smp2p_notify_in",
+        "device": "smp2p-adsp",
+        "client": "slave-kernel",
+        "status": 6,
+        "value": 6
+      }
+    ],
+    "adsp_negotiation_observed": true,
+    "negotiation_timestamps": [
+      "0.559857"
+    ],
+    "ssr_ack_count": 0,
+    "observation": "NEGOTIATION_OBSERVED",
+    "absent_event_proves_negotiation_failure": false,
+    "SSC_publication_proved": false,
+    "unconfigured_remote_entries_inventoried": false
+  },
+  "PPS": false,
+  "pump_ON": false
+}
