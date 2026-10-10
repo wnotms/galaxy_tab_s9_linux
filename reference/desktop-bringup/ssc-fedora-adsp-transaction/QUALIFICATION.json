@@ -1,0 +1,82 @@
+{
+  "device_mutations": false,
+  "full_tests": {
+    "executed": false,
+    "reason": "Affected component/dependency tests only; no routing change"
+  },
+  "host_tests": {
+    "errors": 0,
+    "executed": true,
+    "failures": 0,
+    "modules": [
+      "test_adsp_firmware_transaction.py",
+      "test_fedora_adsp_boot.py",
+      "test_fedora_adsp_profile.py",
+      "test_early_adsp_controlled_boot.py"
+    ],
+    "seconds": 33.928147566999996,
+    "skips": 0,
+    "tests": 87,
+    "verdict": "PASS"
+  },
+  "kernel_build": {
+    "executed": false,
+    "reason": "No kernel/config/DT/module input changes"
+  },
+  "outstanding": [
+    "independent Test400 host registration/runtime integration",
+    "fresh full370 admission",
+    "qualified physical recovery proc binding",
+    "one early candidate boot and original52/370/normal-GNOME return"
+  ],
+  "physical_firmware_tests": {
+    "executed": false
+  },
+  "private_artifacts": {
+    "out/boot-bundle-ssc-fedora-adsp/fedora-adsp.lz4": {
+      "bytes": 19885508,
+      "sha256": "5c9454e42744ab23e32e8d0e1227482191210657e402ec80d12aba4fbdfc344f"
+    },
+    "out/boot-bundle-ssc-fedora-adsp/vendor_boot.img": {
+      "bytes": 100663296,
+      "sha256": "21d289fd4e76ebcf2621267a6259c65449c4e9e262e62e43ad80bc61e3330082"
+    },
+    "out/ssc-assets/sensor-assets.tar.gz": {
+      "bytes": 23361334,
+      "sha256": "6abc10ecdb82c6abe175461ae483670be0c82c8e038cb9acbf5eb5f8ae9231e5"
+    },
+    "out/ssc-fedora-adsp-profile/sensor-assets.tar.gz": {
+      "bytes": 23361201,
+      "sha256": "d647dcdf5ecc010080dbd057cec2c9cc66368d9e241cc3883a532e3f648177b3"
+    }
+  },
+  "protected_files_unchanged_sha256": {
+    "kernel/config/gts9wifi-mainline.fragment": "79f77412aacc1f8bcdbb6e5ff9c8c42a9cfe5ab20152533b051f515462322f6c",
+    "kernel/drivers/sm5714-battery.c": "8b0ac6f263b562be5efc5c0eebe3dbe058e0dfc5aba001a9048150c562a232dc",
+    "kernel/drivers/sm5714-stage2.h": "a240372278da39975e36a7133b5b45981b1abdf9e880f7dec996f9b6350bf3db",
+    "kernel/drivers/sm5714_usbpd.c": "06a039f26e1d1ded781022c01f2af1a88da3a94b23c51950283b5a9280d9f4cf",
+    "kernel/dts/sm8550-samsung-gts9wifi.dts": "20db96df3867501432bcfcbbdbd484918572d62f17990d4915f92a420617c45a",
+    "reference/boot-tests/test-399-ssc-smp2p-provider/assets.py": "9931f6ddc3b0bb7695e1c33bd23b19dc8591dd8759d59e06ba8f6620f59d8f8b",
+    "userspace/sensors/fedora_adsp_profile.py": "9ea6657a98e3157a51667fdbdac11e9731b28eb46c2f1046776c41577795d0a9",
+    "userspace/sensors/smp2p_trace.py": "41d09024b097ab871d7acafce442ed06d90200f76fae46548dba0f9091d055ac"
+  },
+  "reused_MDT_qualification": "reference/desktop-bringup/ssc-fedora-adsp-profile/HOST_TESTS.json (17 stock MDT tests within33; unchanged verifier)",
+  "source_commit_before_work": "ac5bf0b8023c3a3d908cb93ea38838736aae63fd",
+  "source_sha256": {
+    "tests/test_adsp_firmware_transaction.py": "84e82f3cb566188b7b8fb63a3cfb1a0e1b0b8f17b32ccebed2c1078631137290",
+    "tests/test_fedora_adsp_boot.py": "a07bbf38cad931ebb3b18a8fcabd5c438d83c5976e91f7f2a80e62196dac6ba5",
+    "userspace/sensors/adsp_firmware_transaction.py": "ab3ca30e0f65593c9b853b25c09d29ab23395eaf0382564f4905c9df0c8c537b",
+    "userspace/sensors/fedora_adsp_boot.py": "19545e01a65b94fb5d4a1b5c558bdcf266b5b99f3f1739d4ce2acd09923b9bd8"
+  },
+  "syntax": {
+    "executed": true,
+    "files": [
+      "userspace/sensors/adsp_firmware_transaction.py",
+      "userspace/sensors/fedora_adsp_boot.py",
+      "tests/test_adsp_firmware_transaction.py",
+      "tests/test_fedora_adsp_boot.py"
+    ],
+    "verdict": "PASS"
+  },
+  "verdict": "OFFLINE_COMPONENT_QUALIFIED_NOT_DEPLOYMENT_READY"
+}

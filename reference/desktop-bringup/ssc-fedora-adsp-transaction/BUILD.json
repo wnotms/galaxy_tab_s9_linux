@@ -1,0 +1,487 @@
+{
+  "DTB_sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+  "PD_maps_unchanged": true,
+  "authentication_verified": false,
+  "base_vendor_sha256": "af6531b5eaaf5a86ae35f9362cebd173086320d94154590f2391703d7cae72aa",
+  "bootconfig_sha256": "b8425a658e2b1521fe61f9225bc97dd11c58155d268a70ddd5f88526af9506fa",
+  "candidate_asset_sha256": "d647dcdf5ecc010080dbd057cec2c9cc66368d9e241cc3883a532e3f648177b3",
+  "candidate_vendor_sha256": "21d289fd4e76ebcf2621267a6259c65449c4e9e262e62e43ad80bc61e3330082",
+  "changed_files": 19,
+  "command_arguments_after": [
+    "--header_version",
+    "4",
+    "--pagesize",
+    "0x00001000",
+    "--base",
+    "0x00000000",
+    "--kernel_offset",
+    "0x80008000",
+    "--ramdisk_offset",
+    "0x82000000",
+    "--tags_offset",
+    "0x81e00000",
+    "--dtb_offset",
+    "0x0000000081f00000",
+    "--vendor_cmdline",
+    "console=tty0 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32 trace_instance=gts9_ssc_provider,qcom_glink:qcom_glink_cmd_version,qcom_glink:qcom_glink_cmd_version_ack,qcom_glink:qcom_glink_cmd_open,qcom_glink:qcom_glink_cmd_open_ack,qcom_glink:qcom_glink_cmd_close,qcom_glink:qcom_glink_cmd_close_ack,qcom_smp2p:smp2p_negotiate,qcom_smp2p:smp2p_notify_in,qcom_smp2p:smp2p_ssr_ack,qcom_smp2p:smp2p_update_bits trace_buf_size=128K",
+    "--board",
+    "",
+    "--dtb",
+    "out/boot-bundle-ssc-fedora-adsp/verify/dtb",
+    "--vendor_bootconfig",
+    "out/boot-bundle-ssc-fedora-adsp/verify/bootconfig",
+    "--ramdisk_type",
+    "1",
+    "--ramdisk_name",
+    "",
+    "--vendor_ramdisk_fragment",
+    "out/boot-bundle-ssc-fedora-adsp/verify/vendor_ramdisk00"
+  ],
+  "command_arguments_before": [
+    "--header_version",
+    "4",
+    "--pagesize",
+    "0x00001000",
+    "--base",
+    "0x00000000",
+    "--kernel_offset",
+    "0x80008000",
+    "--ramdisk_offset",
+    "0x82000000",
+    "--tags_offset",
+    "0x81e00000",
+    "--dtb_offset",
+    "0x0000000081f00000",
+    "--vendor_cmdline",
+    "console=tty0 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32 trace_instance=gts9_ssc_provider,qcom_glink:qcom_glink_cmd_version,qcom_glink:qcom_glink_cmd_version_ack,qcom_glink:qcom_glink_cmd_open,qcom_glink:qcom_glink_cmd_open_ack,qcom_glink:qcom_glink_cmd_close,qcom_glink:qcom_glink_cmd_close_ack,qcom_smp2p:smp2p_negotiate,qcom_smp2p:smp2p_notify_in,qcom_smp2p:smp2p_ssr_ack,qcom_smp2p:smp2p_update_bits trace_buf_size=128K",
+    "--board",
+    "",
+    "--dtb",
+    "out/boot-bundle-ssc-fedora-adsp/source/dtb",
+    "--vendor_bootconfig",
+    "out/boot-bundle-ssc-fedora-adsp/source/bootconfig",
+    "--ramdisk_type",
+    "1",
+    "--ramdisk_name",
+    "",
+    "--vendor_ramdisk_fragment",
+    "out/boot-bundle-ssc-fedora-adsp/source/vendor_ramdisk00"
+  ],
+  "commands": [
+    [
+      "python3",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/unpack_bootimg.py",
+      "--boot_img",
+      "out/boot-bundle-ssc-provider399/vendor_boot.img",
+      "--out",
+      "out/boot-bundle-ssc-fedora-adsp/source",
+      "--format",
+      "mkbootimg"
+    ],
+    [
+      "lz4",
+      "-dc",
+      "out/boot-bundle-ssc-fedora-adsp/source/vendor_ramdisk00"
+    ],
+    [
+      "lz4",
+      "-l",
+      "-12",
+      "-c"
+    ],
+    [
+      "lz4",
+      "-dc",
+      "out/boot-bundle-ssc-fedora-adsp/fedora-adsp.lz4"
+    ],
+    [
+      "python3",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/mkbootimg.py",
+      "--header_version",
+      "4",
+      "--pagesize",
+      "0x00001000",
+      "--base",
+      "0x00000000",
+      "--kernel_offset",
+      "0x80008000",
+      "--ramdisk_offset",
+      "0x82000000",
+      "--tags_offset",
+      "0x81e00000",
+      "--dtb_offset",
+      "0x0000000081f00000",
+      "--vendor_cmdline",
+      "console=tty0 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32 trace_instance=gts9_ssc_provider,qcom_glink:qcom_glink_cmd_version,qcom_glink:qcom_glink_cmd_version_ack,qcom_glink:qcom_glink_cmd_open,qcom_glink:qcom_glink_cmd_open_ack,qcom_glink:qcom_glink_cmd_close,qcom_glink:qcom_glink_cmd_close_ack,qcom_smp2p:smp2p_negotiate,qcom_smp2p:smp2p_notify_in,qcom_smp2p:smp2p_ssr_ack,qcom_smp2p:smp2p_update_bits trace_buf_size=128K",
+      "--board",
+      "",
+      "--dtb",
+      "out/boot-bundle-ssc-fedora-adsp/source/dtb",
+      "--vendor_bootconfig",
+      "out/boot-bundle-ssc-fedora-adsp/source/bootconfig",
+      "--ramdisk_type",
+      "1",
+      "--ramdisk_name",
+      "",
+      "--vendor_ramdisk_fragment",
+      "out/boot-bundle-ssc-fedora-adsp/fedora-adsp.lz4",
+      "--vendor_boot",
+      "out/boot-bundle-ssc-fedora-adsp/vendor_boot.img"
+    ],
+    [
+      "python3",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/avbtool.py",
+      "add_hash_footer",
+      "--image",
+      "out/boot-bundle-ssc-fedora-adsp/vendor_boot.img",
+      "--partition_name",
+      "vendor_boot",
+      "--partition_size",
+      "100663296",
+      "--salt",
+      "4b758706a716a8a843b86b99116a96c00ecefa1d4813f52bd58a1136f00d29c9"
+    ],
+    [
+      "python3",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/avbtool.py",
+      "verify_image",
+      "--image",
+      "out/boot-bundle-ssc-fedora-adsp/vendor_boot.img"
+    ],
+    [
+      "python3",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/unpack_bootimg.py",
+      "--boot_img",
+      "out/boot-bundle-ssc-fedora-adsp/vendor_boot.img",
+      "--out",
+      "out/boot-bundle-ssc-fedora-adsp/verify",
+      "--format",
+      "mkbootimg"
+    ]
+  ],
+  "deployment_ready": false,
+  "device_operations": false,
+  "firmware_changes": [
+    {
+      "after": "43d00f2ea1e565a9ffe9c747162788556bf6364975055f62b4c9207097a0cdc4",
+      "before": "d455f0fdeebd3e0ae9038648f89327084e90d9d57a2739300a78cfa86717abfb",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp.b00"
+    },
+    {
+      "after": "475bd54976171eaa5ffc013f32d058e7424822b149fb8599801aa5d16cbe0c0c",
+      "before": "475bd54976171eaa5ffc013f32d058e7424822b149fb8599801aa5d16cbe0c0c",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b01"
+    },
+    {
+      "after": "5b4dfcb2117fe15fa25b43a4120bb66102f092c176d9cf3ae14e60977a71885f",
+      "before": "5b4dfcb2117fe15fa25b43a4120bb66102f092c176d9cf3ae14e60977a71885f",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b02"
+    },
+    {
+      "after": "6206f5f24677b86229843277045752bee86459f82c5c31cf14530b66ad97e70a",
+      "before": "6206f5f24677b86229843277045752bee86459f82c5c31cf14530b66ad97e70a",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b03"
+    },
+    {
+      "after": "cfaad569845b7133cbf158d5fc362ec291e3c012d67c5a9ee3457fd5be666177",
+      "before": "cfaad569845b7133cbf158d5fc362ec291e3c012d67c5a9ee3457fd5be666177",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b04"
+    },
+    {
+      "after": "a347d17e87e65ae57ca4cadca3c0493408cb098f7a0bb70c1e30796e84587383",
+      "before": "7e8e8dc85934cdd29b9fdecbee3ce5a703cf34eb7837474cca1b16f5b8572339",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp.b05"
+    },
+    {
+      "after": "22a2e7f471f97a0f6e395ff85258eeb9a87b58b8894412c6b4bc5b2a65a20718",
+      "before": "22a2e7f471f97a0f6e395ff85258eeb9a87b58b8894412c6b4bc5b2a65a20718",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b06"
+    },
+    {
+      "after": "b675b4088e13b83422ed87a124d950f82f64aa2ff4eec67b6cb771b39ec47629",
+      "before": "b675b4088e13b83422ed87a124d950f82f64aa2ff4eec67b6cb771b39ec47629",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b07"
+    },
+    {
+      "after": "5fba1f87ccd2b9765f26a373251c4afc67d5bf18adcbc33d9636777bb0e8a43a",
+      "before": "8db276ec971269cc57922ca6f8dd31c75d59edc43c6b8f882a2e380f85edf132",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp.b08"
+    },
+    {
+      "after": "1731fdecaa01df576167a816d91a503aa349ef8924d85b92af41b01a9b9dc3ec",
+      "before": "1e5e8b9b7a38cdbf72d3e70d5f58b99e26651633c8160b933f652146c45e355a",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp.b09"
+    },
+    {
+      "after": "7653ab59c9353772ae24000e657012cc72183018e440eddecacad8d2c288cce0",
+      "before": "7653ab59c9353772ae24000e657012cc72183018e440eddecacad8d2c288cce0",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b10"
+    },
+    {
+      "after": "130261d7160c2f10da37e90cef0dfd22ed3b499c566ae01252af75771fd3b9ee",
+      "before": "130261d7160c2f10da37e90cef0dfd22ed3b499c566ae01252af75771fd3b9ee",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b11"
+    },
+    {
+      "after": "d260f6c39a0d8b16f8a5e0ac57c534d643da838b3d144e5d9146439282b606ba",
+      "before": "d260f6c39a0d8b16f8a5e0ac57c534d643da838b3d144e5d9146439282b606ba",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b12"
+    },
+    {
+      "after": "b037b26cf8eddf56feaf2beace1bf4be4c8aeeea98898b87ad9eab80852dcab2",
+      "before": "7f626f158353166e4fb96e923c2d3e22ac5582a4c47aac20635f140fece6d465",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp.b13"
+    },
+    {
+      "after": "f00904e11a591d3586f5e72f4d8a6803c13b2bb24d8a62bffc8026ec60424c04",
+      "before": "28d417f90ad1fad83d433adb8ff1f1447cdbfb158db1a708d1f823036e37c8b5",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp.b14"
+    },
+    {
+      "after": "279992825b686126c3e885c63a6cb3e3da6d59710e09f0c38653a47baf8c63b4",
+      "before": "268d552257767cc03eda517ebaa6f4fe168b2535ffe0af1879c5cfd02592b398",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp.b15"
+    },
+    {
+      "after": "cdc65e2a06114accda62920c2befb66f755c6689edd6cbec689ac18151de3903",
+      "before": "3af11cd8a0a20e8130b7232d7c5ced11a75d3db325fc055be2b5c2e9371ea4e5",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp.b16"
+    },
+    {
+      "after": "014cfe934f62bb7706891407a5eba3fe36c077d30d7680fdc124eb1aca3b983b",
+      "before": "adeb1b4bf252966a3ff84ce15e0b1a2df822258122a00cd27d72c199099cc57f",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp.b17"
+    },
+    {
+      "after": "ed91eaf8959703c0ad37a1fa4d6b67e10810e81f68c47a3c84a3cf608d4b35af",
+      "before": "4d5d7cba49c912b2b34364a7b5ec7deaae29e557ce521c04523a3a0e7b42564b",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp.b18"
+    },
+    {
+      "after": "ded7ca5a69803769e9281c7c828cb83265f09fcf467e1d2a49c3a7997fd74633",
+      "before": "c84486e1d27be46554b287714c86aed0a75aab09122d93aa6791f389176ff4a9",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp.b19"
+    },
+    {
+      "after": "b798729f54a793b8f8e2fe0bede996c26e27f76f968695657d170e9198339503",
+      "before": "b798729f54a793b8f8e2fe0bede996c26e27f76f968695657d170e9198339503",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b20"
+    },
+    {
+      "after": "f1152916f96e6d0264f9ca22a6e770d5a9eee25086e6898b178c9eacc59c067c",
+      "before": "f1152916f96e6d0264f9ca22a6e770d5a9eee25086e6898b178c9eacc59c067c",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b21"
+    },
+    {
+      "after": "b0fb1ccc88faa91d740a12c3a62aa40672eea16f955d42034d825f0f87d4d460",
+      "before": "b0fb1ccc88faa91d740a12c3a62aa40672eea16f955d42034d825f0f87d4d460",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b22"
+    },
+    {
+      "after": "891a1d9bfbd16d2723c4e068e3035286f634cbde96c3e4cd8286601067c4338e",
+      "before": "891a1d9bfbd16d2723c4e068e3035286f634cbde96c3e4cd8286601067c4338e",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b23"
+    },
+    {
+      "after": "06a1c932523aab02d13ff65ab60c7cf1a6f045eb5dfd5c4a5b14f408379060b9",
+      "before": "06a1c932523aab02d13ff65ab60c7cf1a6f045eb5dfd5c4a5b14f408379060b9",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b24"
+    },
+    {
+      "after": "07cd292afc1486512f5124ccadc22605310bf4ba4c4d518414fdfff4470becdf",
+      "before": "07cd292afc1486512f5124ccadc22605310bf4ba4c4d518414fdfff4470becdf",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b25"
+    },
+    {
+      "after": "2edfabd9c5a31966f70173bd9d16dea1705cda3e7a93228e97f5d5bb18177447",
+      "before": "2edfabd9c5a31966f70173bd9d16dea1705cda3e7a93228e97f5d5bb18177447",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b27"
+    },
+    {
+      "after": "88ebbb84d10984f81b1d365daf91a65b8f2b2548691f0f2f547d76222698d711",
+      "before": "88ebbb84d10984f81b1d365daf91a65b8f2b2548691f0f2f547d76222698d711",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b28"
+    },
+    {
+      "after": "b6e69746be03dee832c3e1fe640d6cde9276e16159667dc410f65f4b8814b2b1",
+      "before": "fcf187d55ef5e0fe4f2b610f31692b0a63e4ef071985db8b36f495cb49303b76",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp.b30"
+    },
+    {
+      "after": "e7caac83ec03b02602876007e3e5b43a4615d16a87c3ce07c14f12222756ac4e",
+      "before": "a605b4765a3354e4fa1ddff5dc5da4c2eddb636d54729a931f064354bf469a5d",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp.b31"
+    },
+    {
+      "after": "b6977653d9a75b59fbacd4822ff4600a443d19cc9d6a7972feb0f65a559cbce5",
+      "before": "b6977653d9a75b59fbacd4822ff4600a443d19cc9d6a7972feb0f65a559cbce5",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b32"
+    },
+    {
+      "after": "7ce11b941534045548f16cee4c2317701903ffdecb33b823bbceae09fec244c9",
+      "before": "6cb3495113fcd282c6e20cadfaeb3babb9f06e581aab02cb78c3f0cc2532982c",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp.b33"
+    },
+    {
+      "after": "0119fec2bab06d6e9c9239d3f7ac04743cf4564c04f5c733cc080966b7c6dfa8",
+      "before": "f9e2eb26d0acfaf4208e863b3731242a859be0344a957f0373939260ca556386",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp.b34"
+    },
+    {
+      "after": "d7efeb060c9215e008fb3351b5bec48b34689ce9f70f501b3de3878a5166b08a",
+      "before": "d7efeb060c9215e008fb3351b5bec48b34689ce9f70f501b3de3878a5166b08a",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b35"
+    },
+    {
+      "after": "9e2bb6a9e020c8b87dc2980b2078901c42095b4edbffdefac97706ad3b7b8772",
+      "before": "9e2bb6a9e020c8b87dc2980b2078901c42095b4edbffdefac97706ad3b7b8772",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b37"
+    },
+    {
+      "after": "81b6ae6cc0e3c0ec46ecf6c50adbf7bf1c11d77a682614be7a199f902abd20c9",
+      "before": "81b6ae6cc0e3c0ec46ecf6c50adbf7bf1c11d77a682614be7a199f902abd20c9",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b38"
+    },
+    {
+      "after": "c8ede9f410db2c6dbd44fe8dbc2245b7199ac69effb1c5635391814dda808235",
+      "before": "c8ede9f410db2c6dbd44fe8dbc2245b7199ac69effb1c5635391814dda808235",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b39"
+    },
+    {
+      "after": "6f70e9461bfadc063cfebc948e39ef55501d549dc53eb96c76945ac4e4d38d6c",
+      "before": "6f70e9461bfadc063cfebc948e39ef55501d549dc53eb96c76945ac4e4d38d6c",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b40"
+    },
+    {
+      "after": "b1c04902abdf0eb7636334f99178e919143adb13300a2780049b69e4241b7eab",
+      "before": "b1c04902abdf0eb7636334f99178e919143adb13300a2780049b69e4241b7eab",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b41"
+    },
+    {
+      "after": "6edf2719a969e905ca398cc16cd24133649e55ffa849488c42e79098abbdc4aa",
+      "before": "6edf2719a969e905ca398cc16cd24133649e55ffa849488c42e79098abbdc4aa",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b42"
+    },
+    {
+      "after": "c22fbd7689b84d3ca63d01f2bb76d1186f99932afe0a13a0941df32a8700422d",
+      "before": "c22fbd7689b84d3ca63d01f2bb76d1186f99932afe0a13a0941df32a8700422d",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b43"
+    },
+    {
+      "after": "87193787cb8cbe3f6d3e1db445dff6bb5c96f85e7bf382842a1fb9cbf38fb3e2",
+      "before": "87193787cb8cbe3f6d3e1db445dff6bb5c96f85e7bf382842a1fb9cbf38fb3e2",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b44"
+    },
+    {
+      "after": "818b6f7df8eccb392f0a67cc0ea6832a694f2d2cb3f3b984abb8dc01a7be093c",
+      "before": "818b6f7df8eccb392f0a67cc0ea6832a694f2d2cb3f3b984abb8dc01a7be093c",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b45"
+    },
+    {
+      "after": "bfad2e7e97fac5dce69b39cc4fe0f53a726be75976090ac7c49a0f27cdb85132",
+      "before": "bfad2e7e97fac5dce69b39cc4fe0f53a726be75976090ac7c49a0f27cdb85132",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b46"
+    },
+    {
+      "after": "bfa5718359647e23cb7ae6d83f3640f20ad79c45fa8d708bc222c2bbc6509b0a",
+      "before": "bfa5718359647e23cb7ae6d83f3640f20ad79c45fa8d708bc222c2bbc6509b0a",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b47"
+    },
+    {
+      "after": "b79c85cecb4ec57aa4ff86d8b0eeee02ed1a2f614baeb86d445a04ba1f0b44a7",
+      "before": "b79c85cecb4ec57aa4ff86d8b0eeee02ed1a2f614baeb86d445a04ba1f0b44a7",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp.b48"
+    },
+    {
+      "after": "2917627e15890b9b2d93045b612010bab5afe4c97fac8d96b9522b1ce21241f6",
+      "before": "1d06f072f91d0f29117ca2c02e9e4b10709419343ba79a634d61bed46f5a6d2f",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp.b50"
+    },
+    {
+      "after": "a0fe2204a4b70751f58f6fa46481c08368a178868dedf997524f325fdc7191ec",
+      "before": "7e7c1f22cc19a272f570a82c2a451b08fd626465aa8f57ba21912a91cda0e012",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp.mdt"
+    },
+    {
+      "after": "6bf39fd29034606433776d7320ad7a12d7372319d8ec364bbeb671e82d99155c",
+      "before": "6bf39fd29034606433776d7320ad7a12d7372319d8ec364bbeb671e82d99155c",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp_dtb.b00"
+    },
+    {
+      "after": "006d0a6abb068e10fa6f69d53174343c7b5744e8c0be8493c70ac8d44b7cbb05",
+      "before": "006d0a6abb068e10fa6f69d53174343c7b5744e8c0be8493c70ac8d44b7cbb05",
+      "changed": false,
+      "path": "lib/firmware/qcom/sm8550/adsp_dtb.b01"
+    },
+    {
+      "after": "3373d1248d65de1d419a3042c7f1191cb5582ce7a7313dd272c5ddf9a2ef6fe0",
+      "before": "7c9a9c7ee3900d070fef27a3ae01793b20d1607b7207c1680cafdc6780d1dcd3",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp_dtb.b02"
+    },
+    {
+      "after": "db8c3dd2a4f9f2b3f59d29bdea553a4018af5ead08f72032aa5a3936be030fd6",
+      "before": "a0451ad027be6e3213a47da875446b59a762c8687effc9517cc19c3660d77cbf",
+      "changed": true,
+      "path": "lib/firmware/qcom/sm8550/adsp_dtb.mdt"
+    }
+  ],
+  "firmware_files": 52,
+  "kernel_build_executed": false,
+  "ramdisk_sha256": "5c9454e42744ab23e32e8d0e1227482191210657e402ec80d12aba4fbdfc344f",
+  "tool_hashes": {
+    "avbtool.py": "e5a664a38db623da00f080219bc0ee60a640a9dc4a872803616fae4938ac749b",
+    "mkbootimg.py": "37d84b3d162e0bc62e36c1f4e1c63c85ea0caa9f29be023eb2f8efe006ad948c",
+    "unpack_bootimg.py": "a9d260978a63bd06a24b6347e7dee8a28ff96639793caea15dff6aa491316308"
+  },
+  "verdict": "MATCHED_FEDORA_ADSP_BOOT_OFFLINE_ONLY"
+}

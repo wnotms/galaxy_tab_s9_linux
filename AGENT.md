@@ -98,6 +98,25 @@
 
 ## Current state (2026-10-03)
 
+2026-10-11 FEDORA_ADSP_RECOVERY_TRANSACTION_MATCHED_BOOT_OFFLINE_QUALIFIED.
+ADB recovered/same399return1f8302ac GNOME/adbd/usb0 healthy,ADSPoffline,
+100%32.7C4.443V; readonlysnapshot only/notnewfullpreflight. Separate rootTWRP
+guarded52-file transaction freezesalloriginals/actualmetadata beforefirstwrite,
+durableintent/partialrestore/fullboundary/terminalbackupcleanup; existingassets
+different-firmware guardunchanged/integrationtested. Matched399earlyramdisk:
+completeFedora52/19differences/threePDmaps unchanged,DTB/bootconfig/cmdline/
+trace/header exact; reopenedCPIO/LZ4/unpack/AVBverifyPASS,newvendor21d289fd4e76.
+87affectedPASS0skip(26transaction+15boot+16profile+30oldcontrol),syntaxPASS;
+hostroot/kernelpermission seams mocked,physicalTWRPprocbindUNTESTED.
+No devicewrite/reboot/kernelbuild/fullrun/routing/Actions/Test400registration.
+Next independentlyintegrate/register/push one30s firmware comparison with
+fresh370admission, separateownedreadonlyprocbind/scratch andmandatoryoriginal
+52/370vendor/normalGNOME return. Newfirmwarecallbackcountsnotoldpredictions;
+CPU/identity/rescue/thermal/evidence gates stay. PackageNOTDEPLOYMENTREADY,
+PAS/SSC/sample/rotationUNTESTED/migrationunfinished.390–399/current399+370
+retained; pendingcomparisonpackage explicitconsumer. PPS/pump/DCCOFF/4.44
+floatunchanged. See ssc-fedora-adsp-transaction/RESULTS.md.
+
 2026-10-11 FEDORA_X710_COMPLETE_ADSP_PROFILE_OFFLINE_QUALIFIED_NOT_DEPLOYED.
 FreshFedoraoriginHEAD unchangedab123e7; publishedX710 v2 firmware24,607,076bytes
 30cace40556f matchesGitHubassetdigest. Same52ADSP/DTB filenames,19actualdifferent
