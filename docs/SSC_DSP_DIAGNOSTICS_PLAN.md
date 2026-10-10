@@ -1,5 +1,15 @@
 # SSC initialization: next evidence boundary after Test380
 
+Latest boundary (2026-10-11): Test398 verified initialized readdir replies but
+did not restore SSC; exact370/GNOME is restored. New stock/signed-firmware
+SMP2P source comparison and actual disabled native trace capability are recorded
+in [SMP2P evidence](../reference/desktop-bringup/ssc-smp2p-initialization/RESULTS.md).
+The missing stock sleepstate entries are not a demonstrated publication cause:
+the inspected create-error branch rejoins initialization, and Fedora also lacks
+these entries. Next qualify an isolated early SMP2P/GLINK provider observation;
+no Test399 is registered/deployed yet. Preserve398's repairs and do not replay
+its unchanged startup or drive shared-memory bits to satisfy a hypothesis.
+
 The Test380 failure remains unchanged: metadata matched, no SSC400 or actual
 accelerometer sample in the registered window, accepted Test370 restored.
 Do not rerun that profile, reset registry, guess bus addresses or late-start ADSP

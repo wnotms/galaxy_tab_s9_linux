@@ -1,0 +1,81 @@
+{
+  "archive_sha256": "6abc10ecdb82c6abe175461ae483670be0c82c8e038cb9acbf5eb5f8ae9231e5",
+  "verified_members": {
+    "usr/lib/firmware/qcom/sm8550/adsp.mdt": {
+      "source": "apnhlos/image/adsp.mdt",
+      "bytes": 7884,
+      "mtime": 1755713986,
+      "sha256": "7e7c1f22cc19a272f570a82c2a451b08fd626465aa8f57ba21912a91cda0e012"
+    },
+    "usr/lib/firmware/qcom/sm8550/adsp.b18": {
+      "source": "apnhlos/image/adsp.b18",
+      "bytes": 1951672,
+      "mtime": 1755713986,
+      "sha256": "4d5d7cba49c912b2b34364a7b5ec7deaae29e557ce521c04523a3a0e7b42564b"
+    },
+    "usr/lib/firmware/qcom/sm8550/adsp.b31": {
+      "source": "apnhlos/image/adsp.b31",
+      "bytes": 535604,
+      "mtime": 1755713986,
+      "sha256": "a605b4765a3354e4fa1ddff5dc5da4c2eddb636d54729a931f064354bf469a5d"
+    }
+  },
+  "strings": [
+    {
+      "member": "adsp.b18",
+      "offset": "0x17d180",
+      "virtual_address": "0xb337d180",
+      "string": "sleepstate",
+      "kind": "static signed-firmware string; not observed runtime message"
+    },
+    {
+      "member": "adsp.b18",
+      "offset": "0x17d1b8",
+      "virtual_address": "0xb337d1b8",
+      "string": "sns_remote_proc_state_sensor.c:SMP2P registration failed: Error(%d)",
+      "kind": "static signed-firmware string; not observed runtime message"
+    },
+    {
+      "member": "adsp.b18",
+      "offset": "0x1994e1",
+      "virtual_address": "0xb33994e1",
+      "string": "sleepstate_see",
+      "kind": "static signed-firmware string; not observed runtime message"
+    },
+    {
+      "member": "adsp.b18",
+      "offset": "0x19952d",
+      "virtual_address": "0xb339952d",
+      "string": "SNS_CM",
+      "kind": "static signed-firmware string; not observed runtime message"
+    },
+    {
+      "member": "adsp.b18",
+      "offset": "0x1b0ef0",
+      "virtual_address": "0xb33b0ef0",
+      "string": "sns_fw_init.c:Init started",
+      "kind": "static signed-firmware string; not observed runtime message"
+    },
+    {
+      "member": "adsp.b18",
+      "offset": "0x1b0f18",
+      "virtual_address": "0xb33b0f18",
+      "string": "sns_fw_init.c:Register Sensor from static list %i",
+      "kind": "static signed-firmware string; not observed runtime message"
+    },
+    {
+      "member": "adsp.b18",
+      "offset": "0x1b10f8",
+      "virtual_address": "0xb33b10f8",
+      "string": "sns_client_manager.c:smp2p_create failed",
+      "kind": "static signed-firmware string; not observed runtime message"
+    },
+    {
+      "member": "adsp.b18",
+      "offset": "0x1b1200",
+      "virtual_address": "0xb33b1200",
+      "string": "sns_client_manager.c:Error in registring as QMI service",
+      "kind": "static signed-firmware string; not observed runtime message"
+    }
+  ]
+}

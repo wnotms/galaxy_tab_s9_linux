@@ -1,0 +1,71 @@
+0171a6e6-ef97-41e8-baf8-4ab81b0d6b89
+
+EVENT=smp2p_negotiate
+name: smp2p_negotiate
+ID: 796
+format:
+	field:unsigned short common_type;	offset:0;	size:2;	signed:0;
+	field:unsigned char common_flags;	offset:2;	size:1;	signed:0;
+	field:unsigned char common_preempt_count;	offset:3;	size:1;	signed:0;
+	field:int common_pid;	offset:4;	size:4;	signed:1;
+
+	field:__data_loc char[] dev_name;	offset:8;	size:4;	signed:0;
+	field:u32 out_features;	offset:12;	size:4;	signed:0;
+
+print fmt: "%s: state=open out_features=%s", __get_str(dev_name), __print_flags(REC->out_features, "|", {0x1, "SMP2P_FEATURE_SSR_ACK"})
+ENABLE=0
+FILTER=none
+
+EVENT=smp2p_notify_in
+name: smp2p_notify_in
+ID: 797
+format:
+	field:unsigned short common_type;	offset:0;	size:2;	signed:0;
+	field:unsigned char common_flags;	offset:2;	size:1;	signed:0;
+	field:unsigned char common_preempt_count;	offset:3;	size:1;	signed:0;
+	field:int common_pid;	offset:4;	size:4;	signed:1;
+
+	field:__data_loc char[] dev_name;	offset:8;	size:4;	signed:0;
+	field:__data_loc char[] client_name;	offset:12;	size:4;	signed:0;
+	field:unsigned long status;	offset:16;	size:8;	signed:0;
+	field:u32 val;	offset:24;	size:4;	signed:0;
+
+print fmt: "%s: %s: status:0x%0lx val:0x%0x", __get_str(dev_name), __get_str(client_name), REC->status, REC->val
+ENABLE=0
+FILTER=none
+
+EVENT=smp2p_ssr_ack
+name: smp2p_ssr_ack
+ID: 795
+format:
+	field:unsigned short common_type;	offset:0;	size:2;	signed:0;
+	field:unsigned char common_flags;	offset:2;	size:1;	signed:0;
+	field:unsigned char common_preempt_count;	offset:3;	size:1;	signed:0;
+	field:int common_pid;	offset:4;	size:4;	signed:1;
+
+	field:__data_loc char[] dev_name;	offset:8;	size:4;	signed:0;
+
+print fmt: "%s: SSR detected", __get_str(dev_name)
+ENABLE=0
+FILTER=none
+
+EVENT=smp2p_update_bits
+name: smp2p_update_bits
+ID: 798
+format:
+	field:unsigned short common_type;	offset:0;	size:2;	signed:0;
+	field:unsigned char common_flags;	offset:2;	size:1;	signed:0;
+	field:unsigned char common_preempt_count;	offset:3;	size:1;	signed:0;
+	field:int common_pid;	offset:4;	size:4;	signed:1;
+
+	field:__data_loc char[] dev_name;	offset:8;	size:4;	signed:0;
+	field:__data_loc char[] client_name;	offset:12;	size:4;	signed:0;
+	field:u32 orig;	offset:16;	size:4;	signed:0;
+	field:u32 val;	offset:20;	size:4;	signed:0;
+
+print fmt: "%s: %s: orig:0x%0x new:0x%0x", __get_str(dev_name), __get_str(client_name), REC->orig, REC->val
+ENABLE=0
+FILTER=none
+TRACER=nop
+INSTANCES
+0171a6e6-ef97-41e8-baf8-4ab81b0d6b89

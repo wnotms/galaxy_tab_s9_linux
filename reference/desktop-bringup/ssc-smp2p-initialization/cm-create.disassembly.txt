@@ -1,0 +1,54 @@
+
+out/ssc-smp2p-audit/segment-18.elf:	file format elf32-hexagon
+
+Disassembly of section .text:
+
+b3200000 <.text>:
+b32f8740: { 	immext(#0xb3399500)
+b32f8744:   	r1:0 = combine(##-0x4cc66ad3,r17) }
+b32f8748: { 	r18 = r0
+b32f874c:   	immext(#0xb3db94c0)
+b32f8750:   	r1:0 = combine(##-0x4c246b10,r17)
+b32f8754:   	r2 = #0x1000 }
+b32f8758: { 	call 0xb3275858 <.text+0x75858> }
+b32f875c: { 	call 0xb3275898 <.text+0x75898>
+b32f8760:   	r21 = or(r0,r18)
+b32f8764:   	immext(#0x800)
+b32f8768:   	r1:0 = combine(##0x800,r17) }
+b32f876c: { 	call 0xb327591c <.text+0x7591c>
+b32f8770:   	r1:0 = combine(#0x0,r17) }
+b32f8774: { 	call 0xb32758ac <.text+0x758ac>
+b32f8778:   	r18 = r0
+b32f877c:   	r1:0 = combine(#0x75,r17) }
+b32f8780: { 	r0 |= or(r21,r18)
+b32f8784:   	if (!cmp.eq(r0.new,#0x0)) jump:t 0xb32f87a0 <.text+0xf87a0> }
+b32f8788: { 	r2 = add(r29,#0x0)
+b32f878c:   	r3 = add(r19,#0xc)
+b32f8790:   	immext(#0xb32f8fc0)
+b32f8794:   	r1:0 = combine(r16,##-0x4cd07040) }
+b32f8798: { 	call 0xb3275970 <.text+0x75970> }
+b32f879c: { 	jump 0xb32f87b0 <.text+0xf87b0> }
+b32f87a0: { 	immext(#0xb3122600)
+b32f87a4:   	r3:2 = combine(##-0x4cedd9d8,#0x1)
+b32f87a8:   	r4 = #0x1; 	r1:0 = combine(r16,#0) }
+b32f87ac: { 	call 0xb312906c }
+b32f87b0: { 	r17 = add(r19,#0x10)
+b32f87b4:   	immext(#0xb33994c0)
+b32f87b8:   	r2 = ##0xb33994e1; 	r18 = #0x0 }
+b32f87bc: { 	call 0xb32d0880 <.text+0xd0880>
+b32f87c0:   	r1:0 = combine(#0x0,r17) }
+b32f87c4: { 	p0 = cmp.eq(r0,#0x0); if (p0.new) jump:nt 0xb32f87dc <.text+0xf87dc> }
+b32f87c8: { 	immext(#0xb33b1100)
+b32f87cc:   	r3:2 = combine(##-0x4cc4eedc,#0x0)
+b32f87d0:   	r4 = #0x1; 	r1:0 = combine(r16,#0) }
+b32f87d4: { 	call 0xb312906c }
+b32f87d8: { 	memw(r17+#0x0) = #0x0 }
+b32f87dc: { 	call 0xb32fc490 <.text+0xfc490>
+b32f87e0:   	r0 = r16 }
+b32f87e4: { 	jump 0xb30bc90c
+b32f87e8:   	memb(r20+#0x27b) = r18 }
+b32f87ec: { 	call 0xb30b48f8 }
+b32f87f0: { 	call 0xb30b48f8 }
+b32f87f4: { 	call 0xb30b48f8
+b32f87f8:   	immext(#0xb3399640)
+b32f87fc:   	r0 = ##-0x4cc669ba }

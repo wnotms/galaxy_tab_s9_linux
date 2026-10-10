@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id\nuname -r\nsystemctl is-active gdm\nfor k in capacity temp voltage_now status; do printf '%s=' \"$k\"; cat \"/sys/class/power_supply/sm5714-battery/$k\"; done\nfor f in /sys/firmware/devicetree/base/smp2p-adsp/*/qcom,entry-name; do printf '%s ' \"$f\"; od -An -tx1 \"$f\"; done\nfor p in /sys/kernel/tracing/events/*smp2p* /sys/kernel/debug/tracing/events/*smp2p*; do [ ! -d \"$p\" ] || ls \"$p\"; done\ncat /sys/class/remoteproc/remoteproc0/state\ncat /proc/sys/kernel/random/boot_id"
+  ],
+  "returncode": 0,
+  "device_operations": "read only; no remoteproc start, trace enable, flash or reboot"
+}

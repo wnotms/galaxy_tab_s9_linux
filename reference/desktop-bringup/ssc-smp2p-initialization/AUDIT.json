@@ -1,0 +1,80 @@
+{
+  "audit_kind": "OFFLINE_SOURCE_AND_READ_ONLY_CAPABILITY",
+  "repository_start_head": "709bd658",
+  "kernel_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "fedora_head": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "sources_sha256": {
+    "out/ssc-assets/STAGED.json": "b0aec949d209ac6a6460e67c5fd1c66946b24433a999041b4ca38d545dfdf51e",
+    "/home/ms/Samsung/x710-live.dts": "7bf40be5a9ededd23bf3c1725252fc28973be9b18b68e25fc5019502e03d723c",
+    "/home/ms/Samsung/kernel_platform/qcom/proprietary/devicetree/qcom/kalama.dtsi": "3879c91cb7a9ff97264fb126e174d9c7a34e2258495c42029efa208f5f23d78e",
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/soc/qcom/smp2p_sleepstate.c": "f5b3456875565e1b8a4e795b066095bdbbe73013213c9bd48005a93a1d935019",
+    ".work/linux-mainline/arch/arm64/boot/dts/qcom/sm8550.dtsi": "15342d242441d979ed0584be7c5fd34ca044169d962610b5d1938292c2e7954e",
+    ".work/linux-mainline/drivers/soc/qcom/smp2p.c": "af84f30d36a206cc7a0b95e39af686a78be88cf428ab9af8bfbc247d8209d13a",
+    ".work/linux-mainline/drivers/soc/qcom/trace-smp2p.h": "59c5b9e6838e9d426557b38363008456c9ae70813ce21fd77c3e140051f4f45b",
+    "kernel/dts/sm8550-samsung-gts9wifi.dts": "20db96df3867501432bcfcbbdbd484918572d62f17990d4915f92a420617c45a",
+    "/home/ms/Samsung/gts9wifi-fedora-linux/kernel/files/sm8550-samsung-gts9wifi.dts": "ac33ea0f21b4e67c26cb2447756ccbad3fdf0ac153f364db12d4159f414865ce",
+    "/home/ms/Samsung/gts9wifi-fedora-linux/rootfs/overlay/usr/lib/systemd/system/gts9wifi-adsp-boot.service": "449f049938b0869f2bdfd56bcc62f9cc43075d730039ee466996f3f6b3f0b278",
+    "reference/boot-tests/test-398-readdir-initialization/runtime-discovery/discovery-unit-journal.txt": "7d67ae41447b56eeb1e9c10bb0dfd48b8fdf5dfd8ea6a41f63411e7de20725d5",
+    "reference/boot-tests/test-398-readdir-initialization/RESULTS.md": "476926ba049ee3d5e42c936eb3ff2a323bf5ae0cb83e5790a5c14db40759fdb3"
+  },
+  "firmware_archive_sha256": "6abc10ecdb82c6abe175461ae483670be0c82c8e038cb9acbf5eb5f8ae9231e5",
+  "llvm_objdump": "Ubuntu LLVM version 21.1.8",
+  "derived_elf_sha256": "9950ca63c9b35b43b7fed1c52314b9513e728c2fd568d3a0a652047bc0ae0c7b",
+  "derived_elf_is_original_image": false,
+  "commands": [
+    [
+      "llvm-objdump",
+      "-d",
+      "--no-show-raw-insn",
+      "--start-address=0xb32f8740",
+      "--stop-address=0xb32f8800",
+      "out/ssc-smp2p-audit/segment-18.elf"
+    ],
+    [
+      "llvm-objdump",
+      "-d",
+      "--no-show-raw-insn",
+      "--start-address=0xb32f8fc0",
+      "--stop-address=0xb32f9100",
+      "out/ssc-smp2p-audit/segment-18.elf"
+    ],
+    [
+      "llvm-objdump",
+      "-d",
+      "--no-show-raw-insn",
+      "--start-address=0xb3273b50",
+      "--stop-address=0xb3273ce0",
+      "out/ssc-smp2p-audit/segment-18.elf"
+    ]
+  ],
+  "device_boot_id": "0171a6e6-ef97-41e8-baf8-4ab81b0d6b89",
+  "device_battery_percent": 100,
+  "device_temperature_c": 34.2,
+  "device_vbat_uv": 4445000,
+  "gdm_active": true,
+  "adsp_state": "offline",
+  "all_four_smp2p_trace_events_enabled": false,
+  "tracer": "nop",
+  "trace_instances": [],
+  "production_changed": false,
+  "device_rebooted": false,
+  "trace_enabled": false,
+  "dsp_started": false,
+  "ssc_restored": false,
+  "samples_verified": false,
+  "automatic_rotation_accepted": false,
+  "host_tests": {
+    "executed": false,
+    "reason": "Source/capability evidence and documentation only; no runner/parser/profile/runtime change."
+  },
+  "kernel_build": {
+    "executed": false,
+    "reason": "No kernel/config/DT/module inputs changed."
+  },
+  "new_physical_test": {
+    "executed": false
+  },
+  "actions_started": false,
+  "original_elf_flags": "0x73",
+  "wrapper_flags_corrected_before_qualification": true
+}

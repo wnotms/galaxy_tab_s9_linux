@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-11 SSC_SMP2P_SOURCE_BOUNDARY_AND_NATIVE_TRACE_CAPABILITY_RECORDED.
+Read-only same0171a6e6 GNOME/ADB healthy;100%34.2C4.445V/ADSPoffline.
+ActualstockDT/downstream sleepstate bit12 agrees with signedfirmware names;
+runningmainline DT hasonlymaster/slave. Boundedoriginal-flagHexagon disassembly
+shows sleepstate_see createerrorjoinscontinuation, notdirectabort; noobservedDSP
+error/rootcauseclaim. FourdisablednativeSMP2Ptraceformatsavailable, nop/noinstance.
+Next separatelyqualifyearlySMP2P+GLINK providerobservation, noDT/kernel/module/
+sharedmemorywrite orunchanged398 replay. Notregistered399, noflash/reboot/DSPstart/
+traceenable/build/fulltests/Actions; executed:false prose/evidenceonly.
+SSC/sample/rotationunfinished, PPS/pump/DCCOFF,389–398unchanged. See
+reference/desktop-bringup/ssc-smp2p-initialization/RESULTS.md.
+
 2026-10-10 TEST398_READDIR_INITIALIZATION_VERIFIED_SSC_ABSENT_EXACT370_RETURNED.
 One24951e4d boot/sensor→root start,220initializedmethod28replies/twoEOFs match;
 35metadata/178content/status69/completeGLINK,twoUP PDRcycles,30s(33.789through

@@ -1,0 +1,86 @@
+
+out/ssc-smp2p-audit/segment-18.elf:	file format elf32-hexagon
+
+Disassembly of section .text:
+
+b3200000 <.text>:
+b32f8fc0: { 	call 0xb30bc7e8
+b32f8fc4:   	allocframe(#0x50) }
+b32f8fc8: { 	r16 = r0
+b32f8fcc:   	immext(#0xb3399500)
+b32f8fd0:   	r19 = ##0xb339952d; 	r21 = memw(r0+#0xc) }
+b32f8fd4: { 	call 0xb311d78c
+b32f8fd8:   	r0 = r19 }
+b32f8fdc: { 	r0 = r16
+b32f8fe0:   	memw(r21+#0x20) = r0
+b32f8fe4:   	r2 = memw(r16+#0x0) }
+b32f8fe8: { 	r2 = memw(r2+#0x4) }
+b32f8fec: { 	callr r2 }
+b32f8ff0: { 	r1 = #0xa; 	r2 = memw(r0+#0x4) }
+b32f8ff4: { 	callr r2 }
+b32f8ff8: { 	r18 = add(r21,#0x24)
+b32f8ffc:   	r17 = add(r0,#0x4)
+b32f9000:   	r2 = memw(r0+#0x4) }
+b32f9004: { 	r1:0 = combine(r18,r19) }
+b32f9008: { 	r2 = memw(r2+#0x4) }
+b32f900c: { 	callr r2 }
+b32f9010: { 	call 0xb3136624 }
+b32f9014: { 	immext(#0xb33b11c0)
+b32f9018:   	r3:2 = combine(##-0x4cc4ee0c,#0x0)
+b32f901c:   	r4 = #0x1; 	r1:0 = combine(r16,#0) }
+b32f9020: { 	call 0xb312906c
+b32f9024:   	immext(#0xb308de80)
+b32f9028:   	r19 = ##-0x4cf72170 }
+b32f902c: { 	call 0xb3131f8c
+b32f9030:   	r1 = r19
+b32f9034:   	r2 = #0x1; 	r0 = memw(r21+#0x14) }
+b32f9038: { 	r20 = add(r16,#0x58)
+b32f903c:   	r25 = add(r18,#-0x1c)
+b32f9040:   	r21 = add(r21,#0xc) }
+b32f9044: { 	immext(#0xb30b2d80)
+b32f9048:   	r22 = ##-0x4cf4d278 }
+b32f904c: { 	call 0xb3131f8c
+b32f9050:   	r1 = r19
+b32f9054:   	r2 = #0x0
+b32f9058:   	r0 = memw(r25+#0xc) }
+b32f905c: { 	call 0xb311d818
+b32f9060:   	r0 = memw(r25+#0x18) }
+b32f9064: { 	call 0xb3136650 }
+b32f9068: { 	call 0xb30b6398
+b32f906c:   	r1 = #0x7f
+b32f9070:   	r2 = #0x0
+b32f9074:   	r0 = memw(r25+#0x4) }
+b32f9078: { 	call 0xb3136624 }
+b32f907c: { 	call 0xb3131f8c
+b32f9080:   	r1 = r19
+b32f9084:   	r2 = #0x1
+b32f9088:   	r0 = memw(r25+#0xc) }
+b32f908c: { 	call 0xb30b64e8
+b32f9090:   	r0 = memw(r25+#0x4) }
+b32f9094: { 	r26 = r0
+b32f9098:   	r0 = memw(r25+#0x4) }
+b32f909c: { 	call 0xb30b53a0
+b32f90a0:   	r1 = r26 }
+b32f90a4: { 	call 0xb311d888
+b32f90a8:   	r0 = memw(r25+#0x18) }
+b32f90ac: { 	p0 = !tstbit(r26,#0x6)
+b32f90b0:   	if (p0.new) jump:t 0xb32f90f8 <.text+0xf90f8>
+b32f90b4:   	if (!p0.new) r2 = memw(r20+#0x0) }
+b32f90b8: { 	call 0xb3136360
+b32f90bc:   	r0 = memw(r2+#0x18) }
+b32f90c0: { 	r2 = memb(r25+#0x27b)
+b32f90c4:   	if (!cmp.eq(r2.new,#0x0)) jump:t 0xb32f90ec <.text+0xf90ec> }
+b32f90c8: { 	call 0xb32fc4f8 <.text+0xfc4f8>
+b32f90cc:   	r0 = r16 }
+b32f90d0: { 	r2 = #0x1
+b32f90d4:   	p0 = cmp.eq(r0,#0x0); if (p0.new) jump:nt 0xb32f90ec <.text+0xf90ec>
+b32f90d8:   	memb(r25+#0x27b) = r2.new }
+b32f90dc: { 	immext(#0xb33b1200)
+b32f90e0:   	r3:2 = combine(##-0x4cc4edc8,#0x0)
+b32f90e4:   	r4 = #0x1; 	r1:0 = combine(r16,#0) }
+b32f90e8: { 	call 0xb312906c }
+b32f90ec: { 	r2 = memw(r20+#0x0) }
+b32f90f0: { 	call 0xb31363a4
+b32f90f4:   	r0 = memw(r2+#0x18) }
+b32f90f8: { 	p0 = tstbit(r26,#0x0)
+b32f90fc:   	if (!p0.new) jump:t 0xb32f9174 <.text+0xf9174> }

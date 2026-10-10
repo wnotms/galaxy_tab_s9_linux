@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id\nfor e in smp2p_negotiate smp2p_notify_in smp2p_ssr_ack smp2p_update_bits; do\n  printf '\\nEVENT=%s\\n' \"$e\"\n  cat \"/sys/kernel/tracing/events/qcom_smp2p/$e/format\"\n  printf 'ENABLE='; cat \"/sys/kernel/tracing/events/qcom_smp2p/$e/enable\"\n  printf 'FILTER='; cat \"/sys/kernel/tracing/events/qcom_smp2p/$e/filter\"\ndone\nprintf 'TRACER='; cat /sys/kernel/tracing/current_tracer\nprintf 'INSTANCES\\n'; ls /sys/kernel/tracing/instances\ncat /proc/sys/kernel/random/boot_id"
+  ],
+  "returncode": 0,
+  "read_only": true
+}

@@ -1,0 +1,106 @@
+
+out/ssc-smp2p-audit/segment-18.elf:	file format elf32-hexagon
+
+Disassembly of section .text:
+
+b3200000 <.text>:
+b3273b50: { 	immext(#0xb337d180)
+b3273b54:   	r2 = ##-0x4cc82e80
+b3273b58:   	r0 = add(r29,#0x14); 	r17 = r0 }
+b3273b5c: { 	call 0xb32d0aa8 <.text+0xd0aa8>
+b3273b60:   	r1 = #0x0
+b3273b64:   	r26 = #0xff }
+b3273b68: { 	p0 = !bitsclr(r0,r26)
+b3273b6c:   	if (p0.new) jump:t 0xb3273cb4 <.text+0x73cb4> }
+b3273b70: { 	r2 = memb(r16+#0xc)
+b3273b74:   	if (cmp.eq(r2.new,#0x0)) jump:nt 0xb3273cd4 <.text+0x73cd4> }
+b3273b78: { 	r25 = #0xff
+b3273b7c:   	immext(#0xb33af9c0)
+b3273b80:   	r18 = ##-0x4cc5061c }
+b3273b84: { 	immext(#0xb337d280)
+b3273b88:   	r19 = ##-0x4cc82d64
+b3273b8c:   	immext(#0xb33e6580)
+b3273b90:   	r20 = ##-0x4cc19a54 }
+b3273b94: { 	immext(#0xb337d2c0)
+b3273b98:   	r21 = ##-0x4cc82d10
+b3273b9c:   	immext(#0xb337d240)
+b3273ba0:   	r22 = ##-0x4cc82db8 }
+b3273ba4: { 	call 0xb311d818
+b3273ba8:   	r0 = r17 }
+b3273bac: { 	call 0xb3136650 }
+b3273bb0: { 	call 0xb32d0af8 <.text+0xd0af8>
+b3273bb4:   	r0 = memw(r29+#0x14) }
+b3273bb8: { 	call 0xb3136624
+b3273bbc:   	r23 = r0 }
+b3273bc0: { 	call 0xb311d888
+b3273bc4:   	r0 = r17 }
+b3273bc8: { 	p0 = bitsclr(r23,r25)
+b3273bcc:   	if (p0.new) jump:nt 0xb3273be8 <.text+0x73be8> }
+b3273bd0: { 	r2 = and(r23,#0xff)
+b3273bd4:   	r0 = #0x0
+b3273bd8:   	r1 = memw(r16+#0x4)
+b3273bdc:   	memw(r29+#0x0) = r2.new }
+b3273be0: { 	r3:2 = combine(r22,#0x1)
+b3273be4:   	jump 0xb3273ca0 <.text+0x73ca0> }
+b3273be8: { 	call 0xb32d0ab0 <.text+0xd0ab0>
+b3273bec:   	r1 = add(r29,#0x10); 	r0 = memw(r29+#0x14) }
+b3273bf0: { 	p0 = !bitsclr(r0,r25)
+b3273bf4:   	if (p0.new) jump:t 0xb3273c8c <.text+0x73c8c>
+b3273bf8:   	if (!p0.new) r2 = memw(r16+#0x4) }
+b3273bfc: { 	r2 = memw(r2+#0x58) }
+b3273c00: { 	call 0xb3136360
+b3273c04:   	r0 = memw(r2+#0x18) }
+b3273c08: { 	immext(#0xb30b2d80)
+b3273c0c:   	r2 = memb(##0xb30b2d88)
+b3273c10:   	if (cmp.eq(r2.new,#0x0)) jump:nt 0xb3273c24 <.text+0x73c24> }
+b3273c14: { 	call 0xb30b4af0
+b3273c18:   	r1:0 = combine(#0x1,r20)
+b3273c1c:   	r2 = memw(r29+#0x10)
+b3273c20:   	memw(r29+#0x0) = r2.new }
+b3273c24: { 	r0 = #0x0
+b3273c28:   	r4 = #0x1
+b3273c2c:   	r1 = memw(r16+#0x4); 	r2 = memw(r29+#0x10) }
+b3273c30: { 	call 0xb312906c
+b3273c34:   	r3:2 = combine(r18,#0); 	memw(r29+#0x0) = r2 }
+b3273c38: { 	r2 = memw(r29+#0x10) }
+b3273c3c: { 	r2 = extractu(r2,#0x1,#0xc)
+b3273c40:   	memb(r24+#0x18) = r2.new }
+b3273c44: { 	p0 = cmp.eq(r2,r26)
+b3273c48:   	if (!p0.new) r2 = add(r29,#0xf)
+b3273c4c:   	if (p0.new) jump:t 0xb3273c64 <.text+0x73c64> }
+b3273c50: { 	r1 = #0x0
+b3273c54:   	r3 = memw(r16+#0x8); 	r0 = memw(r16+#0x4) }
+b3273c58: { 	callr r3 }
+b3273c5c: { 	jump 0xb3273c78 <.text+0x73c78>
+b3273c60:   	r26 = memub(r24+#0x18) }
+b3273c64: { 	r3:2 = combine(r19,#0x1)
+b3273c68:   	r4 = #0x1
+b3273c6c:   	r0 = #0x0; 	r1 = memw(r16+#0x4) }
+b3273c70: { 	call 0xb312906c
+b3273c74:   	memw(r29+#0x0) = r26 }
+b3273c78: { 	r2 = memw(r16+#0x4) }
+b3273c7c: { 	r2 = memw(r2+#0x58) }
+b3273c80: { 	call 0xb31363a4
+b3273c84:   	r0 = memw(r2+#0x18) }
+b3273c88: { 	jump 0xb3273ca8 <.text+0x73ca8> }
+b3273c8c: { 	r2 = and(r0,#0xff)
+b3273c90:   	r0 = #0x0
+b3273c94:   	r1 = memw(r16+#0x4)
+b3273c98:   	memw(r29+#0x0) = r2.new }
+b3273c9c: { 	r3:2 = combine(r21,#0x1) }
+b3273ca0: { 	call 0xb312906c
+b3273ca4:   	r4 = #0x1 }
+b3273ca8: { 	r2 = memb(r16+#0xc)
+b3273cac:   	if (!cmp.eq(r2.new,#0x0)) jump:t 0xb3273ba4 <.text+0x73ba4> }
+b3273cb0: { 	jump 0xb3273cd4 <.text+0x73cd4> }
+b3273cb4: { 	r2 = and(r0,#0xff)
+b3273cb8:   	r0 = #0x0
+b3273cbc:   	r1 = memw(r16+#0x4)
+b3273cc0:   	memw(r29+#0x0) = r2.new }
+b3273cc4: { 	call 0xb312906c
+b3273cc8:   	immext(#0xb337d1c0)
+b3273ccc:   	r3:2 = combine(##-0x4cc82e04,#0x1)
+b3273cd0:   	r4 = #0x1 }
+b3273cd4: { 	call 0xb3136650 }
+b3273cd8: { 	jump 0xb30bc8d8 }
+b3273cdc: { 	p0 = cmp.eq(r2,#0x2)
