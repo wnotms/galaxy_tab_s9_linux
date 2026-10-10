@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/tmp/gts9-test385-desktop-install/desktop.py", line 170, in <module>
+    result = install(args.root, args.incoming, json.loads(args.manifest.read_text())) if args.mode == 'install' else restore(args.root)
+             ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/gts9-test385-desktop-install/desktop.py", line 55, in install
+    raise ValueError('overlay file set')
+ValueError: overlay file set

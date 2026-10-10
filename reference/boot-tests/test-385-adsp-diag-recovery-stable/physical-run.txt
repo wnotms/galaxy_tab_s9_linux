@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import importlib.util,json; from pathlib import Path; r=Path('/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-385-adsp-diag-recovery-stable'); s=importlib.util.spec_from_file_location('physical385',r/'host_flow.py'); h=importlib.util.module_from_spec(s); s.loader.exec_module(h); accepted=h.C.install(); print(json.dumps(dict(verdict=accepted['verdict'],boot_id=accepted['boot_id'])),flush=True); print(json.dumps(h.probe()),flush=True)
+                                                                                                                                                                                                                                                                                                                    ~~~~~~~~~~~^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-385-adsp-diag-recovery-stable/core.py", line 408, in install
+    desktop_overlay(rec, 'install')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-385-adsp-diag-recovery-stable/core.py", line 450, in desktop_overlay
+    rec.adb('desktop-overlay-'+mode, 'chroot '+root+' /usr/bin/python3 '+scratch+'/desktop.py '+args, timeout=20)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/production_reboot_stability.py", line 160, in adb
+    return self.command(name, [ADB, "-s", SERIAL, "shell", script], timeout, required)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/production_reboot_stability.py", line 156, in command
+    raise CaptureError(f"{name}: status={status}; {stderr[-300:]!r}")
+production_reboot_stability.CaptureError: desktop-overlay-install: status=1; b'read_text())) if args.mode == \'install\' else restore(args.root)\r\n             ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File "/tmp/gts9-test385-desktop-install/desktop.py", line 55, in install\r\n    raise ValueError(\'overlay file set\')\r\nValueError: overlay file set\r\n'

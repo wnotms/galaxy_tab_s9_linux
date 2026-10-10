@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST385_HOST_OVERLAY_SCOPE_STOP_RESTORED370.
+Registratione86ffa40/86affectedPASS. TWRPthree samples8.49s/root/samebootPASS,
+no ADBclosure.328assets copied, minimalmanifest5 rejected by inheritedinstaller
+ALLOWED8 RPCpaths. Hostscopebug/mockcoveragegap, nooverlay/vendor writes,
+candidateboot/moduleload/DIAG/RPC. OriginalSTOP/scripts kept. Cleanup328assets/
+181modules/fivepartitions exact; attributed37088dce57b/GNOME/palm/rootADB/usb0,
+noCPU/panic, ADSPoffline/no385runtime.17Windowsduplicates verifieddeleted.
+Next386 correctfivepaths and realtemp-root install/restore/fault tests before
+new registration; no unchangedretry. Sensor/rotation/goalunfinished,PPS/pumpOFF.
+
 2026-10-10 TEST385_RECOVERY_STABLE_DIAG_REGISTERED_NOT_DEPLOYED.
 After384 firstclosed beforeinstall/restored37056bddde7, new actual correction:
 three exactTWRP/recovery/root/sameboot samples over8s beforeinstallation and

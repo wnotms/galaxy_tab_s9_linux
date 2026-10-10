@@ -1,0 +1,55 @@
+{
+  "DIAG_opens": 0,
+  "GNOME": true,
+  "PPS": false,
+  "SSC_tested": false,
+  "assets_copied": 328,
+  "assets_restored": true,
+  "attempts": 1,
+  "baseline_boot_id": "88dce57ba01047c3bc3b44be289242a1",
+  "baseline_restored": true,
+  "boot_attributed": true,
+  "candidate_boots": 0,
+  "candidate_partition_writes": 0,
+  "config_sha256": "599ca47ab41a29469c3d5830e475049fca9f33bd2ab0923ad014e5ba3fa6ec6c",
+  "device_NCM": true,
+  "diagnostic_module_loaded": false,
+  "failure_category": "host installer allowlist retained8 old RPC paths but minimalmanifest5",
+  "first_error": "desktop-overlay-install: status=1; b'read_text())) if args.mode == \\'install\\' else restore(args.root)\\r\\n             ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\r\\n  File \"/tmp/gts9-test385-desktop-install/desktop.py\", line 55, in install\\r\\n    raise ValueError(\\'overlay file set\\')\\r\\nValueError: overlay file set\\r\\n'",
+  "kernel_fault_counts": {},
+  "module_files": 181,
+  "notes_sha256": "5c0e82337affafefff586613d4a84c4f1388c9716ce251fe69d3c70aad18a518",
+  "overlay_files_installed": 0,
+  "palm": true,
+  "physical_rotation_tested": false,
+  "pump_ON": false,
+  "recovery_admission": {
+    "failed_command_retried": false,
+    "mutation": false,
+    "samples": [
+      {
+        "boot_id": "76a79788-daf5-45ec-8133-7be9d94106d7",
+        "host_elapsed": 0.16859890299974722,
+        "uptime": 8.47
+      },
+      {
+        "boot_id": "76a79788-daf5-45ec-8133-7be9d94106d7",
+        "host_elapsed": 4.319103169999835,
+        "uptime": 12.62
+      },
+      {
+        "boot_id": "76a79788-daf5-45ec-8133-7be9d94106d7",
+        "host_elapsed": 8.489444468999864,
+        "uptime": 16.79
+      }
+    ],
+    "seconds": 8.489448606999758,
+    "verdict": "TWRP_ROOT_SAME_BOOT_THREE_SNAPSHOTS_PASS"
+  },
+  "registration_commit": "e86ffa40",
+  "results_only_tests_executed": false,
+  "root_ADB": true,
+  "test": "Test385",
+  "unchanged_retry": false,
+  "verdict": "STOP_HOST_OVERLAY_FILESET_BEFORE_CANDIDATE_INSTALL_RESTORED370"
+}
