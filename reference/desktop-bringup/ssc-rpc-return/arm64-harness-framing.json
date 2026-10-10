@@ -1,0 +1,110 @@
+{
+  "model_only": true,
+  "hardware_tested": false,
+  "evidence": {
+    "boot_id": "11111111111141118111111111111111",
+    "complete": true,
+    "faults": [],
+    "streams": [
+      {
+        "unit": "hexagonrpcd-adsp-sensorspd.service",
+        "pid": "1",
+        "calls": [
+          {
+            "sequence": 0,
+            "tx_row": 0,
+            "status": 4294967295,
+            "transport_return": 0,
+            "request": {
+              "handle": 1,
+              "scalars": 67240448,
+              "rctx": 10,
+              "buffer_lengths": [
+                4,
+                0
+              ],
+              "buffers_hex": [
+                "07000000",
+                ""
+              ]
+            },
+            "response_to": null,
+            "returned_buffer_lengths": [],
+            "returned_buffer_sha256": [],
+            "returned_buffers_hex": [],
+            "next_request_metadata": {
+              "rctx": 10,
+              "handle": 1,
+              "scalars": 67240448
+            }
+          },
+          {
+            "sequence": 1,
+            "tx_row": 3,
+            "status": 0,
+            "transport_return": 0,
+            "request": {
+              "handle": 1,
+              "scalars": 67240448,
+              "rctx": 11,
+              "buffer_lengths": [
+                4,
+                0
+              ],
+              "buffers_hex": [
+                "07000000",
+                ""
+              ]
+            },
+            "response_to": {
+              "handle": 1,
+              "scalars": 67240448,
+              "rctx": 10,
+              "buffers_hex": [
+                "07000000",
+                ""
+              ]
+            },
+            "returned_buffer_lengths": [
+              8,
+              4
+            ],
+            "returned_buffer_sha256": [
+              "8ad041705ad57138eb90bb9b7dab49557cd5bd9fcb3bb4086dcf3db05fd87cb6",
+              "88d4266fd4e6338d13b845fcf289579d209c897823b9217da3e161936f031589"
+            ],
+            "returned_buffers_hex": [
+              "0400000001000000",
+              "61626364"
+            ],
+            "next_request_metadata": {
+              "rctx": 11,
+              "handle": 1,
+              "scalars": 67240448
+            }
+          }
+        ],
+        "pending_final_call": null
+      },
+      {
+        "unit": "hexagonrpcd-adsp-rootpd.service",
+        "pid": "2",
+        "calls": [],
+        "pending_final_call": {
+          "sequence": 0,
+          "tx_row": 6,
+          "status": 4294967295,
+          "transport_return": null,
+          "request": null,
+          "response_to": null,
+          "returned_buffer_lengths": [],
+          "returned_buffer_sha256": [],
+          "returned_buffers_hex": []
+        }
+      }
+    ],
+    "DSP_content_parsing_proved": false,
+    "SSC_publication_proved": false,
+    "accelerometer_sample_proved": false
+  }
+}

@@ -1,0 +1,63 @@
+--- a/hexagonrpcd/listener.c
++++ b/hexagonrpcd/listener.c
+@@ -30,6 +30,7 @@
+ #include "interfaces/adsp_listener.def"
+ #include "iobuffer.h"
+ #include "listener.h"
++#include "rpc-return-trace.h"
+ 
+ static int adsp_listener_init2(int fd)
+ {
+@@ -153,7 +154,8 @@
+ 				  uint32_t *handle,
+ 				  uint32_t *sc,
+ 				  const struct fastrpc_io_buffer *returned,
+-				  struct fastrpc_io_buffer **decoded)
++				  struct fastrpc_io_buffer **decoded,
++                                  uint64_t sequence, uint32_t previous_handle)
+ {
+ 	struct fastrpc_decoder_context *ctx;
+ 	char inbufs[256];
+@@ -180,11 +182,15 @@
+ 		outbufs_encode(REMOTE_SCALARS_OUTBUFS(*sc), returned, outbufs);
+ 	}
+ 
++	rpc_trace("tx", sequence, *rctx, previous_handle, *sc,
++		  result, outbufs_len, outbufs);
+ 	ret = adsp_listener_next2(fd,
+ 				  *rctx, result,
+ 				  outbufs_len, outbufs,
+ 				  rctx, handle, sc,
+ 				  &inbufs_len, 256, inbufs);
++	rpc_trace("next", sequence, *rctx, ret ? 0 : *handle,
++		  *sc, ret, 0, NULL);
+ 	if (ret) {
+ 		if (ret == -1)
+ 			perror("Could not fetch next FastRPC message");
+@@ -230,6 +236,7 @@
+ 		buf = large_inbufs;
+ 	}
+ 
++	rpc_trace("rx", sequence, *rctx, *handle, *sc, 0, inbufs_len, buf);
+ 	ctx = inbuf_decode_start(*sc);
+ 	if (!ctx) {
+ 		perror("Could not start decoding");
+@@ -353,7 +360,8 @@
+ 	struct fastrpc_io_buffer *decoded = NULL,
+ 				 *returned = NULL;
+ 	uint32_t result = 0xffffffff;
+-	uint32_t handle;
++	uint32_t handle = 0;
++	uint64_t sequence = 0;
+ 	uint32_t rctx = 0;
+ 	uint32_t sc = REMOTE_SCALARS_MAKE(0, 0, 0);
+ 	uint32_t n_outbufs = 0;
+@@ -368,7 +376,7 @@
+ 	while (!ret) {
+ 		ret = return_for_next_invoke(fd,
+ 					     result, &rctx, &handle, &sc,
+-					     returned, &decoded);
++					     returned, &decoded, sequence++, handle);
+ 		if (ret)
+ 			break;
+ 

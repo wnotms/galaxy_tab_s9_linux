@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 SSC_RPC_RETURN_OBSERVER_COMPILED_NOT_DEPLOYED.
+After387noSSC, isolatedlistener/header observer logs actualTX/next2/RX; default
+OFF/explicitopt-in,8192B/frame512KiB/process/explicitlimit. No callback/encoding/
+file/registry/ioctl policychange; exactwire+stat/library preserved.70affectedPASS
+0skip,2upstream+6realListener ARM64QEMUPASS,56sourcehashes,daemon9e988475.
+Strictframe/sequence/attribution/content parser distinguishes pending finalreply
+and DSPparsingunknown. No kernelbuild/fulltests/Actions/devicechange.
+Next independentlyregister388 once, restore370GNOME; goalunfinished,PPS/pumpOFF.
+See reference/desktop-bringup/ssc-rpc-return/RESULTS.md.
+
+
 2026-10-10 TEST387_CORRECTED_WIRE_SSC_ABSENT_RESTORED370.
 Singlecandidate0cc9ae94 afterpushed57126d10; priorreadonly2STOP preserved.
 Orderedroot/sensorPDactive,6domains/sensor74,35statPASS,210reads45226B; noSSC400

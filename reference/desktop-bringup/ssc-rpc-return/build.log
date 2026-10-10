@@ -1,0 +1,105 @@
+The Meson build system
+Version: 1.7.0
+Source dir: /output/work/hexagonrpc
+Build dir: /output/build
+Build type: cross build
+Project name: fastrpc
+Project version: 0.4.0
+C compiler for the host machine: aarch64-linux-gnu-gcc (gcc 14.2.0 "aarch64-linux-gnu-gcc (Debian 14.2.0-19) 14.2.0")
+C linker for the host machine: aarch64-linux-gnu-gcc ld.bfd 2.44
+C compiler for the build machine: cc (gcc 14.2.0 "cc (Debian 14.2.0-19) 14.2.0")
+C linker for the build machine: cc ld.bfd 2.44
+Build machine cpu family: x86_64
+Build machine cpu: x86_64
+Host machine cpu family: aarch64
+Host machine cpu: aarch64
+Target machine cpu family: aarch64
+Target machine cpu: aarch64
+Configuring hexagonrpcd-adsp-rootpd.service using configuration
+Configuring hexagonrpcd-adsp-sensorspd.service using configuration
+Configuring hexagonrpcd-sdsp.service using configuration
+Found pkg-config: YES (/usr/bin/pkgconf) 1.8.1
+Found CMake: NO
+Run-time dependency json-c found: NO (tried pkgconfig and cmake)
+Program valgrind found: NO
+Build targets in project: 6
+
+fastrpc 0.4.0
+
+  User defined options
+    Cross files        : /recipe/cross-arm64.ini
+    buildtype          : release
+    hexagonrpcd_verbose: true
+    libdir             : lib/aarch64-linux-gnu
+    libexecdir         : libexec
+    prefix             : /usr
+
+Found ninja-1.12.1 at /usr/bin/ninja
+ninja: Entering directory `/output/build'
+[1/30] Compiling C object libhexagonrpc/libhexagonrpc.so.0.4.p/interfaces.c.o
+[2/30] Compiling C object libhexagonrpc/libhexagonrpc.so.0.4.p/session.c.o
+[3/30] Compiling C object libhexagonrpc/libhexagonrpc.so.0.4.p/context.c.o
+[4/30] Compiling C object hexagonrpcd/hexagonrpcd.p/aee_error.c.o
+[5/30] Compiling C object hexagonrpcd/hexagonrpcd.p/interfaces.c.o
+[6/30] Compiling C object hexagonrpcd/hexagonrpcd.p/apps_mem.c.o
+../work/hexagonrpc/hexagonrpcd/apps_mem.c: In function ‘apps_mem_request_map64’:
+../work/hexagonrpc/hexagonrpcd/apps_mem.c:83:16: warning: format ‘%lx’ expects argument of type ‘long unsigned int’, but argument 7 has type ‘__u64’ {aka ‘long long unsigned int’} [-Wformat=]
+   83 |         printf("mmap(%d, %x, %x, %lu, %lu) -> %" PRIx64 "\n",
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+......
+   89 |                mmap.vaddrout);
+      |                ~~~~~~~~~~~~~
+      |                    |
+      |                    __u64 {aka long long unsigned int}
+In file included from ../work/hexagonrpc/hexagonrpcd/apps_mem.c:22:
+/usr/include/inttypes.h:121:41: note: format string is defined here
+  121 | # define PRIx64         __PRI64_PREFIX "x"
+[7/30] Compiling C object libhexagonrpc/libhexagonrpc.so.0.4.p/fastrpc.c.o
+[8/30] Linking target libhexagonrpc/libhexagonrpc.so.0.4
+[9/30] Compiling C object hexagonrpcd/hexagonrpcd.p/apps_std.c.o
+[10/30] Compiling C object hexagonrpcd/hexagonrpcd.p/hexagonfs.c.o
+[11/30] Compiling C object hexagonrpcd/hexagonrpcd.p/hexagonfs_plat_subtype_name.c.o
+[12/30] Generating symbol file libhexagonrpc/libhexagonrpc.so.0.4.p/libhexagonrpc.so.0.4.symbols
+[13/30] Compiling C object hexagonrpcd/hexagonrpcd.p/hexagonfs_mapped.c.o
+[14/30] Compiling C object hexagonrpcd/hexagonrpcd.p/hexagonfs_virt_dir.c.o
+[15/30] Compiling C object hexagonrpcd/hexagonrpcd.p/localctl.c.o
+[16/30] Compiling C object hexagonrpcd/hexagonrpcd.p/iobuffer.c.o
+[17/30] Compiling C object chrecd/chrecd.p/interfaces.c.o
+[18/30] Compiling C object hexagonrpcd/hexagonrpcd.p/listener.c.o
+[19/30] Compiling C object hexagonrpcd/hexagonrpcd.p/rpcd_builder.c.o
+[20/30] Compiling C object chrecd/chrecd.p/main.c.o
+[21/30] Compiling C object hexagonrpcd/hexagonrpcd.p/rpcd.c.o
+[22/30] Compiling C object tests/test_iobuffer.p/test_iobuffer.c.o
+[23/30] Compiling C object tests/test_hexagonfs.p/test_hexagonfs.c.o
+[24/30] Compiling C object tests/test_iobuffer.p/.._hexagonrpcd_iobuffer.c.o
+[25/30] Linking target hexagonrpcd/hexagonrpcd
+[26/30] Linking target chrecd/chrecd
+[27/30] Linking target tests/test_iobuffer
+[28/30] Compiling C object tests/test_hexagonfs.p/.._hexagonrpcd_hexagonfs.c.o
+[29/30] Compiling C object tests/test_hexagonfs.p/.._hexagonrpcd_hexagonfs_mapped.c.o
+[30/30] Linking target tests/test_hexagonfs
+INFO: autodetecting backend as ninja
+INFO: calculating backend command to run: /usr/bin/ninja -C /output/build -j 4
+ninja: Entering directory `/output/build'
+[1/1] Generating tests/sample_file with a custom command
+1/2 iobuffer  OK              0.03s
+2/2 hexagonfs OK              0.03s
+
+Ok:                 2   
+Expected Fail:      0   
+Fail:               0   
+Unexpected Pass:    0   
+Skipped:            0   
+Timeout:            0   
+
+Full log written to /output/build/meson-logs/testlog.txt
+ninja: Entering directory `/output/build'
+ninja: no work to do.
+Installing libhexagonrpc/libhexagonrpc.so.0.4 to /output/stage/usr/lib/aarch64-linux-gnu
+Installing hexagonrpcd/hexagonrpcd to /output/stage/usr/bin
+Installing chrecd/chrecd to /output/stage/usr/libexec/hexagonrpc
+Installing /output/work/hexagonrpc/hexagonrpcd/hexagonrpcd.1 to /output/stage/usr/share/man/man1
+Installing /output/build/data/hexagonrpcd-adsp-rootpd.service to /output/stage/usr/lib/aarch64-linux-gnu/systemd/system
+Installing /output/build/data/hexagonrpcd-adsp-sensorspd.service to /output/stage/usr/lib/aarch64-linux-gnu/systemd/system
+Installing /output/build/data/hexagonrpcd-sdsp.service to /output/stage/usr/lib/aarch64-linux-gnu/systemd/system
+Installing symlink pointing to libhexagonrpc.so.0.4 to /output/stage/usr/lib/aarch64-linux-gnu/libhexagonrpc.so
