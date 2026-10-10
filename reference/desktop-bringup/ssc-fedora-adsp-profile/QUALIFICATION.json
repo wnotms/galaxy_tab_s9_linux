@@ -1,0 +1,32 @@
+{
+  "verdict": "OFFLINE_FEDORA_ADSP_PROFILE_QUALIFIED_NOT_DEPLOYMENT_READY",
+  "source_inputs": {
+    "userspace/sensors/fedora_adsp_profile.py": "9ea6657a98e3157a51667fdbdac11e9731b28eb46c2f1046776c41577795d0a9",
+    "userspace/sensors/verify-stock-assets.py": "8723cade1e3fb10ea6b5df0067e9b0f86cf71c595caad7613b8a902b593ee508",
+    "tests/test_fedora_adsp_profile.py": "2eac8d0891b0dcd1fc7e0c86706ad32901e9794f20a3a20860cfd1132401dd92",
+    "tests/test_ssc_stock_assets.py": "dc69698fca7da5e46f58c8ef3f41d977f3448fb47b491200e69dedf417734939",
+    "out/ssc-assets/STAGED.json": "b0aec949d209ac6a6460e67c5fd1c66946b24433a999041b4ca38d545dfdf51e",
+    "out/ssc-fedora-compare/ASSET.json": "14c264f6001eb6800dde9cc09a194d64defb9838d36472a4108cf347c43dffdb"
+  },
+  "artifacts": {
+    "out/ssc-fedora-adsp-profile/sensor-assets.tar.gz": "d647dcdf5ecc010080dbd057cec2c9cc66368d9e241cc3883a532e3f648177b3"
+  },
+  "source_archive_bytes_verified": true,
+  "reopened_output_verified": true,
+  "stock_calibration_unchanged": true,
+  "kernel_config_DT_modules_unchanged": true,
+  "PAS_authentication_tested": false,
+  "physical_test_executed": false,
+  "SSC_restored": false,
+  "actual_sensor_sample": false,
+  "automatic_rotation_accepted": false,
+  "new_kernel_build": false,
+  "full_regression_executed": false,
+  "Actions_started": false,
+  "syntax_checked": [
+    "userspace/sensors/fedora_adsp_profile.py",
+    "tests/test_fedora_adsp_profile.py"
+  ],
+  "recovery_firmware_transaction_implemented": false,
+  "next_scope": "one separately registered full52-file Fedora firmware comparison, matched early ramdisk plus exact current firmware transaction/rollback; no partial mix or safety gate waiver"
+}

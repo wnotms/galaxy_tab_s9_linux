@@ -98,6 +98,23 @@
 
 ## Current state (2026-10-03)
 
+2026-10-11 FEDORA_X710_COMPLETE_ADSP_PROFILE_OFFLINE_QUALIFIED_NOT_DEPLOYED.
+FreshFedoraoriginHEAD unchangedab123e7; publishedX710 v2 firmware24,607,076bytes
+30cace40556f matchesGitHubassetdigest. Same52ADSP/DTB filenames,19actualdifferent
+includingb18/MDTs. Newhost-only fedora_adsp_profile.py selectsall52 fromonepinned
+release, preserves276other currentmembers/calibration/cache/config/DSP-libs/PDmaps
+byte-mode-mtimeexact; doesnotcopyotherFedorahardwareblobs. ExistingMDTstructure/
+split/carveout checksPASS; output328root-owned/reopened, d647dcdf5ecc deterministic.
+33affectedPASS0skip (16new+17stock-MDT), syntaxPASS; twoinitialwrongnewgate
+assumptions(sourceUID1000/DTBmachine1) recorded/corrected narrowly, no device/output
+beforefailures/no safetywaiver. PAS/SSC/sample/rotationUNTESTED; NOTest400registration/
+flash/reboot/devicecommand/kernelbuild/fullrun/routing/Actions yet. Normal370 from
+399lastaccepted; PPS/pump/DCCOFF/4.44float unchanged. Next qualifyrecovery-only
+exactoriginal firmware transaction/restore andmatchedearlyramdisk, separately
+registerone30s completeFedora-pair comparison; existingassets guardmustnotbypass.
+390–399window/current399candidate+370rollback retained. Migrationunfinished.
+See reference/desktop-bringup/ssc-fedora-adsp-profile/RESULTS.md.
+
 2026-10-11 SSC_QMI_PUBLICATION_TRIGGER_SOURCE_BOUNDARY_RECORDED.
 Four bounded originalflag/originalhash segment18 spans: namedresampler/sim
 lookup predicates reachbit6setter ifcontextflagclear; earlierthreadbit6 calls

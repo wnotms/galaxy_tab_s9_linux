@@ -1,0 +1,17 @@
+{
+  "device_operations": false,
+  "output_created_before_failures": false,
+  "failures": [
+    {
+      "error": "nonregular/ownership/mode/size archive member",
+      "cause": "new source reader incorrectly expected root UID/GID; exact release contains UID/GID1000 regular0644 files",
+      "correction": "accept only exact1000/1000 for the pinned release byte source; generated output remains0/0; wrong ownership rejection tested"
+    },
+    {
+      "error": "not Hexagon MDT",
+      "cause": "new machine gate incorrectly expected executable machine164 for opaque ADSP-DTB envelope",
+      "correction": "exact current and Fedora headers both use164 for ADSP,1 for ADSP-DTB; narrow per-image gate and test added"
+    }
+  ],
+  "archive_or_safety_gates_waived": false
+}

@@ -1,0 +1,38 @@
+test_changed_carveout_rejected (test_fedora_adsp_profile.FedoraAdspProfileTests.test_changed_carveout_rejected) ... ok
+test_dtb_envelope_machine_one_is_accepted (test_fedora_adsp_profile.FedoraAdspProfileTests.test_dtb_envelope_machine_one_is_accepted) ... ok
+test_duplicate_member_rejected (test_fedora_adsp_profile.FedoraAdspProfileTests.test_duplicate_member_rejected) ... ok
+test_existing_output_is_never_replaced (test_fedora_adsp_profile.FedoraAdspProfileTests.test_existing_output_is_never_replaced) ... ok
+test_extra_firmware_segment_rejected (test_fedora_adsp_profile.FedoraAdspProfileTests.test_extra_firmware_segment_rejected) ... ok
+test_missing_unchanged_segment_rejected (test_fedora_adsp_profile.FedoraAdspProfileTests.test_missing_unchanged_segment_rejected) ... ok
+test_real_complete_pair_preserves_all_other_assets (test_fedora_adsp_profile.FedoraAdspProfileTests.test_real_complete_pair_preserves_all_other_assets) ... ok
+test_real_output_is_root_owned_and_not_deployable (test_fedora_adsp_profile.FedoraAdspProfileTests.test_real_output_is_root_owned_and_not_deployable) ... ok
+test_rebuilding_archive_is_deterministic (test_fedora_adsp_profile.FedoraAdspProfileTests.test_rebuilding_archive_is_deterministic) ... ok
+test_source_identity_rejected_before_parsing (test_fedora_adsp_profile.FedoraAdspProfileTests.test_source_identity_rejected_before_parsing) ... ok
+test_symlink_rejected (test_fedora_adsp_profile.FedoraAdspProfileTests.test_symlink_rejected) ... ok
+test_unexpected_ownership_rejected (test_fedora_adsp_profile.FedoraAdspProfileTests.test_unexpected_ownership_rejected) ... ok
+test_unrelated_fedora_blobs_are_not_copied (test_fedora_adsp_profile.FedoraAdspProfileTests.test_unrelated_fedora_blobs_are_not_copied) ... ok
+test_unsafe_path_rejected (test_fedora_adsp_profile.FedoraAdspProfileTests.test_unsafe_path_rejected) ... ok
+test_wrong_machine_rejected (test_fedora_adsp_profile.FedoraAdspProfileTests.test_wrong_machine_rejected) ... ok
+test_wrong_split_length_rejected (test_fedora_adsp_profile.FedoraAdspProfileTests.test_wrong_split_length_rejected) ... ok
+test_archive_hash_mismatch (test_ssc_stock_assets.StockAssetTests.test_archive_hash_mismatch) ... ok
+test_cache_path_escape (test_ssc_stock_assets.StockAssetTests.test_cache_path_escape) ... ok
+test_complete_archive_reports_not_deployment_ready (test_ssc_stock_assets.StockAssetTests.test_complete_archive_reports_not_deployment_ready) ... ok
+test_embedded_does_not_require_split_file (test_ssc_stock_assets.StockAssetTests.test_embedded_does_not_require_split_file) ... ok
+test_external_hash_required_and_size_checked (test_ssc_stock_assets.StockAssetTests.test_external_hash_required_and_size_checked) ... ok
+test_incomplete_cleanup_rejected (test_ssc_stock_assets.StockAssetTests.test_incomplete_cleanup_rejected) ... ok
+test_load_exceeds_memory (test_ssc_stock_assets.StockAssetTests.test_load_exceeds_memory) ... ok
+test_marker_missing (test_ssc_stock_assets.StockAssetTests.test_marker_missing) ... ok
+test_missing_hash (test_ssc_stock_assets.StockAssetTests.test_missing_hash) ... ok
+test_missing_manifest_member (test_ssc_stock_assets.StockAssetTests.test_missing_manifest_member) ... ok
+test_missing_segment (test_ssc_stock_assets.StockAssetTests.test_missing_segment) ... ok
+test_payload_hash_mismatch (test_ssc_stock_assets.StockAssetTests.test_payload_hash_mismatch) ... ok
+test_registry_double_directory_maps_once (test_ssc_stock_assets.StockAssetTests.test_registry_double_directory_maps_once) ... ok
+test_split_complete_with_bss_and_number_gap (test_ssc_stock_assets.StockAssetTests.test_split_complete_with_bss_and_number_gap) ... ok
+test_truncated_program_table (test_ssc_stock_assets.StockAssetTests.test_truncated_program_table) ... ok
+test_truncated_segment (test_ssc_stock_assets.StockAssetTests.test_truncated_segment) ... ok
+test_unsafe_archive_members_rejected (test_ssc_stock_assets.StockAssetTests.test_unsafe_archive_members_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 33 tests in 4.431s
+
+OK
