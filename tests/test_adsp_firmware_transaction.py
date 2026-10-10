@@ -316,5 +316,76 @@ class AdspFirmwareTransactionTests(unittest.TestCase):
         self.assertFalse((self.root/assets.PREFIX).exists())
 
 
+class AbsentOriginalTransactionTests(unittest.TestCase):
+    # Reuse fixture construction/permission seams without rerunning old cases.
+    setUpClass = classmethod(AdspFirmwareTransactionTests.setUpClass.__func__)
+    setUp = AdspFirmwareTransactionTests.setUp
+    snapshots = AdspFirmwareTransactionTests.snapshots
+    install = AdspFirmwareTransactionTests.install
+    restore = AdspFirmwareTransactionTests.restore
+    def absent(self):
+        for name in self.original:
+            (self.root/name).unlink()
+        (self.root/TX.FW.rstrip('/')).rmdir()
+
+    def install_absent(self):
+        return TX.install(self.root, BASE, CANDIDATE, self.proc, 'absent')
+
+    def restore_absent(self):
+        return TX.restore(self.root, BASE, CANDIDATE, self.proc, 'absent')
+
+    def test_absent_pair_created_then_removed_with_terminal_ledger(self):
+        self.absent()
+        d=self.install_absent()
+        self.assertEqual(d['original_presence'],'absent')
+        self.assertEqual(len(list((self.root/TX.STATE).iterdir())),1)
+        for n,row in self.new.items():self.assertEqual((self.root/n).read_bytes(),row['data'])
+        self.restore_absent()
+        self.assertFalse((self.root/TX.FW.rstrip('/')).exists())
+        TX.cleanup(self.root,BASE,CANDIDATE,self.proc,'absent')
+        self.assertFalse((self.root/TX.STATE).exists())
+
+    def test_absent_permission_cannot_overwrite_a_present_original(self):
+        with self.assertRaisesRegex(ValueError,'absent original unexpectedly'):
+            self.install_absent()
+        self.assertEqual(self.snapshots(),self.before)
+
+    def test_present_policy_cannot_assume_missing_original_is_backed_up(self):
+        self.absent()
+        with self.assertRaisesRegex(ValueError,'installed original differs'):self.install()
+        self.assertFalse((self.root/TX.STATE).exists())
+
+    def test_partial_absent_install_restores_only_recognized_created_files(self):
+        self.absent(); real=TX.atomic;count=0
+        def fail(p,*args,**kwargs):
+            nonlocal count
+            if str(p.relative_to(self.root)).startswith(TX.FW):
+                count+=1
+                if count==8:raise OSError('injected absent install failure')
+            return real(p,*args,**kwargs)
+        with patch.object(TX,'atomic',fail),self.assertRaises(OSError):self.install_absent()
+        self.restore_absent()
+        self.assertFalse((self.root/TX.FW.rstrip('/')).exists())
+
+    def test_unknown_absent_candidate_file_stops_before_any_deletion(self):
+        self.absent();self.install_absent()
+        (self.root/sorted(self.new)[-1]).write_bytes(b'unknown')
+        before={n:(self.root/n).read_bytes() for n in self.new}
+        with self.assertRaisesRegex(ValueError,'unknown current'):self.restore_absent()
+        self.assertEqual({n:(self.root/n).read_bytes() for n in self.new},before)
+
+    def test_edited_presence_cannot_turn_present_restore_into_deletion(self):
+        self.install()
+        with self.assertRaisesRegex(ValueError,'unqualified transaction'):
+            self.restore_absent()
+        self.assertEqual(len(list((self.root/TX.FW.rstrip('/')).iterdir())),52)
+
+    def test_unrelated_directory_file_is_not_recursively_removed(self):
+        self.absent();self.install_absent()
+        unknown=self.root/TX.FW/'unrelated';unknown.write_bytes(b'keep')
+        with self.assertRaises(OSError):self.restore_absent()
+        self.assertEqual(unknown.read_bytes(),b'keep')
+
+
 if __name__ == '__main__':
     unittest.main()

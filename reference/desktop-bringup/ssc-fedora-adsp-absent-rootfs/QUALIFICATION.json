@@ -1,0 +1,30 @@
+{
+  "actions_started": false,
+  "candidate_vendor_unchanged_sha256": "21d289fd4e76ebcf2621267a6259c65449c4e9e262e62e43ad80bc61e3330082",
+  "device_mutation": false,
+  "full_tests_executed": false,
+  "host_tests": {
+    "errors": 0,
+    "executed": true,
+    "failures": 0,
+    "modules": [
+      "test_adsp_firmware_transaction.py",
+      "test_fedora_adsp_boot.py",
+      "test_fedora_adsp_profile.py",
+      "test_early_adsp_controlled_boot.py"
+    ],
+    "seconds": 41.6881807499999,
+    "skips": 0,
+    "tests": 94,
+    "verdict": "PASS"
+  },
+  "kernel_build_executed": false,
+  "outstanding": "Test400 fresh explicit-absence preflight, registration and physical recovery proc/oneboot/originalabsencereturn",
+  "preflight_failed_before_mutation": true,
+  "source_sha256": {
+    "tests/test_adsp_firmware_transaction.py": "225d7fa0ab69f82e62e0d52173f888764844401f6e6cd7040a0f0393a49c782c",
+    "userspace/sensors/adsp_firmware_transaction.py": "8fefbba1b4fea3901bea8e6d7eefac92eaef19bd263856b6401ea3c309847c60"
+  },
+  "syntax_executed": true,
+  "verdict": "EXPLICIT_ABSENT_ROOTFS_TRANSACTION_HOST_QUALIFIED"
+}

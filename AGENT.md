@@ -98,6 +98,20 @@
 
 ## Current state (2026-10-03)
 
+2026-10-11 FEDORA_ADSP_ORIGINAL_ROOTFS_ABSENCE_CONFIRMED_TRANSACTION_EXTENDED.
+First400draft readonlypreflight stopped: assumedoriginal52rootfiles allabsent,
+sm8550directoryabsent/sameaccepted1f8302ac. Actual399owned328/328thenremoved
+confirmsacceptedstate; notunexpecteddeletion/kernelchange. No devicemutation.
+Explicitabsent-complete52 mode/schema2 freezesnullbeforestates/ownedleaf,
+installsqualifiedpair andremovesonlyrecognizednewfiles/emptyowneddirectory;
+defaultpresent/fullbackup/exactmetadata mode unchanged/noautomaticdowngrade.
+Cross-modeledger/unknowncontents prohibitdeletion, rmdirnotrecursivecleanup.
+Componenttests/sourcepins in ssc-fedora-adsp-absent-rootfs; firmware/earlyboot
+bytes unchanged, no kernel/fullrun/routing/Actions. Test400registrationintegration
+stilldraft; freshabsencegate admission/pushbeforeone30s physicalcomparison and
+mandatory370/absence/normalGNOMEreturn. Current399/370retained,390–399 untilnew
+registration. PPS/pump/DCCOFF/4.44float unchanged, sensorsunfinished.
+
 2026-10-11 FEDORA_ADSP_RECOVERY_TRANSACTION_MATCHED_BOOT_OFFLINE_QUALIFIED.
 ADB recovered/same399return1f8302ac GNOME/adbd/usb0 healthy,ADSPoffline,
 100%32.7C4.443V; readonlysnapshot only/notnewfullpreflight. Separate rootTWRP

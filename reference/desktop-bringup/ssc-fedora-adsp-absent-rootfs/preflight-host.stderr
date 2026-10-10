@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-400-fedora-adsp-comparison/host_flow.py", line 731, in <module>
+    elif mode=='preflight': result=preflight()
+                                   ~~~~~~~~~^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-400-fedora-adsp-comparison/host_flow.py", line 266, in preflight
+    firmware_identity(rec, 'original-firmware', 'baseline')
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-400-fedora-adsp-comparison/host_flow.py", line 319, in firmware_identity
+    rec.adb(name, 'printf %s '+shlex.quote(lines)+' | sha256sum -c -', timeout=20)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/production_reboot_stability.py", line 160, in adb
+    return self.command(name, [ADB, "-s", SERIAL, "shell", script], timeout, required)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/production_reboot_stability.py", line 156, in command
+    raise CaptureError(f"{name}: status={status}; {stderr[-300:]!r}")
+production_reboot_stability.CaptureError: original-firmware: status=1; b'ha256sum: /usr/lib/firmware/qcom/sm8550/adsp_dtb.b01: No such file or directory\r\nsha256sum: /usr/lib/firmware/qcom/sm8550/adsp_dtb.b02: No such file or directory\r\nsha256sum: /usr/lib/firmware/qcom/sm8550/adsp_dtb.mdt: No such file or directory\r\nsha256sum: WARNING: 52 listed files could not be read\r\n'

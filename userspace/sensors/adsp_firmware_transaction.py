@@ -128,42 +128,62 @@ def archive_files(path, sha):
     return result
 
 
-def install(root, base_path, candidate_path, proc):
+def file_state(path):
+    return snapshot(path) if path.exists() else None
+
+
+def install(root, base_path, candidate_path, proc, original_presence='present'):
     root = root.resolve()
     boot = recovery_guard(root, proc)
     base = archive_files(base_path, BASE_SHA)
     candidate = archive_files(candidate_path, CANDIDATE_SHA)
     if set(base) != set(candidate):
         raise ValueError('firmware set changed')
+    if original_presence not in ('present', 'absent'):
+        raise ValueError('unregistered original presence')
     folder = target(root, STATE)
     if folder.exists():
         raise ValueError('prior transaction exists; inspect/restore, never replay')
     rows = {}
     # Validate the whole installed pair before creating a backup or any write.
     for name in sorted(base):
-        before = snapshot(target(root, name))
-        if any(before[k] != base[name][k] for k in ('sha256', 'bytes', 'mode', 'uid', 'gid')):
+        before = file_state(target(root, name))
+        if original_presence == 'absent' and before is not None:
+            raise ValueError('registered absent original unexpectedly exists')
+        if original_presence == 'present' and (before is None or
+                any(before[k] != base[name][k] for k in ('sha256', 'bytes', 'mode', 'uid', 'gid'))):
             raise ValueError('installed original differs: '+name)
         rows[name] = dict(before=before,
                           after={k: v for k, v in candidate[name].items() if k != 'data'})
+    firmware_dir = target(root, FW.rstrip('/'))
+    created_firmware_dir = not firmware_dir.exists()
+    if not firmware_dir.parent.is_dir():
+        raise ValueError('firmware parent missing; no broad directory creation')
     folder.parent.mkdir(parents=True, exist_ok=True)
     folder.mkdir(mode=0o700)
     sync_dir(folder.parent)
-    state = dict(schema=1, phase='backing-up', machine_id=MACHINE, recovery_boot_id=boot,
+    state = dict(schema=2, phase='backing-up', machine_id=MACHINE, recovery_boot_id=boot,
                  base_archive_sha256=BASE_SHA, candidate_archive_sha256=CANDIDATE_SHA,
-                 files=rows, written=[], pending=None)
+                 files=rows, written=[], pending=None, original_presence=original_presence,
+                 created_firmware_dir=created_firmware_dir)
     save(folder, state)
     for name, row in rows.items():
+        if row['before'] is None:
+            continue
         raw = target(root, name).read_bytes()
         if digest(raw) != row['before']['sha256']:
             raise ValueError('original changed during backup')
         atomic(folder / Path(name).name, raw)
     for name, row in rows.items():
-        if (digest((folder / Path(name).name).read_bytes()) != row['before']['sha256']
-                or snapshot(target(root, name)) != row['before']):
+        if ((row['before'] is not None and
+                digest((folder / Path(name).name).read_bytes()) != row['before']['sha256'])
+                or file_state(target(root, name)) != row['before']):
             raise ValueError('backup/original identity')
     state['phase'] = 'installing'
     save(folder, state)  # Durable full backup and write intent precede replacement.
+    if created_firmware_dir:
+        firmware_dir.mkdir(mode=0o755)
+        sync_dir(firmware_dir.parent)
     for name, row in rows.items():
         state['pending'] = name
         save(folder, state)
@@ -177,11 +197,12 @@ def install(root, base_path, candidate_path, proc):
     state['phase'] = 'installed'
     save(folder, state)
     return dict(verdict='COMPLETE_FEDORA_PAIR_INSTALLED_OFFLINE', firmware_files=52,
-                changed_bytes_files=sum(r['before']['sha256'] != r['after']['sha256'] for r in rows.values()),
+                changed_bytes_files=sum(base[n]['sha256'] != r['after']['sha256'] for n,r in rows.items()),
+                original_presence=original_presence,
                 recovery_boot_id=boot, services_started=False, remoteproc_started=False)
 
 
-def restore(root, base_path, candidate_path, proc):
+def restore(root, base_path, candidate_path, proc, original_presence='present'):
     root = root.resolve()
     boot = recovery_guard(root, proc)
     base = archive_files(base_path, BASE_SHA)
@@ -189,10 +210,14 @@ def restore(root, base_path, candidate_path, proc):
     folder = target(root, STATE)
     ledger = target(root, STATE+'/ledger.json')
     state = json.loads(ledger.read_text())
-    if (state.get('schema') != 1 or state.get('machine_id') != MACHINE
+    if (state.get('schema') != 2 or state.get('machine_id') != MACHINE
             or state.get('base_archive_sha256') != BASE_SHA
             or state.get('candidate_archive_sha256') != CANDIDATE_SHA
             or set(state.get('files', {})) != set(base) or set(base) != set(candidate)
+            or original_presence not in ('present', 'absent')
+            or state.get('original_presence') != original_presence
+            or type(state.get('created_firmware_dir')) is not bool
+            or (original_presence == 'present' and state['created_firmware_dir'])
             or state.get('phase') not in ('backing-up', 'installing', 'installed', 'restoring', 'restored')):
         raise ValueError('unqualified transaction ledger')
     UUID(state['recovery_boot_id'])
@@ -200,20 +225,24 @@ def restore(root, base_path, candidate_path, proc):
     # restoring any file. Unknown content stops instead of overwriting evidence.
     for name, row in state['files'].items():
         before, after = row['before'], row['after']
-        if (set(before) != set(after) or set(before) != set(candidate[name])-{'data'}
-                or any(before[k] != base[name][k] for k in ('sha256', 'bytes', 'mode', 'uid', 'gid'))
-                or after != {k: v for k, v in candidate[name].items() if k != 'data'}
-                or not isinstance(before['mtime_ns'], int) or before['mtime_ns'] < 0):
+        before_valid = (before is None if original_presence == 'absent' else
+                        isinstance(before, dict) and set(before) == set(candidate[name])-{'data'}
+                        and all(before[k] == base[name][k] for k in ('sha256', 'bytes', 'mode', 'uid', 'gid'))
+                        and type(before['mtime_ns']) is int and before['mtime_ns'] >= 0)
+        if (not before_valid or after != {k: v for k, v in candidate[name].items() if k != 'data'}):
             raise ValueError('unqualified firmware ledger row')
-        current = snapshot(target(root, name))
+        current = file_state(target(root, name))
         allowed = (before,) if state['phase'] in ('backing-up', 'restored') else (before, after)
         if current not in allowed:
             raise ValueError('unknown current firmware; retain evidence: '+name)
-        if state['phase'] not in ('backing-up', 'restored'):
+        if before is not None and state['phase'] not in ('backing-up', 'restored'):
             backup = target(root, STATE+'/'+Path(name).name)
             raw = backup.read_bytes()
             if digest(raw) != before['sha256'] or len(raw) != before['bytes']:
                 raise ValueError('backup identity; no restore writes')
+    if (state['phase'] in ('backing-up', 'restored') and state['created_firmware_dir']
+            and target(root, FW.rstrip('/')).exists()):
+        raise ValueError('unexpected firmware directory in unchanged/restored state')
     if state['phase'] == 'restored':
         return dict(verdict='EXACT_ORIGINAL_PAIR_UNCHANGED', firmware_files=52)
     if state['phase'] == 'backing-up':
@@ -225,14 +254,22 @@ def restore(root, base_path, candidate_path, proc):
     state['phase'] = 'restoring'
     save(folder, state)
     for name, row in state['files'].items():
-        if snapshot(target(root, name)) != row['before']:
+        if file_state(target(root, name)) != row['before']:
             state['pending'] = name
             save(folder, state)
-            atomic(target(root, name), (folder / Path(name).name).read_bytes(),
-                   **{k: row['before'][k] for k in ('mode', 'mtime_ns', 'uid', 'gid')})
+            if row['before'] is None:
+                target(root, name).unlink()
+                sync_dir(target(root, name).parent)
+            else:
+                atomic(target(root, name), (folder / Path(name).name).read_bytes(),
+                       **{k: row['before'][k] for k in ('mode', 'mtime_ns', 'uid', 'gid')})
     for name, row in state['files'].items():
-        if snapshot(target(root, name)) != row['before']:
+        if file_state(target(root, name)) != row['before']:
             raise ValueError('original restore boundary')
+    firmware_dir = target(root, FW.rstrip('/'))
+    if state['created_firmware_dir'] and firmware_dir.exists():
+        firmware_dir.rmdir()  # Never recursively remove unrelated new files.
+        sync_dir(firmware_dir.parent)
     state.update(phase='restored', pending=None, restore_recovery_boot_id=boot)
     save(folder, state)
     # Leave original backups and terminal ledger for host collection/qualified
@@ -241,7 +278,7 @@ def restore(root, base_path, candidate_path, proc):
                 services_started=False, remoteproc_started=False)
 
 
-def cleanup(root, base_path, candidate_path, proc):
+def cleanup(root, base_path, candidate_path, proc, original_presence='present'):
     """Remove owned backups only after exact restoration and host collection.
 
     The registered host flow must archive the terminal ledger before calling
@@ -253,8 +290,8 @@ def cleanup(root, base_path, candidate_path, proc):
     state = json.loads(target(root, STATE+'/ledger.json').read_text())
     if state.get('phase') != 'restored':
         raise ValueError('cleanup requires restored terminal ledger')
-    restore(root, base_path, candidate_path, proc)  # Idempotent read/validate only.
-    names = {Path(n).name: row for n, row in state['files'].items()}
+    restore(root, base_path, candidate_path, proc, original_presence)  # Read/validate only.
+    names = {Path(n).name: row for n, row in state['files'].items() if row['before'] is not None}
     entries = list(folder.iterdir())
     if any(p.name not in names.keys() | {'ledger.json'} for p in entries):
         raise ValueError('unknown backup directory entry; retain evidence')
@@ -280,6 +317,7 @@ if __name__ == '__main__':
     parser.add_argument('--proc', type=Path, required=True)
     parser.add_argument('--base', type=Path, required=True)
     parser.add_argument('--candidate', type=Path, required=True)
+    parser.add_argument('--original-presence', choices=('present', 'absent'), default='present')
     args = parser.parse_args()
     operation = {'install': install, 'restore': restore, 'cleanup': cleanup}[args.mode]
-    print(json.dumps(operation(args.root, args.base, args.candidate, args.proc), indent=2))
+    print(json.dumps(operation(args.root, args.base, args.candidate, args.proc, args.original_presence), indent=2))
