@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test391（sensor PD 执行状态观测登记），窗口为 **Test382–Test391**；没有生成镜像的轮次仍占一轮。
+  编号为 Test392（sensor PD 主机身份修正登记），窗口为 **Test383–Test392**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,16 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-10 TEST392_CANONICAL_RUNTIME_BOOT_REGISTERED_NOT_DEPLOYED.
+OnehostUUIDnormalization after391pre-queryformatSTOP; actualcapturereproduces
+oldgate/passnormalized/wrongbootreject.13scopePASS/0skip,50observer/domain and
+unchangedkernel/RPCqualification reused. Same2enable0/2squeries before/after
+oneorderedRPCstart/30shealth, unknownfirstSTOPbeforeRPC; mandatory370restore.
+Fresh6fd099f9 five/181/config/notes/noaddederror/ADB/noCode43PASS100%33.8C4.447V.
+32stagefiles; registrationpushbeforemutation, retention383–392; exact382vendor
+hasexplicitcurrent392consumer, no newkernel/image/modules/charging/USBchange.
+PPS/pump/DCCOFF; domainUPnotSSC/sample/rotationproof. See392README.
 
 2026-10-10 TEST391_HOST_UUID_FORMAT_STOP_RESTORED370.
 Onecandidate9004368f startup/five/181/config/notes/ADSP/ADB/NCM/kernelPASS.

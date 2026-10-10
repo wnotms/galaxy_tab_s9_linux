@@ -1,0 +1,37 @@
+{
+  "executed": true,
+  "tests_run": 13,
+  "selected": [
+    "test_ssc_pdr_canonical_scope.DiscoveryTests.test_completed_attempt_cannot_be_replayed",
+    "test_ssc_pdr_canonical_scope.DiscoveryTests.test_failed_rpc_unit_stops_without_restart",
+    "test_ssc_pdr_canonical_scope.DiscoveryTests.test_initial_unknown_stops_before_rpc_and_restores",
+    "test_ssc_pdr_canonical_scope.DiscoveryTests.test_journal_collection_failure_restores",
+    "test_ssc_pdr_canonical_scope.DiscoveryTests.test_new_failed_unit_during_observation_stops_and_restores",
+    "test_ssc_pdr_canonical_scope.DiscoveryTests.test_second_unknown_no_retry_and_restores",
+    "test_ssc_pdr_canonical_scope.DiscoveryTests.test_two_queries_one_start_and_restore_without_false_acceptance",
+    "test_ssc_pdr_canonical_scope.DiscoveryTests.test_unknown_rescue_marks_manual_recovery_without_another_start",
+    "test_ssc_pdr_canonical_scope.NotifierTests.test_missing_state_error_or_changed_boot_stops",
+    "test_ssc_pdr_canonical_scope.NotifierTests.test_raw_json_retained_and_enable_zero_cli",
+    "test_ssc_pdr_canonical_scope.RegistrationTests.test_actual_capture_runtime_identity_matches_normalized_stored_uuid",
+    "test_ssc_pdr_canonical_scope.RegistrationTests.test_new_observable_boundary_and_no_hardware_change",
+    "test_ssc_pdr_canonical_scope.RegistrationTests.test_real_renamed_overlay_transaction_restores_all_eight"
+  ],
+  "skips": [],
+  "failures": 0,
+  "errors": 0,
+  "seconds": 0.0276134470004763,
+  "reused": [
+    "c7009074:50 notifier/domain",
+    "bf64287e:12 originalscope",
+    "4c1a75ef:105RPC/18ARM64/2upstream",
+    "Test370/382 unchanged kernel/vendor/module/rollback artifacts"
+  ],
+  "kernel_build": {
+    "executed": false,
+    "reason": "host UUID normalization only"
+  },
+  "full_host_tests": {
+    "executed": false,
+    "reason": "affected suites directly; no routing change"
+  }
+}
