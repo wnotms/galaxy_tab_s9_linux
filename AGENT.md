@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST384_RECOVERY_ADB_CLOSED_BEFORE_INSTALL_RESTORED370.
+Registered ac338abb/2aa764bc;50 affected host PASS/0skip. One TWRP entry,
+identity/package/read-only mount/five partitions/181 modules passed; remount
+ADB error:closed stopped before assets/overlay/vendor writes. Zero candidate
+boots/module loads/DIAG opens/RPC, not a DIAG or sensor failure. Initial cleanup
+serial unavailable retained; process terminal confirmed, TWRP later available.
+Cleanup verified all baseline bytes and no ledger; normal attributed370 boot
+56bddde7, exact config/notes/181/five partitions, GNOME/palm/rootADB/usb0, ADSP
+OFF and no384 runtime. No CPU/panic fault; WiFi/hostNCM not tested. 17 verified
+Windows duplicates removed. First failure immutable/no retry/no rootcause claim.
+Next correct recovery admission/evidence, register independently before new
+physical attempt. Goalunfinished, no sensor/rotation acceptance/PPS/pump/DCC.
+
 2026-10-10 TEST384_NATIVE_ADSP_DIAG_HANDSHAKE_REGISTERED_NOT_DEPLOYED.
 One new hardware question: AP-initiated DIAG OPEN/ACK using matched unmodified
 7.2 rpmsg_ctrl external module. Exact370 kernel/181 modules/USB and qualified382

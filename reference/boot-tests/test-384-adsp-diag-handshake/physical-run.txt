@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import importlib.util,json; from pathlib import Path; r=Path('/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-384-adsp-diag-handshake'); s=importlib.util.spec_from_file_location('physical384',r/'host_flow.py'); h=importlib.util.module_from_spec(s); s.loader.exec_module(h); print(json.dumps(h.C.install()),flush=True); print(json.dumps(h.probe()),flush=True)
+                                                                                                                                                                                                                                                                                                                      ~~~~~~~~~~~^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-384-adsp-diag-handshake/core.py", line 402, in install
+    rec.adb('remount-rw', 'mount -o remount,rw /mnt/debian', timeout=10)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/production_reboot_stability.py", line 160, in adb
+    return self.command(name, [ADB, "-s", SERIAL, "shell", script], timeout, required)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/production_reboot_stability.py", line 156, in command
+    raise CaptureError(f"{name}: status={status}; {stderr[-300:]!r}")
+production_reboot_stability.CaptureError: remount-rw: status=1; b'error: closed\r\n'
