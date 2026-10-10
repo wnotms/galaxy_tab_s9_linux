@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test397（传感器进程优先启动观察），窗口为 **Test388–Test397**；没有生成镜像的轮次仍占一轮。
+  编号为 Test398（目录 EOF 回包初始化观察），窗口为 **Test389–Test398**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,16 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-10 TEST398_DETERMINISTIC_READDIR_REGISTERED_NOT_DEPLOYED.
+Onlymethod28 width/zero-init change over397 (new78b356c9daemon), library1be4/
+stockassets/kernel/config/DT/181/order/382geometry unchanged. Actual397seq954
+staleEOFsourcebasis, notSSCrootcauseclaim.87componentPASS+16ARM64QEMU+2upstream
+reused;41scope/runtime/lifecycle PASS0skip inclreal397collection rejection and
+hostfixture allothergates. Fresh9fb7e2f3 fullfive/181/config/notes/noCode43/ADB/
+deviceNCM/health gatePASS; noWiFiwait. One30s/twoPDRcycles; mandatoryexact370
+GNOMEreturn, no retry/reset. Registrationpushbeforemutation;389–398 retention,
+no newkernel/fullrun/Actions. PPS/pump/DCCOFF, SSC/sample/rotationunfinished.
 
 2026-10-10 RPC_READDIR_EOF_INITIALIZATION_OFFLINE_QUALIFIED_NOT_DEPLOYED.
 Actual397 method28 EOF seq954 returns15 stale name bytes; local width/zero-init
