@@ -11,3 +11,7 @@ Wire layout reference: Qualcomm's
 [listener_buf.h](https://android.googlesource.com/platform/external/fastrpc/+/refs/tags/android-13.0.0_r77/inc/listener_buf.h).
 An empty buffer contributes only its four-byte length header; alignment applies
 only to a non-empty payload. No firmware or proprietary sensor data is included.
+
+The added apps_std.c fixture is also original pinned source. Composition tests
+verify its hash against the existing stat profile before testing the two real
+patch transactions; the new wire patch does not alter that observer.

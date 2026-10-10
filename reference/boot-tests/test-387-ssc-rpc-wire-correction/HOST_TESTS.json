@@ -1,0 +1,18 @@
+{
+  "executed": true,
+  "passed": 60,
+  "failed": 0,
+  "skipped": 0,
+  "suites": {
+    "test_ssc_rpc_wire": 24,
+    "test_ssc_rpc_wire_scope": 21,
+    "test_ssc_recovery_admission": 15
+  },
+  "full_regression": {
+    "executed": false,
+    "reason": "No routing or kernel change; new composed profile/runner covered by affected real C/transaction/runtime/admission tests"
+  },
+  "syntax": true,
+  "kernel_build_executed": false,
+  "CI_executed": false
+}

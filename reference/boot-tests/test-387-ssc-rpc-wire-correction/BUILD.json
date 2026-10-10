@@ -1,0 +1,36 @@
+{
+  "verdict": "COMPOSED_ARM64_COMPILED_NOT_DEPLOYED",
+  "build_returncode": 0,
+  "source_files": 55,
+  "changes_from_accepted_stat": [
+    "hexagonrpcd/iobuffer.c"
+  ],
+  "stat_observer_unchanged": true,
+  "kernel_build_executed": false,
+  "device_mutation": false,
+  "builder": "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+  "upstream_tests": {
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "emulator": "qemu-aarch64"
+  },
+  "inputs": {
+    "userspace/sensors/rpc_wire_profile.py": "23ffff285965f66a595c2baa425560f26c95971668b582aba12068e4e7802cee",
+    "userspace/sensors/rpc_stat_profile.py": "c44c29c1c193c7acc2786e7ff6afd21593d511a1bf7b1051224ced304069c55e",
+    "userspace/sensors/diagnostics/rpc-wire.patch": "28243a2004280b4b3fcbe504b83f1addbd9371e43656bf34a4fb4e5c74b7ae71",
+    "userspace/sensors/diagnostics/rpc-stat.patch": "293d2b37615b477b37a36821a3e2d1ac1faf2a0e23793fbf79996e62f1fc1710",
+    "userspace/sensors/diagnostics/compile-rpc-stat.sh": "d853e57169174b9b3e1dd7bf8a7e5b2c334d66c9d0296dd1a5c687ee41a66e73",
+    "userspace/sensors/cross-arm64.ini": "22c6969c41a419a97aadb0ed70d459168fac2c5636126355407fdf9458c7767f"
+  },
+  "artifacts": {
+    "usr/bin/hexagonrpcd": {
+      "bytes": 79832,
+      "sha256": "94e943f9d7665eb19c351b13168a1a6e0c03ef698cc24d5d19a6711de73e6b0d"
+    },
+    "usr/lib/aarch64-linux-gnu/libhexagonrpc.so.0.4": {
+      "bytes": 70320,
+      "sha256": "1be44d2fe0c9b5ca785ef27730fba586a7f678f82f91cfbfb01613b3dad76f6e"
+    }
+  }
+}

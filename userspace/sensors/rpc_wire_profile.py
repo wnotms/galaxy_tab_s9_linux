@@ -59,12 +59,44 @@ def prepare(tree, output):
     return identity
 
 
+def prepare_with_stat(tree, output):
+    """Keep the accepted stat observer; change only its real wire codec."""
+    spec = importlib.util.spec_from_file_location('ssc_wire_stat', BASE / 'rpc_stat_profile.py')
+    stat_profile = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(stat_profile)
+    tree, output = Path(tree).resolve(), Path(output).absolute()
+    if output.exists() or output.is_symlink() or output.resolve().is_relative_to(tree):
+        raise ValueError('output must be absent and outside base sources')
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='rpc-wire-stat-', dir=output.parent) as name:
+        temporary = Path(name)
+        wire = prepare(tree, temporary / 'wire')
+        stat = stat_profile.prepare(tree, temporary / 'stat')
+        root = temporary / 'stat/hexagonrpc'
+        result = subprocess.run(['patch', '--batch', '--fuzz=0', '-p1', '-i',
+                                 str(BASE / 'diagnostics/rpc-wire.patch')],
+                                cwd=root, capture_output=True, text=True, check=True)
+        after = files(root)
+        changes = sorted(n for n in stat['patched_files'].keys() | after.keys()
+                         if stat['patched_files'].get(n) != after.get(n))
+        if (changes != wire['profile']['changed_files'] or
+                after['hexagonrpcd/iobuffer.c'] != wire['profile']['patched_file_sha256'] or
+                after['hexagonrpcd/apps_std.c'] != stat['profile']['patched_file_sha256']):
+            raise ValueError('unexpected composed profile changes')
+        identity = dict(wire, patched_files=after, composition=dict(stat_profile=stat['profile'],
+                        changes_from_stat=changes), patch_stdout=result.stdout)
+        (temporary / 'stat/SOURCE.json').write_text(json.dumps(identity, indent=2) + '\n')
+        (temporary / 'stat').rename(output)
+    return identity
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--sources', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--with-stat', action='store_true', help='retain accepted stat metadata observer')
     args = parser.parse_args()
-    identity = prepare(args.sources, args.output)
+    identity = (prepare_with_stat if args.with_stat else prepare)(args.sources, args.output)
     print(json.dumps(dict(changed_files=identity['profile']['changed_files'],
                           output=str(args.output), device_operations=False), indent=2))
 

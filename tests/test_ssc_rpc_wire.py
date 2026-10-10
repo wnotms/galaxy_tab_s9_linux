@@ -235,5 +235,53 @@ class ProfileTests(unittest.TestCase):
             self.module.prepare(self.tree, self.tree / 'candidate')
 
 
+class CompositionTests(unittest.TestCase):
+    def setUp(self):
+        ProfileTests.setUp(self)
+        import shutil
+        for name in ['rpc_stat_profile.py', 'build.py', 'prepare.py',
+                     'diagnostics/rpc-stat.json', 'diagnostics/rpc-stat.patch']:
+            shutil.copyfile(ROOT / 'userspace/sensors' / name, self.recipe / name)
+        source = FIXTURE / 'hexagonrpcd/apps_std.c'
+        stat_profile = json.loads((self.recipe / 'diagnostics/rpc-stat.json').read_text())
+        self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(), stat_profile['base_file_sha256'])
+        shutil.copyfile(source, self.tree / 'hexagonrpc/hexagonrpcd/apps_std.c')
+        prepared = json.loads((self.tree / 'PREPARED.json').read_text())
+        prepared['sources'][0]['patched_files']['hexagonrpcd/apps_std.c'] = stat_profile['base_file_sha256']
+        (self.tree / 'PREPARED.json').write_text(json.dumps(prepared))
+        stat_profile['base_manifest_sha256'] = hashlib.sha256((self.recipe / 'sources.json').read_bytes()).hexdigest()
+        (self.recipe / 'diagnostics/rpc-stat.json').write_text(json.dumps(stat_profile))
+
+    def test_composition_preserves_stat_and_changes_only_wire_from_stat(self):
+        original = self.module.files(self.tree)
+        result = self.module.prepare_with_stat(self.tree, self.output)
+        self.assertEqual(self.module.files(self.tree), original)
+        self.assertEqual(result['composition']['changes_from_stat'], ['hexagonrpcd/iobuffer.c'])
+        self.assertEqual(result['patched_files']['hexagonrpcd/apps_std.c'],
+                         result['composition']['stat_profile']['patched_file_sha256'])
+        self.assertFalse(result['device_operations'])
+
+    def test_composition_corrupt_stat_patch_cannot_publish(self):
+        (self.recipe / 'diagnostics/rpc-stat.patch').write_text('corrupt')
+        with self.assertRaisesRegex(ValueError, 'input hash mismatch'):
+            self.module.prepare_with_stat(self.tree, self.output)
+        self.assertFalse(self.output.exists())
+
+    def test_composition_corrupt_wire_patch_cannot_publish(self):
+        (self.recipe / 'diagnostics/rpc-wire.patch').write_text('corrupt')
+        with self.assertRaisesRegex(ValueError, 'input hash mismatch'):
+            self.module.prepare_with_stat(self.tree, self.output)
+        self.assertFalse(self.output.exists())
+
+    def test_composition_inside_base_refused(self):
+        with self.assertRaisesRegex(ValueError, 'outside base sources'):
+            self.module.prepare_with_stat(self.tree, self.tree / 'candidate')
+
+    def test_composition_existing_output_refused(self):
+        self.output.mkdir()
+        with self.assertRaisesRegex(ValueError, 'output must be absent'):
+            self.module.prepare_with_stat(self.tree, self.output)
+
+
 if __name__ == '__main__':
     unittest.main()

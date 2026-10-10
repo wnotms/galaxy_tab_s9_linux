@@ -1,0 +1,58 @@
+{
+  "usr/local/lib/gts9-test387/hexagonrpcd": {
+    "incoming": "overlay-00",
+    "source": "out/ssc-rpc-wire-stat/build-output/stage/usr/bin/hexagonrpcd",
+    "sha256": "94e943f9d7665eb19c351b13168a1a6e0c03ef698cc24d5d19a6711de73e6b0d",
+    "original_sha256": null,
+    "mode": 493
+  },
+  "var/lib/gts9-test387/text-scope": {
+    "incoming": "overlay-01",
+    "source": "reference/boot-tests/test-387-ssc-rpc-wire-correction/text-scope",
+    "sha256": "ab38722f194edf81317a05c9fef595b9bff688be771fca1a421c8c635178b239",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/gdm.service.d/91-gts9-test387.conf": {
+    "incoming": "overlay-02",
+    "source": "reference/boot-tests/test-387-ssc-rpc-wire-correction/text-condition.conf",
+    "sha256": "880e4b53f13cea26db4dda09fe2f49e7bc8d1e453ab8bf8f5dd2b16a39b1d493",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-rootpd.service.d/91-gts9-test387.conf": {
+    "incoming": "overlay-03",
+    "source": "reference/boot-tests/test-387-ssc-rpc-wire-correction/hexagonrpcd-adsp-rootpd-trace.conf",
+    "sha256": "9eb28b6b920aad6f44ac43f5c18e1a1eace52e0174826b803304a0d928de33ed",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-sensorspd.service.d/91-gts9-test387.conf": {
+    "incoming": "overlay-04",
+    "source": "reference/boot-tests/test-387-ssc-rpc-wire-correction/hexagonrpcd-adsp-sensorspd-trace.conf",
+    "sha256": "93a4fbc3d64e5737c96440237a69f65776fdcb68a95c4edb174add78e9365290",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "usr/local/lib/gts9-test387/glink_trace.py": {
+    "incoming": "overlay-05",
+    "source": "userspace/sensors/glink_trace_382.py",
+    "sha256": "21a3ca57f89ca760439d30cb8896bf1aac40059247e2cd17e6064b9534f74303",
+    "original_sha256": null,
+    "mode": 493
+  },
+  "etc/systemd/system/gts9-glink-test387.service": {
+    "incoming": "overlay-06",
+    "source": "reference/boot-tests/test-387-ssc-rpc-wire-correction/glink-watch.service",
+    "sha256": "1209dae3a81d36b62d61498bafdb98c9c4b00a367c6e578f91c90f219f395561",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/multi-user.target.d/91-gts9-test387.conf": {
+    "incoming": "overlay-07",
+    "source": "reference/boot-tests/test-387-ssc-rpc-wire-correction/multi-user-trace.conf",
+    "sha256": "0f4fb990aa2160b5d6bb7f129031e997b7c0dff12a0addd0aa20cfa82cce2479",
+    "original_sha256": null,
+    "mode": 420
+  }
+}

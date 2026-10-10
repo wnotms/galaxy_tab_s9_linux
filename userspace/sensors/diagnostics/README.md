@@ -47,3 +47,9 @@ hashes and artifact hashes are recorded in
 `reference/desktop-bringup/ssc-rpc-wire/`. No real DSP zero-length invocation has
 yet been identified; this fixes demonstrated codec defects, not a proven SSC
 initialization rootcause. A new physical registration is required before use.
+
+For a comparison against the accepted stat-observer runtime, add `--with-stat`.
+Both profiles admit the same frozen Fedora source tree independently. The
+composed output preserves the stat observer byte-for-byte and changes only
+iobuffer.c relative to it; SOURCE.json records both patch identities and the
+complete55-file result. This does not rewrite either old build or its manifest.
