@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "systemctl get-default; systemctl is-active gdm gts9-palm gts9-adbd gts9-usb-acm; systemctl --failed --no-legend --no-pager"
+  ],
+  "ended_utc": "2026-10-10T15:09:32.566069+00:00",
+  "started_utc": "2026-10-10T15:09:32.439316+00:00",
+  "status": 0
+}

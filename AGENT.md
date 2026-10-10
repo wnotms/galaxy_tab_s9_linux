@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST396_RETAINED_LISTENER_SSC_ABSENT_RETURNED370_WITH_TRANSIENT_HOSTNAMED.
+One978319fe root→sensor start/30s, PDRUPbefore/after,35metadata/178content/status69/
+completeGLINK, noCPU/severefault; SSC400absent/no sample/rotation, no unchangedretry.
+Exact370/vendor/assets/eightoverlay restored; initialreturn gate failedhostnamed
+NETWORK ENOMEM225, percpu atomic32allocation warning adjacent/notprovenrootcause.
+Originalrunnerexit1/notCLEAN preserved. Same5b93e963 automatichostnamed recovery,
+no manualreset/restart. Readonlyfullfive/181/config/notes +16.3s GDM/palm/ADB/device
+NCM/nofailedunit health verified, attributedreturn;33Windowsstage files checked/
+deleted.16scopePASS/reuse73component/16QEMU/2upstream+86observer; results
+executed:false, no kernelbuild/fullrun/Actions.387–396/PPS/pump/DCCOFF. Sensors
+unfinished; next stockcallback/static-PD semantics, notunchanged396 replay.
+See396RESULTS; separately trackearlypercpu/hostnamed startup anomaly.
+
 2026-10-10 TEST396_RETAINED_DEFAULT_LISTENER_REGISTERED_NOT_DEPLOYED.
 Only daemon lifetime changes over393,49140bbd; unchanged library1be44d2f, kernel/
 DT/config/181 modules/assets/ordered RPC/382trace geometry. One30s SSC observation,

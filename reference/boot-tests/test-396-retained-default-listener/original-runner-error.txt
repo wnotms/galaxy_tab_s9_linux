@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-396-retained-default-listener/host_flow.py", line 646, in <module>
+    elif mode=='discover': result=discover()
+                                  ~~~~~~~~^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-396-retained-default-listener/host_flow.py", line 591, in discover
+    restore()
+    ~~~~~~~^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-396-retained-default-listener/host_flow.py", line 408, in restore
+    result = accept(rec, 'baseline', before.strip().replace('-', ''), boots)
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-396-retained-default-listener/host_flow.py", line 326, in accept
+    d = snapshot(rec, 'current-state', phase)
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-396-retained-default-listener/host_flow.py", line 188, in snapshot
+    identity(d, phase, expected, allow_desktop=allow_desktop)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-396-retained-default-listener/host_flow.py", line 71, in identity
+    raise ValueError('failed unit or permanent USB baseline changed')
+ValueError: failed unit or permanent USB baseline changed

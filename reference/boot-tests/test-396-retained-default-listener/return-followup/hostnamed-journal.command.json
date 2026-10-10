@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "journalctl -b -u systemd-hostnamed -o json --no-pager; systemctl status systemd-hostnamed --no-pager -l; systemctl show systemd-hostnamed -p Result -p ExecMainCode -p ExecMainStatus -p ActiveState -p SubState -p FragmentPath -p DropInPaths"
+  ],
+  "ended_utc": "2026-10-10T15:09:28.898244+00:00",
+  "started_utc": "2026-10-10T15:09:27.844562+00:00",
+  "status": 0
+}
