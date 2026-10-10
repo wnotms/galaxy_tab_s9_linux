@@ -1,0 +1,42 @@
+{
+  "image": "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+  "argv": [
+    "docker",
+    "run",
+    "--rm",
+    "--network=none",
+    "--security-opt=no-new-privileges",
+    "-e",
+    "HOST_UID=1000",
+    "-e",
+    "HOST_GID=1000",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/ssc-sources/prepared-clean/iio-sensor-proxy:/inputs/original:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/proxy-claim/reference:/inputs/reference:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/proxy-claim/sources:/inputs/final:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/libssc-wait/build/stage:/libssc-stage:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/userspace/sensors:/recipe:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/tests/fixtures:/fixtures:ro",
+    "-v",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/proxy-claim/build:/output",
+    "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+    "sh",
+    "/recipe/compile-proxy-claim.sh"
+  ],
+  "returncode": 0,
+  "seconds": 3.9608967304229736,
+  "device_operations": false,
+  "kernel_rebuilt": false,
+  "recipe_sha256": {
+    "userspace/sensors/proxy_claim_profile.py": "878360f10cafc9b171d350516592478bc0c079860a3ed791b5b30d2edea686ca",
+    "userspace/sensors/proxy-claim.json": "1eab4023a3e32d3cd06a3896cbe1dab0ed45193098479b6fc4361a13df9c4503",
+    "userspace/sensors/compile-proxy-claim.sh": "b3cd8bc6e3d1c13517e74e0c27eee0a7f7acd31144106abb695a2158422b34f0",
+    "tests/fixtures/proxy_claim_harness.c": "f823083ae158a4d62a87102c93cbf0b6fd25f1fc02ee8f27b26052a2816bad93"
+  },
+  "libssc_sha256": "12ad645f6e5bbc52a5947f0934f3a0c6bec6c006abf1ffc8ddf63ec1af4aa54e"
+}

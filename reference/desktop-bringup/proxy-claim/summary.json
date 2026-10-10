@@ -1,0 +1,29 @@
+{
+  "state": "compiled and qualified, not deployed",
+  "parent_commit": "3bfb74d4be1767f3fbc1e37cdd44e542ec232b90",
+  "SSC_publication_proven": false,
+  "actual_sensor_sample_proven": false,
+  "automatic_rotation_verified": false,
+  "host_tests": {
+    "run": 38,
+    "skipped": 0,
+    "successful": true
+  },
+  "ARM64_private_DBUS_cases": {
+    "run": 12,
+    "expected_fatal_controls": 3,
+    "adapted_reference_positive_controls": 1,
+    "final_cases": 8,
+    "successful": true
+  },
+  "upstream_tests": 3,
+  "build_successful": true,
+  "kernel_build_executed": false,
+  "full_host_tests_executed": false,
+  "Actions_started": false,
+  "device_mutations": false,
+  "device_baseline": "Test370",
+  "last_physical_sensor_test": "Test389",
+  "PPS_pump_DCC": "OFF",
+  "unchanged_default_sources_sha256": "ffd7b47acf67e732d2c0ca0d3c614d908835e8c49e4c419acdbe73d9ae08b6a4"
+}

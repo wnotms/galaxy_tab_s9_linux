@@ -1,0 +1,8 @@
+{
+  "command": "aarch64-linux-gnu-readelf -h -d",
+  "failure": "host executable absent",
+  "corrected_to": "native readelf, architecture-independent ELF reader",
+  "build_and_test_qualification_unchanged": true,
+  "archive_members_verified": true,
+  "device_operations": false
+}

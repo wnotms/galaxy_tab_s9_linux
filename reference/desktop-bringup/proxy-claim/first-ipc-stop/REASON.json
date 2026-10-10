@@ -1,0 +1,9 @@
+{
+  "successful": false,
+  "failure": "GUdev lo sysfs identity unavailable inside isolated network namespace; fixture asserted before proxy race was tested",
+  "container_id": "8ec9873a7056",
+  "target_abort_did_not_exit": true,
+  "runner_cli_timeout_left_owned_container": true,
+  "cleanup": "owned container forcibly removed; owned private bus already exited; no tablet operations",
+  "next": "Use stable read-only /dev/null GUdev identity, explicit per-container identity and finally removal on timeout, bounded target watchdog"
+}

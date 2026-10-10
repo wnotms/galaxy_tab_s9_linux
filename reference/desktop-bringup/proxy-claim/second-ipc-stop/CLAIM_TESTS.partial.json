@@ -1,0 +1,11 @@
+[
+  {
+    "profile": "original",
+    "case": "during-discovery",
+    "expected_fault": "g_ptr_array_add",
+    "returncode": 134,
+    "stdout": "Bail out! ERROR:/fixtures/proxy_claim_harness.c:57:fixture_query: 'device' should not be NULL\n",
+    "stderr": "**\nERROR:/fixtures/proxy_claim_harness.c:57:fixture_query: 'device' should not be NULL\nqemu: uncaught target signal 6 (Aborted) - core dumped\n",
+    "seconds": 0.6964549970007283
+  }
+]

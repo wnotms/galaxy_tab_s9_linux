@@ -1,0 +1,23 @@
+{
+  "successful": true,
+  "protected_tracked_paths": [
+    "kernel",
+    "rootfs-overlay",
+    "userspace/adbd",
+    "userspace/sensors/sources.json",
+    "reference/boot-tests"
+  ],
+  "tracked_changes": [],
+  "Fedora_original_files": 67,
+  "Fedora_original_hashes_match": true,
+  "compiled_proxy_source_hashes_match": true,
+  "changed_runtime_source_files": [
+    "src/iio-sensor-proxy.c"
+  ],
+  "kernel_rebuilt": false,
+  "full_tests_executed": false,
+  "device_operations": [
+    "read-only ADB boot ID/GDM/capacity/temperature"
+  ],
+  "physical_test_executed": false
+}

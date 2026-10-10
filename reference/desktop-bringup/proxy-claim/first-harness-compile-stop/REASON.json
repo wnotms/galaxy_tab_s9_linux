@@ -1,0 +1,5 @@
+{
+  "device_operations": false,
+  "proxy_compiled": true,
+  "reason": "Fixture -Werror rejected the upstream implicit zero initialization of GLib vtable padding. Exempt only missing-field-initializers for compiling unchanged upstream code in the harness; no proxy source or ABI change."
+}

@@ -98,6 +98,22 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 PROXY_EARLY_CLAIM_ARM64_DBUS_QUALIFIED_NOT_DEPLOYED.
+AdaptS9U32273earlyclaim overexactFedora3.9; preserve singlepostopenpolling,
+initializealltables/arraysbeforeexport, gateClaimandReleaseonopeneddevice.
+OnlyoneproxyCfile; defaultsources/driver/XML/policy/history unchanged.
+38affectedhostPASS/0skip, fullARM64SSCenabledproxy/monitor and3upstreamPASS;
+12realprivateDBus/QEMUcases reproduceoriginalNULLarray/referencereleaseNULL,
+final8PASS inclclaimtiming/release/vanish/firstreading/openfailure.
+GUdev/sensorIO/authdecisionmocked; notSSCpublication/hardware/permissionsproof.
+Fixturecompile+2identity stops retained, ownedtimeoutcontainercleanupcorrected;
+3fileruntime notinstalled, pinnedbuilder/libsscwaitqualification reused.
+ADB restoredsame370boot0f360b00/GDMactive/100%31.5C; no devicewrite/reboot/
+ADSPstart/kernelbuild/fulltests/Actions. PPS/pump/DCCOFF; goalunfinished.
+Nextactualfirmware/X710prerequisite, no unchanged389startup replay.
+See reference/desktop-bringup/proxy-claim/RESULTS.md.
+
+
 2026-10-10 LIBSSC_WAIT_FIX_ARM64_QUALIFIED_NOT_DEPLOYED.
 ExactS9U32273b0a public wait patch (freshHEAD916e2f13same) plus proven completion
 wakeup; one privatecommonCfile only, baseFedora/sources.json/389 unchanged.

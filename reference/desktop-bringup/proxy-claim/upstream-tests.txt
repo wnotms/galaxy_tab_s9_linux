@@ -1,0 +1,54 @@
+Log of Meson test suite run on 2026-10-10T08:13:27.220842
+
+Inherited environment: HOSTNAME=98a119a38ae9 HOME=/root OLDPWD=/ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin HOST_GID=1000 DEBIAN_FRONTEND=noninteractive PWD=/output/work HOST_UID=1000 LC_CTYPE=C.UTF-8 
+
+==================================== 1/3 =====================================
+test:         net.hadess.SensorProxy.policy
+start time:   08:13:27
+duration:     0.01s
+result:       exit status 0
+command:      UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 MALLOC_PERTURB_=193 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 /usr/bin/xmllint --noout /output/work/proxy/data/net.hadess.SensorProxy.policy
+==============================================================================
+
+==================================== 2/3 =====================================
+test:         test-orientation
+start time:   08:13:27
+duration:     0.07s
+result:       exit status 0
+command:      UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 MESON_EXE_WRAPPER=/usr/bin/qemu-aarch64 MALLOC_PERTURB_=166 /usr/bin/qemu-aarch64 /output/work/proxy-build/src/test-orientation
+----------------------------------- stdout -----------------------------------
+TAP version 14
+# random seed: R02S4e789fff864f1d90810922b7ffc9692e
+1..3
+# Start of iio-sensor-proxy tests
+ok 1 /iio-sensor-proxy/orientation
+ok 2 /iio-sensor-proxy/quirking
+ok 3 /iio-sensor-proxy/threshold
+# End of iio-sensor-proxy tests
+==============================================================================
+
+==================================== 3/3 =====================================
+test:         test-mount-matrix
+start time:   08:13:27
+duration:     0.08s
+result:       exit status 0
+command:      UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 MESON_EXE_WRAPPER=/usr/bin/qemu-aarch64 MALLOC_PERTURB_=214 /usr/bin/qemu-aarch64 /output/work/proxy-build/src/test-mount-matrix
+----------------------------------- stdout -----------------------------------
+TAP version 14
+# random seed: R02S1a3ab3bd510e8d15e9a7ca5504bdb084
+1..2
+# Start of iio-sensor-proxy tests
+# 1.000000, 0.000000, 0.000000; 0.000000, 0.000000, 1.000000; 0.000000, 1.000000, 0.000000
+# 1.000000, 0.000000, 0.000000; 0.000000, 1.000000, 0.000000; 0.000000, 0.000000, 1.000000
+ok 1 /iio-sensor-proxy/mount-matrix
+ok 2 /iio-sensor-proxy/comma-decimal-separator # SKIP Local fr_FR.UTF-8 not available
+# End of iio-sensor-proxy tests
+==============================================================================
+
+
+Ok:                 3   
+Expected Fail:      0   
+Fail:               0   
+Unexpected Pass:    0   
+Skipped:            0   
+Timeout:            0   

@@ -1,0 +1,86 @@
+Cleaning... 0 files.
+The Meson build system
+Version: 1.7.0
+Source dir: /output/work/proxy
+Build dir: /output/work/proxy-build
+Build type: cross build
+Project name: iio-sensor-proxy
+Project version: 3.9
+C compiler for the host machine: aarch64-linux-gnu-gcc (gcc 14.2.0 "aarch64-linux-gnu-gcc (Debian 14.2.0-19) 14.2.0")
+C linker for the host machine: aarch64-linux-gnu-gcc ld.bfd 2.44
+C compiler for the build machine: cc (gcc 14.2.0 "cc (Debian 14.2.0-19) 14.2.0")
+C linker for the build machine: cc ld.bfd 2.44
+Build machine cpu family: x86_64
+Build machine cpu: x86_64
+Host machine cpu family: aarch64
+Host machine cpu: aarch64
+Target machine cpu family: aarch64
+Target machine cpu: aarch64
+Compiler for C supports arguments -fgnu89-inline: YES (cached)
+Compiler for C supports arguments -fvisibility=hidden: YES (cached)
+Compiler for C supports arguments -std=gnu99: YES (cached)
+Compiler for C supports arguments -Wall: YES (cached)
+Compiler for C supports arguments -Wundef: YES (cached)
+Compiler for C supports arguments -Wunused: YES (cached)
+Compiler for C supports arguments -Wstrict-prototypes: YES (cached)
+Compiler for C supports arguments -Werror-implicit-function-declaration: YES (cached)
+Compiler for C supports arguments -Wno-pointer-sign: YES (cached)
+Compiler for C supports arguments -Wshadow: YES (cached)
+Library m found: YES
+Dependency gio-2.0 found: YES 2.84.4 (cached)
+Dependency gudev-1.0 found: YES 238 (cached)
+Dependency polkit-gobject-1 found: YES 126 (cached)
+Dependency libssc found: YES 0.4.4 (cached)
+Program xmllint found: YES (/usr/bin/xmllint)
+Configuring config.h using configuration
+Found pkg-config: YES (/usr/bin/pkg-config) 1.8.1
+WARNING: Could not detect glib version, assuming 2.54. You may get build errors if your glib is older.
+Did not find CMake 'cmake'
+Found CMake: NO
+Build-time dependency gio-2.0 found: NO (tried pkgconfig and cmake)
+Program glib-compile-resources found: YES (/usr/bin/glib-compile-resources)
+Configuring iio-sensor-proxy.service using configuration
+Configuring net.hadess.SensorProxy.conf using configuration
+Build targets in project: 7
+NOTICE: Future-deprecated features used:
+ * 0.56.0: {'dependency.get_pkgconfig_variable', 'meson.source_root'}
+
+iio-sensor-proxy 3.9
+
+  User defined options
+    Cross files         : /opt/ssc/cross-arm64.ini
+    buildtype           : release
+    libdir              : lib/aarch64-linux-gnu
+    libexecdir          : libexec
+    prefix              : /usr
+    ssc-support         : enabled
+    systemdsystemunitdir: /usr/lib/systemd/system
+    udevrulesdir        : /usr/lib/udev/rules.d
+
+Found ninja-1.12.1 at /usr/bin/ninja
+ninja: Entering directory `/output/work/proxy-build'
+ninja: no work to do.
+INFO: autodetecting backend as ninja
+INFO: calculating backend command to run: /usr/bin/ninja -C /output/work/proxy-build -j 4
+ninja: Entering directory `/output/work/proxy-build'
+ninja: no work to do.
+1/3 net.hadess.SensorProxy.policy OK              0.01s
+2/3 test-orientation              OK              0.07s
+3/3 test-mount-matrix             OK              0.08s
+
+Ok:                 3   
+Expected Fail:      0   
+Fail:               0   
+Unexpected Pass:    0   
+Skipped:            0   
+Timeout:            0   
+
+Full log written to /output/work/proxy-build/meson-logs/testlog.txt
+ninja: Entering directory `/output/work/proxy-build'
+ninja: no work to do.
+Installing src/iio-sensor-proxy to /output/stage/usr/libexec
+Installing src/monitor-sensor to /output/stage/usr/bin
+Installing /output/work/proxy/data/80-iio-sensor-proxy.rules to /output/stage/usr/lib/udev/rules.d
+Installing /output/work/proxy-build/data/iio-sensor-proxy.service to /output/stage/usr/lib/systemd/system
+Installing /output/work/proxy-build/data/net.hadess.SensorProxy.conf to /output/stage/usr/share/dbus-1/system.d
+Installing /output/work/proxy/data/net.hadess.SensorProxy.policy to /output/stage/usr/share/polkit-1/actions

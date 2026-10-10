@@ -1,0 +1,188 @@
+{
+  "successful": true,
+  "cases": [
+    {
+      "profile": "original",
+      "case": "during-discovery",
+      "expected_fault": "g_ptr_array_add",
+      "returncode": 133,
+      "stdout": "",
+      "stderr": "\n(process:7): GLib-CRITICAL **: 08:14:49.126: g_ptr_array_add: assertion 'rarray' failed\nqemu: uncaught target signal 5 (Trace/breakpoint trap) - core dumped\n",
+      "seconds": 0.704924753999876
+    },
+    {
+      "profile": "reference",
+      "case": "during-discovery",
+      "expected_fault": null,
+      "returncode": 0,
+      "stdout": "{\"case\":\"during-discovery\",\"starts\":1,\"stops\":0,\"opens\":1,\"availability_events\":1}\n",
+      "stderr": "",
+      "seconds": 0.7463978289997613,
+      "observation": {
+        "case": "during-discovery",
+        "starts": 1,
+        "stops": 0,
+        "opens": 1,
+        "availability_events": 1
+      }
+    },
+    {
+      "profile": "reference",
+      "case": "release-before-open",
+      "expected_fault": "sensor_device",
+      "returncode": 133,
+      "stdout": "",
+      "stderr": "\n** (process:7): CRITICAL **: 08:14:50.583: driver_set_polling: assertion 'sensor_device' failed\nqemu: uncaught target signal 5 (Trace/breakpoint trap) - core dumped\n",
+      "seconds": 0.7141244770000412
+    },
+    {
+      "profile": "reference",
+      "case": "vanish-before-open",
+      "expected_fault": "sensor_device",
+      "returncode": 133,
+      "stdout": "",
+      "stderr": "\n** (process:7): CRITICAL **: 08:14:51.275: driver_set_polling: assertion 'sensor_device' failed\nqemu: uncaught target signal 5 (Trace/breakpoint trap) - core dumped\n",
+      "seconds": 0.6901566500000627
+    },
+    {
+      "profile": "final",
+      "case": "no-clients",
+      "expected_fault": null,
+      "returncode": 0,
+      "stdout": "{\"case\":\"no-clients\",\"starts\":0,\"stops\":0,\"opens\":1,\"availability_events\":1}\n",
+      "stderr": "",
+      "seconds": 0.6875432819997513,
+      "observation": {
+        "case": "no-clients",
+        "starts": 0,
+        "stops": 0,
+        "opens": 1,
+        "availability_events": 1
+      }
+    },
+    {
+      "profile": "final",
+      "case": "before-discovery",
+      "expected_fault": null,
+      "returncode": 0,
+      "stdout": "{\"case\":\"before-discovery\",\"starts\":1,\"stops\":0,\"opens\":1,\"availability_events\":1}\n",
+      "stderr": "",
+      "seconds": 0.6815190449997317,
+      "observation": {
+        "case": "before-discovery",
+        "starts": 1,
+        "stops": 0,
+        "opens": 1,
+        "availability_events": 1
+      }
+    },
+    {
+      "profile": "final",
+      "case": "during-discovery",
+      "expected_fault": null,
+      "returncode": 0,
+      "stdout": "{\"case\":\"during-discovery\",\"starts\":1,\"stops\":0,\"opens\":1,\"availability_events\":1}\n",
+      "stderr": "",
+      "seconds": 0.7132140100002289,
+      "observation": {
+        "case": "during-discovery",
+        "starts": 1,
+        "stops": 0,
+        "opens": 1,
+        "availability_events": 1
+      }
+    },
+    {
+      "profile": "final",
+      "case": "during-open",
+      "expected_fault": null,
+      "returncode": 0,
+      "stdout": "{\"case\":\"during-open\",\"starts\":1,\"stops\":0,\"opens\":1,\"availability_events\":1}\n",
+      "stderr": "",
+      "seconds": 0.6899892410001485,
+      "observation": {
+        "case": "during-open",
+        "starts": 1,
+        "stops": 0,
+        "opens": 1,
+        "availability_events": 1
+      }
+    },
+    {
+      "profile": "final",
+      "case": "release-before-open",
+      "expected_fault": null,
+      "returncode": 0,
+      "stdout": "{\"case\":\"release-before-open\",\"starts\":0,\"stops\":0,\"opens\":1,\"availability_events\":1}\n",
+      "stderr": "",
+      "seconds": 0.7139909289999196,
+      "observation": {
+        "case": "release-before-open",
+        "starts": 0,
+        "stops": 0,
+        "opens": 1,
+        "availability_events": 1
+      }
+    },
+    {
+      "profile": "final",
+      "case": "vanish-before-open",
+      "expected_fault": null,
+      "returncode": 0,
+      "stdout": "{\"case\":\"vanish-before-open\",\"starts\":0,\"stops\":0,\"opens\":1,\"availability_events\":0}\n",
+      "stderr": "",
+      "seconds": 0.6875672109999869,
+      "observation": {
+        "case": "vanish-before-open",
+        "starts": 0,
+        "stops": 0,
+        "opens": 1,
+        "availability_events": 0
+      }
+    },
+    {
+      "profile": "final",
+      "case": "after-open",
+      "expected_fault": null,
+      "returncode": 0,
+      "stdout": "{\"case\":\"after-open\",\"starts\":1,\"stops\":0,\"opens\":1,\"availability_events\":1}\n",
+      "stderr": "",
+      "seconds": 0.7079976220002209,
+      "observation": {
+        "case": "after-open",
+        "starts": 1,
+        "stops": 0,
+        "opens": 1,
+        "availability_events": 1
+      }
+    },
+    {
+      "profile": "final",
+      "case": "open-failure",
+      "expected_fault": null,
+      "returncode": 0,
+      "stdout": "{\"case\":\"open-failure\",\"starts\":0,\"stops\":0,\"opens\":1,\"availability_events\":0}\n",
+      "stderr": "** Message: 08:14:56.811: No sensors or missing kernel drivers for the sensors. Exiting\n",
+      "seconds": 0.6778773559999536,
+      "observation": {
+        "case": "open-failure",
+        "starts": 0,
+        "stops": 0,
+        "opens": 1,
+        "availability_events": 0
+      }
+    }
+  ],
+  "device_operations": false,
+  "hardware_tested": false,
+  "private_bus_stopped": true,
+  "authorization_mocked": true,
+  "sensor_IO_mocked": true,
+  "GUdev_identity_mocked": true,
+  "binary_sha256": {
+    "original": "61deedd4703a7007a8896d2e2f53f6c0d1ae84fa3736ac33c5f4222ec76a71cb",
+    "reference": "ca5dfaddcb69ba24a961571912420d2aec1c315bf39fe02acb69c55341c6152f",
+    "final": "5d1bb6049a619941366ea91696858343ff10773a203d3af31204d3752b3f717a"
+  },
+  "runner_sha256": "4c1451765a498f531f5f1380ccb2d7d13e3c9436d5d8c99ddc5a408544786d92"
+}

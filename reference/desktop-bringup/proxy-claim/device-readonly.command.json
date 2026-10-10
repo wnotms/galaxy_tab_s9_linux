@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; systemctl is-active gdm3; cat /sys/class/power_supply/sm5714-battery/capacity; cat /sys/class/power_supply/sm5714-battery/temp"
+  ],
+  "returncode": 0,
+  "read_only": true,
+  "not_full_identity_acceptance": true
+}

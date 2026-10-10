@@ -1,0 +1,43 @@
+test_adapted_and_reference_patch_hashes_required (test_proxy_claim_profile.ClaimSourceTests.test_adapted_and_reference_patch_hashes_required) ... ok
+test_exact_one_file_composition (test_proxy_claim_profile.ClaimSourceTests.test_exact_one_file_composition) ... ok
+test_existing_and_overlapping_output_rejected (test_proxy_claim_profile.ClaimSourceTests.test_existing_and_overlapping_output_rejected) ... ok
+test_original_fedora_tree_is_preserved (test_proxy_claim_profile.ClaimSourceTests.test_original_fedora_tree_is_preserved) ... ok
+test_profile_does_not_claim_firmware_repair (test_proxy_claim_profile.ClaimSourceTests.test_profile_does_not_claim_firmware_repair) ... ok
+test_source_corruption_extra_file_and_link_rejected (test_proxy_claim_profile.ClaimSourceTests.test_source_corruption_extra_file_and_link_rejected) ... ok
+test_corrupt_patch_rejected_before_staging (test_libssc_wait_profile.WaitSourceTests.test_corrupt_patch_rejected_before_staging) ... ok
+test_existing_output_and_source_overlap_are_rejected (test_libssc_wait_profile.WaitSourceTests.test_existing_output_and_source_overlap_are_rejected) ... ok
+test_only_common_source_changed (test_libssc_wait_profile.WaitSourceTests.test_only_common_source_changed) ... ok
+test_original_tree_is_preserved (test_libssc_wait_profile.WaitSourceTests.test_original_tree_is_preserved) ... ok
+test_reference_provenance_is_explicit (test_libssc_wait_profile.WaitSourceTests.test_reference_provenance_is_explicit) ... ok
+test_reference_stage_is_distinct_from_completion_fix (test_libssc_wait_profile.WaitSourceTests.test_reference_stage_is_distinct_from_completion_fix) ... ok
+test_unqualified_base_corrupt_extra_and_link_rejected (test_libssc_wait_profile.WaitSourceTests.test_unqualified_base_corrupt_extra_and_link_rejected) ... ok
+test_all_inputs_validated_before_any_output (test_ssc_source_preparation.SourceTests.test_all_inputs_validated_before_any_output) ... ok
+test_bad_patch_and_patch_hash_leave_no_published_tree (test_ssc_source_preparation.SourceTests.test_bad_patch_and_patch_hash_leave_no_published_tree) ... ok
+test_patch_applies_and_records_hash (test_ssc_source_preparation.SourceTests.test_patch_applies_and_records_hash) ... ok
+test_prepares_exact_files_without_device_operations (test_ssc_source_preparation.SourceTests.test_prepares_exact_files_without_device_operations) ... ok
+test_preserves_existing_output_and_rejects_duplicate_source (test_ssc_source_preparation.SourceTests.test_preserves_existing_output_and_rejects_duplicate_source) ... ok
+test_rejects_duplicate_and_empty_archives (test_ssc_source_preparation.SourceTests.test_rejects_duplicate_and_empty_archives) ... ok
+test_rejects_source_symlink (test_ssc_source_preparation.SourceTests.test_rejects_source_symlink) ... ok
+test_rejects_traversal_absolute_other_root_and_links (test_ssc_source_preparation.SourceTests.test_rejects_traversal_absolute_other_root_and_links) ... ok
+test_source_hash_mismatch_does_not_publish (test_ssc_source_preparation.SourceTests.test_source_hash_mismatch_does_not_publish) ... ok
+test_source_size_mismatch_does_not_publish (test_ssc_source_preparation.SourceTests.test_source_size_mismatch_does_not_publish) ... ok
+test_archive_identity (test_ssc_cross_build.SourceTests.test_archive_identity) ... ok
+test_duplicate_component (test_ssc_cross_build.SourceTests.test_duplicate_component) ... ok
+test_extra_file (test_ssc_cross_build.SourceTests.test_extra_file) ... ok
+test_source_changed (test_ssc_cross_build.SourceTests.test_source_changed) ... ok
+test_source_link (test_ssc_cross_build.SourceTests.test_source_link) ... ok
+test_unrelated_prepare_module_cannot_override_source_validation (test_ssc_cross_build.SourceTests.test_unrelated_prepare_module_cannot_override_source_validation) ... ok
+test_verified_source (test_ssc_cross_build.SourceTests.test_verified_source) ... ok
+test_arm64_runtime_set (test_ssc_cross_build.StageTests.test_arm64_runtime_set) ... ok
+test_enabled_unit_rejected (test_ssc_cross_build.StageTests.test_enabled_unit_rejected) ... ok
+test_missing_executable (test_ssc_cross_build.StageTests.test_missing_executable) ... ok
+test_relative_library_link (test_ssc_cross_build.StageTests.test_relative_library_link) ... ok
+test_service_path (test_ssc_cross_build.StageTests.test_service_path) ... ok
+test_symlink_escape (test_ssc_cross_build.StageTests.test_symlink_escape) ... ok
+test_wrong_elf_class_endian (test_ssc_cross_build.StageTests.test_wrong_elf_class_endian) ... ok
+test_x86_64_rejected (test_ssc_cross_build.StageTests.test_x86_64_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 38 tests in 0.283s
+
+OK

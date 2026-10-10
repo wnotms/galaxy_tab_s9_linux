@@ -1,0 +1,230 @@
+[
+    {
+        "Id": "8ec9873a70569c122540e2626a31c94da5135974aacee7afcec13b2e57404d13",
+        "Created": "2026-10-10T08:08:58.415598728Z",
+        "Path": "sh",
+        "Args": [
+            "-c",
+            "ulimit -c 0\nexec qemu-aarch64 -L /usr/aarch64-linux-gnu \"$@\"",
+            "claim-test",
+            "/output/claim-original",
+            "unix:path=/bus/socket",
+            "during-discovery"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 44425,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-10-10T08:08:58.474764097Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+        "ResolvConfPath": "/var/lib/docker/containers/8ec9873a70569c122540e2626a31c94da5135974aacee7afcec13b2e57404d13/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/8ec9873a70569c122540e2626a31c94da5135974aacee7afcec13b2e57404d13/hostname",
+        "HostsPath": "/var/lib/docker/containers/8ec9873a70569c122540e2626a31c94da5135974aacee7afcec13b2e57404d13/hosts",
+        "LogPath": "/var/lib/docker/containers/8ec9873a70569c122540e2626a31c94da5135974aacee7afcec13b2e57404d13/8ec9873a70569c122540e2626a31c94da5135974aacee7afcec13b2e57404d13-json.log",
+        "Name": "/lucid_hopper",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "/home/ms/Samsung/galaxy_tab_s9_linux/out/proxy-claim/build:/output:ro",
+                "/home/ms/Samsung/galaxy_tab_s9_linux/out/proxy-claim/build/bus-068rxczp:/bus:ro"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "3",
+                    "max-size": "50m"
+                }
+            },
+            "NetworkMode": "none",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": true,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": [
+                "no-new-privileges"
+            ],
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/home/ms/Samsung/galaxy_tab_s9_linux/out/proxy-claim/build/bus-068rxczp",
+                "Destination": "/bus",
+                "Mode": "ro",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/home/ms/Samsung/galaxy_tab_s9_linux/out/proxy-claim/build",
+                "Destination": "/output",
+                "Mode": "ro",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "8ec9873a7056",
+            "Domainname": "",
+            "User": "1000:1000",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "G_DEBUG=fatal-criticals",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive"
+            ],
+            "Cmd": [
+                "sh",
+                "-c",
+                "ulimit -c 0\nexec qemu-aarch64 -L /usr/aarch64-linux-gnu \"$@\"",
+                "claim-test",
+                "/output/claim-original",
+                "unix:path=/bus/socket",
+                "during-discovery"
+            ],
+            "Image": "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "Labels": {}
+        },
+        "NetworkSettings": {
+            "SandboxID": "f6303c2ac186885f2afcc358b6bf3b7effba22c09daf3eaf9aa198ef9d78cabe",
+            "SandboxKey": "/var/run/docker/netns/f6303c2ac186",
+            "Ports": {},
+            "Networks": {
+                "none": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "78c2d26b9418c35283521a5aaad1a78d88f987ce53bdcb5fd96dea56307181b8",
+                    "EndpointID": "fa07d00c5bb7b8f2e027862ed12349759cf13b1a269a0afaabcde3e4c3572df0",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "MacAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": null
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:ac344b74548e5e9dafb781d5ebf3d5f07c114a8a41027ae5b4d1b486811b0306",
+            "size": 1245,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    }
+]
