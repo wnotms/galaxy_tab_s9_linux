@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test389（RPC 完整返回内容有界观察登记），窗口为 **Test380–Test389**；没有生成镜像的轮次仍占一轮。
+  编号为 Test390（缺失文件返回状态比较登记），窗口为 **Test381–Test390**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,18 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-10 TEST390_MISSING_FILE_STATUS_REGISTERED_NOT_DEPLOYED.
+One changed69callback startup comparison, notunchanged389retry; exactmethod19
+oemconfig.so/env/rb request mustack69 once, otherfailure/missingcontent STOP.
+32newnamespace/runtime/overlay/statushostPASS/0skip;105+18QEMU+2upstream reused.
+Reuse370kernel/config/DTB/181,382earlyvendor/native/stockassets/library; no wait/
+proxyprofilemixing/firmwareblob/registryreset.31stagedfiles; no newkernel/Image.
+Freshread-only same0f360b00 five/181/config/notes/journal/ADB/noCode43 PASS,
+100%31.4C4.431V; ADBonly/noWiFiIP. Oneboot/root+sensorstartup/60s, firstnonclean
+STOP, mandatoryexact370/GNOMErestore. PPS/pump/DCCOFF, sensorsunfinished.
+Registration push precedes mutation; retention381–390/no380 images found.
+See reference/boot-tests/test-390-ssc-missing-file-status/README.md.
 
 2026-10-10 RPC_ENOENT_ARM64_QUALIFIED_NOT_DEPLOYED.
 Test389 actualmissing oemconfig.so seq6status1 differs Qualcomm ENOSUCHFILE69;

@@ -1,0 +1,58 @@
+{
+  "etc/systemd/system/gdm.service.d/91-gts9-test390.conf": {
+    "incoming": "overlay-02",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "a8cc3dd3a6e308cab23f83a0f720cf85b6318cb93092f563891a4159c901e241",
+    "source": "reference/boot-tests/test-390-ssc-missing-file-status/text-condition.conf"
+  },
+  "etc/systemd/system/gts9-glink-test390.service": {
+    "incoming": "overlay-06",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "e27becb94492ddaf2a7b191efd4fef71d12a27119e376fca023688f22b5f489f",
+    "source": "reference/boot-tests/test-390-ssc-missing-file-status/glink-watch.service"
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-rootpd.service.d/91-gts9-test390.conf": {
+    "incoming": "overlay-03",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "65a9e8a962a0183e1437fb7c4d25f913dddf64cf681a2bb997b08ec663f45c16",
+    "source": "reference/boot-tests/test-390-ssc-missing-file-status/hexagonrpcd-adsp-rootpd-trace.conf"
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-sensorspd.service.d/91-gts9-test390.conf": {
+    "incoming": "overlay-04",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "4125a53bdc7c2fd8fdd3532239d5352d2793bae216dc4add7bf1447b5716e282",
+    "source": "reference/boot-tests/test-390-ssc-missing-file-status/hexagonrpcd-adsp-sensorspd-trace.conf"
+  },
+  "etc/systemd/system/multi-user.target.d/91-gts9-test390.conf": {
+    "incoming": "overlay-07",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "0f2fc571c428ccb4e66dc622250dff8fd1a77de0f44b70eb39bb72a44dd78b26",
+    "source": "reference/boot-tests/test-390-ssc-missing-file-status/multi-user-trace.conf"
+  },
+  "usr/local/lib/gts9-test390/glink_trace.py": {
+    "incoming": "overlay-05",
+    "mode": 493,
+    "original_sha256": null,
+    "sha256": "21a3ca57f89ca760439d30cb8896bf1aac40059247e2cd17e6064b9534f74303",
+    "source": "userspace/sensors/glink_trace_382.py"
+  },
+  "usr/local/lib/gts9-test390/hexagonrpcd": {
+    "incoming": "overlay-00",
+    "mode": 493,
+    "original_sha256": null,
+    "sha256": "36fae649be02137c156588dacf453ffa467de6a18d15b3b95167c1e7569627a1",
+    "source": "out/rpc-open-error/build/stage/usr/bin/hexagonrpcd"
+  },
+  "var/lib/gts9-test390/text-scope": {
+    "incoming": "overlay-01",
+    "mode": 420,
+    "original_sha256": null,
+    "sha256": "a580fb946ef1fcdc9c7260a0ae51c814a1a46c7446ca365e1a192fec9a014d1d",
+    "source": "reference/boot-tests/test-390-ssc-missing-file-status/text-scope"
+  }
+}
