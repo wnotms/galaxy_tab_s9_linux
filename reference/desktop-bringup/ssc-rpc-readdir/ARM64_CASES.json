@@ -1,0 +1,134 @@
+{
+  "count": 16,
+  "qemu": true,
+  "cases": {
+    "final-eof": {
+      "status": 0,
+      "calls": 1,
+      "eof": 1,
+      "inode": 0,
+      "tail_nonzero": 0,
+      "padding": 0
+    },
+    "original-max-name": {
+      "status": 0,
+      "calls": 1,
+      "eof": 0,
+      "inode": 0,
+      "tail_nonzero": 253,
+      "padding": 165
+    },
+    "final-repeat": {
+      "status": 0,
+      "calls": 512,
+      "eof": 1,
+      "inode": 0,
+      "tail_nonzero": 0,
+      "padding": 0
+    },
+    "final-long-out": {
+      "status": 14,
+      "calls": 0,
+      "eof": 2779096485,
+      "inode": 2779096485,
+      "tail_nonzero": 254,
+      "padding": 165
+    },
+    "original-eof": {
+      "status": 0,
+      "calls": 1,
+      "eof": 1,
+      "inode": 0,
+      "tail_nonzero": 254,
+      "padding": 165
+    },
+    "final-short-in": {
+      "status": 14,
+      "calls": 0,
+      "eof": 2779096485,
+      "inode": 2779096485,
+      "tail_nonzero": 254,
+      "padding": 165
+    },
+    "original-repeat": {
+      "status": 0,
+      "calls": 512,
+      "eof": 1,
+      "inode": 0,
+      "tail_nonzero": 254,
+      "padding": 165
+    },
+    "final-max-name": {
+      "status": 0,
+      "calls": 1,
+      "eof": 0,
+      "inode": 0,
+      "tail_nonzero": 253,
+      "padding": 0
+    },
+    "original-name": {
+      "status": 0,
+      "calls": 1,
+      "eof": 0,
+      "inode": 0,
+      "tail_nonzero": 253,
+      "padding": 165
+    },
+    "final-null-out": {
+      "status": 14,
+      "calls": 0,
+      "eof": 2779096485,
+      "inode": 2779096485,
+      "tail_nonzero": 254,
+      "padding": 165
+    },
+    "original-error": {
+      "status": 1,
+      "calls": 1,
+      "eof": 2779096485,
+      "inode": 2779096485,
+      "tail_nonzero": 254,
+      "padding": 165
+    },
+    "final-error": {
+      "status": 1,
+      "calls": 1,
+      "eof": 0,
+      "inode": 0,
+      "tail_nonzero": 0,
+      "padding": 0
+    },
+    "final-name": {
+      "status": 0,
+      "calls": 1,
+      "eof": 0,
+      "inode": 0,
+      "tail_nonzero": 14,
+      "padding": 0
+    },
+    "final-null-in": {
+      "status": 14,
+      "calls": 0,
+      "eof": 2779096485,
+      "inode": 2779096485,
+      "tail_nonzero": 254,
+      "padding": 165
+    },
+    "final-long-in": {
+      "status": 14,
+      "calls": 0,
+      "eof": 2779096485,
+      "inode": 2779096485,
+      "tail_nonzero": 254,
+      "padding": 165
+    },
+    "final-short-out": {
+      "status": 14,
+      "calls": 0,
+      "eof": 2779096485,
+      "inode": 2779096485,
+      "tail_nonzero": 254,
+      "padding": 165
+    }
+  }
+}

@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 RPC_READDIR_EOF_INITIALIZATION_OFFLINE_QUALIFIED_NOT_DEPLOYED.
+Actual397 method28 EOF seq954 returns15 stale name bytes; local width/zero-init
+fix onlyapps_std.c, nativeactualC/UBSan +16ARM64QEMU +2upstream PASS;87affected
+hostPASS0skip. Libraryexact1be44d2f unchanged,newdaemon78b356c9; inode0 convention
+untouched, notSSCrootcauseproof. No device/kernel/config/DT/modules/firmware/
+registry/USB/charging/inputchange/fullrun/Actions. PPS/pump/DCCOFF; SSC/sample/
+rotationunfinished. Next separatelyregister deterministicreply/startup comparison
+and mandatory370 GNOMEreturn. See ssc-rpc-readdirRESULTS.
+
 2026-10-10 TEST397_SENSOR_FIRST_SSC_ABSENT_EXACT370_RETURNED.
 One65129696 sensor→root explicitorderedstart (ledger+journal retained), same396
 binary/library/assets/kernel/config/DT/181/382geometry.30s/twoUP PDRcycles,

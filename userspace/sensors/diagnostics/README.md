@@ -53,3 +53,18 @@ Both profiles admit the same frozen Fedora source tree independently. The
 composed output preserves the stat observer byte-for-byte and changes only
 iobuffer.c relative to it; SOURCE.json records both patch identities and the
 complete55-file result. This does not rewrite either old build or its manifest.
+
+## Deterministic readdir reply (2026-10-10)
+
+`rpc-readdir.json`/`rpc-readdir.patch` are an independent profile over the exact
+Test397 retained-listener source. Only method28 in apps_std.c changes: check
+input/output widths and initialize its complete reply, including EOF tail and
+padding. Actual397 EOF residue and native/ARM64 original-versus-fixed callback
+tests are recorded in `reference/desktop-bringup/ssc-rpc-readdir/`. The unchanged
+inode0 convention is intentional; no SSC-rootcause claim or device deployment.
+
+Prepare with `rpc_readdir_profile.py --source out/rpc-listener-lifetime/sources
+--output out/rpc-readdir/sources`. Build with `compile-rpc-readdir.sh` using the
+same networkless builder, original/final read-only mounts and bounded QEMU
+harness. `rpc_readdir_evidence.py` consumes the strict return-frame parser's
+result; it cannot replace framing/boot attribution or establish SSC publication.

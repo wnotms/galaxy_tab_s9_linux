@@ -1,0 +1,19 @@
+--- a/hexagonrpcd/apps_std.c
++++ b/hexagonrpcd/apps_std.c
+@@ -322,6 +322,16 @@
+ 	} *first_out = outbufs[0].p;
+ 	int ret;
+ 
++	/* Method 28 carries an eight-byte directory handle and 66 output words.
++	 * Clear the complete reply: the FS EOF path only writes name[0], and
++	 * the fixed-width name and ABI padding must not contain old heap bytes.
++	 * Test397 seq954 directly captured a previous name in the EOF tail.
++	 */
++	if (!dir || inbufs[0].s != sizeof(*dir) || !first_out ||
++	    outbufs[0].s != sizeof(*first_out))
++		return AEE_EBADPARM;
++
++	memset(first_out, 0, sizeof(*first_out));
+ 	ret = hexagonfs_readdir(ctx->fds, *dir, 255, first_out->name);
+ 	if (ret < 0) {
+ 		fprintf(stderr, "Could not read from directory: %s\n",
