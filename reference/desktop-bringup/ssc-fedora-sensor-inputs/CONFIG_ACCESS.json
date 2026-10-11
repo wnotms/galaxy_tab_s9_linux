@@ -1,0 +1,157 @@
+{
+  "source": "reference/boot-tests/test-400-fedora-adsp-comparison/runtime-discovery/discovery-unit-journal.txt",
+  "source_sha256": "69a6609ec82036537f86dfee4fa78467de916821354a8bae341e5fbfa410bdc5",
+  "boot_id": "3ff4d010-adab-48b2-b34d-0bde9a50b472",
+  "config_path_messages": [
+    {
+      "monotonic_us": "50626002",
+      "message": "opendir(/vendor/etc/sensors/config) -> 3"
+    },
+    {
+      "monotonic_us": "50626225",
+      "message": "stat(/vendor/etc/sensors/config/sns_dae.json) -> size=942 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50626447",
+      "message": "stat(/vendor/etc/sensors/config/veml3328_0.json) -> size=1018 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50626670",
+      "message": "stat(/vendor/etc/sensors/config/kailua_ak991x_5.json) -> size=6097 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50626873",
+      "message": "stat(/vendor/etc/sensors/config/qsh_ble.json) -> size=927 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50627082",
+      "message": "stat(/vendor/etc/sensors/config/sns_tilt.json) -> size=819 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50627288",
+      "message": "stat(/vendor/etc/sensors/config/kailua_dynamic_sensors_template.json) -> size=556 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50627491",
+      "message": "stat(/vendor/etc/sensors/config/sns_gyro_cal.json) -> size=949 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50627699",
+      "message": "stat(/vendor/etc/sensors/config/kailua_lsm6dso_0_0.json) -> size=6804 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50627900",
+      "message": "stat(/vendor/etc/sensors/config/sns_amd_sw_disabled.json) -> size=314 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50628107",
+      "message": "stat(/vendor/etc/sensors/config/kailua_default_sensors.json) -> size=5518 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50628308",
+      "message": "stat(/vendor/etc/sensors/config/kailua_bridge_driver_0.json) -> size=1466 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50628517",
+      "message": "stat(/vendor/etc/sensors/config/sns_diag_filter.json) -> size=7306 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50628734",
+      "message": "stat(/vendor/etc/sensors/config/sns_amd_sw_enabled.json) -> size=527 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50628938",
+      "message": "stat(/vendor/etc/sensors/config/sns_transport_ppe.json) -> size=438 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50629146",
+      "message": "stat(/vendor/etc/sensors/config/kailua_qsh_ble_0.json) -> size=397 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50629351",
+      "message": "stat(/vendor/etc/sensors/config/sns_flip_state.json) -> size=248 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50629562",
+      "message": "stat(/vendor/etc/sensors/config/sns_tilt_sw_enabled.json) -> size=452 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50629768",
+      "message": "stat(/vendor/etc/sensors/config/kailua_iot_hdk_dae.json) -> size=803 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50629973",
+      "message": "stat(/vendor/etc/sensors/config/sns_cm.json) -> size=852 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50630183",
+      "message": "stat(/vendor/etc/sensors/config/sns_direct_channel.json) -> size=164 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50630388",
+      "message": "stat(/vendor/etc/sensors/config/lsm6dso_0.json) -> size=2661 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50630594",
+      "message": "stat(/vendor/etc/sensors/config/sns_tilt_sw_disabled.json) -> size=330 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50630807",
+      "message": "stat(/vendor/etc/sensors/config/sns_fmv_legacy.json) -> size=1583 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50631104",
+      "message": "stat(/vendor/etc/sensors/config/sns_mag_cal.json) -> size=702 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50631404",
+      "message": "stat(/vendor/etc/sensors/config/sns_rotv.json) -> size=908 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50631611",
+      "message": "stat(/vendor/etc/sensors/config/sns_offbody_detect_phone.json) -> size=173 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50631816",
+      "message": "stat(/vendor/etc/sensors/config/kailua_veml3328_0.json) -> size=3371 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50632030",
+      "message": "stat(/vendor/etc/sensors/config/sns_fmv.json) -> size=1523 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50632228",
+      "message": "stat(/vendor/etc/sensors/config/kailua_irq.json) -> size=179 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50632429",
+      "message": "stat(/vendor/etc/sensors/config/kailua_veml3328_1.json) -> size=3371 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50632621",
+      "message": "stat(/vendor/etc/sensors/config/kailua_ak991x_0.json) -> size=5956 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50632821",
+      "message": "stat(/vendor/etc/sensors/config/kailua_power_0.json) -> size=308 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50633027",
+      "message": "stat(/vendor/etc/sensors/config/sns_mag_cal_legacy.json) -> size=313 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50633194",
+      "message": "stat(/vendor/etc/sensors/config/sns_amd.json) -> size=801 mtime=1640995200.000000000"
+    },
+    {
+      "monotonic_us": "50633419",
+      "message": "stat(/vendor/etc/sensors/config/akmlib.json) -> size=3161 mtime=1640995200.000000000"
+    }
+  ],
+  "observed_stat_messages": 35,
+  "observed_directory_open_messages": 1,
+  "observed_config_file_open_messages": 0,
+  "DSP_parsing_proved": false,
+  "SSC_rootcause_proved": false,
+  "scope": "Only these logged AP callback messages; no claim about DSP internal parsing or unlogged operations"
+}

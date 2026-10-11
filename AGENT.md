@@ -98,6 +98,21 @@
 
 ## Current state (2026-10-03)
 
+2026-10-11 FEDORA_REMAINING_SENSOR_INPUT_DIFFERENCES_RECORDED_OFFLINE.
+FreshFedoraHEADab123e7 unchanged; pinnedarchivesreadwithout extraction.
+All35configbytes/versionmarkers/fivecommonDSPskels equal. Current35mtimecache
+values1640995200matchconfigmtime; Fedora35values0differfrom1786379433mtime.
+Actual400rawjournal36config-pathmessages=35stat+oneopendir/no configfileopen
+logged; notDSPparseproof/rootcause. Factorybias/matrices/placement/volatile
+and extralibraries reportedseparately, no wholepackagecalibrationoverwrite.
+Fedorareferenceplatform_version0 cannotreplacecurrentnative65536/vendorraw
+getter. Newreadonlycomparator16+existingprofile16testsPASS0skip/syntaxPASS;
+no devicecommand/build/fullrun/routing/Actions/registryreset. Next independently
+qualifycopiedmtimecache-only comparison andgenerated-file evidence, keepown
+factoryinput/physicalpersist/nativeidentity/exactreturn; notregistered401 yet.
+No unchanged400replay;370GNOMEreturn retained/PPS/pump/DCCOFF/sensorsunfinished.
+See ssc-fedora-sensor-inputs/RESULTS.md and exactCOMPARISON/CONFIG_ACCESS.
+
 2026-10-11 TEST400_COMPLETE_FEDORA_PAIR_BOOTED_SSC_ABSENT_RETURNED370.
 Registrationa615b795 pushedbeforeone3ff4d010 candidate; complete52Fedora
 ADSP/DTB files/19differences, same399kernel/config/DT/181/daemon/order/provider.
