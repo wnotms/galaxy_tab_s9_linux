@@ -1,0 +1,33 @@
+{
+  "start_head": "7543d4fee0d0201ad8572b17fc32b4a1b5e6b607",
+  "source_sha256": {
+    "userspace/sensors/registry_mutation_evidence.py": "ad29377ee6919c0a42eb36dd0f19f3ea321c0f1aaa9f78bc2220233c69584870",
+    "userspace/sensors/rpc_return_evidence.py": "8c7e220ca7f245e69a5b9d7b510f0da3b6579cdefa17408e667ce6c7a3ad520f",
+    "tests/test_registry_mutation_evidence.py": "aa4442a6e094261f315b5c5e88ea0ac8dbf9d9d38df518d51ef4793a01d2fe2b",
+    "tests/fixtures/rpc_registry_write_harness.c": "5a3f5aef4dd686ae127b09788c432b07e3361116fd7bf32195e0f655a7060742",
+    "out/rpc-readdir/build/work/hexagonrpc/hexagonrpcd/apps_std.c": "7d220d65bb2ec15cbf6612853c969db86fc2594c71dfa1655100bd5fa8e2371a",
+    "out/rpc-readdir/build/work/hexagonrpc/hexagonrpcd/interfaces/apps_std.def": "132ae82e6afa19c78a03c34de902e93aff0a9fed03cf173a6065f640d83db83c",
+    "out/rpc-readdir/build/work/hexagonrpc/hexagonrpcd/hexagonfs.c": "ad9155af0b06a92c5f564c1530da9d272de6310109abe3bb94fee220093ddfb8",
+    "out/rpc-readdir/build/work/hexagonrpc/hexagonrpcd/hexagonfs_mapped.c": "a5bad29448b73274c57a08852f230037f2d60bf7c72cf2e1926022165e34b346",
+    "out/rpc-readdir/build/work/hexagonrpc/hexagonrpcd/hexagonfs_virt_dir.c": "24e24b81a8eb83bfbeea3d2264c9c655e92de0a6f5d5c305476265dcbcd6d7ec",
+    "out/rpc-readdir/build/work/hexagonrpc/hexagonrpcd/rpcd_builder.c": "c601870fc2a7115357f0608a90029a99a497ca82081a21c682988054d6f129db",
+    "out/rpc-readdir/build/work/hexagonrpc/hexagonrpcd/listener.c": "2c80c8c41bb0f037e7fca7548b7e10eb921070fca787a3e3c79fd5d6f481cc9d"
+  },
+  "syntax_check": "PASS",
+  "kernel_build_executed": false,
+  "full_tests_executed": false,
+  "routing_changed": false,
+  "device_operations": false,
+  "Actions_started": false,
+  "initial_failures": [
+    {
+      "record": "INITIAL_HOST_TESTS.json",
+      "cause": "Real-source fixture assumed0644 for every sensor file; actual179registry entries0600; corrected fixture to exact archive modes, production guard unchanged"
+    },
+    {
+      "record": "SECOND_HOST_TESTS.json",
+      "cause": "Actual firmware keeps read-only bootstrap config descriptor open until process exit; report it without invented callback close, require quiescent after snapshot; unclosed mutable descriptors still fatal"
+    }
+  ],
+  "physical_snapshots_tested": false
+}

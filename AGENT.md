@@ -98,6 +98,22 @@
 
 ## Current state (2026-10-03)
 
+2026-10-11 ISOLATED_REGISTRY_MUTATION_EVIDENCE_HOST_QUALIFIED.
+Newreadonlysnapshot/replay usesunchangedlistener2 parser/exactFedoraHexagonFS
+aliases, fullbeforemanifest/afterquiescent hashboundary;128KiBfile/2MiB/2048.
+Onlysensorunit copiedregistry/versionwrites modelled; config/identity/persist
+outsidewrites/unknownmethods/faults/capacities/unack/shortwrites/unknownfinalbytes
+STOP. Nodeidentity survivesrename; actual400replay write0/retainedreadonly
+bootstrapfd reportedwithoutinventedclose; mutableunclosedFD stillSTOP.
+33testsPASS0skip including5actualqualifiedC/UBSanprivatefilecases; initial
+fixturemode600 andretainedreadonly assumptions preserved/corrected explicitly.
+No oldparser/testchange/build/fullrun/routing/Actions/devicecommand; physical
+snapshotsUNTESTED. Next independent401integration capturesbeforeRPCstart and
+afterdeactivation, retainsraw/fullkernel/firstfault, mandatory370normalGNOME
+return. Fedoramtime-onlyprofile staysNOTDEPLOYABLE untilregisteredintegration.
+Owncalibrationinput/physicalpersist unchanged/PPS/pump/DCCOFF/sensorsunfinished.
+See ssc-registry-mutation-evidence/RESULTS/HOST_TESTS/SOURCE.
+
 2026-10-11 FEDORA_MTIME_CACHE_ONLY_PROFILE_OFFLINE_QUALIFIED_NOT_DEPLOYABLE.
 Newarchive overcomplete400FedoraADSP assets changesonlycopiedsns_reg_config
 35data timestamps to publishedFedora0; sameowner/type/ver/filemode/mtime.
