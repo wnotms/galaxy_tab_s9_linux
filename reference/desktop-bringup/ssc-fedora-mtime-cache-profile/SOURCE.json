@@ -1,0 +1,25 @@
+{
+  "start_head": "67f5d0049e73d38149e97dd20fbe3b14f8d69f86",
+  "source_sha256": {
+    "userspace/sensors/fedora_registry_cache_profile.py": "565e3fb43bfb6365af10ca5d444f258191bc2cdf2759f9c4bacd157cd82157df",
+    "userspace/sensors/fedora_sensor_inputs.py": "86bd398004dce77b4f3abf890ec83361e020c7e98e0979d64ad956e205f9eb37",
+    "userspace/sensors/fedora_adsp_profile.py": "9ea6657a98e3157a51667fdbdac11e9731b28eb46c2f1046776c41577795d0a9",
+    "tests/test_fedora_registry_cache_profile.py": "fa9295921f80735595c1a76c1011e8cb6b9f6cd6f4cba410380b68f2fb7417c8",
+    "tests/test_fedora_sensor_inputs.py": "23a5dbc87ad06d275a2e524843cd716d0c5b1843d35a433f35d201ed6b0ee7cd"
+  },
+  "kernel_build_executed": false,
+  "full_tests_executed": false,
+  "routing_changed": false,
+  "device_operations": false,
+  "syntax_check": "PASS",
+  "Actions_started": false,
+  "Windows_staging_performed": false,
+  "profile_archive": "out/ssc-fedora-mtime-cache-profile/sensor-assets.tar.gz",
+  "candidate_consumers": [
+    "pending separate generated-cache evidence qualification and single registered comparison"
+  ],
+  "unchanged_vendor_provider": "out/boot-bundle-ssc-fedora-adsp/vendor_boot.img",
+  "vendor_source": "reference/boot-tests/test-400-fedora-adsp-comparison/BUILD.json",
+  "no_new_image": true,
+  "retention_window": "Test391\u2013Test400"
+}

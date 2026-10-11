@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-11 FEDORA_MTIME_CACHE_ONLY_PROFILE_OFFLINE_QUALIFIED_NOT_DEPLOYABLE.
+Newarchive overcomplete400FedoraADSP assets changesonlycopiedsns_reg_config
+35data timestamps to publishedFedora0; sameowner/type/ver/filemode/mtime.
+All327othermembers byte/mode/mtimeexact, ownfactorycalibration/config/native
+identity/physicalpersist preserved. No newkernel/DT/modules/image/vendorbuild,
+400matchedvendor reusable. Eightnew+16comparison testsPASS0skip/syntax/reopened
+all328archivePASS. Notregistered401/notdeploymentready: qualifygeneratedisolated
+cache/write/rename evidence beforeoneindependentphysicalcomparison, preserve
+actualfault/identity/rescue/thermalgates andmandatory370normalGNOMEreturn.
+No devicecommand/registryreset/Windowsstage/fullrun/routing/Actions. Explicit
+pendingprofileconsumer/391–400retention; PPS/pump/DCCOFF/sensorsunfinished.
+See ssc-fedora-mtime-cache-profile/RESULTS/PROFILE/SOURCE.
+
 2026-10-11 FEDORA_REMAINING_SENSOR_INPUT_DIFFERENCES_RECORDED_OFFLINE.
 FreshFedoraHEADab123e7 unchanged; pinnedarchivesreadwithout extraction.
 All35configbytes/versionmarkers/fivecommonDSPskels equal. Current35mtimecache

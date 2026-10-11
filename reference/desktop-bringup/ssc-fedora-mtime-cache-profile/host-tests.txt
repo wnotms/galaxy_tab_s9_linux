@@ -1,0 +1,29 @@
+test_bad_archive_hash_stops_before_output_creation (test_fedora_registry_cache_profile.RegistryCacheProfileTests.test_bad_archive_hash_stops_before_output_creation) ... ok
+test_missing_baseline_member_stops (test_fedora_registry_cache_profile.RegistryCacheProfileTests.test_missing_baseline_member_stops) ... ok
+test_nonzero_reference_cache_not_silently_adopted (test_fedora_registry_cache_profile.RegistryCacheProfileTests.test_nonzero_reference_cache_not_silently_adopted) ... ok
+test_original_inputs_are_not_mutated (test_fedora_registry_cache_profile.RegistryCacheProfileTests.test_original_inputs_are_not_mutated) ... ok
+test_prior_modified_cache_cannot_be_staged_again (test_fedora_registry_cache_profile.RegistryCacheProfileTests.test_prior_modified_cache_cannot_be_staged_again) ... ok
+test_real_output_roundtrip_matches_exact_plan (test_fedora_registry_cache_profile.RegistryCacheProfileTests.test_real_output_roundtrip_matches_exact_plan) ... ok
+test_real_profile_changes_one_file_and_no_calibration_bytes (test_fedora_registry_cache_profile.RegistryCacheProfileTests.test_real_profile_changes_one_file_and_no_calibration_bytes) ... ok
+test_reference_config_difference_stops (test_fedora_registry_cache_profile.RegistryCacheProfileTests.test_reference_config_difference_stops) ... ok
+test_comparison_leaves_every_input_byte_and_metadata_unchanged (test_fedora_sensor_inputs.FedoraSensorInputTests.test_comparison_leaves_every_input_byte_and_metadata_unchanged) ... ok
+test_duplicate_keys_rejected (test_fedora_sensor_inputs.FedoraSensorInputTests.test_duplicate_keys_rejected) ... ok
+test_extra_current_library_is_not_missing_fedora_requirement (test_fedora_sensor_inputs.FedoraSensorInputTests.test_extra_current_library_is_not_missing_fedora_requirement) ... ok
+test_fedora_soc_files_are_reference_values (test_fedora_sensor_inputs.FedoraSensorInputTests.test_fedora_soc_files_are_reference_values) ... ok
+test_key_order_does_not_fake_semantic_difference (test_fedora_sensor_inputs.FedoraSensorInputTests.test_key_order_does_not_fake_semantic_difference) ... ok
+test_missing_and_null_are_distinguished (test_fedora_sensor_inputs.FedoraSensorInputTests.test_missing_and_null_are_distinguished) ... ok
+test_missing_config_rejected (test_fedora_sensor_inputs.FedoraSensorInputTests.test_missing_config_rejected) ... ok
+test_missing_marker_rejected (test_fedora_sensor_inputs.FedoraSensorInputTests.test_missing_marker_rejected) ... ok
+test_negative_cache_timestamp_rejected (test_fedora_sensor_inputs.FedoraSensorInputTests.test_negative_cache_timestamp_rejected) ... ok
+test_nonfinite_json_rejected (test_fedora_sensor_inputs.FedoraSensorInputTests.test_nonfinite_json_rejected) ... ok
+test_nonstandard_vendor_json_is_not_repaired (test_fedora_sensor_inputs.FedoraSensorInputTests.test_nonstandard_vendor_json_is_not_repaired) ... ok
+test_partial_cache_rejected (test_fedora_sensor_inputs.FedoraSensorInputTests.test_partial_cache_rejected) ... ok
+test_real_cache_difference_retained (test_fedora_sensor_inputs.FedoraSensorInputTests.test_real_cache_difference_retained) ... ok
+test_real_config_and_version_bytes_match (test_fedora_sensor_inputs.FedoraSensorInputTests.test_real_config_and_version_bytes_match) ... ok
+test_real_factory_data_not_claimed_interchangeable (test_fedora_sensor_inputs.FedoraSensorInputTests.test_real_factory_data_not_claimed_interchangeable) ... ok
+test_strings_and_numbers_are_not_coerced (test_fedora_sensor_inputs.FedoraSensorInputTests.test_strings_and_numbers_are_not_coerced) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 4.750s
+
+OK
