@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "if test -f /mnt/debian/var/lib/gts9-fedora-adsp-transaction/ledger.json; then echo present; elif test -e /mnt/debian/var/lib/gts9-fedora-adsp-transaction; then echo unknown; else echo absent; fi"
+  ],
+  "ended_utc": "2026-10-11T00:30:16.259612+00:00",
+  "started_utc": "2026-10-11T00:30:16.192025+00:00",
+  "status": 0
+}

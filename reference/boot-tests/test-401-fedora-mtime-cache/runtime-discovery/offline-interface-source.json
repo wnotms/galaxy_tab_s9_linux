@@ -1,0 +1,20 @@
+{
+  "Android_compatibility_comment_present": true,
+  "Fedora_package": "hexagonrpcd0.4.0 plus existing three patches",
+  "Fedora_patch_adds_sns_registry": false,
+  "actual_new_interface_implementation": false,
+  "interface_rootcause_proved": false,
+  "next_action": "Classify source-bounded optional probe separately; never fabricate an sns_registry implementation or waive all-5. Complete frames required for remaining protocol analysis.",
+  "observed_unsigned_return": 4294967291,
+  "registered_interfaces": [
+    "apps_remotectl",
+    "apps_std",
+    "apps_mem"
+  ],
+  "requested_interface": "sns_registry",
+  "source_files": {
+    "out/rpc-readdir/build/work/hexagonrpc/hexagonrpcd/localctl.c": "4c94702fd308c94d19591536560eaf491e6be5e087b26d8d7104220ce93f75b8",
+    "out/rpc-readdir/build/work/hexagonrpc/hexagonrpcd/rpcd.c": "2f8ba6f5ae89322e9de858b1fd93d02aa7965705e2cfaec57866cd9a7442cdaa"
+  },
+  "unknown_interface_return": -5
+}

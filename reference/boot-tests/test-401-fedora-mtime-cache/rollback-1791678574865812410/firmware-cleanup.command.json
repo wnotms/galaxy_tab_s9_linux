@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "chroot /mnt/debian /usr/bin/python3 /tmp/gts9-test401-fw/adsp_firmware_transaction.py cleanup --proc /tmp/gts9-test401-fw/proc --base /tmp/gts9-test401-fw/original-assets.tar.gz --candidate /tmp/gts9-test401-fw/firmware-assets.tar.gz --original-presence absent"
+  ],
+  "ended_utc": "2026-10-11T00:30:19.070480+00:00",
+  "started_utc": "2026-10-11T00:30:18.535287+00:00",
+  "status": 0
+}

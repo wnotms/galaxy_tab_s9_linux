@@ -98,6 +98,26 @@
 
 ## Current state (2026-10-03)
 
+2026-10-11 TEST401_CACHE_REINITIALIZED_RPC_GAPS_RETURNED370.
+Registration366f17e0 pushedbeforeonee72b9cfb earlyboot/onesensor→rootlaunch/30s.
+Physicalquiescent216filebefore/afterPASS; initialprofileexact;35cachetimes0→
+1640995200/frozen400bytes; onecontentmember/86metadata-only memberschanged,
+allinsideownedcopy/removed, no factorypersistadoption.35configstatPASS/three
+configopens/18writereplies partiallydecoded.1MiBobserverLIMITseq1379/missing
+buffer header; completeI/OreplayUNQUALIFIED. Alsoseq1025sns_registryopen -5,
+sourceFedora-derivedlocalctlunknowninterfacereturn; threeFedora patches don't
+addinterface. Realunqualifiedreply, notSSCrootcause/necessityproof; no blanketwaiver.
+PDRbothUP/native22events8CPUzerolossPASS,SSC400absent/no sample/no rotation.
+Fullofflinetargetkernelstrictscannernewfault0; firsterrorpreserved/no retry.
+Exactoriginal52absences/ownedfirmwarescratch/assets/nineoverlay/370vendor/allfive/
+181/config/notesrestored; attributedc9a70924GNOME/palm/ADB/deviceNCM/sshd20.203s
+returnPASS100%33.0C4.446V/no failedunit.39Windowsstagefileshashverifiedremoved,
+ADBtoolpreserved.81hostqualificationreuse/results executed:false/no build/full/
+Actions.392–401; next boundedobservercapacity+exactoptionalinterface source
+classification, not unchanged401replay. PPS/pump/DCCOFF/4.44float/thermal unchanged.
+Sensorsunfinished. See401RESULTS/summary/fullrawframes/snapshots/result seal.
+
+
 2026-10-11 TEST401_CACHE_ONLY_COMPARISON_REGISTERED_READY_NOT_DEPLOYED.
 Independent401 oneearlyboot/one sensor→rootlaunch/30s scope reusesexact400
 complete52Fedora firmware/vendor/nativeprovider/kernel/DT/config/181/modules.
