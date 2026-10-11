@@ -1,0 +1,27 @@
+{
+  "ARM64_QEMU_cases": 15,
+  "builder": "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+  "companion_library_sha256": "1be44d2fe0c9b5ca785ef27730fba586a7f678f82f91cfbfb01613b3dad76f6e",
+  "daemon": {
+    "bytes": 80144,
+    "path": "out/rpc-init-observer/build/stage/usr/bin/hexagonrpcd",
+    "sha256": "aea9072d017d3e4fbd895272d5aeb751fdefe3d24dcf866a76e6d5cf0acf1f8f"
+  },
+  "device_operations": false,
+  "not_registered_as_physical_test": true,
+  "physical_snapshot_qualification_reused": "Test401216files/beforeafter/inactive",
+  "source_manifest": "userspace/sensors/diagnostics/rpc-return-init.json",
+  "source_sha256": {
+    "tests/fixtures/rpc_init_trace_harness.c": "8feaefe13cbec28ab1ebea1396c7e1e24b0a4e0dd2ec09dbc68d31ae5ee9a31a",
+    "tests/fixtures/rpc_localctl_harness.c": "71b3284bba70e1a5f47c2f9cddc91e967dfe657fde799e49de73f3d675cfc4e6",
+    "tests/test_rpc_init_observer.py": "5e07ec4397b74c40f00c9f0bacf2ff20626ad692b67cc00713ecb9cbb931bbe9",
+    "userspace/sensors/compile-rpc-init-observer.sh": "25fdc503fb42098c5904edcd09861530fa4323e4870ce83a0e083c46f2671f5a",
+    "userspace/sensors/diagnostics/rpc-return-init.json": "80bbb0fbab5c7a4946e2b486a6f29e572117f4ff7b71bc117da7dca4a53bf0d4",
+    "userspace/sensors/diagnostics/rpc-return-trace-init.h": "7966985a790665668f30c8b3dc80e7d6396f047e6192c237a8d7c68501dc99c7",
+    "userspace/sensors/registry_init_evidence.py": "3d9562ef6c8fd53416963abe5488067bc33f92c49e24f8d126f83ee4f4722fb2",
+    "userspace/sensors/rpc_init_trace_profile.py": "ee13c86f043adecc565e29af16a839ee10e4fc500fc20ced0674349a7be4055f",
+    "userspace/sensors/rpc_localctl_evidence.py": "54e50c92bedd3529b68416ea6f26c54a89a3bc85fab8956f6964d8c4e8ef0523",
+    "userspace/sensors/rpc_return_error_evidence.py": "67acb61677a8145a45fb082b7104b1f6534b1f16ed67366c4361b77667f863d8"
+  },
+  "upstream_tests": 2
+}

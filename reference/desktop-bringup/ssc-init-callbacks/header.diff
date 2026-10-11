@@ -1,0 +1,45 @@
+--- frozen-v2.h
++++ init-observer.h
+@@ -9,7 +9,8 @@
+ #include <string.h>
+ 
+ #define RPC_TRACE_FRAME_MAX 8192U
+-#define RPC_TRACE_TOTAL_MAX (1024U * 1024U)
++#define RPC_TRACE_TOTAL_DEFAULT (1024U * 1024U)
++#define RPC_TRACE_TOTAL_MAX (8U * 1024U * 1024U)
+ 
+ static void rpc_trace(const char *phase, uint64_t seq, uint32_t rctx,
+                       uint32_t handle, uint32_t sc, int64_t status,
+@@ -17,6 +18,7 @@
+ {
+     static int enabled = -1;
+     static size_t total;
++    static size_t budget = RPC_TRACE_TOTAL_DEFAULT;
+     static int stopped;
+     const unsigned char *p = data;
+     const char digits[] = "0123456789abcdef";
+@@ -27,6 +29,15 @@
+     if (enabled < 0) {
+         const char *value = getenv("HEXAGONRPC_RETURN_TRACE");
+         enabled = value && !strcmp(value, "1");
++        const char *requested = getenv("HEXAGONRPC_RETURN_TRACE_BUDGET");
++        if (enabled && requested && strcmp(requested, "1048576")) {
++            if (!strcmp(requested, "8388608")) {
++                budget = RPC_TRACE_TOTAL_MAX;
++            } else {
++                fprintf(stderr, "RPCRETURN_LIMIT seq=%" PRIu64 " reason=budget_config\n", seq);
++                stopped = 1;
++            }
++        }
+     }
+     if (!enabled || stopped)
+         return;
+@@ -53,7 +64,7 @@
+     if (!bytes)
+         line[length++] = '-';
+     line[length++] = '\n';
+-    if (length > RPC_TRACE_TOTAL_MAX - total) {
++    if (length > budget - total) {
+         fprintf(stderr, "RPCRETURN_LIMIT seq=%" PRIu64 " reason=budget\n", seq);
+         stopped = 1;
+         return;

@@ -98,6 +98,25 @@
 
 ## Current state (2026-10-03)
 
+2026-10-11 REGISTRY_INIT_OBSERVER_AND_NEGATIVE_PROTOCOL_OFFLINE_QUALIFIED.
+Actual401 seq1026zeroencodedstatus20/ro.revision causedoldmissingheader before
+seq1379budget. UnchangedFedoralistener rejectsunknownhandle beforeoutputalloc,
+continues; SNSunregistered -5/localctlshape source/C/UBSanverified. Exactnegative
+adjacentSNS/propertypairs≤6 classifiedwithoutimplementinginterface/blanketwaiver;
+newerrorframeparser exactshape only, allunknownmissingoutputs/LIMIT stillfault.
+Independentcache model onlyaddsactualdouble-registry../temp.json insidecopied
+sensors; config/identity/arbitraryroot/outsidewrites blocked/all28oldguardsPASS.
+Newobserverheader only: defaultOFF/default1MiB outputexact; explicit8MiB finite
+budget/8192frame/no8MiBallocation/invalidbudgetLIMIT.48hostPASS0skip/syntax+
+15ARM64QEMU+2upstreamPASS/networkless3.661s; companionlib1be44d2fexact,newdaemon
+ aea9072d017d3e4fbd895272d5aeb751fdefe3d24dcf866a76e6d5cf0acf1f8f.
+Nohistoricalparser/test/verdictchange/kernelbuild/full/routing/Actions/device
+command. Notregistered402/notdeploymentready; nextoneindependentcompleteinit
+trace/byte replay comparison+normal370return. Owncalibration/persist preserved,
+PPS/pump/DCCOFF/4.44float/thermal unchanged/sensorsunfinished.
+See ssc-init-callbacks/RESULTS/SOURCE/HOST_TESTS/BUILD/hashseal.
+
+
 2026-10-11 TEST401_CACHE_REINITIALIZED_RPC_GAPS_RETURNED370.
 Registration366f17e0 pushedbeforeonee72b9cfb earlyboot/onesensor→rootlaunch/30s.
 Physicalquiescent216filebefore/afterPASS; initialprofileexact;35cachetimes0→
