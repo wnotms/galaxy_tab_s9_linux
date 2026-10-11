@@ -1,0 +1,29 @@
+{
+  "expired391_image_audit": {
+    "deletion_executed": false,
+    "exists": false,
+    "path": "out/boot-bundle-ssc-glink382/vendor_boot.img",
+    "state": "already absent"
+  },
+  "expired391_image_audit_pending": false,
+  "latest_test": 401,
+  "new_image_built": false,
+  "retained": [
+    {
+      "consumer": "Test401 reused matched400 early comparison",
+      "path": "out/boot-bundle-ssc-fedora-adsp/vendor_boot.img"
+    },
+    {
+      "consumer": "Test401 exact source/provider comparison",
+      "path": "out/boot-bundle-ssc-provider399/vendor_boot.img"
+    },
+    {
+      "consumer": "Test401 active370 normal rollback",
+      "path": "out/boot-bundle-x710-263-passive/vendor_boot.img"
+    }
+  ],
+  "window": [
+    392,
+    401
+  ]
+}

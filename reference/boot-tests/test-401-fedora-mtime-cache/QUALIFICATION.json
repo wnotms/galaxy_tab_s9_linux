@@ -1,0 +1,42 @@
+{
+  "components_reused": [
+    "Test400 completeFirmware/PAS/nativetrace/normal370 return",
+    "33 mutation helper tests including5 realCUBSan",
+    "24 cacheprofile/comparator tests",
+    "94 guardedabsentrootfs/transaction tests"
+  ],
+  "device_mutation": false,
+  "executed": true,
+  "full_tests_executed": false,
+  "host_tests": {
+    "errors": 0,
+    "executed": true,
+    "failures": 0,
+    "patterns": [
+      "test_ssc_mtime_cache_scope.py",
+      "test_ssc_mtime_cache_runtime.py",
+      "test_registry_mutation_evidence.py",
+      "test_fedora_registry_cache_profile.py"
+    ],
+    "seconds": 5.27774000699992,
+    "skips": 0,
+    "success": true,
+    "tests": 81
+  },
+  "kernel_build_executed": false,
+  "physical_snapshots_qualified": false,
+  "preflight_active": "preflight-1791678376797753943",
+  "protected_files_changed": [],
+  "registration_source_before_commit": "e3f63aa6847fa7dd4b11bfb52c5c2a42323bc770",
+  "routing_changed": false,
+  "source_sha256": {
+    "reference/boot-tests/test-401-fedora-mtime-cache/callback_evidence.py": "fc94434e3be32ec50a93c3dce01a1adaf165acb71a3e0c7246b54df14e27c559",
+    "reference/boot-tests/test-401-fedora-mtime-cache/desktop.py": "df48524ead6e1ac89f0a09efb6675bc06497097c3db2470832bf7d9383277e50",
+    "reference/boot-tests/test-401-fedora-mtime-cache/host_flow.py": "2853106872e537879cdbc34208a72e334eb1ac69f95928a43e9cec6078090755",
+    "reference/boot-tests/test-401-fedora-mtime-cache/runtime.py": "4c468a00422951f8e4aab6743303a1f4568b3a4e9a74b87e857dad6eba09a5c9",
+    "tests/test_ssc_mtime_cache_runtime.py": "cb7fadc62b04c0be3a8b2d1321fecd73cf87edb6c9974ae06990495bb218eef3",
+    "tests/test_ssc_mtime_cache_scope.py": "50ce5a38c9ffbd8cc9f6264a9e68dc0ae81fd6c1acf080f95fe94462a8924586"
+  },
+  "syntax": "PASS",
+  "verdict": "REGISTERED_CACHE_FLOW_QUALIFIED_NOT_HARDWARE_RESULT"
+}

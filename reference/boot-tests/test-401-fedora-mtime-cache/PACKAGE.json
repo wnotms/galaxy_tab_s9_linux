@@ -1,0 +1,83 @@
+{
+  "artifacts": {
+    "firmware-assets.tar.gz": {
+      "bytes": 23361201,
+      "path": "out/ssc-fedora-adsp-profile/sensor-assets.tar.gz",
+      "sha256": "d647dcdf5ecc010080dbd057cec2c9cc66368d9e241cc3883a532e3f648177b3"
+    },
+    "hexagonrpcd-trace": {
+      "bytes": 80104,
+      "path": "out/rpc-readdir/build/stage/usr/bin/hexagonrpcd",
+      "sha256": "78b356c96afb1f7ff75280810d9db88386b7b2d10ad4d71d818ab5f261752299"
+    },
+    "original-assets.tar.gz": {
+      "bytes": 23361334,
+      "path": "out/ssc-assets/sensor-assets.tar.gz",
+      "sha256": "6abc10ecdb82c6abe175461ae483670be0c82c8e038cb9acbf5eb5f8ae9231e5"
+    },
+    "rollback-vendor_boot.img": {
+      "bytes": 100663296,
+      "path": "out/boot-bundle-x710-263-passive/vendor_boot.img",
+      "sha256": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+    },
+    "sensor-assets.tar.gz": {
+      "bytes": 23361191,
+      "path": "out/ssc-fedora-mtime-cache-profile/sensor-assets.tar.gz",
+      "sha256": "9ddf8294327ec0416bef47a72737a7843c4a45d3035d5000aa17c45150bf5431"
+    },
+    "vendor_boot.img": {
+      "bytes": 100663296,
+      "path": "out/boot-bundle-ssc-fedora-adsp/vendor_boot.img",
+      "sha256": "21d289fd4e76ebcf2621267a6259c65449c4e9e262e62e43ad80bc61e3330082"
+    }
+  },
+  "baseline_partitions": {
+    "boot": "823555189f2f1f18bf331789671b33d2f06fc89294e775b304f824f9d8649f21",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "candidate_build_link": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+  "candidate_partitions": {
+    "boot": "823555189f2f1f18bf331789671b33d2f06fc89294e775b304f824f9d8649f21",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "21d289fd4e76ebcf2621267a6259c65449c4e9e262e62e43ad80bc61e3330082"
+  },
+  "cmdline_change_scope": "Same400 image/header/provider arguments; no new build",
+  "cmdline_changed": false,
+  "config_changed": false,
+  "copied_cache_changed_fields": 35,
+  "dtb_changed": false,
+  "firmware_changed": true,
+  "firmware_changed_bytes_files": 19,
+  "firmware_changed_over400": false,
+  "firmware_files": 52,
+  "kernel_rebuilt": false,
+  "modules": 181,
+  "modules_changed": false,
+  "qualification_reused": [
+    "Test370 kernel/config/modules/native input",
+    "Test371 persistent USB lifecycle",
+    "Test378 early ADSP/vendor/assets/native domain/ordered RPC flow",
+    "Test382 vendor_boot/observer exact geometry/live raw buffer identity",
+    "Test383 metadata observer retained; new qualified wire correction only",
+    "Test385/386 stable recovery admission/first-fault capture",
+    "Test387 exact wire/stat/early flow; new bounded listener observer70",
+    "Test388 frozen flow/artifacts; newly qualified capacity parser/v2 header and80source/parser tests",
+    "Exact Test389 early flow/library/assets;105affected+18ARM64+2upstream qualified missing-file semantic repair in4c1a75ef",
+    "f3220073: retained default listener, 73 host +16 ARM64/QEMU +2 upstream; unchanged companion library",
+    "Exact Test396 retained-listener daemon/library/early vendor; new sensor-first Python launch helper only",
+    "fab72c18:87 affected host/16 ARM64QEMU/2 upstream; only method28 initialization/bounds change over Test397",
+    "4abbace9: native provider observer39hostPASS; same398 daemon/library/kernel/DT/modules/assets/lifecycle",
+    "d30ee1a3:87 hostPASS recovery transaction/matched earlyfirmware; PAS untested",
+    "Test400 physical complete52 firmware/early pair/native providers/normal370 restoration",
+    "e3f63aa6:33 host cases incl5 actual C/UBSan file-I/O; physical snapshots not yet tested"
+  ],
+  "test": "Test401",
+  "write_partitions": [
+    "vendor_boot"
+  ]
+}

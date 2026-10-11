@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-401-fedora-mtime-cache/host_flow.py", line 764, in <module>
+    elif mode=='preflight': result=preflight()
+                                   ~~~~~~~~~^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-401-fedora-mtime-cache/host_flow.py", line 267, in preflight
+    preflight_scan(rec, d)
+    ~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-401-fedora-mtime-cache/host_flow.py", line 243, in preflight_scan
+    rows=guard.journal(raw,d['boot_id']);original=guard.journal(prior.read_text(),d['boot_id'])
+                                                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-371-usb-lifecycle-gmu/host_flow.py", line 41, in journal
+    raise ValueError('kernel attribution/metadata missing')
+ValueError: kernel attribution/metadata missing

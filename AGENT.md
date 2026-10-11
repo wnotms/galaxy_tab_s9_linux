@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test400（Fedora 完整 ADSP 固件对照），窗口为 **Test391–Test400**；没有生成镜像的轮次仍占一轮。
+  编号为 Test401（隔离配置时间戳缓存对照），窗口为 **Test392–Test401**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,24 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-11 TEST401_CACHE_ONLY_COMPARISON_REGISTERED_READY_NOT_DEPLOYED.
+Independent401 oneearlyboot/one sensor→rootlaunch/30s scope reusesexact400
+complete52Fedora firmware/vendor/nativeprovider/kernel/DT/config/181/modules.
+Onlycopiedsns_reg_config35datavalues becomeFedora0; all327otherarchive members
+exact. Appliedinstaller0644 andfastrpcowner recordedexplicitly/same400, no new
+permissionvariable. Separateunchangedfirmwarearchive keepsguardedtransaction
+pin; original52rootfsabsence/exact370normalGNOME returnremainmandatory.
+Newprestart/quiescentafter snapshots+acknowledgedmutableI/Oreplay; unknownwrites/
+finalbytes/metadata/status/faultSTOP. Fullrawkernels/unitframes/firstfailure kept.
+81scope testsPASS0skip/syntaxPASS; initial6stagingdependency errors andreadonly
+wronghistoricaljournal reference saved/corrected; nohistoricaltestweakening.
+Fresh9bb51abd admissionPASS100%33.4C4.444V/allfive/181/config/notes/rescue/noCode43.
+Physicalsnapshots/SSC/sample/rotationUNTESTED. No newbuild/routing/full/Actions;
+392–401retention/expired391imagealreadyabsent; PPS/pump/DCCOFF/4.44float unchanged.
+Nextpushregistration thenone physical401 comparison, no unchanged400retry.
+See401README/QUALIFICATION/INPUTS/registration seal.
+
 
 2026-10-11 ISOLATED_REGISTRY_MUTATION_EVIDENCE_HOST_QUALIFIED.
 Newreadonlysnapshot/replay usesunchangedlistener2 parser/exactFedoraHexagonFS

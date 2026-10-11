@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test ! -L /usr/lib/firmware/qcom/sm8550; for path in /usr/lib/firmware/qcom/sm8550/adsp.b00 /usr/lib/firmware/qcom/sm8550/adsp.b01 /usr/lib/firmware/qcom/sm8550/adsp.b02 /usr/lib/firmware/qcom/sm8550/adsp.b03 /usr/lib/firmware/qcom/sm8550/adsp.b04 /usr/lib/firmware/qcom/sm8550/adsp.b05 /usr/lib/firmware/qcom/sm8550/adsp.b06 /usr/lib/firmware/qcom/sm8550/adsp.b07 /usr/lib/firmware/qcom/sm8550/adsp.b08 /usr/lib/firmware/qcom/sm8550/adsp.b09 /usr/lib/firmware/qcom/sm8550/adsp.b10 /usr/lib/firmware/qcom/sm8550/adsp.b11 /usr/lib/firmware/qcom/sm8550/adsp.b12 /usr/lib/firmware/qcom/sm8550/adsp.b13 /usr/lib/firmware/qcom/sm8550/adsp.b14 /usr/lib/firmware/qcom/sm8550/adsp.b15 /usr/lib/firmware/qcom/sm8550/adsp.b16 /usr/lib/firmware/qcom/sm8550/adsp.b17 /usr/lib/firmware/qcom/sm8550/adsp.b18 /usr/lib/firmware/qcom/sm8550/adsp.b19 /usr/lib/firmware/qcom/sm8550/adsp.b20 /usr/lib/firmware/qcom/sm8550/adsp.b21 /usr/lib/firmware/qcom/sm8550/adsp.b22 /usr/lib/firmware/qcom/sm8550/adsp.b23 /usr/lib/firmware/qcom/sm8550/adsp.b24 /usr/lib/firmware/qcom/sm8550/adsp.b25 /usr/lib/firmware/qcom/sm8550/adsp.b27 /usr/lib/firmware/qcom/sm8550/adsp.b28 /usr/lib/firmware/qcom/sm8550/adsp.b30 /usr/lib/firmware/qcom/sm8550/adsp.b31 /usr/lib/firmware/qcom/sm8550/adsp.b32 /usr/lib/firmware/qcom/sm8550/adsp.b33 /usr/lib/firmware/qcom/sm8550/adsp.b34 /usr/lib/firmware/qcom/sm8550/adsp.b35 /usr/lib/firmware/qcom/sm8550/adsp.b37 /usr/lib/firmware/qcom/sm8550/adsp.b38 /usr/lib/firmware/qcom/sm8550/adsp.b39 /usr/lib/firmware/qcom/sm8550/adsp.b40 /usr/lib/firmware/qcom/sm8550/adsp.b41 /usr/lib/firmware/qcom/sm8550/adsp.b42 /usr/lib/firmware/qcom/sm8550/adsp.b43 /usr/lib/firmware/qcom/sm8550/adsp.b44 /usr/lib/firmware/qcom/sm8550/adsp.b45 /usr/lib/firmware/qcom/sm8550/adsp.b46 /usr/lib/firmware/qcom/sm8550/adsp.b47 /usr/lib/firmware/qcom/sm8550/adsp.b48 /usr/lib/firmware/qcom/sm8550/adsp.b50 /usr/lib/firmware/qcom/sm8550/adsp.mdt /usr/lib/firmware/qcom/sm8550/adsp_dtb.b00 /usr/lib/firmware/qcom/sm8550/adsp_dtb.b01 /usr/lib/firmware/qcom/sm8550/adsp_dtb.b02 /usr/lib/firmware/qcom/sm8550/adsp_dtb.mdt; do test ! -e \"$path\"; test ! -L \"$path\"; printf \"%s: ABSENT\\n\" \"$path\"; done"
+  ],
+  "ended_utc": "2026-10-11T00:26:18.488657+00:00",
+  "started_utc": "2026-10-11T00:26:18.408416+00:00",
+  "status": 0
+}

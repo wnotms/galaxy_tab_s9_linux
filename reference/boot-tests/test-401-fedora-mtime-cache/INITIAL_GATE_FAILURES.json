@@ -1,0 +1,20 @@
+{
+  "firmware_transaction_integration": {
+    "correction": "separate exact firmware-assets.tar.gz and new sensor-assets.tar.gz; helper unchanged; all52 samefirmware",
+    "device_mutation": false,
+    "reason": "transaction helper pins unchanged400 full archive SHA; cache-only archive must not be passed as firmware input"
+  },
+  "host_initial": {
+    "device_mutation": false,
+    "errors": 6,
+    "evidence": "initial-scope-tests.txt",
+    "reason": "firmware wrapper tests ran before its39-file host staging existed",
+    "tests": 81
+  },
+  "readonly_preflight_initial": {
+    "correction": "bind exact Test400 returned9bb51abd journal with independent SHA; complete fresh preflight passed",
+    "evidence": "preflight-host.stderr",
+    "identity_gate_weakened": false,
+    "reason": "copied registration referenced a different historical boot kernel journal; attribution rejected correctly"
+  }
+}
